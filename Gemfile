@@ -12,3 +12,5 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'haml-rails'
 gem 'less-rails-bootstrap'
+
+gem 'database_cleaner'

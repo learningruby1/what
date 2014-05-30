@@ -1,0 +1,21 @@
+= form_for :document_answer, :url => (@answers.first.id.blank? ? document_answers_path(@document) : document_answer_update_path(@document, params[:step])), :html => { :class => "form-horizontal", :role => 'form' } do |f|
+
+  - @answers.each do |answer|
+    = f.fields_for 'answers[]', answer do |a|
+      .jumbotron
+        .container
+          %h2= TemplateField.find(answer.template_field_id).name
+
+      .container
+        %p= a.text_field :answer, :class => 'form-control'
+        = a.hidden_field :template_field_id, :value => answer.template_field_id
+        %br
+
+  .jumbotron
+    .container
+      .pull-left
+        - current_step = TemplateField.find(@answers.first.template_field_id).step_number.to_i
+        - if current_step > 1
+          = link_to :Back, document_answer_path(@document, current_step - 1), :class => 'form-control'
+      .pull-right
+        = f.submit :Next, :class => 'form-control'

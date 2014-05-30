@@ -11,9 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140528131847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "document_answers", force: true do |t|
+    t.integer  "document_id"
+    t.integer  "template_field_id"
+    t.string   "answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "document_answers", ["document_id", "template_field_id"], name: "index_document_answers_on_document_id_and_template_field_id", unique: true, using: :btree
+
+  create_table "documents", force: true do |t|
+    t.integer  "template_id"
+    t.string   "title"
+    t.integer  "user_id"
+    t.string   "session_uniq_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "documents", ["session_uniq_token"], name: "index_documents_on_session_uniq_token", unique: true, using: :btree
+  add_index "documents", ["template_id"], name: "index_documents_on_template_id", using: :btree
+  add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
+
+  create_table "template_fields", force: true do |t|
+    t.integer  "template_id"
+    t.string   "name"
+    t.integer  "step_number"
+    t.integer  "order_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "template_fields", ["template_id", "step_number", "order_number"], name: "uniqueness", unique: true, using: :btree
+
+  create_table "templates", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
