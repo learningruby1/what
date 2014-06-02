@@ -28,3 +28,14 @@ module FormsMama
     # config.i18n.default_locale = :de
   end
 end
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+    #:tls => true,
+    :address        => 'smtp.gmail.com',
+    :domain         => 'smtp.gmail.com',
+    :port           => 587,
+    :user_name      => 'teamvoy.mta@gmail.com',
+    :password       => 'Teamvoy2014',
+    :authentication => :plain
+}

@@ -15,9 +15,6 @@
   %body
     = render :partial => 'layouts/navigation'
 
-    .container
-      .row
-        .col-md-12
-          = render :partial => 'layouts/messages'
+    = render :partial => 'layouts/messages'
 
     = yield

@@ -35,14 +35,18 @@ class Document < ActiveRecord::Base
   end
 
 
-  def generate_session_uniq_token!
+  def generate_session_uniq_token
     begin
-      self.session_uniq_token = SecureRandom.hex
+      session_uniq_token = SecureRandom.hex
     end while Document.exists?(:session_uniq_token => session_uniq_token)
-    save :validate => false
+    session_uniq_token
   end
 
   def has_next_step?(current_step)
     template.fields.where(:step_number => current_step + 1).exists?
+  end
+
+  def to_s
+    title
   end
 end

@@ -1,9 +1,5 @@
 - flash.each do |name, message|
-  %div{:class => "alert alert-#{name == :notice ? "success" : "danger"}"}
-    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-    - if message.kind_of? Array
-      - message.each do |msg|
-        = raw msg
-        %br
-    - else
+  %div{ :class => "alert alert-#{ name == 'notice' ? 'success' : 'danger' }" }
+    .container
+      %button.close{ 'aria-hidden' => 'true', 'data-dismiss' => 'alert', :type => 'button' } &times;
       = raw message

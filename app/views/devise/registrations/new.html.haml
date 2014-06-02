@@ -1,0 +1,20 @@
+.container
+  .col-md-3
+    = form_for resource, :as => resource_name, :url => registration_path(resource_name), :id => 'registration-form', :class => 'form', :role => 'form' do |f|
+      %fieldset
+        %legend Find your neighborhood
+
+        = devise_error_messages!
+        = render :partial => 'layouts/messages'
+
+        .form-group
+          = f.email_field :email, :placeholder => 'Email address', :class => 'form-control'
+        .form-group
+          = f.password_field :password, :placeholder => 'Password', :class => 'form-control'
+        .form-group
+          = f.password_field :password_confirmation, :placeholder => 'Password confirm', :class => 'form-control'
+
+        .form-group
+          = f.submit 'SIGN UP', :class => 'btn btn-default btn-block'
+
+        = render "devise/shared/links"

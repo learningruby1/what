@@ -2,6 +2,11 @@
   .container
     %h1 Hello
     %p Here you can find some blanks... blah blah blah
+    - if @documents.present?
+      %h2.text-muted Recent documents
+      - @documents.each do |document|
+        = link_to document, new_document_answer_path(document)
+        %br
 
 .container
   - @templates.each_with_index do |template, index|

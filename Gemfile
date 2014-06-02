@@ -14,3 +14,5 @@ gem 'haml-rails'
 gem 'less-rails-bootstrap'
 
 gem 'database_cleaner'
+
+gem 'devise'

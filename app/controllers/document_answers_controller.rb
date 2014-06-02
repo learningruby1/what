@@ -1,4 +1,5 @@
 class DocumentAnswersController < ApplicationController
+  skip_filter :authenticate_user!
   before_action :get_document, :only => [:new, :create, :edit, :update]
 
   def new
@@ -23,7 +24,11 @@ class DocumentAnswersController < ApplicationController
 
   private
   def get_document
-    @document = Document.where(:id => params[:document_id]).first#, :session_uniq_token => params[:session_uniq_token]).first
+    if user_signed_in?
+      @document = current_user.documents.find(params[:document_id])
+    else
+      @document = Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token]).first
+    end
   end
 
   def answers_params

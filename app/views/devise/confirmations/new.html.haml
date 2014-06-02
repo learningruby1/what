@@ -1,0 +1,14 @@
+.container
+  .col-md-3
+    %fieldset
+      %legend Resend confirmation instructions
+
+      = devise_error_messages!
+
+      = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f|
+        .form-group
+          = f.email_field :email, :autofocus => true, :placeholder => 'Email', :class => 'form-control'
+        .form-group
+          = f.submit "Resend confirmation instructions", :class => 'btn btn-success btn-block'
+        .form-group
+          = render "devise/shared/links"
