@@ -5,7 +5,7 @@
     - if @documents.present?
       %h2.text-muted Recent documents
       - @documents.each do |document|
-        = link_to document, new_document_answer_path(document)
+        = link_to document, document_answer_path(document, 1)
         %br
 
 .container

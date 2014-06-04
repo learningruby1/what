@@ -11,43 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140602071120) do
+ActiveRecord::Schema.define(version: 20140604064615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "document_answers", force: true do |t|
-    t.integer  "document_id"
-    t.integer  "template_field_id"
-    t.string   "answer"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "document_id"
+    t.integer "template_field_id"
+    t.string  "answer"
   end
 
   add_index "document_answers", ["document_id", "template_field_id"], name: "index_document_answers_on_document_id_and_template_field_id", unique: true, using: :btree
 
   create_table "documents", force: true do |t|
     t.integer  "template_id"
-    t.string   "title"
     t.integer  "user_id"
     t.string   "session_uniq_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title",              default: "Untitled document"
   end
 
   add_index "documents", ["template_id"], name: "index_documents_on_template_id", using: :btree
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "template_fields", force: true do |t|
-    t.integer  "template_id"
     t.string   "name"
-    t.integer  "step_number"
-    t.integer  "order_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "field_type",       default: "string"
+    t.boolean  "mandatory",        default: true
+    t.integer  "template_step_id"
+    t.boolean  "in_line",          default: false
   end
 
-  add_index "template_fields", ["template_id", "step_number", "order_number"], name: "uniqueness", unique: true, using: :btree
+  add_index "template_fields", ["template_step_id"], name: "index_template_fields_on_template_step_id", using: :btree
+
+  create_table "template_steps", force: true do |t|
+    t.integer "template_id"
+    t.integer "step_number"
+    t.string  "title"
+    t.text    "description"
+  end
+
+  add_index "template_steps", ["template_id", "step_number"], name: "index_template_steps_on_template_id_and_step_number", unique: true, using: :btree
 
   create_table "templates", force: true do |t|
     t.string   "name"

@@ -1,3 +1,14 @@
 .margin-right{
   margin-right: 50px !important;
 }
+.new_roman{
+  font-family: 'Times New Roman';
+  font-size: 18px;
+}
+#questionare .jumbotron{
+  padding-bottom: 10px;
+}
+#questionare .container{
+  padding-top: 0px;
+  padding-bottom: 20px;
+}

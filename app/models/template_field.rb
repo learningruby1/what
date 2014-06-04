@@ -1,6 +1,7 @@
 class TemplateField < ActiveRecord::Base
 
-  has_many :answers, :class_name => 'DocumentAnswer', :foreign_key => 'canonical_name', :primary_key => 'canonical_name'
+  belongs_to :template_step
+  has_many :document_answers
 
   def to_s
     name

@@ -1,7 +1,7 @@
 class Template < ActiveRecord::Base
 
-  has_many :fields, :class_name => 'TemplateField'
   has_many :documents
+  has_many :steps, :class_name => 'TemplateStep'
 
   def to_s
     name

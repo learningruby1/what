@@ -4,7 +4,7 @@ class DocumentAnswersController < ApplicationController
 
   def new
     @answers = @document.build_next_step_answers
-    redirect_to root_path if @answers.blank?
+    redirect_to(templates_path, :notice => 'Document complete') if @answers.blank?
   end
 
   def create
