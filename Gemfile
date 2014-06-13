@@ -16,3 +16,12 @@ gem 'less-rails-bootstrap'
 gem 'database_cleaner'
 
 gem 'devise'
+
+gem 'puma'
+
+gem 'net-ssh', '~> 2.9.1'
+group :development, :test do
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-rvm'
+  gem 'capistrano-rails'
+end
