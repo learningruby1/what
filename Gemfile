@@ -25,3 +25,5 @@ group :development, :test do
   gem 'capistrano-rvm'
   gem 'capistrano-rails'
 end
+
+gem 'colorize', '~> 0.7.3'

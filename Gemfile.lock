@@ -155,6 +155,7 @@ DEPENDENCIES
   capistrano (~> 3.0)
   capistrano-rails
   capistrano-rvm
+  colorize (~> 0.7.3)
   database_cleaner
   devise
   haml-rails
