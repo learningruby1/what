@@ -19,6 +19,9 @@ gem 'devise'
 
 gem 'puma'
 
+gem 'momentjs-rails', '~> 2.5.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0.1'
+
 gem 'net-ssh', '~> 2.9.1'
 group :development, :test do
   gem 'capistrano', '~> 3.0'
@@ -26,4 +29,4 @@ group :development, :test do
   gem 'capistrano-rails'
 end
 
-gem 'colorize', '~> 0.7.3'
+# gem 'colorize', '~> 0.7.3'

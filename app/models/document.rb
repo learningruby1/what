@@ -6,9 +6,9 @@ class Document < ActiveRecord::Base
   belongs_to :template
   accepts_nested_attributes_for :answers
 
-  #Controller answers Action new
-  def build_next_step_answers
-    next_step = (answers.map{ |a| a.template_field.template_step.to_i }.max || 0) + 1
+  #Controller answers Action edit
+  def create_next_step_answers(next_step)
+    next_step = skip_steps next_step
 
     document_answers = Array.new
     if template.steps.where(:step_number => next_step).exists?
@@ -16,7 +16,7 @@ class Document < ActiveRecord::Base
         document_answers.push answers.build(:template_field_id => field.id)
       end
     end
-    document_answers.sort_by{ |a| a.template_field.id }
+    document_answers.sort_by{ |a| a.template_field.id }.each{ |a| a.save }
   end
 
   #Controller answers Action create
@@ -28,6 +28,7 @@ class Document < ActiveRecord::Base
 
   #Controller answers Action edit
   def step_answers(step)
+    step = skip_steps step
     begin
       template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten.sort_by{ |a| a.template_field.id }
     end rescue nil
@@ -40,6 +41,22 @@ class Document < ActiveRecord::Base
     end
   end
 
+
+  def skip_steps(next_step, action='forward')
+    if template.steps.where(:step_number => next_step).exists?
+      if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
+        begin
+          while !template.steps.where(:step_number => next_step).first.render_if_field_value.nil? &&
+                 template.steps.where(:step_number => next_step).first.render_if_field_value !=
+                (template.steps.where(:step_number => next_step).first.render_fields.where(:document_id => id).first.try(:answer) || '') do
+
+            next_step = action == 'forward' ? next_step.next : next_step.pred
+          end
+        end rescue nil #rescue needs cause answer can be not created at the moment
+      end
+    end
+    next_step
+  end
 
   def generate_session_uniq_token
     begin

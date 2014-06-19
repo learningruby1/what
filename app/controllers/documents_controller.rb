@@ -9,7 +9,7 @@ class DocumentsController < ApplicationController
 
   def create
     if @document.save
-      redirect_to new_document_answer_path(@document)
+      redirect_to document_answer_path(@document, 1)
     else
       render :action => 'new'
     end

@@ -28,6 +28,7 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+  config.assets.precompile += %w( application.css application.js )
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -78,9 +79,7 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
-
-  config.assets.precompile += %w( application.css application.js )
-
+  config.action_controller.asset_host = 'http://162.243.154.139/'
+  config.action_mailer.default_url_options = { :host => "162.243.154.139" }
+  config.action_mailer.asset_host = "http://162.243.154.139"
 end

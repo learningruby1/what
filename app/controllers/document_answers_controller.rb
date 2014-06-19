@@ -1,25 +1,16 @@
 class DocumentAnswersController < ApplicationController
   skip_filter :authenticate_user!
-  before_action :get_document, :only => [:new, :create, :edit, :update]
-
-  def new
-    @answers = @document.build_next_step_answers
-    redirect_to(templates_path, :notice => 'Document complete') if @answers.blank?
-  end
-
-  def create
-    @document.create_answers! answers_params
-    redirect_to new_document_answer_path(@document)
-  end
+  before_action :get_document, :only => [:edit, :update]
 
   def edit
     @answers = @document.step_answers params[:step]
-    new if @answers.blank?
+    @answers = @document.create_next_step_answers(params[:step]) if @answers.blank?
+    redirect_to(templates_path, :notice => 'Document complete') if @answers.blank?
   end
 
   def update
     @document.update_answers! answers_params
-    redirect_to document_answer_path(@document, params[:step].to_i + 1)
+    redirect_to document_answer_path(@document, params[:step].to_i.next)
   end
 
   private

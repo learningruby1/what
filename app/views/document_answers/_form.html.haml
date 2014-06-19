@@ -1,45 +1,24 @@
 #questionare
-  = form_for :document_answer, :url => (@answers.first.id.blank? ? document_answers_path(@document) : document_answer_update_path(@document, params[:step])), :html => { :class => "form-horizontal", :role => 'form' } do |f|
+  = form_for :document_answer, :url => (document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)), :html => { :class => "form-horizontal", :role => 'form', :id => 'answer_form' } do |f|
     .jumbotron
       .container
 
         - template_step = @answers.first.template_field.template_step
-        %p.new_roman= template_step.to_question_title
+        = render :partial => 'render_text', :locals => { :text => template_step.to_question_title }
+        %hr
+        = render :partial => 'render_text', :locals => { :text => template_step.description }
 
-        - if template_step.description.present?
-          - template_step.description.split('<br/>').each do |desc|
-            %p.new_roman= desc
-
-
-    .container
-      - @answers.each do |answer|
-        = f.fields_for 'answers[]', answer do |a|
-
-          - if !answer.template_field.in_line
-            .row
-
-          = a.hidden_field :template_field_id, :value => answer.template_field_id
-
-          - case answer.template_field.field_type
-          - when 'string'
-            .row.new_roman.col-md-12
-              - if answer.template_field.name.present?
-                - answer.template_field.name.split('<br/>').each do |text|
-                  = a.label :answer, text
-
-            .row.new_roman{ :class => ( answer.template_field.in_line? ? 'col-md-2' : 'col-md-12' ) }
-              %p= a.text_field :answer, :class => 'form-control'
-          - when 'radio'
-            .row
-              %label.new_roman
-                = a.radio_button :answer, :class => 'form-control'
-                = answer.template_field.name
-
+    = render :partial => 'answers', :locals => { :f => f }
 
     .jumbotron
       .container
         .pull-left
           - if template_step.to_i > 1
-            = link_to :Back, document_answer_path(@document, template_step.to_i - 1), :class => 'form-control'
+            = link_to document_answer_path(@document, @document.skip_steps(template_step.to_i.pred, 'back')), :class => 'btn btn-default' do
+              %span.new_roman Back /
+              %span.new_roman.spain Retroceder
         .pull-right
-          = f.submit :Next, :class => 'form-control'
+          -#= f.submit :class => 'form-control' do
+          %a.btn.btn-default{ :href => 'javascript: $("#answer_form").submit();' }
+            %span.new_roman Next /
+            %span.new_roman.spain Continuar

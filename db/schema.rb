@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604064615) do
+ActiveRecord::Schema.define(version: 20140618121909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,6 @@ ActiveRecord::Schema.define(version: 20140604064615) do
     t.integer "template_field_id"
     t.string  "answer"
   end
-
-  add_index "document_answers", ["document_id", "template_field_id"], name: "index_document_answers_on_document_id_and_template_field_id", unique: true, using: :btree
 
   create_table "documents", force: true do |t|
     t.integer  "template_id"
@@ -37,13 +35,16 @@ ActiveRecord::Schema.define(version: 20140604064615) do
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "template_fields", force: true do |t|
-    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "field_type",       default: "string"
     t.boolean  "mandatory",        default: true
     t.integer  "template_step_id"
+    t.text     "name"
     t.boolean  "in_line",          default: false
+    t.integer  "toggle_id"
+    t.boolean  "in_loop",          default: false
+    t.string   "toggle_option"
   end
 
   add_index "template_fields", ["template_step_id"], name: "index_template_fields_on_template_step_id", using: :btree
@@ -53,6 +54,9 @@ ActiveRecord::Schema.define(version: 20140604064615) do
     t.integer "step_number"
     t.string  "title"
     t.text    "description"
+    t.integer "render_if_field_id"
+    t.string  "render_if_field_value"
+    t.integer "amount_field_id"
   end
 
   add_index "template_steps", ["template_id", "step_number"], name: "index_template_steps_on_template_id_and_step_number", unique: true, using: :btree
