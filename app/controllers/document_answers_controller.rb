@@ -3,7 +3,7 @@ class DocumentAnswersController < ApplicationController
   before_action :get_document, :only => [:edit, :update]
 
   def edit
-    @answers = @document.step_answers params[:step]
+    @answers = @document.step_answers(params[:step]).sort_by(&:id)
     @answers = @document.create_next_step_answers(params[:step]) if @answers.blank?
     redirect_to(templates_path, :notice => 'Document complete') if @answers.blank?
   end

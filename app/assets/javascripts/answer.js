@@ -35,4 +35,9 @@ $(function(){
       });
     });
   });
+
+
+  var counter = $('.counter');
+  if(counter.length == 1)
+    counter.hide();
 });

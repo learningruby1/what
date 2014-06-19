@@ -11,12 +11,17 @@ class Document < ActiveRecord::Base
     next_step = skip_steps next_step
 
     document_answers = Array.new
+    loop_amount = template.steps.where(:step_number => next_step).first.amount_fields.where(:document_id => id).first.try(:answer).to_i.presence_in(1..50) || 1
+
     if template.steps.where(:step_number => next_step).exists?
-      template.steps.where(:step_number => next_step).first.fields.each do |field|
-        document_answers.push answers.build(:template_field_id => field.id)
+      loop_amount.times do
+        template.steps.where(:step_number => next_step).first.fields.reverse_each do |field|
+
+          document_answers.push answers.create(:template_field_id => field.id)
+        end
       end
     end
-    document_answers.sort_by{ |a| a.template_field.id }.each{ |a| a.save }
+    document_answers
   end
 
   #Controller answers Action create

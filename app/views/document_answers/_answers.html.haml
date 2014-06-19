@@ -1,37 +1,35 @@
-- loop_amount = @answers.first.template_field.template_step.amount_fields.where(:document_id => @answers.first.document.id).first.try(:answer).to_i
-- loop_amount = loop_amount.next if loop_amount == 0
+- first_field_name = @answers.first.template_field.name
+- counter = 0
 
-- 1.upto loop_amount do |index|
+- @answers.each do |answer|
+  = f.fields_for 'answers[]', answer do |a|
+    = a.hidden_field :template_field_id, :value => answer.template_field_id
 
-  - if loop_amount > 1
-    %hr.col-md-12
-    .col-md-12= render :partial => 'render_text', :locals => { :text => "##{ index }" }
-    %hr.col-md-12
+    - if answer.template_field.name == first_field_name
+      .counter
+        %hr
+        .container.new_roman= DocumentAnswer::NUMBER_NAME[counter]
+        - counter += 1
 
+    - case answer.template_field.field_type
+    - when /date|time/
+      = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
 
-  - @answers.each do |answer|
-    = f.fields_for 'answers[]', answer do |a|
-      = a.hidden_field :template_field_id, :value => answer.template_field_id
+    - when /\Alink:sep:/
+      = render :partial => 'document_answers/fields/link', :locals => { :answer => answer }
 
-      - case answer.template_field.field_type
-      - when /date|time/
-        = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
+    - when /radio/
+      = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 
-      - when /\Alink:sep:/
-        = render :partial => 'document_answers/fields/link', :locals => { :answer => answer }
+    - else
+      = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }
 
-      - when /radio/
-        = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
+    - case answer.template_field.field_type
 
-      - else
-        = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }
+    - when /last\z/
+      .col-md-12
+        %br
 
-      - case answer.template_field.field_type
-
-      - when /last\z/
-        .col-md-12
-          %br
-
-      - when 'date'
-        .col-md-12
-          %br
+    - when 'date'
+      .col-md-12
+        %br
