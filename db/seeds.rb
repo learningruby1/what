@@ -817,7 +817,9 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Everything curre
 
 
 
-
+#
+# DEBTS
+#
 
 
 current_step = template.steps.create :step_number => 30,
@@ -828,35 +830,123 @@ current_step = template.steps.create :step_number => 30,
 current_step.fields.create :field_type => 'text', :name => 'Nevada is a community property state.  This means that the law presumes that all debts (credit cards, loans, mortgage, taxes, hospital bills, etc.) acquired or incurred during the marriage is community debts, and belongs equally to both parties, with the exception of separate debt.
                                                             <br/><spain/>Nevada es un estado de propiedad comunitaria.  Esto significa que la ley presupone que todas las deudas (tarjetas de crédito, préstamos, impuestos, cuenta de hospital, etc.) adquiridas o incurridas durante el matrimonio son responsabilidad de ambas partes y pertenecen igualmente a los dos, con la excepción de deudas individuales.'
 
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No
-                                                             <option/>No, we already divided them /<spain/>No ya las dividimos '
+debts_division_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                                                    <option/>No
+                                                                                    <option/>No, we already divided them /<spain/>No ya las dividimos'
 
 
 
 
-current_step = template.steps.create :step_number => 31,
+current_step = template.steps.create :step_number => 31, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Debts Division: Home loan /<spain/>División de Deudas: Préstamo de Casa',
                                      :description => 'Is there a mortgage on the marital home?
                                                       <br/><spain/>¿Hay una hipoteca en la casa matrimonial?'
 
+toggle_id = 0
+toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No
-                                                             <option/>Yes /<spain/>Sí'
+                                                             <option/>Yes /<spain/>Sí', :toggle_id => toggle_id
+current_step.fields.create :name => 'Bank and amount owe /<spain/>Banco y cantidad que se debe:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+other_property_field = current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                                                    <option/>Husband will keep /<spain/>Esposo va a pagar
+                                                                                    <option/>Pay with sell of home /<spain/>Pagar con venta de casa', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
 
 current_step.fields.create :field_type => 'text', :name => 'Is there another debt associated with the marital home?
-                                                            <br/><spain/>¿Existe otra deuda asociada con la casa matrimonial?'
+                                                            <br/><spain/>¿Existe otra deuda asociada con la casa matrimonial?', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No'
+                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 
 
 
-current_step = template.steps.create :step_number => 32,
+current_step = template.steps.create :step_number => 32, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Debt Division: Credit Cards, hospital or medical bills
                                                 <br/><spain/>División de Deuda: Tarjeta de Crédito, Cuenta de hospital o doctor:',
                                      :description => 'Are there any credit cards, hospital or medical bills to divide?
                                                       <br/><spain/>¿Tiene tarjetas de créditos, cuenta de hospital o doctores que dividir?'
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'radio', :name => 'No
+                                                             <option/>Yes /<spain/>Sí', :toggle_id => toggle_id
+
+current_step.fields.create :name => 'Card, amount, last 4# (if possible): (example Visa, $1000, #1234) /<spain/>Tarjeta, cantidad, últimos 4#: (ejemplo Visa, $ 1000, #1234)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                            <option/>Divide /<spain/>Dividir
+                                                            <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'text', :name => 'Is there another credit card, hospital or doctor bill?
+                                                            <br/><spain/>¿Hay otra tarjeta de crédito, cuenta de hospital o doctor que dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
+
+current_step = template.steps.create :step_number => 33, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',
+                                     :title => 'Debt Division: Car Loan /<spain/>División de Deudas: Préstamo de Carro',
+                                     :description => 'Is there any car, rv, boat, motorcycle loan to divide?
+                                                      <br/><spain/>¿Tiene algún préstamo de carro, rv, barco, moto que dividir?'
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'radio', :name => 'No
+                                                             <option/>Yes /<spain/>Sí', :toggle_id => toggle_id
+
+current_step.fields.create :name => 'Bank and amount owe: (example Ford about $10,000) /<spain/>Banco y cantidad que se debe: (ejemplo Ford $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'text', :name => 'Is there another car, rv, boat, motorcycle loan to divide?
+                                                            <br/><spain/>¿Tiene otro préstamo de carro, rv, barco, moto que dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
+current_step = template.steps.create :step_number => 34, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',
+                                     :title => 'Debt Division: Student loans, IRS, payday loans, other /<spain/>División de Deuda: Préstamo estudiantil, IRS, otra deuda',
+                                     :description => 'Is there any student loan, IRS, payday loans, other debt to divide?
+                                                      <br/><spain/>¿Tiene algún préstamo estudiantil, IRS, otra deuda para dividir?'
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'radio', :name => 'No
+                                                             <option/>Yes /<spain/>Sí', :toggle_id => toggle_id
+
+current_step.fields.create :name => 'Type and amount owe: (example IRS about $10,000)
+                                     <spain/>Tipo y deuda: (ejemplo IRS $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'text', :name => 'Is there another student loan, IRS, payday loans, other debt to divide?
+                                                            <br/><spain/>¿Tiene otro préstamo estudiantil, IRS, otra deuda para dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
+current_step = template.steps.create :step_number => 35, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',
+                                     :title => 'Debt Division: Other /<spain/>División de Deuda: Otro',
+                                     :description => 'Is there any other debt incurred during the marriage that you want to divide?
+                                                      <br/><spain/>¿Hay otra deuda que fue adquirida durante el matrimonio que desea dividir?'
+
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'radio', :name => 'No
+                                                             <option/>Yes /<spain/>Sí', :toggle_id => toggle_id
+
+current_step.fields.create :name => 'Make a list of debts that need to be divided:
+                                     <br/><spain/>Haga una lista de las deudas que se tienen que', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
+
+#
+# END OF DEBTS
+#
+
+
+
+
 
 
 
