@@ -2,31 +2,23 @@ template = Template.where( :name => 'Complaint for Divorce').first
 template = Template.create :name => 'Complaint for Divorce', :description => 'No description' if !template.present?
 
 
-
-
-
 current_step = template.steps.create :step_number => 1,
-                                     :title => 'Your information /<spain/>Su informatión',
-                                     :description => 'Since you are the person starting the divorce action, you will be referred as the PLAINTIFF.<br/><spain/>Ya que usted es la persona que inicia la acción de divorcio, usted será referido como el demandante (PLAINTIFF)'
+                                     :title => 'Your information /<spain/>Su informatión'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
-current_step.fields.create :mandatory => false, :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
+current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :mandatory => false
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
-
-current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *'
-
-current_step.fields.create :mandatory => false, :name => 'Social Security # /<spain/>Seguro Social #:'
+current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => false
 current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *'
 current_step.fields.create :name => 'State /<spain/>Estado: *'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *'
-
-current_step.fields.create :mandatory => false, :field_type => 'radio', :name => 'I am Wife /<spain/>Usted es Esposa
-                                                                                  <option/>I am Husband /<spain/>Usted es Esposo'
-
-
-
-
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => false
+current_step.fields.create :name => 'I am Wife /<spain/>Usted es Esposa
+                                     <option/>I am Husband /<spain/>Usted es Esposo', :mandatory => false, :field_type => 'radio'
+current_step.fields.create :name => 'Since you are the person starting the divorce action, you will be referred as the PLAINTIFF.
+                                     <br/><spain/>Ya que usted es la persona que inicia la acción de divorcio, usted será referido como el demandante (PLAINTIFF)', :field_type => 'text'
 
 
 current_step = template.steps.create :step_number => 2,
@@ -34,24 +26,16 @@ current_step = template.steps.create :step_number => 2,
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona serà referida como el demandado (DEFENDANT)'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
-current_step.fields.create :mandatory => false, :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
+current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :mandatory => false
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
-
-current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *'
-
-current_step.fields.create :mandatory => false, :name => 'Social Security # /<spain/>Seguro Social #:'
+current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => false
 current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *'
 current_step.fields.create :name => 'State /<spain/>Estado: *'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *'
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *'
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:'
-
-
-
-
-
-
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => false
 
 
 toggle_id = 0
@@ -60,25 +44,13 @@ current_step = template.steps.create :step_number => 3,
                                      :title => 'Marriage Information /<spain/>Información de Matrimonio',
                                      :description => 'Where were you married? /<spain/>¿Dónde se casaron?'
 
-current_step.fields.create :mandatory => false, :field_type => 'radio', :name => 'In the United States /<spain/>En los Estados Unidos
-                                                                                  <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id
-
-current_step.fields.create :name => 'City /<spain/>Ciudad: *', :toggle_id => toggle_id, :toggle_option => 'In the United States'
-current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States'
-
-current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside'
-current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside'
-
-
-
-
-
-current_step.fields.create :field_type => 'link:sep:https://recorder.co.clark.nv.us/RecorderEcommerce/', :name => 'Don’t remember the date? Got married in Clark County? Click here<br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? Haz clic'
-
-
-
-
-
+current_step.fields.create :name => 'In the United States /<spain/>En los Estados Unidos
+                                     <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :mandatory => false, :field_type => 'radio'
+current_step.fields.create :name => 'City /<spain/>Ciudad: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => false
+current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => false
+current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
+current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
+current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? Click here<br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? Haz clic', :field_type => 'link:sep:https://recorder.co.clark.nv.us/RecorderEcommerce/', :mandatory => false
 
 
 current_step = template.steps.create :step_number => 4,
@@ -88,10 +60,9 @@ current_step = template.steps.create :step_number => 4,
                                                       <spain/>Si usted es la persona que está presentando el divorcio, debe ser residente de Nevada por lo menos 6 semanas antes de archivar la demanda de divorcio.<br/>
                                                       El testigo de residencia deberá firmar una declaración jurada indicando que usted es residente de Nevada (se permiten familiares).'
 
-current_step.fields.create :field_type => 'text', :name => 'I have lived in Nevada for over 6 weeks.
-                                                            <br/><spain/>Yo, he vivido en Nevada por más de 6 semanas.'
-
-current_step.fields.create :field_type => 'date', :name => 'Since when? /<spain/>¿Desde cuándo?'
+current_step.fields.create :name => 'I have lived in Nevada for over 6 weeks.
+                                     <br/><spain/>Yo, he vivido en Nevada por más de 6 semanas.', :field_type => 'text'
+current_step.fields.create :name => 'Since when? /<spain/>¿Desde cuándo?', :field_type => 'date'
 
 
 current_step = template.steps.create :step_number => 5,
@@ -121,8 +92,6 @@ current_step = template.steps.create :step_number => 7, :render_if_field_id => c
 
 children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Si
                                                                               <option/>No', :toggle_id => toggle_id
-
-
 current_step.fields.create :field_type => 'text', :name => 'Nevada Court does not have the legal right to set
                                                             custody at this time, BUT you can still get a divorce
                                                             without custody.
@@ -138,10 +107,8 @@ current_step = template.steps.create :step_number => 8, :render_if_field_id => c
                                      :description => 'How many minor children were born or legally adopted during this marriage?<br/>
                                                       <spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?'
 
-
 current_step.fields.create :field_type => 'text', :name => 'How many minor children were born or legally adopted during this marriage?
                                                             <br/><spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?'
-
 children_amount_field = current_step.fields.create :field_type => 'amount'
 
 
@@ -149,13 +116,13 @@ children_amount_field = current_step.fields.create :field_type => 'amount'
 current_step = template.steps.create :step_number => 9, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,
                                      :title => 'Child(ren)\'s Information /<spain/>Información de Menore(s)'
 
-
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
 current_step.fields.create :mandatory => false, :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
-
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *'
-current_step.fields.create :mandatory => false, :name => 'Social Security # /<spain/>Seguro Social #:'
+current_step.fields.create :mandatory => false, :name => 'Social Security # /<spain/># Seguro Social:'
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                                     <option/>Daughter /<spain/>Hija', :field_type => 'radio'
 
 
 
@@ -165,7 +132,6 @@ current_step = template.steps.create :step_number => 10, :render_if_field_id => 
                                                       <br/>Who will have legal custody of the child(ren)?
                                                       <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca del menor en cuanto a la educación, salud, religión, etc. para el bienestar del menor.<br/>
                                                       ¿Quién tendrá la custodia legal de los menores?'
-
 
 current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
@@ -564,15 +530,16 @@ current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>Mamá
                                                              <option/>Dad /<spain/>Papá
                                                              <option/>Both Parents /<spain/>Ambos Padres'
 
-
+toggle_id = 0
+toggle_id += 1
 current_step = template.steps.create :step_number => 15, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Child Support /<spain/>Manutención de menores'
 
 current_step.fields.create :field_type => 'radio', :name => 'No child support /<spain/>No habrá manutención de menores
                                                              <option/>Dad will pay $ /<spain/>El papá pagara $
-                                                             <option/>Mom will pay $ /<spain/>La mamá pagara $'
+                                                             <option/>Mom will pay $ /<spain/>La mamá pagara $', :toggle_id => toggle_id
 
-current_step.fields.create :field_type => 'amount', :name => 'per month as child support /<spain/>mensual de manutención para los menores'
+current_step.fields.create :field_type => 'amount', :name => 'per month as child support /<spain/>mensual de manutención para los menores', :toggle_id => toggle_id, :toggle_option => 'will'
 
 
 
@@ -608,17 +575,18 @@ current_step.fields.create :field_type => 'text', :name => 'You can request up t
                                                             <br/>Yo QUIERO manutención comenzando (escriba el mes y año) hasta (escriba el mes y año).
                                                             Desde que nos separamos el otro padre me ha dado $ (ponga la cantidad).', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
-
-
-
-current_step = template.steps.create :step_number => 18, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',
+toggle_id = 0
+toggle_id += 1
+current_step = template.steps.create :step_number => 18, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,
                                      :title => 'Child Tax Exemption /<spain/>Menores en los Impuestos',
                                      :description => 'Who will claim (insert name of child #1) as dependent on tax returns?
                                                       <br/><spain/>¿Quién reclamará (insert name of child #1) como dependiente en los impuestos?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años
                                                              <option/>Dad every year /<spain/>Papá todos los años
-                                                             <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años '
+                                                             <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años', :toggle_id => toggle_id
+
+current_step.fields.create :field_type => 'date', :name => 'Mom  will start claiming start from and up /<spain/>La mamá comenzara a reclamar a en (ponga el año de comienzo)', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom'
 
 
 toggle_id = 0
@@ -644,6 +612,13 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will  KEEP /<s
                                                              <option/>Husband will keep WILL keep /<spain/>Se QUEDARA con el esposo
                                                              <option/>Both Equally /<spain/>AMBOS TENDREMOS custodia '
 
+
+
+#
+# PROPERTY DIVISION
+#
+
+
 current_step = template.steps.create :step_number => 21,
                                      :title => 'Property /<spain/>Bienes',
                                      :description => 'Nevada is a community property state. This means that the law presumes that all property (bank account, 401K, house, military pension, car, furniture, jewelry, etc.) acquired or incurred during the marriage is community property, and belongs equally to both parties, with the exception of separate property.
@@ -652,35 +627,25 @@ current_step = template.steps.create :step_number => 21,
 current_step.fields.create :field_type => 'text', :name => 'Do you have community property to divide?
                                                             <br/><spain/>¿Tienen propiedad en común que dividir?'
 
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+property_division_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No
                                                              <option/>No, we already divided them /<spain/>No ya las dividimos'
 
 
-
-current_step = template.steps.create :step_number => 22,
+toggle_id = 1
+current_step = template.steps.create :step_number => 22, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Property Division: Marital Home /<spain/>División de Propiedad: Casa',
                                      :description => 'Do you have a marital home purchased during the marriage?
                                                       <br/><spain/>¿Tienen usted una casa que compraron durante el matrimonio?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No'
-
-current_step.fields.create :field_type => 'text', :name => 'Was there more properties bought during the marriage?
-                                                            <br/><option/>¿Compraron más propiedades durante el matrimonio?'
-
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No'
+                                                             <option/>No', :toggle_id => toggle_id
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 
-current_step = template.steps.create :step_number => 23,
-                                     :title => 'Property Division: More /<spain/>División de Propiedades: Más',
-                                     :description => 'What other property did you buy during the marriage?
-                                                      <br/><spain/>¿Qué otra propiedad compraron durante el matrimonio?'
-
-current_step.fields.create :field_type => 'checkbox', :name => 'Home /<spain/>Casa'
-current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra'
-current_step.fields.create :field_type => 'checkbox', :name => 'Business /<spain/>Negocio'
 
 current_step.fields.create :field_type => 'text', :name => 'Was there more properties bought during the marriage?
                                                             <br/><spain/>¿Compraron más propiedades durante el matrimonio?'
@@ -688,14 +653,86 @@ current_step.fields.create :field_type => 'text', :name => 'Was there more prope
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No'
 
+toggle_id = 1
+current_step = template.steps.create :step_number => 23, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',
+                                     :title => 'Property Division: More /<spain/>División de Propiedades: Más',
+                                     :description => 'What other property did you buy during the marriage?
+                                                      <br/><spain/>¿Qué otra propiedad compraron durante el matrimonio?'
 
-current_step = template.steps.create :step_number => 24,
+current_step.fields.create :field_type => 'checkbox', :name => 'Home /<spain/>Casa', :toggle_id => toggle_id
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes'
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra', :toggle_id => toggle_id
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes'
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Business /<spain/>Negocio', :toggle_id => toggle_id
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
+current_step.fields.create :field_type => 'text', :name => 'Was there more properties bought during the marriage?
+                                                            <br/><spain/>¿Compraron más propiedades durante el matrimonio?'
+current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                             <option/>No'
+
+current_step = template.steps.create :step_number => 24, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Property Division: Vehicles /<spain/>División de Propiedades: Vehículos',
                                      :description => 'Was there a car, motorcycle, rv, boat, trailer purchased during the marriage?
                                                       <br/><spain/>¿Compraron carro, moto, rv, barco, remolque durante el matrimonio?'
 
-current_step.fields.create :field_type => 'radio', :name => 'No
-                                                             <option/>Yes /<spain/>Sí'
+property_field = current_step.fields.create :field_type => 'radio', :name => 'No
+                                                                              <option/>Yes /<spain/>Sí'
+
+
+current_step = template.steps.create :step_number => 25, :render_if_field_id => property_field.id, :render_if_field_value => 'Yes',
+                                     :title => 'Property Division: Vehicles /<spain/>División de Propiedades: Vehículos'
+
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Car /<spain/>Carro', :toggle_id => toggle_id
+current_step.fields.create :name => 'Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Motorcycle /<spain/>Motocicleta', :toggle_id => toggle_id
+current_step.fields.create :name => 'Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'RV', :toggle_id => toggle_id
+current_step.fields.create :name => 'Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Boat /<spain/>Barco', :toggle_id => toggle_id
+current_step.fields.create :name => 'Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Trailer /<spain/>Remolque', :toggle_id => toggle_id
+current_step.fields.create :name => 'Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Other /<spain/>Otro', :toggle_id => toggle_id
+current_step.fields.create :name => 'Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
+                                                             <option/>Sell it /<spain/>Vender
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id
+
 
 current_step.fields.create :field_type => 'text', :name => 'Was there another vehicle, motorcycle, rv, boat, trailer bought during the marriage?
                                                             <br/><spain/>¿Compraron otro vehículo, motocicleta, rv, barco, remolque durante el matrimonio?'
@@ -704,35 +741,86 @@ current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No'
 
 
-current_step = template.steps.create :step_number => 25,
+
+
+current_step = template.steps.create :step_number => 26, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Property Division: Pension Benefit /<spain/>División de Beneficios de Pensión',
                                      :description => 'Is there a pension benefit, retirement fund, 401K, 403B, military pension, other retirement benefits obtain during the marriage?
                                                       <br/><spain/>¿Hay beneficio de Pensión, 401 k, 403B, pensión militar, otros beneficios de jubilación durante a matrimonio?'
-
+toggle_id = 0
+toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No'
+                                                             <option/>No', :toggle_id => toggle_id
+
+current_step.fields.create :name => 'Name of the plan: /<spain/>Nombre del plan de beneficios:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'I will keep /<spain/>Para Mi
+                                                             <option/>I want a portion /<spain/>Quiero una porción
+                                                             <option/>My spouse will keep it /<spain/>Para mi esposa(o)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'text', :name => 'Is there another retirement account? /<spain/>¿Hay otra cuenta de jubilación?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 
-current_step = template.steps.create :step_number => 26,
+
+current_step = template.steps.create :step_number => 27, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Property Division: Bank and Investment Account
                                                 <br/><spain/>División de Cuentas Bancarias e Inversiones',
                                      :description => 'Is there bank accounts, investment account or any other financial account obtain during the marriage?
                                                       <br/><spain/>¿Hay cuentas bancarias, de inversiones, u otro tipo de cuenta financiera obtenida  durante el matrimonio?'
-
+toggle_id = 0
+toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No'
+                                                             <option/>No', :toggle_id => toggle_id
+current_step.fields.create :name => 'Name of the account /<spain/>Nombre de la cuenta', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :name => 'approximate amount in it /<spain/>la cantidad aproximada', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :name => 'last 4# (if possible) /<spain/>los ultimos 4# (si es posible):', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'I will keep /<spain/>Para Mi
+                                                             <option/>I want a portion /<spain/>Quiero una porción
+                                                             <option/>My spouse will keep it /<spain/>Para mi esposa(o)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'text', :name => 'Is there another account? /<spain/>¿Hay otra cuenta?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 
-current_step = template.steps.create :step_number => 27,
+
+
+current_step = template.steps.create :step_number => 28, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Property Division: Other /<spain/>División de Bienes: Otro',
                                      :description => 'Is there anything else bought during the marriage that you want to keep?
                                                       <br/><spain/>¿Compro algo más durante el matrimonio que desea quedarse?'
 
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No'
+
+other_property_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                                                    <option/>No'
+
+current_step = template.steps.create :step_number => 29, :render_if_field_id => other_property_field.id, :render_if_field_value => 'Yes',
+                                     :title => 'Property Division: Other /<spain/>División de Bienes: Otro',
+                                     :description => 'Check all that apply and you want to keep: /<spain/>Marque todas las cosas que le gustaría mantener:'
+
+current_step.fields.create :field_type => 'checkbox', :name => 'household item /<spain/>cosas de la casa'
+current_step.fields.create :field_type => 'checkbox', :name => 'Jewelry /<spain/>Joyas'
+current_step.fields.create :field_type => 'checkbox', :name => 'Collections /<spain/>Collecciones'
+current_step.fields.create :field_type => 'checkbox', :name => 'Furniture /<spain/>Muebles'
+current_step.fields.create :field_type => 'checkbox', :name => 'Everything currently in my possession /<spain/>Todas las cosas en mi poder en este momento'
 
 
-current_step = template.steps.create :step_number => 28,
+
+
+
+
+#
+# END OF PROPERTY DIVISION
+#
+
+
+
+
+
+
+
+current_step = template.steps.create :step_number => 30,
                                      :title => 'Debts /<spain/>Deudas',
                                      :description => 'Do you have community debts to divide?
                                                       <br/><spain/>¿Tienen deudas en común que dividir?'
@@ -745,7 +833,9 @@ current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No, we already divided them /<spain/>No ya las dividimos '
 
 
-current_step = template.steps.create :step_number => 29,
+
+
+current_step = template.steps.create :step_number => 31,
                                      :title => 'Debts Division: Home loan /<spain/>División de Deudas: Préstamo de Casa',
                                      :description => 'Is there a mortgage on the marital home?
                                                       <br/><spain/>¿Hay una hipoteca en la casa matrimonial?'
@@ -760,7 +850,9 @@ current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No'
 
 
-current_step = template.steps.create :step_number => 30,
+
+
+current_step = template.steps.create :step_number => 32,
                                      :title => 'Debt Division: Credit Cards, hospital or medical bills
                                                 <br/><spain/>División de Deuda: Tarjeta de Crédito, Cuenta de hospital o doctor:',
                                      :description => 'Are there any credit cards, hospital or medical bills to divide?
