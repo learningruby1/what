@@ -27,12 +27,14 @@ $(function(){
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
       var field_value;
 
-      $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
+      if($('[class^="toggle_"]:first:has(:checkbox)').length == 0){
+        $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
 
-        field_value = $(this).data('toggle-option');
-        if(selected_value.indexOf(field_value) != -1)
-          $(this).show();
-      });
+          field_value = $(this).data('toggle-option');
+          if(selected_value.indexOf(field_value) != -1)
+            $(this).show();
+        });
+      }
     });
   });
 

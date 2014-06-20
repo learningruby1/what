@@ -6,8 +6,7 @@
     = a.hidden_field :template_field_id, :value => answer.template_field_id
 
     - if answer.template_field.name == first_field_name
-      .counter
-        %hr
+      .jumbotron.counter
         .container.new_roman= DocumentAnswer::NUMBER_NAME[counter]
         - counter += 1
 

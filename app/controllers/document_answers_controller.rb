@@ -3,14 +3,13 @@ class DocumentAnswersController < ApplicationController
   before_action :get_document, :only => [:edit, :update]
 
   def edit
-    @answers = @document.step_answers(params[:step]).sort_by(&:id) rescue nil
-    @answers = @document.create_next_step_answers(params[:step]) if @answers.blank?
+    @answers = @document.get_or_create_answers! params[:step]
     redirect_to(templates_path, :notice => 'Document complete') if @answers.blank?
   end
 
   def update
-    @document.update_answers! answers_params
-    redirect_to document_answer_path(@document, params[:step].to_i.next)
+    params[:step] = params[:step].to_i.next if !@document.update_answers!(answers_params)
+    redirect_to document_answer_path(@document, params[:step].to_i)
   end
 
   private
