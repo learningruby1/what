@@ -23,7 +23,7 @@ $(function(){
     if(!$('.' + $(this).prop('class') + ' :checkbox:first').is(':checked'))
         $('.' + $(this).prop('class') + ':not(:first)').hide();
 
-    $(this).change(function(){
+    $(this).click(function(){
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
       var field_value;
 

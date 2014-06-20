@@ -11,7 +11,7 @@ class Document < ActiveRecord::Base
     next_step = skip_steps next_step
 
     document_answers = Array.new
-    loop_amount = template.steps.where(:step_number => next_step).first.amount_fields.where(:document_id => id).first.try(:answer).to_i.presence_in(1..50) || 1
+    loop_amount = template.steps.where(:step_number => next_step).first.amount_fields.where(:document_id => id).first.try(:answer).to_i.presence_in(1..50) || 1 rescue 0
 
     if template.steps.where(:step_number => next_step).exists?
       loop_amount.times do

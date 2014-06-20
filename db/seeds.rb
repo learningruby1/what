@@ -947,6 +947,165 @@ current_step.fields.create :name => 'Make a list of debts that need to be divide
 
 
 
+#
+# ALIMONY
+#
+
+
+current_step = template.steps.create :step_number => 36,
+                                     :title => 'Spousal support or Alimony /<spain/>Manutención de Esposa(o)',
+                                     :description => 'Will there be spousal support/alimony?
+                                                      <br/><spain/>¿Va haber manutención de esposa(o)?'
+
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'radio', :name => 'No
+                                                             <option/>Yes /<spain/>Sí', :toggle_id => toggle_id
+
+current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.
+                                                             <option/>Husband WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
+                                                             <option/>Year(s) (example 1 year) /<spain/>Año(s)  (ejemplo 1 año)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
+current_step = template.steps.create :step_number => 37,
+                                     :title => 'Wife’s Name /<spain/>Cambio de Apellido'
+
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'radio', :name => 'Wife never change her name /<spain/>La esposa nunca se cambió el apellido
+                                                             <option/>Wife will keep married name /<spain/>La esposa se va a quedar con el apellido de casada
+                                                             <option/>Wife will return to her maiden name /<spain/>La esposa volverá a su apellido de soltera que es', :toggle_id => toggle_id
+
+current_step.fields.create :toggle_id => toggle_id, :toggle_option => 'Wife will return'
+
+
+
+current_step = template.steps.create :step_number => 38,
+                                     :title => 'Reason for divorce  /<spain/>Razón por el divorcio',
+                                     :description => 'Nevada is a "no fault" divorce state.  This means the person seeking the divorce does not have to prove in court that she or he is entitled to a divorce.
+                                                      <be/><spain/>Nevada es un estado de divorcio "sin culpa".  Esto significa que la persona que busca el divorcio no tiene que probar en la corte que él o ella tiene el derecho a divorciarse.'
+
+current_step.fields.create :field_type => 'radio', :name => 'I no longer want to be married /<spain/>Ya no quiero seguir casado porque no nos entendemos
+                                                             <option/>I no longer want to be married and have lived separated and apart for over 1 year /<spain/>Ya no quiero seguir casada y hemos vivido separados desde hace más de 1 año'
+
+
+
+current_step = template.steps.create :step_number => 39,
+                                     :title => 'Other cases in Family court /<spain/>Otros casos en la corte de Familia',
+                                     :description => 'Do you or other party in this case (including any minor child) have any other current case(s) or past case(s) in the Family Court or Juvenile Court in (insert county) County?
+                                                      <br/><spain/>¿Ha tenido o tiene usted u la otra persona en este caso (incluyendo cualquier de sus menores) otros casos en la corte de familia en el Condado de (insert county)?'
+
+other_cases_field = current_step.fields.create :field_type => 'radio', :name => 'No
+                                                                                 <option/>Yes /<spain/>Sí'
+
+
+
+
+current_step = template.steps.create :step_number => 40, :render_if_field_id => other_cases_field.id, :render_if_field_value => 'Yes',
+                                     :title => 'Other cases in Family court /<spain/>Otros casos en la corte de Familia',
+                                     :description => '** If you don\'t remember write as much as you remember.
+                                                      <br/><spain/>** Si no recuerdas toda la información escriba lo que recuerde.'
+
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Divorce /<spain/>Divorcio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Person involved: /<spain/>Persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Other person involved: /<spain/>La otra persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la ultima orden:', :toggle_id => toggle_id
+
+
+current_step.fields.create :field_type => 'checkbox', :name => 'Temporary Protective order(TPO) /<spain/>Orden de Protección'
+
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Custody or Child Support /<spain/>Custodia  o Manutención de menor', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Person involved: /<spain/>Persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Other person involved: /<spain/>La otra persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la ultima orden:', :toggle_id => toggle_id
+
+
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Paternity /<spain/>Paternidad', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Person involved: /<spain/>Persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Other person involved: /<spain/>La otra persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la ultima orden:', :toggle_id => toggle_id
+
+
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Juvenile Court or abuse and neglect /<spain/>Corte juvenil o abuso y negligencia', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Person involved: /<spain/>Persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Other person involved: /<spain/>La otra persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la ultima orden:', :toggle_id => toggle_id
+
+
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Guardianship /<spain/>Tutela', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Person involved: /<spain/>Persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Other person involved: /<spain/>La otra persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la ultima orden:', :toggle_id => toggle_id
+
+
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Termination of Parental Rights /<spain/>Terminación de la patria potestad', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Person involved: /<spain/>Persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'text', :name => 'Other person involved: /<spain/>La otra persona involucrada:', :toggle_id => toggle_id
+current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id => toggle_id
+current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id
+current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la ultima orden:', :toggle_id => toggle_id
+
+
+
+
+current_step.fields.create :field_type => 'link:sep:https://www.clarkcountycourts.us/Anonymous/default.aspx', :name => 'Don’t remember the date? Click here
+                                                                                                                        <br/><spain/>¿No recuerda la fecha? Haz clic'
+
+
+#
+# END OF ALIMONY
+#
 
 
 
