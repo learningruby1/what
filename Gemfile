@@ -27,6 +27,7 @@ group :development, :test do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rvm'
   gem 'capistrano-rails'
+  gem 'capistrano3-puma'
 end
 
 # gem 'colorize', '~> 0.7.3'
