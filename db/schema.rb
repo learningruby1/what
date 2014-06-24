@@ -36,12 +36,12 @@ ActiveRecord::Schema.define(version: 20140623114304) do
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "template_fields", force: true do |t|
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "field_type",       default: "string"
     t.boolean  "mandatory",        default: true
     t.integer  "template_step_id"
-    t.text     "name"
     t.boolean  "in_line",          default: false
     t.integer  "toggle_id"
     t.boolean  "in_loop",          default: false
