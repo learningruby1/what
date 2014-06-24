@@ -39,11 +39,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 set :keep_releases, 5
 
 # Puma custum config
-set :puma_workers, 3
 set :puma_conf, "#{shared_path}/config/puma.rb"
-set :puma_state, "#{shared_path}/tmp/pids/puma.state"
-set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
-set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
 
 namespace :deploy do
   desc 'Restart application'
