@@ -1,0 +1,30 @@
+.jumbotron
+  .container
+    %h2 Your documents
+
+.container
+  - if @documents.blank?
+    %h5 You have no documents...
+  - else
+    %table.table
+      %thead
+        %tr
+          %td
+            %h4 Documents
+          %td
+            %h4 Actions
+
+      - @documents.each do |document|
+        %tr
+          %td
+            %h5
+              = document
+              %i= " (#{ document.template.to_s })"
+          %td
+            = link_to document_answer_path(document, 1), :class => 'btn btn-default' do
+              .glyphicon.glyphicon-edit
+              Edit
+            - if document.is_generated?
+              = link_to download_pdf_path(document.id), :class => 'btn btn-primary' do
+                .glyphicon.glyphicon-cloud-download
+                Download

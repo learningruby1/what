@@ -29,4 +29,5 @@ group :development, :test do
   gem 'capistrano-rails'
 end
 
-# gem 'colorize', '~> 0.7.3'
+gem 'prawn'
+

@@ -6,6 +6,7 @@ class Document < ActiveRecord::Base
   belongs_to :template
   accepts_nested_attributes_for :answers
 
+  #Controller answers Action edit
   def get_or_create_answers!(next_step)
     next_step = skip_steps next_step
 
@@ -19,7 +20,27 @@ class Document < ActiveRecord::Base
     _answers
   end
 
-  #Controller answers Action edit
+  #Controller answers Action update
+  def update_answers!(answers_params)
+    looper = false
+    answers_params[:answers].each do |answer|
+      answers.find(answer.first).update answer.last.permit(:answer)
+      looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !answer.last.permit(:answer)[:answer].nil?
+    end
+    looper
+  end
+
+  def generate_session_uniq_token
+    begin
+      session_uniq_token = SecureRandom.hex
+    end while Document.exists?(:session_uniq_token => session_uniq_token)
+    session_uniq_token
+  end
+
+  def to_s
+    title
+  end
+
   def create_next_step_answers!(next_step, toggler_offset=0)
     document_answers = Array.new
     loop_amount = template.steps.where(:step_number => next_step).first.amount_fields.where(:document_id => id).first.try(:answer).to_i.presence_in(1..50) || 1 rescue 0
@@ -35,21 +56,9 @@ class Document < ActiveRecord::Base
     document_answers
   end
 
-  #Controller answers Action edit
   def step_answers(step)
     template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten rescue nil
   end
-
-  #Controller answers Action update
-  def update_answers!(answers_params)
-    looper = false
-    answers_params[:answers].each do |answer|
-      answers.find(answer.first).update answer.last.permit(:answer)
-      looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !answer.last.permit(:answer)[:answer].nil?
-    end
-    looper
-  end
-
 
   def skip_steps(next_step, action='forward')
     if template.steps.where(:step_number => next_step).exists?
@@ -65,16 +74,5 @@ class Document < ActiveRecord::Base
       end
     end
     next_step
-  end
-
-  def generate_session_uniq_token
-    begin
-      session_uniq_token = SecureRandom.hex
-    end while Document.exists?(:session_uniq_token => session_uniq_token)
-    session_uniq_token
-  end
-
-  def to_s
-    title
   end
 end

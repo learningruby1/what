@@ -50,6 +50,7 @@ current_step.fields.create :name => 'City /<spain/>Ciudad: *', :toggle_id => tog
 current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => false
 current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
 current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
+current_step.fields.create :name => 'Marriage Date /<spain/>Fecha de matrimonio:', :field_type => 'date'
 current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? Click here<br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? Haz clic', :field_type => 'link:sep:https://recorder.co.clark.nv.us/RecorderEcommerce/', :mandatory => false
 
 
@@ -75,7 +76,7 @@ current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pr
 
 current_step = template.steps.create :step_number => 6,
                                      :title => 'Children /<spain/>Menores',
-                                     :description => 'Are there children born or legally adopteed of this marriage UNDER the age of 18?<br/><spain/>¿Hay menores de 18 años nacidos o adoptados legalmente de este matrimonio?'
+                                     :description => 'Are there children born or legally adopted of this marriage UNDER the age of 18?<br/><spain/>¿Hay menores de 18 años nacidos o adoptados legalmente de este matrimonio?'
 
 children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Si
                                                                               <option/>No'
@@ -126,7 +127,7 @@ current_step.fields.create :name => 'Son /<spain/>Hijo
 
 
 
-current_step = template.steps.create :step_number => 10, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,
+current_step = template.steps.create :step_number => 10, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', #:amount_field_id => children_amount_field.id,
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Legal Custody: the right of the parents to make legal decision for the child regarding education, health care, religion, etc. for the welfare of the child.
                                                       <br/>Who will have legal custody of the child(ren)?
@@ -157,8 +158,8 @@ current_step.fields.create :field_type => 'text', :name => 'JOINT PHYSICAL CUSTO
 current_step.fields.create :field_type => 'text', :name => 'SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.
                                                             <br/><spain/>CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.'
 
-current_step.fields.create :field_type => 'radio', :name => 'Only me /<spain/>Solo conmigo
-                                                             <option/>Only with the dad/mom /<spain/>Solo con el OTRO padre'
+current_step.fields.create :field_type => 'radio', :name => 'Only with the mom /<spain/>Solo conmigo
+                                                             <option/>Only with the dad /<spain/>Solo con el OTRO padre'
 
 
 current_step = template.steps.create :step_number => 12, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',
@@ -568,6 +569,12 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting c
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id
 
+current_step.fields.create :field_type => 'date', :name => 'I want back child support starting
+                                                            <spain/>Yo QUIERO manutención comenzando', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'date', :name => 'The OTHER parent has paid $ since separation to:
+                                                            <spain/>Desde que nos separamos el otro padre me ha dado $ (ponga la cantidad) hasta:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
 current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years
                                                             <br/>I want back child support starting (insert month /year) to (insert month/year).
                                                             The OTHER parent has paid $ since separation.
@@ -577,7 +584,7 @@ current_step.fields.create :field_type => 'text', :name => 'You can request up t
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => 18, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,
+current_step = template.steps.create :step_number => 18, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',
                                      :title => 'Child Tax Exemption /<spain/>Menores en los Impuestos',
                                      :description => 'Who will claim (insert name of child #1) as dependent on tax returns?
                                                       <br/><spain/>¿Quién reclamará (insert name of child #1) como dependiente en los impuestos?'
@@ -600,6 +607,8 @@ pet_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<s
                                                                          <option/>No', :toggle_id => toggle_id
 
 pet_amount_field = current_step.fields.create :field_type => 'amount', :name => 'How many: /<spain/>Cuántos:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
 
 
 current_step = template.steps.create :step_number => 20, :render_if_field_id => pet_field.id, :render_if_field_value => 'Yes', :amount_field_id => pet_amount_field.id,
@@ -994,6 +1003,7 @@ current_step.fields.create :field_type => 'radio', :name => 'No
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.
                                                              <option/>Husband WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
+current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
@@ -1016,7 +1026,7 @@ current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden nam
 current_step = template.steps.create :step_number => 38,
                                      :title => 'Reason for divorce  /<spain/>Razón por el divorcio',
                                      :description => 'Nevada is a "no fault" divorce state.  This means the person seeking the divorce does not have to prove in court that she or he is entitled to a divorce.
-                                                      <be/><spain/>Nevada es un estado de divorcio "sin culpa".  Esto significa que la persona que busca el divorcio no tiene que probar en la corte que él o ella tiene el derecho a divorciarse.'
+                                                      <br/><spain/>Nevada es un estado de divorcio "sin culpa".  Esto significa que la persona que busca el divorcio no tiene que probar en la corte que él o ella tiene el derecho a divorciarse.'
 
 current_step.fields.create :field_type => 'radio', :name => 'I no longer want to be married /<spain/>Ya no quiero seguir casado porque no nos entendemos
                                                              <option/>I no longer want to be married and have lived separated and apart for over 1 year /<spain/>Ya no quiero seguir casada y hemos vivido separados desde hace más de 1 año'
@@ -1055,7 +1065,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of last Order: 
 current_step.fields.create :field_type => 'text', :toggle_id => toggle_id
 
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Temporary Protective order(TPO) /<spain/>Orden de Protección'
+current_step.fields.create :field_type => 'checkbox', :name => 'Temporary Protective Order (TPO) /<spain/>Orden de Protección'
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Custody or Child Support /<spain/>Custodia  o Manutención de menor', :toggle_id => toggle_id

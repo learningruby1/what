@@ -92,8 +92,12 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
     orm_adapter (0.5.0)
+    pdf-core (0.2.5)
     pg (0.17.1)
     polyglot (0.3.4)
+    prawn (1.0.0)
+      pdf-core (~> 0.2.2)
+      ttfunk (~> 1.1.1)
     puma (2.8.2)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
@@ -144,6 +148,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.1.1)
     tzinfo (1.2.0)
       thread_safe (~> 0.1)
     uglifier (2.5.0)
@@ -170,6 +175,7 @@ DEPENDENCIES
   momentjs-rails (~> 2.5.0)
   net-ssh (~> 2.9.1)
   pg
+  prawn
   puma
   rails (= 4.1.1)
   sass-rails (~> 4.0.3)

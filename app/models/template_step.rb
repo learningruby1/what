@@ -5,7 +5,11 @@ class TemplateStep < ActiveRecord::Base
   has_many :amount_fields, :class_name => 'DocumentAnswer', :primary_key => 'amount_field_id', :foreign_key => 'template_field_id'
 
   def to_question_title
-    [step_number, title].join('. ')
+    [title].join('. ')
+  end
+
+  def to_s
+    title
   end
 
   def to_i
