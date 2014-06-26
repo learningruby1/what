@@ -13,7 +13,7 @@ module PdfDocument
       end
 
 
-      Prawn::Document.generate("app/assets/data/document_#{ document.id }.pdf") do
+      Prawn::Document.generate("app/documents/pdf/document_#{ document.id }.pdf") do
 
         wrapped_document.amount.times do
 

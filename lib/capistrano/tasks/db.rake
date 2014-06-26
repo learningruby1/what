@@ -9,11 +9,18 @@ namespace :app do
       end
     end
 
-    desc 'Load the seed data from db/seeds.rb'
+    desc 'Load the seed data from db/seeds.rb OR can load specific document document=divorce_complaint'
     task :seed do
       on roles(:all) do
         within release_path do
-          execute :rake, 'db:seed'
+
+          DOCUMENT = ENV.fetch 'document', nil
+
+          if DOCUMENT
+            execute :rake, "db:seed:#{ DOCUMENT }"
+          else
+            execute :rake, 'db:seed'
+          end
         end
       end
     end
