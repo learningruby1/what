@@ -6,7 +6,12 @@ module PdfDocument
       @document_id = document.id
       @data_array = Array.new
 
+      #Step zero
       steps = document.template.steps.to_enum
+      answers = step_answers_enum steps.next
+
+      clark_nye = answers.next.answer.strip
+
 
       #First step   Your information
       answers = step_answers_enum steps.next
@@ -412,8 +417,8 @@ module PdfDocument
       push_text 'Plaintiff In Proper Person', :style => :bold
 
       move_down 20
-      push_header 'JUDICIAL DISTRICT COURT'
-      push_header "#{ plaintiff_city } JUDICIAL DISTRICT COURT"
+      push_header "#{ clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT"
+      push_header "#{ clark_nye } JUDICIAL DISTRICT COURT"
       move_down 20
 
       push_text "#{ plaintiff_first_name } #{ plaintiff_middle_name } #{ plaintiff_last_name } Plaintiff,", :inline_format => true
@@ -438,6 +443,7 @@ module PdfDocument
 
       push_text "That the parties were married on the #{ marriage_date } #{ marriage_country_string }", text_indent
 
+      move_down header_margin_top
       move_down header_margin_top
       push_header '3. MINOR CHILDREN'
       move_down

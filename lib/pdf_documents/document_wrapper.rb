@@ -26,7 +26,7 @@ module PdfDocument
       end
     end
 
-    def push_header(text, size=14)
+    def push_header(text, size=13)
       @data_array.push ["header #{ size.to_s }", text]
     end
 
