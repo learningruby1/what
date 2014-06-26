@@ -1,5 +1,5 @@
 class PdfFilesController < ApplicationController
-  require 'pdf_documents/divorce_compilant'
+  require 'pdf_documents/pdf'
 
   skip_filter :authenticate_user!
   before_action :get_user_document, :only => [:generate, :download]
@@ -13,7 +13,7 @@ class PdfFilesController < ApplicationController
   end
 
   def generate
-    PdfDocument::DivorceCompilant.new.generate @document
+    PdfDocument::Pdf.new.generate @document
     @document.update :is_generated => true
     redirect_to pdf_files_path, :notice => 'Document complete'
   end
@@ -27,7 +27,7 @@ class PdfFilesController < ApplicationController
   def get_user_document
 
     if user_signed_in?
-      @documents = current_user.documents.find(params[:document_id])
+      @document = current_user.documents.find(params[:document_id])
     else
       @document =  Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token]).first
     end
