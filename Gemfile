@@ -19,8 +19,6 @@ gem 'devise'
 
 gem 'puma'
 
-gem 'momentjs-rails', '~> 2.5.0'
-
 gem 'net-ssh', '~> 2.9.1'
 group :development, :test do
   gem 'capistrano', '~> 3.0'

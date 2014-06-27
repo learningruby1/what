@@ -28,7 +28,7 @@ $(function(){
 
     date.append('<div class="col-md-2 margin-left"><select class="month form-control">' + months + '</select></div>' +
                 '<div class="col-md-1 margin-left"><select class="day form-control">' + days + '</select></div>' +
-                '<div class="col-md-1 margin-left"><select class="year form-control">' + years + '</select></div>');
+                '<div class="col-md-2 margin-left"><select class="year form-control">' + years + '</select></div>');
 
     $('.date select').each(function(){
       $(this).change(function(){
@@ -73,8 +73,11 @@ $(function(){
       minutes += '<option>' + min + '</option>'
     }
 
+    var am_pm = '<option value="AM">AM</option><option value="PM">PM</option>'
+
     time.append('<div class="col-md-1 margin-left"><select class="hour form-control">' + hours + '</select></div>' +
-                '<div class="col-md-1 margin-left"><select class="minute form-control">' + minutes + '</select></div>');
+                '<div class="col-md-1 margin-left"><select class="minute form-control">' + minutes + '</select></div>' +
+                '<div class="col-md-1 margin-left"><select class="am-pm form-control">' + am_pm + '</select></div>');
 
     $('.time select').each(function(){
       $(this).change(function(){
@@ -89,7 +92,6 @@ $(function(){
             date.val(date.val() + ':');
           date.val(date.val() + $(this).val());
         });
-        console.log(date)
       });
     });
 
@@ -100,7 +102,8 @@ $(function(){
 
         selects = _this.parent().find('.form-control');
         selects.first().val(_this.val().split(':')[0])
-        selects.last().val(_this.val().split(':')[1])
+        selects.first().parent().next().children().val(_this.val().split(':')[1]);
+        selects.last().val(_this.val().split(':')[2])
       }
     });
   }
