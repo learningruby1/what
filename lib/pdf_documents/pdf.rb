@@ -8,11 +8,8 @@ module PdfDocument
 
       case document.template.to_s
       when 'Complaint for Divorce'
-        generate_divorce_complaint PdfDocument::DivorceComplaint.new document
+        wrapped_document = PdfDocument::DivorceComplaint.new document
       end
-    end
-
-    def generate_divorce_complaint(wrapped_document)
 
       numbers = ''; 28.times do |i| numbers += "\n\n#{ i + 1 }" end
       leading = 8

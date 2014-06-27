@@ -288,13 +288,11 @@ module PdfDocument
 
         properties_more = Array.new
         property_count = 0
-        if !property_presence_more
 
-          steps.next
-        else
+        #Step 23   Property Division: Marital Home
+        answers = step_answers_looped_enum steps.next
+        if property_presence_more
 
-          #Step 23   Property Division: Marital Home
-          answers = step_answers_looped_enum steps.next
           answers.first.length.times do
             properties_more.push Array.new
           end
@@ -312,13 +310,10 @@ module PdfDocument
         answers = step_answers_enum steps.next
         vehicles_presence = answers.next.answer == 'Yes' rescue false
 
-        if !vehicles_presence
+        #Step 25   Property Division: Vehicles
+        answers = step_answers_looped_enum steps.next
+        if vehicles_presence
 
-          5.times do steps.next end
-        else
-
-          #Step 25   Property Division: Vehicles
-          answers = step_answers_looped_enum steps.next
           answers.first.length.times do
             properties_more.push Array.new
           end
@@ -435,7 +430,7 @@ module PdfDocument
       push_header '1. RESIDENCY'
       move_down
 
-      push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of the (insert NYE or CLARK) County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", text_indent
+      push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of the #{ clark_nye } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", text_indent
 
       move_down header_margin_top
       push_header '2. DATE OF MARRIAGE'
@@ -605,6 +600,7 @@ module PdfDocument
             end
           end
         end
+
 
         move_down
         if other_property_presence
