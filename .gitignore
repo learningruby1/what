@@ -10,6 +10,7 @@
 /config/database.yml
 /public/system
 .DS_Store
+/documents
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

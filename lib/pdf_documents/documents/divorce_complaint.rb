@@ -376,6 +376,9 @@ module PdfDocument
       answers = step_answers_looped_enum steps.next
       5.times do steps.next end
 
+
+
+
       #Step 36   Spousal support or Alimony
       answers = step_answers_enum steps.next
       alimony_presence = answers.next.answer == 'Yes' rescue false

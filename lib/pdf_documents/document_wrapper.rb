@@ -10,11 +10,11 @@ module PdfDocument
     end
 
     protected
-    def step_answers_enum(step, loop_step=0)
+    def step_answers_enum(step, loop_step=0, test='')
       step.fields.map{ |f| f.document_answers.where(:document_id => @document_id)[loop_step] }.reverse.to_enum
     end
 
-    def step_answers_looped_enum(step)
+    def step_answers_looped_enum(step, test='')
       step.fields.map{ |f| f.document_answers.where(:document_id => @document_id) }.reverse.to_enum
     end
 

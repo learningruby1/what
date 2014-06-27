@@ -1,7 +1,5 @@
 %div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }" } }
   .container
     = render :partial => 'render_text', :locals => { :text => answer.template_field.name }
-    .col-md-3.input-group{ 'data-date-format' => (answer.template_field.field_type == 'date' ? 'MM/DD/YYYY' : 'H:mm'), :class => answer.template_field.field_type }
-      = a.text_field :answer, :class => 'form-control'
-      %span.input-group-addon
-        %span.glyphicon.glyphicon-calendar
+    .col-md-12.input-group{ 'data-date-format' => (answer.template_field.field_type == 'date' ? 'MM/DD/YYYY' : 'H:mm'), :class => answer.template_field.field_type }
+      = a.hidden_field :answer
