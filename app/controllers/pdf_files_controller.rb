@@ -19,7 +19,7 @@ class PdfFilesController < ApplicationController
   end
 
   def download
-    send_file "app/documents/pdf/document_#{ @document.id }.pdf", :type => "application/pdf", :x_sendfile => true
+    send_file "documents/pdf/document_#{ @document.id }.pdf", :type => "application/pdf", :x_sendfile => true
   end
 
   private

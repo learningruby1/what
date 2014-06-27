@@ -14,7 +14,7 @@ module PdfDocument
       numbers = ''; 28.times do |i| numbers += "\n\n#{ i + 1 }" end
       leading = 8
 
-      Prawn::Document.generate("app/documents/pdf/document_#{ document.id }.pdf") do
+      Prawn::Document.generate("documents/pdf/document_#{ document.id }.pdf") do
         repeat :all do
 
           font "Times-Roman"
