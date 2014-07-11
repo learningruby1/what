@@ -39,7 +39,7 @@ current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo 
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => false
-current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *'
+current_step.fields.create :name => 'Mailing Address or last Known address /<spain/> Dirección postal o última dirección : *'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *'
 current_step.fields.create :name => 'State /<spain/>Estado: *'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *'
