@@ -20,6 +20,7 @@ current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento:
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => false
 current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *'
+current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *'
 current_step.fields.create :name => 'State /<spain/>Estado: *'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *'
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => false
