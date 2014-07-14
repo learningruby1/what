@@ -122,7 +122,7 @@ children_amount_field = current_step.fields.create :field_type => 'amount'
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
-                                     :title => 'Child(ren)\'s Information /<spain/>Información de Menore(s)'
+                                     :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
 current_step.fields.create :mandatory => false, :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
