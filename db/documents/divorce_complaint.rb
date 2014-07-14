@@ -11,7 +11,7 @@ current_step.fields.create :name => 'Clark
 
 
 current_step = template.steps.create :step_number => step_number += 1,#1
-                                     :title => 'Your information /<spain/>Su informatión'
+                                     :title => 'Your information /<spain/>Su Información'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :mandatory => false
@@ -31,7 +31,7 @@ current_step.fields.create :name => 'Since you are the person starting the divor
 
 
 current_step = template.steps.create :step_number => step_number += 1,#2
-                                     :title => 'Your Spouse\'s Information /<spain/>Informatión de su esposa(o)',
+                                     :title => 'Your Spouse\'s Information /<spain/>Información de su esposa(o)',
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona serà referida como el demandado (DEFENDANT)'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
@@ -77,7 +77,7 @@ current_step.fields.create :name => 'Since when? /<spain/>¿Desde cuándo?', :fi
 
 current_step = template.steps.create :step_number => step_number += 1,#5
                                      :title => 'Pregnancy /<spain/>Embarazada',
-                                     :description => 'To my knowledge wife /<spain/>A mi  conociemiento la esposa'
+                                     :description => 'To my knowledge wife /<spain/>A mi  conocimiento la esposa'
 
 current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pregnant /<spain/>NO ESTÁ embarazada en este momento.
                                                              <option/>IS currently pregnant. /<spain/>ESTÁ embarazada en este momento.'
@@ -87,7 +87,7 @@ current_step = template.steps.create :step_number => step_number += 1,#6
                                      :title => 'Children /<spain/>Menores',
                                      :description => 'Are there children born or legally adopted of this marriage UNDER the age of 18?<br/><spain/>¿Hay menores de 18 años nacidos o adoptados legalmente de este matrimonio?'
 
-children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Si
+children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                                               <option/>No'
 
 
@@ -100,7 +100,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <spain/>Los menores deben haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre ellos.<br/>
                                                       ¿Han vivido los menores en Nevada por más de 6 meses?'
 
-children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Si
+children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                                               <option/>No', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Nevada Court does not have the legal right to set
                                                             custody at this time, BUT you can still get a divorce
