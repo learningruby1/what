@@ -113,9 +113,7 @@ current_step.fields.create :field_type => 'text', :name => 'Nevada Court does no
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#8
-                                     :title => 'Number of children /<spain/>Número de menores',
-                                     :description => 'How many minor children were born or legally adopted during this marriage?<br/>
-                                                      <spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?'
+                                     :title => 'Number of children /<spain/>Número de menores'
 
 current_step.fields.create :field_type => 'text', :name => 'How many minor children were born or legally adopted during this marriage?
                                                             <br/><spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?'
