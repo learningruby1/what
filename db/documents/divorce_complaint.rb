@@ -259,7 +259,7 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 
 
 toggle_id += 1
-current_step.fields.create :field_type => 'checkbox', :name => 'U.S. Mother’s Day /<spain/>Día de la Madre (Estados Unidos)', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'checkbox', :name => 'Mother’s Day /<spain/>Día de la Madre', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
@@ -283,7 +283,7 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 
 
 toggle_id += 1
-current_step.fields.create :field_type => 'checkbox', :name => 'U.S. Father’s day /<spain/>Día del Padre (Estados Unidos)', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'checkbox', :name => 'Father’s day /<spain/>Día del Padre', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
