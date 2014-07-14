@@ -1,11 +1,11 @@
 - if text.present?
 
   - text.split('<spain/>').first.split('<br/>').each do |t|
-    %strong.new_roman= t
+    %strong.new_roman= t.html_safe
     - if text.match /<br\/>/
       %br
 
   - if text.split('<spain/>').count > 1
     - text.split('<spain/>').last.split('<br/>').each do |t|
-      %strong.new_roman.spain= t
+      %strong.new_roman.spain= t.html_safe
       %br

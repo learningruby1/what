@@ -60,7 +60,7 @@ current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => to
 current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
 current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
 current_step.fields.create :name => 'Marriage Date /<spain/>Fecha de matrimonio:', :field_type => 'date'
-current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? Click here<br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? Haz clic', :field_type => 'link:sep:https://recorder.co.clark.nv.us/RecorderEcommerce/', :mandatory => false
+current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/" class="english">Click here</a><br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/" class="spain">Haz clic</a>', :mandatory => false, :field_type => 'text'
 
 
 current_step = template.steps.create :step_number => step_number += 1,#4
