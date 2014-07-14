@@ -72,8 +72,6 @@ current_step = template.steps.create :step_number => step_number += 1,#4
 
 current_step.fields.create :name => 'I have lived in Nevada for over 6 weeks.
                                      <br/><spain/>Yo, he vivido en Nevada por más de 6 semanas.', :field_type => 'text'
-current_step.fields.create :name => 'Since when? /<spain/>¿Desde cuándo?', :field_type => 'date'
-
 
 current_step = template.steps.create :step_number => step_number += 1,#5
                                      :title => 'Pregnancy /<spain/>Embarazada',
