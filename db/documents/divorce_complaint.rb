@@ -39,7 +39,7 @@ current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo 
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => false
-current_step.fields.create :name => 'Mailing Address or last Known address /<spain/> Dirección postal o última dirección : *'
+current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección : *'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *'
 current_step.fields.create :name => 'State /<spain/>Estado: *'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *'
@@ -70,8 +70,9 @@ current_step = template.steps.create :step_number => step_number += 1,#4
                                                       <spain/>Si usted es la persona que está presentando el divorcio, debe ser residente de Nevada por lo menos 6 semanas antes de archivar la demanda de divorcio.<br/>
                                                       El testigo de residencia deberá firmar una declaración jurada indicando que usted es residente de Nevada (se permiten familiares).'
 
-current_step.fields.create :name => 'I have lived in Nevada for over 6 weeks.
-                                     <br/><spain/>Yo, he vivido en Nevada por más de 6 semanas.', :field_type => 'text'
+toggle_id = 0
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in Nevada for over 6 weeks. /<spain/>Yo, he vivido en Nevada por más de 6 semanas.', :toggle_id => toggle_id
 
 current_step = template.steps.create :step_number => step_number += 1,#5
                                      :title => 'Pregnancy /<spain/>Embarazada',
