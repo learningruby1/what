@@ -302,7 +302,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id
-
+current_step.fields.create :name => 'Other Holiday /<spain/>Otro de vacaciones:'
 
 
 
