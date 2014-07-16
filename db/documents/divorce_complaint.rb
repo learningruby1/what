@@ -160,6 +160,7 @@ current_step.fields.create :field_type => 'radio', :name => 'With mom and visits
 current_step.fields.create :field_type => 'text', :name => 'JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<br/>
                                                             <spain/>Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.'
 
+current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>Ambos padres'
 
 current_step.fields.create :field_type => 'text', :name => 'SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.
                                                             <br/><spain/>CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.'
