@@ -530,8 +530,8 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#14
                                      :title => 'Child’s or children’s Health Insurance /<spain/>Seguro Médico (del Menor or de los menores) ',
-                                     :description => 'Who will be responsible for maintaining health and dental insurance for the child(ren) /
-                                                      <spain/>¿Quién será responsable de mantener el seguro médico y dental para menor(es)'
+                                     :description => 'Who will be responsible for maintaining health and dental insurance for the child or children? /
+                                                      <spain/>¿Quién será responsable de mantener el seguro médico y dental para el menor o los menores)?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>Mamá
                                                              <option/>Dad /<spain/>Papá
