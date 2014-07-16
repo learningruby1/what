@@ -569,10 +569,9 @@ toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#17
                                      :title => 'Child  Support Arrears /<spain/>Manutención de Menores Retroactiva'
 
+current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years of back child support. /<br/><spain/>Puede pedir hasta 4 años atrasados de manutención de menores.'
 
-current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS?
-                                                            <br/><spain/>¿Está solicitando manutención atrasada de menores?'
-
+current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS? /<br/><spain/>¿Está solicitando manutención ATRASADA de menores?'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id
 
@@ -589,6 +588,10 @@ current_step.fields.create :field_type => 'text', :name => 'You can request up t
                                                             <br/>Yo QUIERO manutención comenzando (escriba el mes y año) hasta (escriba el mes y año).
                                                             Desde que nos separamos el otro padre me ha dado $ (ponga la cantidad).', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
+current_step.fields.create :field_type => 'date', :name => 'I want back child support starting /<spain/>Quiero la manutención de niños a partir'
+current_step.fields.create :field_type => 'text', :name => 'The OTHER parent has paid /<spain/>del otro padre ha pagado'
+current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.'
+
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#18
@@ -601,7 +604,6 @@ current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<sp
                                                              <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años', :toggle_id => toggle_id
 
 current_step.fields.create :field_type => 'date', :name => 'Mom  will start claiming start from and up /<spain/>La mamá comenzara a reclamar a en (ponga el año de comienzo)', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom'
-
 
 toggle_id = 0
 toggle_id += 1
