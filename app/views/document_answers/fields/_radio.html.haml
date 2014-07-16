@@ -3,5 +3,8 @@
     .col-md-12.margin-left
       - answer.template_field.name.split('<option/>').each do |title|
         %label.new_roman.radio
-          = a.radio_button :answer, title.split(' /<spain/>').first
+          - if title.match /value/
+            = a.radio_button :answer, title.scan(/\w+/).last
+          - else
+            = a.radio_button :answer, title.split(' /<spain/>').first
           = render :partial => 'render_text', :locals => { :text => title }
