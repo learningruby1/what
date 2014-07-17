@@ -77,7 +77,6 @@ module PdfDocument
       #Step 4   Nevada Residency
       answers = step_answers_enum steps.next
 
-      answers.next.answer
       lived_in_nevada_since = answers.next.answer
 
       #Step 5   Pregnacy
