@@ -29,6 +29,7 @@ module PdfDocument
       plaintiff_zip = answers.next.answer
 
       plaintiff_phone = answers.next.answer
+      answers.next
       plaintiff_wife_husband = answers.next.answer
 
       if plaintiff_wife_husband == 'I am Wife'

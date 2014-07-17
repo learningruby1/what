@@ -1,6 +1,0 @@
-%div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }" } }
-  .jumbotron
-    .container
-      = render :partial => 'render_text', :locals => { :text => answer.template_field.name }
-      %br
-      %a{ :href => "#{ answer.template_field.field_type.split(':sep:').last }" }= answer.template_field.field_type.split(':sep:').last

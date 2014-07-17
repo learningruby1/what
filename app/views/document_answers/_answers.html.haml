@@ -14,9 +14,6 @@
     - when /date|time/
       = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
 
-    - when /\Alink:sep:/
-      = render :partial => 'document_answers/fields/link', :locals => { :answer => answer }
-
     - when /radio/
       = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 
