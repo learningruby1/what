@@ -6,8 +6,7 @@ step_number = 0
 current_step = template.steps.create :step_number => step_number += 1,#0
                                      :title => 'Are you filing in Clark County or Nye County?'
 
-current_step.fields.create :name => 'Clark
-                                     <option/>Nye', :mandatory => false, :field_type => 'radio'
+current_step.fields.create :name => 'Clark<option/>Nye', :mandatory => false, :field_type => 'radio'
 
 
 current_step = template.steps.create :step_number => step_number += 1,#1
@@ -60,11 +59,11 @@ current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => to
 current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
 current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
 current_step.fields.create :name => 'Marriage Date /<spain/>Fecha de matrimonio:', :field_type => 'date'
-current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/" class="english">Click here</a><br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/" class="spain">Haz clic</a>', :mandatory => false, :field_type => 'text'
+current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Click here</a><br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Haz clic</a>', :mandatory => false, :field_type => 'text'
 
 
 current_step = template.steps.create :step_number => step_number += 1,#4
-                                     :title => 'Nevada Residency/ Residente de Nevada',
+                                     :title => 'Nevada Residency /<spain/>Residente de Nevada',
                                      :description => 'The party filing for divorce must be a Nevada resident for at least six weeks before the filing date.<br/>
                                                       A resident witness will need to sign an affidavit stating your residency in Nevada (relatives are allowed).<br/>
                                                       <spain/>Si usted es la persona que está presentando el divorcio, debe ser residente de Nevada por lo menos 6 semanas antes de archivar la demanda de divorcio.<br/>
@@ -76,7 +75,7 @@ current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in 
 
 current_step = template.steps.create :step_number => step_number += 1,#5
                                      :title => 'Pregnancy /<spain/>Embarazada',
-                                     :description => 'To my knowledge wife /<spain/>A mi  conocimiento la esposa'
+                                     :description => 'To my knowledge wife /<spain/>A mi conocimiento la esposa'
 
 current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pregnant /<spain/>NO ESTÁ embarazada en este momento.
                                                              <option/>IS currently pregnant. /<spain/>ESTÁ embarazada en este momento.'
