@@ -16,7 +16,7 @@ current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\-[0-9]{2}\-[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number' }
 current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ ]+$/, :hint => 'Please enter a valid mailing address' }
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid city' }
 current_step.fields.create :name => 'State /<spain/>Estado: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid state' }
@@ -38,7 +38,7 @@ current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\-[0-9]{2}\-[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number' }
 current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:'
 current_step.fields.create :name => 'City /<spain/>Ciudad:'
 current_step.fields.create :name => 'State /<spain/>Estado:'
@@ -125,7 +125,7 @@ current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\-[0-9]{2}\-[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number' }
 current_step.fields.create :name => 'Son /<spain/>Hijo
                                      <option/>Daughter /<spain/>Hija', :field_type => 'radio'
 
