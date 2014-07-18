@@ -142,7 +142,7 @@ module PdfDocument
           holiday_counter = 0
 
           holidays = Array.new
-          11.times do
+          7.times do
             holiday = Array.new
             holiday.push answers.next
             holiday.push answers.next.answer
@@ -153,6 +153,18 @@ module PdfDocument
             holiday_counter += 1 if holiday[0].answer == '1'
             holidays.push holiday
           end
+
+          #Father and mother days, havent who
+          4.times do
+            holiday = Array.new
+            holiday.push answers.next
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+
+            holiday_counter += 1 if holiday[0].answer == '1'
+            holidays.push holiday
+          end
+
 
           #Step 13   More holiday
           answers = step_answers_enum steps.next
