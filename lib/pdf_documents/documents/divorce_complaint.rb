@@ -88,136 +88,59 @@ module PdfDocument
       answers = step_answers_enum steps.next
       children_adopted = answers.next.answer == 'Yes' rescue false
       children_residency = false
+      #NOTICE: 7 merged with 6
+      #Step 7   Children's Residency
+      answers.next
+      children_residency = answers.next.answer == 'Yes' rescue false
 
-      if !children_adopted
+      if !children_residency
 
-        12.times do steps.next end
+        11.times do steps.next end
       else
-        #Step 7   Children's Residency
+
+        #Step 8   Number of children
         answers = step_answers_enum steps.next
-        children_residency = answers.next.answer == 'Yes' rescue false
+        answers.next.answer
+        number_of_children = answers.next.answer.to_i
 
-        if !children_residency
+        #Step 9   Child(ren)'s Information
+        step = steps.next
+        children_info = Array.new
 
-          11.times do steps.next end
-        else
-          #Step 8   Number of children
-          answers = step_answers_enum steps.next
-          answers.next.answer
-          number_of_children = answers.next.answer.to_i
+        number_of_children.times do |i|
 
-          #Step 9   Child(ren)'s Information
-          step = steps.next
-          children_info = Array.new
+          answers = step_answers_enum step, i
+          child_info = Hash.new
+          child_info[:first_name] = answers.next.answer
+          child_info[:middle_name] = answers.next.answer
+          child_info[:last_name] = answers.next.answer
+          child_info[:date_of_birth] = answers.next.answer
+          child_info[:social_security] = answers.next.answer
+          child_info[:is_son] = answers.next.answer == 'Son'
 
-          number_of_children.times do |i|
+          children_info.push child_info
+        end
 
-            answers = step_answers_enum step, i
-            child_info = Hash.new
-            child_info[:first_name] = answers.next.answer
-            child_info[:middle_name] = answers.next.answer
-            child_info[:last_name] = answers.next.answer
-            child_info[:date_of_birth] = answers.next.answer
-            child_info[:social_security] = answers.next.answer
-            child_info[:is_son] = answers.next.answer == 'Son'
+        #Step 10   Legal Custody
+        answers = step_answers_enum steps.next
+        legal_custody_parent = answers.next.answer
 
-            children_info.push child_info
-          end
+        #Step 11   Physical Custody
+        answers = step_answers_enum steps.next
 
-          #Step 10   Legal Custody
-          answers = step_answers_enum steps.next
-          legal_custody_parent = answers.next.answer
+        answers.next.answer
+        physical_custody_parent = answers.next.answer
+        answers.next.answer
+        answers.next.answer
 
-          #Step 11   Physical Custody
-          answers = step_answers_enum steps.next
+        #Step 12   Holiday
+        answers = step_answers_enum steps.next
 
-          answers.next.answer
-          physical_custody_parent = answers.next.answer
-          answers.next.answer
-          answers.next.answer
+        holiday_counter = 0
 
-          #Step 12   Holiday
-          answers = step_answers_enum steps.next
-
-          holiday_counter = 0
-
-          holidays = Array.new
-          7.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            holiday_counter += 1 if holiday[0].answer == '1'
-            holidays.push holiday
-          end
-
-          #Father and mother days, havent who
-          4.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            holiday_counter += 1 if holiday[0].answer == '1'
-            holidays.push holiday
-          end
-
-
-          #Step 13   More holiday
-          answers = step_answers_enum steps.next
-
-          10.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            holiday_counter += 1 if holiday[0].answer == '1'
-            holidays.push holiday
-          end
-
-          #Father and mother days, havent who
-          2.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            holiday_counter += 1 if holiday[0].answer == '1'
-            holidays.push holiday
-          end
-
-          3.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            holiday_counter += 1 if holiday[0].answer == '1'
-            holidays.push holiday
-          end
-
-          #Holidays have no time
-          3.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            holiday_counter += 1 if holiday[0].answer == '1'
-            holidays.push holiday
-          end
-
+        holidays = Array.new
+        7.times do
           holiday = Array.new
-
           holiday.push answers.next
           holiday.push answers.next.answer
           holiday.push answers.next.answer
@@ -226,33 +149,106 @@ module PdfDocument
 
           holiday_counter += 1 if holiday[0].answer == '1'
           holidays.push holiday
-
-          #Step 14   Children’s Health Insurance
-          answers = step_answers_enum steps.next
-          child_insurance = answers.next.answer
-
-          #Step 15   Child Support
-          answers = step_answers_enum steps.next
-          child_suport_who = answers.next.answer
-          child_suport_amount = answers.next.answer
-
-          #Step 16   Wage withholding
-          answers = step_answers_enum steps.next
-          answers.next.answer
-          request_withhold = answers.next.answer == 'Yes' rescue false
-
-          #Step 17   Child  Support Arrears
-          answers = step_answers_enum steps.next
-          answers.next.answer
-          request_arrears = answers.next.answer == 'Yes' rescue false
-          request_arrears_from = answers.next.answer
-          request_arrears_to = answers.next.answer
-
-          #Step 18   Child Tax Exemption
-          answers = step_answers_enum steps.next
-          tax_examption_who = answers.next.answer
-          tax_examption_date = answers.next.answer
         end
+
+        #Father and mother days, havent who
+        4.times do
+          holiday = Array.new
+          holiday.push answers.next
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+
+          holiday_counter += 1 if holiday[0].answer == '1'
+          holidays.push holiday
+        end
+
+
+        #Step 13   More holiday
+        answers = step_answers_enum steps.next
+
+        10.times do
+          holiday = Array.new
+          holiday.push answers.next
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+
+          holiday_counter += 1 if holiday[0].answer == '1'
+          holidays.push holiday
+        end
+
+        #Father and mother days, havent who
+        2.times do
+          holiday = Array.new
+          holiday.push answers.next
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+
+          holiday_counter += 1 if holiday[0].answer == '1'
+          holidays.push holiday
+        end
+
+        3.times do
+          holiday = Array.new
+          holiday.push answers.next
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+
+          holiday_counter += 1 if holiday[0].answer == '1'
+          holidays.push holiday
+        end
+
+        #Holidays have no time
+        3.times do
+          holiday = Array.new
+          holiday.push answers.next
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
+
+          holiday_counter += 1 if holiday[0].answer == '1'
+          holidays.push holiday
+        end
+
+        holiday = Array.new
+
+        holiday.push answers.next
+        holiday.push answers.next.answer
+        holiday.push answers.next.answer
+        holiday.push answers.next.answer
+        holiday.push answers.next.answer
+
+        holiday_counter += 1 if holiday[0].answer == '1'
+        holidays.push holiday
+
+        #Step 14   Children’s Health Insurance
+        answers = step_answers_enum steps.next
+        child_insurance = answers.next.answer
+
+        #Step 15   Child Support
+        answers = step_answers_enum steps.next
+        child_suport_who = answers.next.answer
+        child_suport_amount = answers.next.answer
+
+        #Step 16   Wage withholding
+        answers = step_answers_enum steps.next
+        answers.next.answer
+        request_withhold = answers.next.answer == 'Yes' rescue false
+
+        #Step 17   Child  Support Arrears
+        answers = step_answers_enum steps.next
+        answers.next.answer
+        request_arrears = answers.next.answer == 'Yes' rescue false
+        request_arrears_from = answers.next.answer
+        request_arrears_to = answers.next.answer
+
+        #Step 18   Child Tax Exemption
+        answers = step_answers_enum steps.next
+        tax_examption_who = answers.next.answer
+        tax_examption_date = answers.next.answer
       end
 
       #Step 19   Pet
@@ -282,7 +278,7 @@ module PdfDocument
 
       #Step 21   Property
       answers = step_answers_enum steps.next
-      test = answers.next
+      answers.next
       property_presence = answers.next.answer
 
       if property_presence != 'Yes'
@@ -458,7 +454,7 @@ module PdfDocument
       push_header '3. MINOR CHILDREN'
       move_down
 
-      if children_adopted
+      if children_residency
         push_text "That the parties have #{ number_of_children } minor #{ number_of_children > 1 ? 'children' : 'child' } to wit:", text_indent
 
         children_info.each do |c|
@@ -468,8 +464,8 @@ module PdfDocument
         end
 
         push_text "That the minor #{ number_of_children > 1 ? 'children are' : 'child is' } residents of the State of  Nevada and #{ number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months.", text_indent
-      elsif children_residency
-        push_text "That the minor #{ number_of_children > 1 ? 'children are' : 'child is' } not residents of the State of  Nevada and #{ number_of_children > 1 ? 'have' : 'has' } not lived in this state for at least the past six (6) months.", text_indent
+      elsif children_adopted
+        push_text "That the minor children are not residents of the State of Nevada and have not lived in this state for at least the past six (6) months.", text_indent
       else
         push_text 'That the parties do not have minor children who are the issue of this marriage or were adopted.', text_indent
       end
