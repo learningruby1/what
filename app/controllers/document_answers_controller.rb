@@ -4,7 +4,6 @@ class DocumentAnswersController < ApplicationController
 
   def edit
     @answers = @document.get_or_create_answers! params[:step]
-    #redirect_to(templates_path, :notice => 'Document complete') if @answers.blank?
     redirect_to generate_pdf_path(@document.id) if @answers.blank?
   end
 
