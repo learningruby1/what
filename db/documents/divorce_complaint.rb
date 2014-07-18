@@ -21,7 +21,7 @@ current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid city' }
 current_step.fields.create :name => 'State /<spain/>Estado: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid state' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *', :mandatory => { :value => /^[0-9]{5}(\-[0-9]{4})?$/, :hint => 'Please enter a valid zip code' }
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:'
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^([0-9]{3}\s[0-9]{3}\-[0-9]{4})?$/, :hint => 'Please enter a valid Phone Number' }
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email' }
 current_step.fields.create :name => 'I am /<spain/>Yo soy:', :field_type => 'label'
 current_step.fields.create :name => 'Wife /<spain/>Esposa
@@ -44,7 +44,7 @@ current_step.fields.create :name => 'City /<spain/>Ciudad:'
 current_step.fields.create :name => 'State /<spain/>Estado:'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal:'
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico:'
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:'
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^([0-9]{3}\s[0-9]{3}\-[0-9]{4})?$/, :hint => 'Please enter a valid Phone Number' }
 
 
 toggle_id = 0
