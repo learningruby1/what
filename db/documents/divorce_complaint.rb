@@ -82,31 +82,29 @@ current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pr
                                                              <option/>IS currently pregnant. /<spain/>ESTÁ embarazada en este momento.'
 
 
-current_step = template.steps.create :step_number => step_number += 1,#6
+current_step = template.steps.create :step_number => step_number += 1,#6 and 7
                                      :title => 'Children /<spain/>Menores',
                                      :description => 'Are there children born or legally adopted of this marriage UNDER the age of 18?<br/><spain/>¿Hay menores de 18 años nacidos o adoptados legalmente de este matrimonio?'
 
-children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                              <option/>No'
-
-
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#7
-                                     :title => 'Children\'s Residency /<spain/>Residencia de los menores',
-                                     :description => 'Children must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
-                                                      Have the child(ren) lived in Nevada for over 6 months?<br/>
-                                                      <spain/>Los menores deben haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre ellos.<br/>
-                                                      ¿Han vivido los menores en Nevada por más de 6 meses?'
-
 children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                                               <option/>No', :toggle_id => toggle_id
+
+current_step.fields.create :field_type => 'text', :name => 'Children must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
+                                                            Have the child(ren) lived in Nevada for over 6 months?<br/>
+                                                            <spain/>Los menores deben haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre ellos.<br/>
+                                                            ¿Han vivido los menores en Nevada por más de 6 meses?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                                              <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
 current_step.fields.create :field_type => 'text', :name => 'Nevada Court does not have the legal right to set
                                                             custody at this time, BUT you can still get a divorce
                                                             without custody.
                                                             <br/><spain/>La corte de Nevada no tiene el poder para establecer
                                                             custodia en este momento, PERO usted todavía puede
-                                                            divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'No'
+                                                            divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 
 
