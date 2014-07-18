@@ -6,26 +6,26 @@ step_number = 0
 current_step = template.steps.create :step_number => step_number += 1,#0
                                      :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su formulario?'
 
-current_step.fields.create :name => 'Clark<option/>Nye', :mandatory => false, :field_type => 'radio'
+current_step.fields.create :name => 'Clark<option/>Nye', :field_type => 'radio'
 
 
 current_step = template.steps.create :step_number => step_number += 1,#1
                                      :title => 'Your information /<spain/>Su Información'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *'
-current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :mandatory => false
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /\w+{2,}/, :hint => 'Please enter a valid name' }
+current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => false
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
 current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *'
 current_step.fields.create :name => 'State /<spain/>Estado: *'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *'
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => false
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:'
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *'
 current_step.fields.create :name => 'I am /<spain/>Yo soy:', :field_type => 'label'
 current_step.fields.create :name => 'Wife /<spain/>Esposa
-                                     <option/>Husband /<spain/>Esposo', :mandatory => false, :field_type => 'radio'
+                                     <option/>Husband /<spain/>Esposo', :field_type => 'radio'
 current_step.fields.create :name => 'Since you are the person starting the divorce action, you will be referred as the PLAINTIFF.
                                      <br/><spain/>Ya que usted es la persona que inicia la acción de divorcio, usted será referido como el demandante (PLAINTIFF)', :field_type => 'text'
 
@@ -35,16 +35,16 @@ current_step = template.steps.create :step_number => step_number += 1,#2
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona serà referida como el demandado (DEFENDANT)'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
-current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :mandatory => false
+current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => false
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
 current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:'
 current_step.fields.create :name => 'City /<spain/>Ciudad:'
 current_step.fields.create :name => 'State /<spain/>Estado:'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal:'
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico:'
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => false
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:'
 
 
 toggle_id = 0
@@ -54,13 +54,13 @@ current_step = template.steps.create :step_number => step_number += 1,#3
                                      :description => 'Where were you married? /<spain/>¿Dónde se casaron?'
 
 current_step.fields.create :name => 'In the United States /<spain/>En los Estados Unidos
-                                     <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :mandatory => false, :field_type => 'radio'
-current_step.fields.create :name => 'City /<spain/>Ciudad: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => false
-current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => false
-current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
-current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => false
+                                     <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :field_type => 'radio'
+current_step.fields.create :name => 'City /<spain/>Ciudad: *', :toggle_id => toggle_id, :toggle_option => 'In the United States'
+current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States'
+current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside'
+current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside'
 current_step.fields.create :name => 'Marriage Date /<spain/>Fecha de matrimonio:', :field_type => 'date'
-current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Click here</a><br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Haz clic</a>', :mandatory => false, :field_type => 'text'
+current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Click here</a><br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Haz clic</a>', :field_type => 'text'
 
 
 current_step = template.steps.create :step_number => step_number += 1,#4
@@ -124,10 +124,10 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *'
-current_step.fields.create :mandatory => false, :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
+current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *'
-current_step.fields.create :mandatory => false, :name => 'Social Security # /<spain/># Seguro Social:'
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
 current_step.fields.create :name => 'Son /<spain/>Hijo
                                      <option/>Daughter /<spain/>Hija', :field_type => 'radio'
 

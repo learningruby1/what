@@ -1,3 +1,4 @@
+- text = answer.kind_of?(DocumentAnswer) ? answer.template_field.name : answer
 - if text.present?
 
   - text.split('<spain/>').first.split('<br/>').each do |t|
@@ -8,4 +9,7 @@
   - if text.split('<spain/>').count > 1
     - text.split('<spain/>').last.split('<br/>').each do |t|
       %strong.new_roman.spain= t.html_safe
-      %br
+
+- if answer.kind_of?(DocumentAnswer) && flash.any?
+  - if !answer.template_field.mandatory.nil? && answer.answer.nil? || !answer.template_field.mandatory.nil? && !answer.answer.match(answer.template_field.mandatory[:value])
+    %span.alert-danger.padding-horizontal-10= answer.template_field.mandatory[:hint]

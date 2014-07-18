@@ -2,4 +2,4 @@
   %div{ :class => "alert alert-#{ name == 'notice' ? 'success' : 'danger' }" }
     .container
       %button.close{ 'aria-hidden' => 'true', 'data-dismiss' => 'alert', :type => 'button' } &times;
-      = raw message
+      = raw message.first

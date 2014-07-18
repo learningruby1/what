@@ -9,10 +9,10 @@ class Document < ActiveRecord::Base
   #Controller answers Action edit
   def get_or_create_answers!(next_step)
     next_step = skip_steps next_step
-
     _answers = step_answers(next_step).sort_by(&:id) rescue nil
     _answers = create_next_step_answers!(next_step) if _answers.blank?
     if !_answers.blank? && !_answers.last.answer.nil? && !_answers.last.template_field.looper_option.nil? && _answers.last.template_field.looper_option  == _answers.last.answer
+
       _answers.each{ |a| a.destroy if a.template_field.dont_repeat? }
       _answers = step_answers(next_step).sort_by(&:id)
       _answers += create_next_step_answers!(next_step, _answers.first.toggler_offset + _answers.length)
@@ -24,8 +24,15 @@ class Document < ActiveRecord::Base
   def update_answers!(answers_params)
     looper = false
     answers_params[:answers].each do |answer|
-      answers.find(answer.first).update answer.last.permit(:answer)
-      looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !answer.last.permit(:answer)[:answer].nil?
+      if answers.find(answer.first).template_field.mandatory.nil? ||
+         answer.last[:answer].match(answers.find(answer.first).template_field.mandatory[:value])
+
+        answers.find(answer.first).update answer.last.permit(:answer)
+        looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
+      else
+        errors.add(:base, 'Check the mandatory fields') if !errors.any?
+        looper = true
+      end
     end
     looper
   end
