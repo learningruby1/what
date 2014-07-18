@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140625095331) do
+ActiveRecord::Schema.define(version: 20140717141953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,18 +37,18 @@ ActiveRecord::Schema.define(version: 20140625095331) do
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "template_fields", force: true do |t|
-    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "field_type",       default: "string"
-    t.boolean  "mandatory",        default: true
     t.integer  "template_step_id"
+    t.text     "name"
     t.boolean  "in_line",          default: false
     t.integer  "toggle_id"
     t.boolean  "in_loop",          default: false
     t.string   "toggle_option"
     t.string   "looper_option"
     t.boolean  "dont_repeat",      default: false
+    t.string   "mandatory"
   end
 
   add_index "template_fields", ["template_step_id"], name: "index_template_fields_on_template_step_id", using: :btree

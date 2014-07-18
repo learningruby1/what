@@ -4,4 +4,4 @@
       %p= a.text_field :answer, :class => 'form-control'
     .row.new_roman.col-md-9
       &nbsp
-      = render :partial => 'render_text', :locals => { :text => answer.template_field.name }
+      = render :partial => 'render_text', :locals => { :answer => answer }

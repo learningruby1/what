@@ -4,9 +4,9 @@
       .container
 
         - template_step = @answers.first.template_field.template_step
-        = render :partial => 'render_text', :locals => { :text => template_step.to_question_title }
+        = render :partial => 'render_text', :locals => { :answer => template_step.to_question_title }
         %hr
-        = render :partial => 'render_text', :locals => { :text => template_step.description }
+        = render :partial => 'render_text', :locals => { :answer => template_step.description }
 
     = render :partial => 'answers', :locals => { :f => f }
 

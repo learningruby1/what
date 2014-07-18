@@ -7,4 +7,5 @@
             = a.radio_button :answer, title.scan(/\w+/).last
           - else
             = a.radio_button :answer, title.split(' /<spain/>').first
-          = render :partial => 'render_text', :locals => { :text => title }
+
+          = render :partial => 'render_text', :locals => { :answer => title }

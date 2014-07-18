@@ -5,12 +5,12 @@
 .spain{
   color: #009933;
 }
-.english{
-  color: #333333;
-}
 .padding-left{
   padding-left: -15px;
 }
 .bottom-offset-15{
   margin-bottom: -15px;
+}
+.padding-horizontal-10{
+  padding: 0px 10px 0px 10px;
 }
