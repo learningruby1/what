@@ -261,50 +261,31 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Mother’s Day /<spain/>Día de la Madre', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
-current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
-current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id
-
-current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
-                                                             <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to, with mom every year /<spain/>hasta, con la madre todos los años'
 
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Country Mother’s Day /<spain/>Día de la Madre (de otro país)', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
-current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
-current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id
-
-current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
-                                                             <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to, with mom every year /<spain/>hasta, con la madre todos los años'
 
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Father’s day /<spain/>Día del Padre', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
-current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
-current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id
-
-current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
-                                                             <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to, with dad every year /<spain/>hasta, con el padre todos los años'
 
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Country Father’s Day /<spain/>Día del Padre', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
-current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
-current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to, with dad every year /<spain/>hasta, con el padre todos los años'
 
-current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
-                                                             <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id
 current_step.fields.create :name => 'Other Holiday /<spain/>Otro de vacaciones:'
+
+
+
+
 
 
 
