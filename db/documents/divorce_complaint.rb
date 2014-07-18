@@ -12,17 +12,17 @@ current_step.fields.create :name => 'Clark<option/>Nye', :field_type => 'radio'
 current_step = template.steps.create :step_number => step_number += 1,#1
                                      :title => 'Your information /<spain/>Su Información'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /\w+{2,}/, :hint => 'Please enter a valid name' }
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
-current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
+current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
+current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
-current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *'
-current_step.fields.create :name => 'City /<spain/>Ciudad: *'
-current_step.fields.create :name => 'State /<spain/>Estado: *'
-current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *'
+current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ ]+$/, :hint => 'Please enter a valid mailing address' }
+current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid city' }
+current_step.fields.create :name => 'State /<spain/>Estado: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid state' }
+current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *', :mandatory => { :value => /^[0-9]{5}(\-[0-9]{4})?$/, :hint => 'Please enter a valid zip code' }
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:'
-current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *'
+current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email' }
 current_step.fields.create :name => 'I am /<spain/>Yo soy:', :field_type => 'label'
 current_step.fields.create :name => 'Wife /<spain/>Esposa
                                      <option/>Husband /<spain/>Esposo', :field_type => 'radio'
@@ -34,10 +34,10 @@ current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'Your Spouse\'s Information /<spain/>Información de su esposa(o)',
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona serà referida como el demandado (DEFENDANT)'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *'
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
-current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date'
+current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
+current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
 current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:'
 current_step.fields.create :name => 'City /<spain/>Ciudad:'
@@ -123,10 +123,10 @@ children_amount_field = current_step.fields.create :field_type => 'amount'
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
                                      :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *'
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *'
-current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *'
+current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
+current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:'
 current_step.fields.create :name => 'Son /<spain/>Hijo
                                      <option/>Daughter /<spain/>Hija', :field_type => 'radio'
@@ -136,7 +136,7 @@ current_step.fields.create :name => 'Son /<spain/>Hijo
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', #:amount_field_id => children_amount_field.id,#10
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Legal Custody: the right of the parents to make legal decision for the child regarding education, health care, religion, etc. for the welfare of the child.
-                                                      <br/>Who will have legal custody of the child(ren)?
+                                                      Who will have legal custody of the child(ren)?
                                                       <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca del menor en cuanto a la educación, salud, religión, etc. para el bienestar del menor.<br/>
                                                       ¿Quién tendrá la custodia legal de los menores?'
 
@@ -605,7 +605,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Pet Custody /<spain/>Custodia de Mascota'
 
 current_step.fields.create :name => 'Name of your Pet: *
-                                     <spain/>Nombre de su mascota:*'
+                                     <spain/>Nombre de su mascota:*', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid pet name' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife will  KEEP /<spain/>Se QUEDARA con la esposa
                                                              <option/>Husband will keep WILL keep /<spain/>Se QUEDARA con el esposo
