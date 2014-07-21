@@ -125,8 +125,9 @@ $(function(){
 
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
       $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
-        if(selected_value.indexOf($(this).data('toggle-option')) != -1)
-          $(this).show();
+        if(selected_value != undefined)
+          if(selected_value.indexOf($(this).data('toggle-option')) != -1)
+            $(this).show();
       });
 
       //Radio button event
