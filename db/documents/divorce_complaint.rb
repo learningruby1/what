@@ -152,18 +152,9 @@ current_step.fields.create :field_type => 'text', :name => 'PRIMARY PHYSICAL CUS
                                                             <spain/>CUSTODIA FISICA PRIMARIA: cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
 
 current_step.fields.create :field_type => 'radio', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
-                                                             <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.
-                                                             <option/>Both Parents /<spain/>Ambos padres'
-
-current_step.fields.create :field_type => 'text', :name => 'JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<br/>
-                                                            <spain/>Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.'
-
-current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>Ambos padres'
-
-current_step.fields.create :field_type => 'text', :name => 'SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.
-                                                            <br/><spain/>CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.'
-
-current_step.fields.create :field_type => 'radio', :name => 'Only with the mom /<spain/>Solo conmigo
+                                                             <option/>With dad and visit  with mom: JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.
+                                                             <option/>Both Parents: SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
+                                                             <option/>Only with the mom /<spain/>Solo conmigo
                                                              <option/>Only with the dad /<spain/>Solo con el OTRO padre'
 
 

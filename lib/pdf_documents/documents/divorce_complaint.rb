@@ -130,8 +130,6 @@ module PdfDocument
 
         answers.next.answer
         physical_custody_parent = answers.next.answer
-        answers.next.answer
-        answers.next.answer
 
         #Step 12   Holiday
         answers = step_answers_enum steps.next
