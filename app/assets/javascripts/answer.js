@@ -116,7 +116,7 @@ $(function(){
         $(this_prop_class   + ':not(:first)').hide();
 
       //Checkbox event
-      $(this).change(function(){
+      $('.' + $(this).prop('class') + ':first:has(:checkbox)').change(function(){
         $('.' + $(this).prop('class') + ':not(:first)').toggle();
       });
     }
@@ -131,15 +131,17 @@ $(function(){
       });
 
       //Radio button event
-      $('.' + $(this).prop('class') + ':first').change(function(){
+      $('.' + $(this).prop('class') + ':first:has([type="radio"])').change(function(){
         var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
+        if(selected_value.indexOf('No') != -1){
+          $('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').attr('checked', true);
+          console.log($('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').val())
+        }
+
         $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
-
-          //For chirldren presence question only
-          $('.' + $(this).prop('class') + ':not(:first) [type="radio"]:not(:first)').attr('checked', true);
-
-          if(selected_value.indexOf($(this).data('toggle-option')) != -1)
+          if(selected_value.indexOf($(this).data('toggle-option')) != -1){
             $(this).show();
+          }
         });
       });
     }
