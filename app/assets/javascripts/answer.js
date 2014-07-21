@@ -131,9 +131,13 @@ $(function(){
       });
 
       //Radio button event
-      $(this).change(function(){
+      $('.' + $(this).prop('class') + ':first').change(function(){
         var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
         $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
+
+          //For chirldren presence question only
+          $('.' + $(this).prop('class') + ':not(:first) [type="radio"]:not(:first)').attr('checked', true);
+
           if(selected_value.indexOf($(this).data('toggle-option')) != -1)
             $(this).show();
         });
