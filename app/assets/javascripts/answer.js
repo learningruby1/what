@@ -96,7 +96,6 @@ $(function(){
     });
 
     time.find('[type="hidden"]').each(function(){
-
       var _this = $(this);
       if(_this.val().length > 0){
 
@@ -108,10 +107,8 @@ $(function(){
     });
   }
 
-  var dry = '';
-  var current;
+  //Toggler logic
   $('[class^="toggle_"]').each(function(){
-
     var this_prop_class = '.' + $(this).prop('class');
 
     if($(this_prop_class    + ':first :checkbox').length > 0){
