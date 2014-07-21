@@ -108,36 +108,40 @@ $(function(){
     });
   }
 
-  $('[class^="toggle_"]:has([type="checkbox"])').each(function(){
+  var dry = '';
+  var current;
+  $('[class^="toggle_"]').each(function(){
 
-    if(!$('.' + $(this).prop('class') + ' :checkbox:first').is(':checked'))
-        $('.' + $(this).prop('class') + ':not(:first)').hide();
+    var this_prop_class = '.' + $(this).prop('class');
 
-    $(this).change(function(){
-      $('.' + $(this).prop('class') + ':not(:first)').toggle();
-    });
-  });
+    if($(this_prop_class    + ':first :checkbox').length > 0){
+      if(!$(this_prop_class + ':first :checkbox').is(':checked'))
+        $(this_prop_class   + ':not(:first)').hide();
 
-  $('[class^="toggle_"]:has([type="radio"])').each(function(){
+      //Checkbox event
+      $(this).change(function(){
+        $('.' + $(this).prop('class') + ':not(:first)').toggle();
+      });
+    }
 
-    if(!$('.' + $(this).prop('class') + ' :checkbox:first').is(':checked'))
-        $('.' + $(this).prop('class') + ':not(:first)').hide();
+    if($(this_prop_class + ':first [type="radio"]').length > 0){
 
-    $(this).click(function(){
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
-      var field_value;
+      $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
+        if(selected_value.indexOf($(this).data('toggle-option')) != -1)
+          $(this).show();
+      });
 
-      if($('[class^="toggle_"]:first:has(:checkbox)').length == 0){
+      //Radio button event
+      $(this).change(function(){
+        var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
         $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
-
-          field_value = $(this).data('toggle-option');
-          if(selected_value.indexOf(field_value) != -1)
+          if(selected_value.indexOf($(this).data('toggle-option')) != -1)
             $(this).show();
         });
-      }
-    });
+      });
+    }
   });
-
 
   var counter = $('.counter');
   if(counter.length == 1)
