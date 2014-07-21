@@ -128,10 +128,8 @@ module PdfDocument
         #Step 11   Physical Custody
         answers = step_answers_enum steps.next
 
-        answers.next.answer
+        answers.next
         physical_custody_parent = answers.next.answer
-        answers.next.answer
-        answers.next.answer
 
         #Step 12   Holiday
         answers = step_answers_enum steps.next
