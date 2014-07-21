@@ -88,8 +88,8 @@ current_step = template.steps.create :step_number => step_number += 1,#6 and 7
 
 toggle_id = 0
 toggle_id += 1
-children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                              <option/>No', :toggle_id => toggle_id
+children_field = current_step.fields.create :field_type => 'radio', :name => 'No
+                                                                              <option/>Yes /<spain/>Sí', :toggle_id => toggle_id
 
 current_step.fields.create :field_type => 'text', :name => 'Children must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
                                                             Have the child(ren) lived in Nevada for over 6 months?<br/>

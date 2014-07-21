@@ -96,7 +96,6 @@ $(function(){
     });
 
     time.find('[type="hidden"]').each(function(){
-
       var _this = $(this);
       if(_this.val().length > 0){
 
@@ -108,36 +107,45 @@ $(function(){
     });
   }
 
-  $('[class^="toggle_"]:has([type="checkbox"])').each(function(){
+  //Toggler logic
+  $('[class^="toggle_"]').each(function(){
+    var this_prop_class = '.' + $(this).prop('class');
 
-    if(!$('.' + $(this).prop('class') + ' :checkbox:first').is(':checked'))
-        $('.' + $(this).prop('class') + ':not(:first)').hide();
+    if($(this_prop_class    + ':first :checkbox').length > 0){
+      if(!$(this_prop_class + ':first :checkbox').is(':checked'))
+        $(this_prop_class   + ':not(:first)').hide();
 
-    $(this).change(function(){
-      $('.' + $(this).prop('class') + ':not(:first)').toggle();
-    });
-  });
+      //Checkbox event
+      $('.' + $(this).prop('class') + ':first:has(:checkbox)').change(function(){
+        $('.' + $(this).prop('class') + ':not(:first)').toggle();
+      });
+    }
 
-  $('[class^="toggle_"]:has([type="radio"])').each(function(){
+    if($(this_prop_class + ':first [type="radio"]').length > 0){
 
-    if(!$('.' + $(this).prop('class') + ' :checkbox:first').is(':checked'))
-        $('.' + $(this).prop('class') + ':not(:first)').hide();
-
-    $(this).click(function(){
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
-      var field_value;
-
-      if($('[class^="toggle_"]:first:has(:checkbox)').length == 0){
-        $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
-
-          field_value = $(this).data('toggle-option');
-          if(selected_value.indexOf(field_value) != -1)
+      $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
+        if(selected_value != undefined)
+          if(selected_value.indexOf($(this).data('toggle-option')) != -1)
             $(this).show();
-        });
-      }
-    });
-  });
+      });
 
+      //Radio button event
+      $('.' + $(this).prop('class') + ':first:has([type="radio"])').change(function(){
+        var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
+        if(selected_value.indexOf('No') != -1){
+          $('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').attr('checked', true);
+          console.log($('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').val())
+        }
+
+        $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
+          if(selected_value.indexOf($(this).data('toggle-option')) != -1){
+            $(this).show();
+          }
+        });
+      });
+    }
+  });
 
   var counter = $('.counter');
   if(counter.length == 1)
