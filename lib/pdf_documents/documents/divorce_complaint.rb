@@ -238,10 +238,12 @@ module PdfDocument
 
         #Step 17   Child  Support Arrears
         answers = step_answers_enum steps.next
-        answers.next.answer
+        answers.next
+        answers.next
         request_arrears = answers.next.answer == 'Yes' rescue false
         request_arrears_from = answers.next.answer
-        request_arrears_to = answers.next.answer
+        answers.next
+        request_amount_paid = answers.next.answer
 
         #Step 18   Child Tax Exemption
         answers = step_answers_enum steps.next

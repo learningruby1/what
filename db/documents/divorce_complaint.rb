@@ -545,22 +545,9 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting c
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id
 
-current_step.fields.create :field_type => 'date', :name => 'I want back child support starting
-                                                            <spain/>Yo QUIERO manutención comenzando', :toggle_id => toggle_id, :toggle_option => 'Yes'
-
-current_step.fields.create :field_type => 'date', :name => 'The OTHER parent has paid $ since separation to:
-                                                            <spain/>Desde que nos separamos el otro padre me ha dado $ (ponga la cantidad) hasta:', :toggle_id => toggle_id, :toggle_option => 'Yes'
-
-current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years
-                                                            <br/>I want back child support starting (insert month /year) to (insert month/year).
-                                                            The OTHER parent has paid $ since separation.
-                                                            <br/><spain/>Puede pedir hasta 4 años atrasados
-                                                            <br/>Yo QUIERO manutención comenzando (escriba el mes y año) hasta (escriba el mes y año).
-                                                            Desde que nos separamos el otro padre me ha dado $ (ponga la cantidad).', :toggle_id => toggle_id, :toggle_option => 'Yes'
-
-current_step.fields.create :field_type => 'date', :name => 'I want back child support starting /<spain/>Quiero la manutención de niños a partir'
-current_step.fields.create :field_type => 'text', :name => 'The OTHER parent has paid /<spain/>del otro padre ha pagado'
-current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.'
+current_step.fields.create :field_type => 'date', :name => 'I want back child support starting /<spain/>Quiero la manutención de niños a partir', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'text', :name => 'The OTHER parent has paid /<spain/>del otro padre ha pagado', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 toggle_id = 0
 toggle_id += 1
