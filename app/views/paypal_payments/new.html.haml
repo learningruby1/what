@@ -1,0 +1,62 @@
+.modal-header
+  %h3.modal-title Payment via Paypal
+
+.modal-body
+  .row
+    .col-md-12
+      = form_tag paypal_payments_path, :method => :post, :remote => true, :role => :form, :class => 'form' do
+        .row
+          .col-md-12
+            %h4
+              Credit card information
+              %p.small.muted We do not store any information about your credit card. Transaction will be done via Paypal.
+
+        .row
+          .col-md-3
+            = select_tag :credit_card_type, options_for_select([['Mastercard', 'mastercard'], ['Visa', 'visa']]),
+              { :class => 'form-control' }
+          .col-md-7
+            = text_field_tag :credit_card_number, '', :class => 'form-control', :placeholder => 'Number'
+          .col-md-2
+            = text_field_tag :credit_card_cvv2, '', :class => 'form-control', :placeholder => 'CVV2'
+
+        .row
+          .col-md-6
+            = select_tag :credit_card_expire_month, options_for_select((1..12)),
+              { :class => 'form-control', :prompt => 'Expire month' }
+          .col-md-6
+            = select_tag :credit_card_expire_year, options_for_select((2013..2050)),
+              { :class => 'form-control', :prompt => 'Expire year' }
+
+        .row
+          .col-md-6
+            = text_field_tag :credit_card_first_name, '', :class => 'form-control', :placeholder => 'First name'
+          .col-md-6
+            = text_field_tag :credit_card_last_name, '', :class => 'form-control', :placeholder => 'Last name'
+
+
+        .row
+          %hr
+          .col-md-12
+            %h4 Billing address
+
+        .row
+          .col-md-12
+            = text_field_tag :billing_address, '', :class => 'form-control', :placeholder => 'Address'
+
+        .row
+          .col-md-3
+            = text_field_tag :billing_city, '', :class => 'form-control', :placeholder => 'City'
+          .col-md-3
+            = text_field_tag :billing_state, '', :class => 'form-control', :placeholder => 'State'
+          .col-md-3
+            = text_field_tag :billing_postal_code, '', :class => 'form-control', :placeholder => 'Postal code'
+          .col-md-3
+            = text_field_tag :billing_country_code, '', :class => 'form-control', :placeholder => 'Country code'
+
+
+        .row
+          %hr
+          .col-md-12
+            = submit_tag 'Make single payment', :class => 'btn btn-primary',
+              :data => { :disable_with => 'Please wait. It takes some time...' }

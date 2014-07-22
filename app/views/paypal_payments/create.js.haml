@@ -1,0 +1,5 @@
+- if current_user.errors.any?
+  = raw add_gritter(current_user.errors.full_messages.join('; '), :time => 15000)
+- else
+  = raw add_gritter('Payment made successfuly', :time => 15000)
+  setTimeout(function(){ location.reload(true); }, 3000);

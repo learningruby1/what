@@ -28,3 +28,6 @@ group :development, :test do
 end
 
 gem 'prawn'
+
+gem 'paypal-sdk-rest'
+gem 'gritter'

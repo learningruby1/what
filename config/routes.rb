@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
   root 'welcome#index'
 
+  resources :paypal_payments, :only => [:new, :create]
+
   resources :templates, :only => [:index] do
     resources :documents, :only => [:new, :create]
   end
