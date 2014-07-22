@@ -18,3 +18,8 @@
     = render :partial => 'layouts/messages'
 
     = yield
+
+    // [andpu] it is singleton for all bootstrap modal windows
+    #modal_window.modal.fade{ :role => 'dialog', 'aria-labelledby' => 'remoteModalLabel', 'aria-hidden' => 'true', :tabindex => '-1' }
+      .modal-dialog
+        .modal-content

@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require_self
+ *= require gritter
  *= require custom_bootstrap/custom_bootstrap
  *= require navigation
  *

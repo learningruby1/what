@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require gritter
 //= require twitter/bootstrap
 //= require answer
