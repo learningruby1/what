@@ -157,12 +157,19 @@ $(function(){
     counters.each(function(){
 
       var first_depend_field = $(this).next().find('[type="text"]');
+
       if( first_depend_field.length > 0){
-          first_depend_field.change(function(){ first_depend_field.closest('div[data-toggle-option]').prev().find('.first_dependant_field').text($(this).val()); });
+          first_depend_field.change(function(){
+
+          first_depend_field.closest('div[data-toggle-option]').prev().find('.first_dependant_field').text($(this).val());
+        });
 
         var second_depend_field = first_depend_field.closest('div[data-toggle-option]').next().next().next().next().find('[type="text"]')
         if( second_depend_field.length > 0)
-            second_depend_field.change(function(){ second_depend_field.closest('div[data-toggle-option]').prev().prev().prev().prev().prev().find('.second_dependant_field').text($(this).val()); });
+            second_depend_field.change(function(){
+
+            second_depend_field.closest('div[data-toggle-option]').prev().prev().prev().prev().prev().find('.second_dependant_field').text($(this).val());
+        });
       }
 
     });
