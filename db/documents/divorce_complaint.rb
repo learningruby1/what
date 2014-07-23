@@ -1109,8 +1109,8 @@ current_step.fields.create :field_type => 'text', :toggle_id => toggle_id
 
 
 
-current_step.fields.create :field_type => 'link:sep:https://www.clarkcountycourts.us/Anonymous/default.aspx', :name => 'Don’t remember the date? Click here
-                                                                                                                        <br/><spain/>¿No recuerda la fecha? Haz clic'
+# current_step.fields.create :field_type => 'link:sep:https://www.clarkcountycourts.us/Anonymous/default.aspx', :name => 'Don’t remember the date? Click here
+#                                                                                                                         <br/><spain/>¿No recuerda la fecha? Haz clic'
 
 
 #
