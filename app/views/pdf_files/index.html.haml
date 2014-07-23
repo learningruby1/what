@@ -26,14 +26,20 @@
               Edit
 
             - if document.is_generated?
-              - if current_user.paypal_payment_id.present?
-                &nbsp
-                = link_to download_pdf_path(document.id), :class => 'btn btn-primary' do
-                  .glyphicon.glyphicon-cloud-download
-                  Download
+              - if current_user
+                - if current_user.paypal_payment_id.present?
+                  &nbsp
+                  = link_to download_pdf_path(document.id), :class => 'btn btn-primary' do
+                    .glyphicon.glyphicon-cloud-download
+                    Download
 
+                - else
+                  = link_to new_paypal_payment_path, :class => 'btn btn-primary modal_remote',
+                    'data-target' => '#modal_window', 'data-toggle' => 'modal' do
+                    .glyphicon.glyphicon-cloud-download
+                    Pay to Download
               - else
-                = link_to new_paypal_payment_path, :class => 'btn btn-primary modal_remote',
+                = link_to new_user_session_path, :class => 'btn btn-primary modal_remote',
                   'data-target' => '#modal_window', 'data-toggle' => 'modal' do
-                  .glyphicon.glyphicon-cloud-download
-                  Pay to Download
+                  .glyphicon.glyphicon-pencil
+                  Sign In
