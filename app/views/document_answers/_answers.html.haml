@@ -6,9 +6,13 @@
     = a.hidden_field :template_field_id, :value => answer.template_field_id
 
     - if answer.template_field.name == first_field_name
-      .jumbotron.counter
-        .container.new_roman= DocumentAnswer::NUMBER_NAME[counter]
-        - counter += 1
+      .jumbotron.counter.new_roman
+        .container
+          %span{ :class => 'first_dependant_field' }
+            = DocumentAnswer::NUMBER_NAME[counter]
+          %span{ :class => 'second_dependant_field' }
+      - counter += 1
+
 
     -#NOTICE: fields can contain toggle_x class, if so, they can't contain any other classes!!1
     - case answer.template_field.field_type

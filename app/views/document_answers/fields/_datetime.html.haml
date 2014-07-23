@@ -2,4 +2,4 @@
   .container
     = render :partial => 'render_text', :locals => { :answer => answer }
     .col-md-12.input-group{ 'data-date-format' => (answer.template_field.field_type == 'date' ? 'MM/DD/YYYY' : 'H:mm'), :class => answer.template_field.field_type }
-      = a.hidden_field :answer, :value => answer.answer.presence || answer.template_field.field_type == 'date' ? Date.today.strftime('1/1/%Y') : '1:00:AM'
+      = a.hidden_field :answer, :value => answer.answer.presence || (answer.template_field.field_type == 'date' ? Date.today.strftime('1/1/%Y') : '1:00:AM')

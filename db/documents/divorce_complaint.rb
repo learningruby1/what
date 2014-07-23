@@ -635,10 +635,12 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Qué otra propiedad compraron durante el matrimonio?'
 
 current_step.fields.create :field_type => 'checkbox', :name => 'Home /<spain/>Casa', :toggle_id => toggle_id
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+sub_amount = current_step.fields.create :field_type => 'sub_amount'
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :amount_field_id = sub_amount.id
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
-                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :amount_field_id = sub_amount.id
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra', :toggle_id => toggle_id
 current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'

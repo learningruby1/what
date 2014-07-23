@@ -117,7 +117,10 @@ $(function(){
 
       //Checkbox event
       $('.' + $(this).prop('class') + ':first:has(:checkbox)').change(function(){
-        $('.' + $(this).prop('class') + ':not(:first)').toggle();
+        if($('.' + $(this).prop('class') + ':first :checkbox').prop('checked') == true)
+          $('.' + $(this).prop('class') + ':not(:first)').show();
+        else
+          $('.' + $(this).prop('class') + ':not(:first)').hide();
       });
     }
 
@@ -133,10 +136,8 @@ $(function(){
       //Radio button event
       $('.' + $(this).prop('class') + ':first:has([type="radio"])').change(function(){
         var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
-        if(selected_value.indexOf('No') != -1){
+        if(selected_value.indexOf('No') != -1)
           $('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').attr('checked', true);
-          console.log($('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').val())
-        }
 
         $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
           if(selected_value.indexOf($(this).data('toggle-option')) != -1){
@@ -147,7 +148,32 @@ $(function(){
     }
   });
 
-  var counter = $('.counter');
-  if(counter.length == 1)
-    counter.hide();
+  var counters = $('.counter');
+  if(counters.length == 1){
+
+    counters.hide();
+  }else{
+
+    counters.each(function(){
+
+      var first_depend_field = $(this).next().find('[type="text"]');
+      if( first_depend_field.length > 0){
+          first_depend_field.change(function(){ first_depend_field.closest('div[data-toggle-option]').prev().find('.first_dependant_field').text($(this).val()); });
+
+        var second_depend_field = first_depend_field.closest('div[data-toggle-option]').next().next().next().next().find('[type="text"]')
+        if( second_depend_field.length > 0)
+            second_depend_field.change(function(){ second_depend_field.closest('div[data-toggle-option]').prev().prev().prev().prev().prev().find('.second_dependant_field').text($(this).val()); });
+      }
+
+    });
+  }
 });
+
+
+
+
+
+
+
+
+
