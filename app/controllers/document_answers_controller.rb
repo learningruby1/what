@@ -3,8 +3,12 @@ class DocumentAnswersController < ApplicationController
   before_action :get_document, :only => [:edit, :update]
 
   def edit
-    @answers = @document.get_or_create_answers! params[:step]
-    redirect_to generate_pdf_path(@document.id) if @answers.blank?
+    if @document.present?
+      @answers = @document.get_or_create_answers! params[:step], params[:direction].presence || 'forward'
+      redirect_to generate_pdf_path(@document.id) if @answers.blank?
+    else
+      redirect_to root_path
+    end
   end
 
   def update
@@ -21,7 +25,7 @@ class DocumentAnswersController < ApplicationController
     if user_signed_in?
       @document = current_user.documents.find(params[:document_id])
     else
-      @document = Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token]).first
+      @document = Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token], :user_id => nil).first
     end
   end
 
