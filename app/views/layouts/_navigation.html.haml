@@ -5,16 +5,17 @@
       = link_to 'Forms mama', root_path, :class => 'navbar-brand'
 
     .collapse.navbar-collapse
-      %ul.nav.navbar-nav.navbar-right
+      - unless controller_name == 'sessions'
+        %ul.nav.navbar-nav.navbar-right
 
-        %li
-          = link_to 'Documents', pdf_files_path
+          %li
+            = link_to 'Documents', pdf_files_path
 
-        %li
-          = link_to 'Templates', templates_path
+          %li
+            = link_to 'Templates', templates_path
 
-        %li
-          - if user_signed_in?
-            = link_to 'Sign out', destroy_user_session_path, :method => :delete
-          - else
-            = link_to 'Sign in', new_user_session_path
+          %li
+            - if user_signed_in?
+              = link_to 'Sign out', destroy_user_session_path, :method => :delete
+            - else
+              = link_to 'Sign in', new_user_session_path
