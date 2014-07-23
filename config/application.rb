@@ -36,6 +36,6 @@ ActionMailer::Base.smtp_settings = {
     :domain         => 'smtp.gmail.com',
     :port           => 587,
     :user_name      => 'teamvoy.mta@gmail.com',
-    :password       => 'Teamvoy2014',
+    :password       => 'rubyist2014',
     :authentication => :plain
 }
