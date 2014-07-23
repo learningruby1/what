@@ -152,9 +152,18 @@ current_step.fields.create :field_type => 'text', :name => 'PRIMARY PHYSICAL CUS
                                                             <spain/>CUSTODIA FISICA PRIMARIA: cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
 
 current_step.fields.create :field_type => 'radio', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
-                                                             <option/>With dad and visit  with mom: JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.
-                                                             <option/>Both Parents: SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
-                                                             <option/>Only with the mom /<spain/>Solo conmigo
+                                                             <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.
+                                                             <option/>Both Parents /<spain/>Ambos padres'
+
+current_step.fields.create :field_type => 'text', :name => 'JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<br/>
+                                                            <spain/>Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.'
+
+current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>Ambos padres'
+
+current_step.fields.create :field_type => 'text', :name => 'SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.
+                                                            <br/><spain/>CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.'
+
+current_step.fields.create :field_type => 'radio', :name => 'Only with the mom /<spain/>Solo conmigo
                                                              <option/>Only with the dad /<spain/>Solo con el OTRO padre'
 
 
@@ -545,9 +554,22 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting c
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id
 
-current_step.fields.create :field_type => 'date', :name => 'I want back child support starting /<spain/>Quiero la manutención de niños a partir', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :field_type => 'text', :name => 'The OTHER parent has paid /<spain/>del otro padre ha pagado', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'date', :name => 'I want back child support starting
+                                                            <spain/>Yo QUIERO manutención comenzando', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'date', :name => 'The OTHER parent has paid $ since separation to:
+                                                            <spain/>Desde que nos separamos el otro padre me ha dado $ (ponga la cantidad) hasta:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years
+                                                            <br/>I want back child support starting (insert month /year) to (insert month/year).
+                                                            The OTHER parent has paid $ since separation.
+                                                            <br/><spain/>Puede pedir hasta 4 años atrasados
+                                                            <br/>Yo QUIERO manutención comenzando (escriba el mes y año) hasta (escriba el mes y año).
+                                                            Desde que nos separamos el otro padre me ha dado $ (ponga la cantidad).', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+current_step.fields.create :field_type => 'date', :name => 'I want back child support starting /<spain/>Quiero la manutención de niños a partir'
+current_step.fields.create :field_type => 'text', :name => 'The OTHER parent has paid /<spain/>del otro padre ha pagado'
+current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.'
 
 toggle_id = 0
 toggle_id += 1
@@ -635,12 +657,10 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Qué otra propiedad compraron durante el matrimonio?'
 
 current_step.fields.create :field_type => 'checkbox', :name => 'Home /<spain/>Casa', :toggle_id => toggle_id
-
-sub_amount = current_step.fields.create :field_type => 'sub_amount'
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :amount_field_id = sub_amount.id
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
-                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :amount_field_id = sub_amount.id
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes'
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra', :toggle_id => toggle_id
 current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes'
