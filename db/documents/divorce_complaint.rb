@@ -1,3 +1,12 @@
+#
+# Hints and tricks:
+#
+# <separate/>  -  for radio only
+#
+#
+#
+#
+
 Template.where( :name => 'Complaint for Divorce').first.try :destroy
 template = Template.create :name => 'Complaint for Divorce', :description => 'No description' if !template.present?
 
@@ -120,9 +129,10 @@ children_amount_field = current_step.fields.create :field_type => 'amount', :man
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
                                      :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
+child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
+
+child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\-[0-9]{2}\-[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX' }
 current_step.fields.create :name => 'Son /<spain/>Hijo
@@ -142,17 +152,21 @@ current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spai
                                                              <option/>Only DAD /<spain/>Solo PAPÁ', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select value' }
 
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#11
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#11
                                      :title => 'Physical Custody /<spain/>Custodia Física',
                                      :description => 'Select  the type of custody you would like to have:
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
-current_step.fields.create :field_type => 'text', :name => 'PRIMARY PHYSICAL CUSTODY: when the child(ren) live with one parent for most of the time (more than 60%) and has limited visitation with the other parent.<br/>
-                                                            <spain/>CUSTODIA FISICA PRIMARIA: cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
+current_step.fields.create :field_type => 'text', :name => 'Who will have legal custody of <spain/>¿Quién tendrá la custodia legal', :header_id => child_name.id, :additional_header_id => child_last_name.id
+current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA<spain/>
+                                                            <br/>When the child(ren) live with one parent for most of the time (more than 60%) and has limited visitation with the other parent.
+                                                            <br/><spain/>Cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
 
 current_step.fields.create :field_type => 'radio', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
-                                                             <option/>With dad and visit  with mom: JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.
-                                                             <option/>Both Parents: SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
+                                                             <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.<spain/>
+                                                             <separate/>JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.
+                                                             <option/>Both Parents /<spain/>Ambos padres.<spain/>
+                                                             <separate/>SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
                                                              <option/>Only with the mom /<spain/>Solo conmigo
                                                              <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /^[a-zA-Z\s():.]+$/, :hint => 'Please select value' }
 
