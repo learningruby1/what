@@ -17,7 +17,7 @@ namespace :app do
           DOCUMENT = ENV.fetch 'document', nil
 
           if DOCUMENT
-            execute :rake, "db:seed:#{ DOCUMENT }"
+            execute :rake, "app:db:seed:#{ DOCUMENT }"
           else
             execute :rake, 'db:seed'
           end
