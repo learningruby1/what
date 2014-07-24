@@ -9,9 +9,7 @@ module PdfDocument
       #Step zero
       steps = document.template.steps.to_enum
       answers = step_answers_enum steps.next
-
       clark_nye = answers.next.answer.strip
-
 
       #First step   Your information
       answers = step_answers_enum steps.next
@@ -126,10 +124,20 @@ module PdfDocument
         legal_custody_parent = answers.next.answer
 
         #Step 11   Physical Custody
-        answers = step_answers_enum steps.next
+        step = steps.next
 
-        answers.next
-        physical_custody_parent = answers.next.answer
+        physical_custody_parent = Array.new
+        number_of_children.times do |i|
+
+          physical_custody = Hash.new
+
+          answers = step_answers_enum step, i
+          physical_custody[:child] = get_headed_info answers.next, i
+          answers.next
+          physical_custody[:custody] = answers.next.answer
+
+          physical_custody_parent.push physical_custody
+        end
 
         #Step 12   Holiday
         answers = step_answers_enum steps.next
@@ -496,13 +504,16 @@ module PdfDocument
         push_header '6. PHYSICAL CUSTODY'
         move_down
 
-        case physical_custody_parent
-        when /^With mom/
-          push_text "That #{ mom } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } with dad having visitation as follows: (insert the proposed visitation schedule)", text_indent
-        when /^With dad/
-          push_text "That #{ dad } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } with mom having visitation as follows: (insert the proposed visitation schedule)", text_indent
-        when /^Both/
-          push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: (insert the proposed timeshare)", text_indent
+        physical_custody_parent.each do |physical_custody|
+
+          case physical_custody[:custody]
+          when /^With mom/
+            push_text "#{ physical_custody[:child] }: That #{ mom } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } with dad having visitation as follows: (insert the proposed visitation schedule)", text_indent
+          when /^With dad/
+            push_text "#{ physical_custody[:child] }: That #{ dad } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } with mom having visitation as follows: (insert the proposed visitation schedule)", text_indent
+          when /^Both/
+            push_text "#{ physical_custody[:child] }: That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: (insert the proposed timeshare)", text_indent
+          end
         end
 
         move_down header_margin_top

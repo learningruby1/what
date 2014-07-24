@@ -1,15 +1,18 @@
 %div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }" } }
-  .container
-    - if answer.kind_of?(DocumentAnswer) && flash.any?
-      - if !answer.template_field.mandatory.nil? && answer.answer.nil? || !answer.template_field.mandatory.nil? && !answer.answer.match(answer.template_field.mandatory[:value])
-        .col-md-12.margin-left
-          %span.alert-danger.padding-horizontal-10= answer.template_field.mandatory[:hint]
-    .col-md-12.margin-left
-      - answer.template_field.name.split('<option/>').each do |title|
+  - answer.template_field.name.split('<option/>').each do |title|
+    .container
+      .col-md-12
+        - title_array = title.split('<separate/>')
         %label.new_roman.radio
-          - if title.match /value/
-            = a.radio_button :answer, title.scan(/\w+/).last
-          - else
-            = a.radio_button :answer, title.split(' /<spain/>').first
+          = a.radio_button :answer, title_array.first.split(' /<spain/>').first
+          = render :partial => 'render_text', :locals => { :answer => title_array.first }
 
-          = render :partial => 'render_text', :locals => { :answer => title }
+
+    - if title_array.length > 1
+      .container.marin-top-50
+        = render :partial => 'render_text', :locals => { :answer => title_array.last }
+
+  - if answer.kind_of?(DocumentAnswer) && flash.any?
+    - if !answer.template_field.mandatory.nil? && answer.answer.nil? || !answer.template_field.mandatory.nil? && !answer.answer.match(answer.template_field.mandatory[:value])
+      .container
+        %span.alert-danger.padding-horizontal-10= answer.template_field.mandatory[:hint]
