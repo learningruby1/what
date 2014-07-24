@@ -794,9 +794,9 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Property Division: Other /<spain/>División de Bienes: Otro',
                                      :description => 'Check all that apply and you want to keep: /<spain/>Marque todas las cosas que le gustaría mantener:'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'household item /<spain/>cosas de la casa'
+current_step.fields.create :field_type => 'checkbox', :name => 'Household item /<spain/>cosas de la casa'
 current_step.fields.create :field_type => 'checkbox', :name => 'Jewelry /<spain/>Joyas'
-current_step.fields.create :field_type => 'checkbox', :name => 'Collections /<spain/>Collecciones'
+current_step.fields.create :field_type => 'checkbox', :name => 'Collections /<spain/>Colecciones'
 current_step.fields.create :field_type => 'checkbox', :name => 'Furniture /<spain/>Muebles'
 current_step.fields.create :field_type => 'checkbox', :name => 'Everything currently in my possession /<spain/>Todas las cosas en mi poder en este momento'
 
