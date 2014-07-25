@@ -12,7 +12,6 @@ module PdfDocument
 
       clark_nye = answers.next.answer.strip
 
-
       #First step   Your information
       answers = step_answers_enum steps.next
 
