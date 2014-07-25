@@ -34,7 +34,7 @@ current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email' }
 current_step.fields.create :name => 'I am /<spain/>Yo soy:', :field_type => 'label'
 current_step.fields.create :name => 'Wife /<spain/>Esposa
-                                     <option/>Husband /<spain/>Esposo', :field_type => 'radio'
+                                     <option/>Husband /<spain/>Esposo', :field_type => 'radio', :mandatory => { :value => /^Wife|Husband/, :hint => 'Please select one' }
 current_step.fields.create :name => 'Since you are the person starting the divorce action, you will be referred as the PLAINTIFF.
                                      <br/><spain/>Ya que usted es la persona que inicia la acción de divorcio, usted será referido como el demandante (PLAINTIFF)', :field_type => 'text'
 
@@ -81,7 +81,7 @@ current_step = template.steps.create :step_number => step_number += 1,#4
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in Nevada for over 6 weeks. /<spain/>Yo, he vivido en Nevada por más de 6 semanas.', :toggle_id => toggle_id, :mandatory => { :value => /^1$/, :hint => 'You need to be a Nevada resident before you can file for a divorce.' }
+current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in Nevada for over 6 weeks. /<spain/>Yo, he vivido en Nevada por más de 6 semanas.', :toggle_id => toggle_id, :mandatory => { :value => /^1$/, :hint => '<br/>You need to be a Nevada resident before you can file for a divorce.' }
 
 current_step = template.steps.create :step_number => step_number += 1,#5
                                      :title => 'Pregnancy /<spain/>Embarazada',
