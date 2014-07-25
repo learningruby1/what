@@ -2,7 +2,7 @@
 # Hints and tricks:
 #
 # <separate/>  -  for radio only
-#
+# postfix '-last' could be added to radio for <br/>
 #
 #
 #
@@ -149,7 +149,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
-                                                             <option/>Only DAD /<spain/>Solo PAPÁ', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select value' }
+                                                             <option/>Only DAD /<spain/>Solo PAPÁ', :mandatory => { :value => /.+/, :hint => 'Please select value' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#11
@@ -157,18 +157,18 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Select  the type of custody you would like to have:
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
-current_step.fields.create :field_type => 'text', :name => 'Who will have legal custody of <spain/>¿Quién tendrá la custodia legal', :header_id => child_name.id, :additional_header_id => child_last_name.id
+current_step.fields.create :field_type => 'text', :name => 'Who will have legal custody of <spain/>¿Quién tendrá la custodia legal', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA<spain/>
                                                             <br/>When the child(ren) live with one parent for most of the time (more than 60%) and has limited visitation with the other parent.
                                                             <br/><spain/>Cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
 
-current_step.fields.create :field_type => 'radio', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
-                                                             <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.<spain/>
-                                                             <separate/>JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.
-                                                             <option/>Both Parents /<spain/>Ambos padres.<spain/>
-                                                             <separate/>SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
-                                                             <option/>Only with the mom /<spain/>Solo conmigo
-                                                             <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /^[a-zA-Z\s():.]+$/, :hint => 'Please select value' }
+current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
+                                                                 <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.<spain/>
+                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.
+                                                                 <option/>Both Parents /<spain/>Ambos padres.<spain/>
+                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
+                                                                 <option/>Only with the mom /<spain/>Solo conmigo
+                                                                 <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /.+/, :hint => 'Please select value' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#12

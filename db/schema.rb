@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724092818) do
+ActiveRecord::Schema.define(version: 20140725075343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,18 +39,15 @@ ActiveRecord::Schema.define(version: 20140724092818) do
   create_table "template_fields", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "field_type",           default: "string"
+    t.string   "field_type",       default: "string"
     t.integer  "template_step_id"
     t.text     "name"
-    t.boolean  "in_line",              default: false
     t.integer  "toggle_id"
-    t.boolean  "in_loop",              default: false
     t.string   "toggle_option"
     t.string   "looper_option"
-    t.boolean  "dont_repeat",          default: false
+    t.boolean  "dont_repeat",      default: false
     t.string   "mandatory"
-    t.integer  "header_id"
-    t.integer  "additional_header_id"
+    t.string   "header_ids"
   end
 
   add_index "template_fields", ["template_step_id"], name: "index_template_fields_on_template_step_id", using: :btree

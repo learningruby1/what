@@ -3,7 +3,7 @@
     .container
       .col-md-12
         - title_array = title.split('<separate/>')
-        %label.new_roman.radio
+        %label.new_roman.radio{ :class => ('margin-left' if !answer.template_field.field_type.match('sub')) }
           = a.radio_button :answer, title_array.first.split(' /<spain/>').first
           = render :partial => 'render_text', :locals => { :answer => title_array.first }
 

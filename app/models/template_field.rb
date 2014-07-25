@@ -10,9 +10,11 @@ class TemplateField < ActiveRecord::Base
 
   def to_text(document, amount_index)
     amount_index -= 1
-    if !header_id.nil?
-      additional_info = TemplateField.find(header_id).document_answers.where(:document_id => document.id)[amount_index].answer
-      additional_info += (" #{ TemplateField.find(additional_header_id).document_answers.where(:document_id => document.id)[amount_index].answer }" if !additional_header_id.nil?)
+
+    if !header_ids.nil?
+      _header_ids = header_ids.split('/')
+      additional_info = TemplateField.find(_header_ids.first).document_answers.where(:document_id => document.id)[amount_index].answer
+      additional_info += (" #{ TemplateField.find(_header_ids.last).document_answers.where(:document_id => document.id)[amount_index].answer }" if _header_ids.length > 1)
       [
         name.split('<spain/>').first,
         '<i>',

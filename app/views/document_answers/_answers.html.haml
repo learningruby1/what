@@ -4,7 +4,7 @@
     = a.hidden_field :template_field_id, :value => answer.template_field_id
 
     - if answer.template_field == @answers.first.template_field && !answer.template_field.template_step.amount_field_id.nil?
-      - if answer.template_field.header_id.nil?
+      - if answer.template_field.header_ids.nil?
         .jumbotron.counter.new_roman
           .container
             %span{ :class => 'first_dependant_field' }
