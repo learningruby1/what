@@ -38,9 +38,9 @@ class Document < ActiveRecord::Base
       if !answers.find(answer.first).template_field.mandatory.nil? && answer.last[:answer].nil? || !answers.find(answer.first).template_field.mandatory.nil? &&
          !answer.last[:answer].match(answers.find(answer.first).template_field.mandatory[:value])
         #WARNING: Temporary disable mandatory checking
-        # errors.add(:base, 'Check the mandatory fields') if !errors.any?
-        # looper = true
-        looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
+        errors.add(:base, 'Check the mandatory fields') if !errors.any?
+        looper = true
+        # looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
         #######
       else
         answers.find(answer.first).update answer.last.permit(:answer)
