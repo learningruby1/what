@@ -171,9 +171,11 @@ current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and vi
                                                                  <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /.+/, :hint => 'Please select value' }
 
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#12
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#12
                                      :title => 'Holiday /<spain/>Feriados',
                                      :description => 'Check all the holiday that apply for your child(ren):<br/><spain/>Marque todos los feriados que aplican a su (s) menor (es):'
+
+current_step.fields.create :field_type => 'text', :name => 'Holidays schedule for <spain/>Holidays schedule para', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 
 toggle_id = 0
 toggle_id += 1
@@ -283,18 +285,17 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Other Country Fa
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to, with dad every year /<spain/>hasta, con el padre todos los años'
 
-current_step.fields.create :name => 'Other Holiday /<spain/>Otro de vacaciones:'
 
 
 
 
-
-
-
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#13
-                                     :title => 'More Holiday /<spain/>Mas Feriados',
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#13
+                                     :title => 'More Holiday /<spain/>Más Feriados',
                                      :description => 'Check all the holiday that apply for your child(ren):<br/>
                                                       <spain/>Marque todos los feriados que aplican a su (s) menor (es):'
+
+current_step.fields.create :field_type => 'text', :name => 'More Holidays schedule for <spain/>Más Holidays schedule para', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => '4th of July /<spain/>4 de Julio', :toggle_id => toggle_id
@@ -502,6 +503,7 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Holiday /<spain/>Otro Feriado', :toggle_id => toggle_id
+current_step.fields.create :name => 'Holiday Name /<spain/>Holiday Nombre', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre

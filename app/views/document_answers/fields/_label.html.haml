@@ -1,3 +1,2 @@
-%div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }" } }
-  .container.margin-vertical-15
-    = render :partial => 'render_text', :locals => { :answer => answer }
+.container.margin-vertical-15
+  = render :partial => 'render_text', :locals => { :answer => answer }

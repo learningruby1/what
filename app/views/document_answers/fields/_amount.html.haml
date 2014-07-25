@@ -1,7 +1,6 @@
-%div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }" } }
-  .container
-    .row.new_roman.col-md-3
-      %p= a.text_field :answer, :class => 'form-control'
-    .row.new_roman.col-md-9
-      &nbsp
-      = render :partial => 'render_text', :locals => { :answer => answer }
+.container
+  .row.new_roman.col-md-3
+    %p= a.text_field :answer, :class => 'form-control'
+  .row.new_roman.col-md-9
+    &nbsp
+    = render :partial => 'render_text', :locals => { :answer => answer }

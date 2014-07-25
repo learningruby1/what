@@ -125,13 +125,13 @@ module PdfDocument
 
         #Step 11   Physical Custody
         step = steps.next
-
         physical_custody_parent = Array.new
+
         number_of_children.times do |i|
+          answers = step_answers_enum step, i
 
           physical_custody = Hash.new
 
-          answers = step_answers_enum step, i
           physical_custody[:child] = get_headed_info answers.next, i
           answers.next
           physical_custody[:custody] = answers.next.answer
@@ -140,36 +140,55 @@ module PdfDocument
         end
 
         #Step 12   Holiday
-        answers = step_answers_enum steps.next
+        step = steps.next
 
         holiday_counter = 0
+        all_holidays = Array.new
 
-        holidays = Array.new
-        7.times do
-          holiday = Array.new
-          holiday.push answers.next
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
+        number_of_children.times do |i|
+          answers = step_answers_enum step, i
 
-          holiday_counter += 1 if holiday[0].answer == '1'
-          holidays.push holiday
-        end
+          holidays = Array.new
+          child_holidays = Hash.new
 
-        #Father and mother days, havent who
-        4.times do
-          holiday = Array.new
-          holiday.push answers.next
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
+          child_holidays[:child] = get_headed_info answers.next, i
 
-          holiday_counter += 1 if holiday[0].answer == '1'
-          holidays.push holiday
+          7.times do
+            holiday = Array.new
+            holiday.push answers.next
+
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+
+            if holiday[0].answer == '1'
+              holiday_counter += 1
+              holidays.push holiday
+            end
+          end
+
+          #Father and mother days, haven't who
+          4.times do
+            holiday = Array.new
+            holiday.push answers.next
+
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+
+            if holiday[0].answer == '1'
+              holiday_counter += 1
+              holidays.push holiday
+            end
+          end
+
+          child_holidays[:holidays] = holidays
+          all_holidays.push child_holidays
         end
 
 
         #Step 13   More holiday
+        holidays = Array.new
         answers = step_answers_enum steps.next
 
         10.times do
@@ -220,7 +239,6 @@ module PdfDocument
         end
 
         holiday = Array.new
-
         holiday.push answers.next
         holiday.push answers.next.answer
         holiday.push answers.next.answer
@@ -457,6 +475,8 @@ module PdfDocument
 
       push_text "That the parties were married on the #{ marriage_date } #{ marriage_country_string }", text_indent
 
+
+
       move_down header_margin_top
       move_down header_margin_top
       push_header '3. MINOR CHILDREN'
@@ -478,11 +498,12 @@ module PdfDocument
         push_text 'That the parties do not have minor children who are the issue of this marriage or were adopted.', text_indent
       end
 
-      move_down header_margin_top
-      push_header '4. PREGNACY'
-      move_down
+      # move_down header_margin_top
+      # push_header '4. PREGNACY'
+      # move_down
 
       push_text "That the wife in this case #{ wife_pregnacy ? 'is' : 'not' } currently pregnant.", text_indent
+
 
 
       if children_adopted && children_residency
@@ -500,6 +521,7 @@ module PdfDocument
           push_text "#{ dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' }", text_indent
         end
 
+
         move_down header_margin_top
         push_header '6. PHYSICAL CUSTODY'
         move_down
@@ -507,12 +529,27 @@ module PdfDocument
         physical_custody_parent.each do |physical_custody|
 
           case physical_custody[:custody]
-          when /^With mom/
-            push_text "#{ physical_custody[:child] }: That #{ mom } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } with dad having visitation as follows: (insert the proposed visitation schedule)", text_indent
-          when /^With dad/
-            push_text "#{ physical_custody[:child] }: That #{ dad } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } with mom having visitation as follows: (insert the proposed visitation schedule)", text_indent
+
+          when /and visit/
+            case physical_custody[:custody]
+
+            when /^With mom/
+              push_text "#{ physical_custody[:child] }: That #{ mom } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor child with dad having visitation as follows: (insert the proposed visitation schedule)", text_indent
+            when /^With dad/
+              push_text "#{ physical_custody[:child] }: That #{ dad } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor child with mom having visitation as follows: (insert the proposed visitation schedule)", text_indent
+            end
+
           when /^Both/
-            push_text "#{ physical_custody[:child] }: That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: (insert the proposed timeshare)", text_indent
+            push_text "#{ physical_custody[:child] }: That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor child and the parties’ timeshare should be as follows: (insert the proposed timeshare)", text_indent
+
+
+          when /^Only/
+            case physical_custody[:custody]
+            when /mom/
+              push_text "#{ physical_custody[:child] }: That #{ mom } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor.", text_indent
+            when /dad/
+              push_text "#{ physical_custody[:child] }: That #{ dad } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor.", text_indent
+            end
           end
         end
 
@@ -521,20 +558,28 @@ module PdfDocument
         move_down
 
         if holiday_counter > 0
+
           push_text 'That the parties should follow the following Holiday schedule:'
-          holidays.each do |holiday|
-            if holiday[0].answer == '1'
-              holiday_string = holiday[0].template_field.name.split(' /<spain/>').first
-              case holiday.count
+          move_down
+
+          all_holidays.each do |holiday|
+
+            push_text holiday[:child]
+            holiday[:holidays].each do |holy|
+
+              holiday_string = holy[0].template_field.name.split(' /<spain/>').first
+              case holy.count
               when 3
-                holiday_string += ": from #{ holiday[1] } to #{ holiday[2] }"
+                holiday_string += ": from #{ holy[1] } to #{ holy[2] }"
               when 4
-                holiday_string += ": #{ holiday[1] } with #{ holiday[2] }, #{ holiday[3] }"
+                holiday_string += ": #{ holy[1] } with #{ holy[2] }, #{ holy[3] }"
               when 5
-                holiday_string += ": from #{ holiday[1] } to #{ holiday[2] } with #{ holiday[3] }, #{ holiday[4] }"
+                holiday_string += ": from #{ holy[1] } to #{ holy[2] } with #{ holy[3] }, #{ holy[4] }"
               end
-              push_text holiday_string
+              push_text holiday_string, text_indent
+
             end
+
           end
         else
           push_text 'That the parties should not follow a specific Holiday schedule.'
@@ -593,8 +638,16 @@ module PdfDocument
           push_text "That the parties should alternate claiming the minor #{ number_of_children > 1 ? 'children' : 'child' }. as dependent(s) for Federal Tax purposes."
         end
 
+
+
+
       # End of children
       end
+
+
+
+
+
 
       move_down header_margin_top
       push_header '13. COMMUNITY PROPERTY'

@@ -38,6 +38,8 @@
                     'data-target' => '#modal_window', 'data-toggle' => 'modal' do
                     .glyphicon.glyphicon-cloud-download
                     Pay to Download
+
+                = link_to 'Download free', download_pdf_path(document.id), :class => 'btn btn-success'
               - else
                 = link_to new_user_session_path, :class => 'btn btn-primary modal_remote',
                   'data-target' => '#modal_window', 'data-toggle' => 'modal' do

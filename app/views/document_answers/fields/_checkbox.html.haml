@@ -1,7 +1,6 @@
-%div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }" } }
-  .container
-    %hr.col-md-12
-      %label.new_roman
-        = a.check_box :answer
-        = render :partial => 'render_text', :locals => { :answer => answer }
-        -#%div{ :style => 'cursor: pointer' }
+.container
+  %hr.col-md-12
+    %label.new_roman
+      = a.check_box :answer
+      = render :partial => 'render_text', :locals => { :answer => answer }
+      -#%div{ :style => 'cursor: pointer' }
