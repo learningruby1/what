@@ -81,7 +81,7 @@ current_step = template.steps.create :step_number => step_number += 1,#4
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in Nevada for over 6 weeks. /<spain/>Yo, he vivido en Nevada por más de 6 semanas.', :toggle_id => toggle_id, :mandatory => { :value => /^1$/, :hint => 'Please select value' }
+current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in Nevada for over 6 weeks. /<spain/>Yo, he vivido en Nevada por más de 6 semanas.', :toggle_id => toggle_id, :mandatory => { :value => /^1$/, :hint => 'You need to be a Nevada resident before you can file for a divorce.' }
 
 current_step = template.steps.create :step_number => step_number += 1,#5
                                      :title => 'Pregnancy /<spain/>Embarazada',
