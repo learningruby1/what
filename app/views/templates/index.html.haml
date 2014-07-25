@@ -1,6 +1,6 @@
 .jumbotron
   .container
-    %h1 Forms Mama
+    %h2 Forms Mama
     %p A unique online multilingual Self-Help forms site
     - if @documents.present?
       %h2.text-muted Recent documents
@@ -13,6 +13,6 @@
     - if index % 3 == 0
       .row
     .col-md-4
-      %h2= template
+      %h3= template
       %p=  template.to_desc
       %p= link_to 'View details >>', new_template_document_path(template), :class => 'btn btn-default'

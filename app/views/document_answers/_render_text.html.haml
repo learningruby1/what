@@ -1,14 +1,11 @@
-- text = answer.kind_of?(DocumentAnswer) ? answer.template_field.name : answer
+- text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
-  - text.split('<spain/>').first.split('<br/>').each do |t|
-    %strong.new_roman= t.html_safe
-    - if text.match /<br\/>/
-      %br
-
-  - if text.split('<spain/>').count > 1
-    - text.split('<spain/>').last.split('<br/>').each do |t|
-      %strong.new_roman.spain= t.html_safe
+  - text.split('<spain/>').each_with_index do |value, index|
+    - if index%2==0
+      %strong.new_roman= value.strip.html_safe
+    - else
+      %strong.new_roman.spain= value.strip.html_safe
 
 - if answer.kind_of?(DocumentAnswer) && flash.any?
   - if !answer.template_field.mandatory.nil? && answer.answer.nil? || !answer.template_field.mandatory.nil? && !answer.answer.match(answer.template_field.mandatory[:value])

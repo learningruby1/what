@@ -33,5 +33,12 @@ module PdfDocument
     def move_down(number=10)
       @data_array.push [number.to_s]
     end
+
+    def get_headed_info(answer, amount_index)
+      additional_info = TemplateField.find(answer.template_field.header_id).document_answers.where(:document_id => @document_id)[amount_index].answer
+      additional_info += (" #{ TemplateField.find(answer.template_field.additional_header_id).document_answers.where(:document_id => @document_id)[amount_index].answer }" if !answer.template_field.additional_header_id.nil?)
+
+      additional_info
+    end
   end
 end
