@@ -139,12 +139,12 @@ module PdfDocument
           physical_custody_parent.push physical_custody
         end
 
-        #Step 12   Holiday
-        step = steps.next
 
-        holiday_counter = 0
+
+        #Step 12   Holiday
         all_holidays = Array.new
 
+        step = steps.next
         number_of_children.times do |i|
           answers = step_answers_enum step, i
 
@@ -163,7 +163,6 @@ module PdfDocument
             holiday.push answers.next.answer
 
             if holiday[0].answer == '1'
-              holiday_counter += 1
               holidays.push holiday
             end
           end
@@ -177,76 +176,107 @@ module PdfDocument
             holiday.push answers.next.answer
 
             if holiday[0].answer == '1'
-              holiday_counter += 1
               holidays.push holiday
             end
           end
 
-          child_holidays[:holidays] = holidays
-          all_holidays.push child_holidays
+          if holidays.length > 0
+            child_holidays[:holidays] = holidays
+            all_holidays.push child_holidays
+          end
         end
+
+
 
 
         #Step 13   More holiday
-        holidays = Array.new
-        answers = step_answers_enum steps.next
+        step = steps.next
+        number_of_children.times do |i|
+          answers = step_answers_enum step, i
 
-        10.times do
+          holidays = Array.new
+          child_holidays = Hash.new
+
+          child_holidays[:child] = get_headed_info answers.next, i
+
+          10.times do
+            holiday = Array.new
+            holiday.push answers.next
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+
+            if holiday[0].answer == '1'
+              holidays.push holiday
+            end
+          end
+
+          #Father and mother days, havent who
+          2.times do
+            holiday = Array.new
+            holiday.push answers.next
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+
+            if holiday[0].answer == '1'
+              holidays.push holiday
+            end
+          end
+
+          3.times do
+            holiday = Array.new
+            holiday.push answers.next
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+
+            if holiday[0].answer == '1'
+              holidays.push holiday
+            end
+          end
+
+          #Holidays have no time
+          3.times do
+            holiday = Array.new
+            holiday.push answers.next
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
+
+            if holiday[0].answer == '1'
+              holidays.push holiday
+            end
+          end
+
           holiday = Array.new
           holiday.push answers.next
           holiday.push answers.next.answer
           holiday.push answers.next.answer
           holiday.push answers.next.answer
           holiday.push answers.next.answer
+          holiday.push answers.next.answer
+          holiday.push answers.next.answer
 
-          holiday_counter += 1 if holiday[0].answer == '1'
-          holidays.push holiday
+          if holiday[0].answer == '1'
+            holidays.push holiday
+          end
+
+          child_holidays[:holidays] = holidays
+
+          if all_holidays.select{ |h| h[:child] == child_holidays[:child] }.present?
+
+             all_holidays.select{ |h| h[:child] == child_holidays[:child] }.first[:holidays].concat child_holidays[:holidays]
+          else
+
+            all_holidays.push child_holidays
+          end
+
         end
 
-        #Father and mother days, havent who
-        2.times do
-          holiday = Array.new
-          holiday.push answers.next
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
 
-          holiday_counter += 1 if holiday[0].answer == '1'
-          holidays.push holiday
-        end
 
-        3.times do
-          holiday = Array.new
-          holiday.push answers.next
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-
-          holiday_counter += 1 if holiday[0].answer == '1'
-          holidays.push holiday
-        end
-
-        #Holidays have no time
-        3.times do
-          holiday = Array.new
-          holiday.push answers.next
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-
-          holiday_counter += 1 if holiday[0].answer == '1'
-          holidays.push holiday
-        end
-
-        holiday = Array.new
-        holiday.push answers.next
-        holiday.push answers.next.answer
-        holiday.push answers.next.answer
-        holiday.push answers.next.answer
-        holiday.push answers.next.answer
-
-        holiday_counter += 1 if holiday[0].answer == '1'
-        holidays.push holiday
 
         #Step 14   Children’s Health Insurance
         answers = step_answers_enum steps.next
@@ -557,7 +587,7 @@ module PdfDocument
         push_header '7. HOLIDAYS VISITATION'
         move_down
 
-        if holiday_counter > 0
+        if all_holidays.length > 0
 
           push_text 'That the parties should follow the following Holiday schedule:'
           move_down
@@ -575,11 +605,12 @@ module PdfDocument
                 holiday_string += ": #{ holy[1] } with #{ holy[2] }, #{ holy[3] }"
               when 5
                 holiday_string += ": from #{ holy[1] } to #{ holy[2] } with #{ holy[3] }, #{ holy[4] }"
+              when 7
+                holiday_string += ": #{ holy[1] }, #{ holy[2] } from #{ holy[3] } to #{ holy[4] }, with #{ holy[5] }, #{ holy[6] }"
               end
               push_text holiday_string, text_indent
 
             end
-
           end
         else
           push_text 'That the parties should not follow a specific Holiday schedule.'
