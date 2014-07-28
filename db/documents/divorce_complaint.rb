@@ -504,6 +504,7 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Holiday /<spain/>Otro Feriado', :toggle_id => toggle_id
 current_step.fields.create :name => 'Holiday Name /<spain/>Holiday Nombre', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
