@@ -3,14 +3,16 @@ module PdfDocument
     require 'pdf_documents/document_wrapper'
     require 'pdf_documents/documents/divorce_complaint'
     require 'pdf_documents/documents/divorce_summons'
+    require 'pdf_documents/documents/divorce_injunction'
     require 'prawn'
 
     def generate(document)
 
       case document.template.to_s
       when 'Complaint for Divorce'
-        generate_numered PdfDocument::DivorceComplaint.new(document), "Divorce_complaint_#{ document.id }"
-        generate_plain   PdfDocument::DivorceSummons.new(document), "Divorce_summons_#{ document.id }"
+        generate_numered PdfDocument::DivorceComplaint.new(document),  "Divorce_complaint_#{ document.id }"
+        generate_plain   PdfDocument::DivorceSummons.new(document),    "Divorce_summons_#{ document.id }"
+        generate_plain   PdfDocument::DivorceInjunction.new(document), "Divorce_injunction_#{ document.id }"
       end
 
     end
