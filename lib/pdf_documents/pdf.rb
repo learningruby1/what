@@ -2,19 +2,25 @@ module PdfDocument
   class Pdf
     require 'pdf_documents/document_wrapper'
     require 'pdf_documents/documents/divorce_complaint'
+    require 'pdf_documents/documents/divorce_summons'
     require 'prawn'
 
     def generate(document)
 
       case document.template.to_s
       when 'Complaint for Divorce'
-        wrapped_document = PdfDocument::DivorceComplaint.new document
+        generate_numered PdfDocument::DivorceComplaint.new(document), "Divorce_complaint_#{ document.id }"
+        generate_plain   PdfDocument::DivorceSummons.new(document), "Divorce_summons_#{ document.id }"
       end
+
+    end
+
+    def generate_numered(wrapped_document, document_name)
 
       numbers = ''; 28.times do |i| numbers += "\n\n#{ i + 1 }" end
       leading = 8
 
-      Prawn::Document.generate("documents/pdf/document_#{ document.id }.pdf") do
+      Prawn::Document.generate("documents/pdf/#{ document_name }.pdf") do
         repeat :all do
 
           font "Times-Roman"
@@ -91,5 +97,37 @@ module PdfDocument
         end
       end
     end
+
+    def generate_plain(wrapped_document, document_name)
+      Prawn::Document.generate("documents/pdf/#{ document_name }.pdf") do
+
+        #BODY
+        bounding_box([bounds.left + 20, bounds.top - 37], :width => 503, :height => bounds.height - 97) do
+          cell :width => 503, :height => bounds.height, :borders => [], :padding_left => 5
+
+          wrapped_document.amount.times do
+
+            next_element = wrapped_document.next
+            next_line = next_element.last
+            command   = next_element.first
+            command_number = command.split(' ').last.to_i
+
+            case command
+            when 'text'
+              text next_line, :inline_format => true
+            when /^text-right /
+              font_size(command_number){ text next_line, :align => :right }
+            when /^text /
+              text next_line, :inline_format => true, :indent_paragraphs => command_number
+            when /^header /
+              font_size(command_number){ text next_line, :align => :center }
+            when /\d/
+              move_down command_number
+            end
+          end
+        end
+      end
+    end
+
   end
 end

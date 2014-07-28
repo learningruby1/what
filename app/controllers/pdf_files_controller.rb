@@ -2,7 +2,7 @@ class PdfFilesController < ApplicationController
   require 'pdf_documents/pdf'
 
   skip_filter :authenticate_user!
-  before_action :get_user_document, :only => [:generate, :download]
+  before_action :get_user_document, :only => [:generate]
 
   def index
     if user_signed_in?
@@ -19,11 +19,11 @@ class PdfFilesController < ApplicationController
   end
 
   def download
-    send_file "documents/pdf/document_#{ @document.id }.pdf", :type => "application/pdf", :x_sendfile => true
+    #NOTICE: privacy should be implemented
+    send_file "documents/pdf/#{ params[:filename] }.pdf", :type => "application/pdf", :x_sendfile => true
   end
 
   private
-
   def get_user_document
 
     if user_signed_in?

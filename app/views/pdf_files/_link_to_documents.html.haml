@@ -1,0 +1,7 @@
+&nbsp
+- case document.title
+- when 'Complaint for Divorce'
+= link_to download_pdf_path("Divorce_complaint_#{ document.id }"), :class => 'btn btn-primary btn-xs' do
+  Complaint
+= link_to download_pdf_path("Divorce_summons_#{ document.id }"), :class => 'btn btn-primary btn-xs' do
+  Summons

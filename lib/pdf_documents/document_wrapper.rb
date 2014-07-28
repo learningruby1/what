@@ -6,7 +6,7 @@ module PdfDocument
     end
 
     def amount
-      @data_array.length
+      @data_array.try(:length).to_i || 0
     end
 
     protected
@@ -24,6 +24,10 @@ module PdfDocument
       else
         @data_array.push ["text #{ indent.to_s }", text]
       end
+    end
+
+    def push_text_right(text, size=10)
+      @data_array.push ["text-right #{ size.to_s }", text]
     end
 
     def push_header(text, size=13)
