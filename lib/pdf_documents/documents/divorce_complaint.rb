@@ -6,6 +6,10 @@ module PdfDocument
       @document_id = document.id
       @data_array = Array.new
 
+
+      # FETCHING STEPS
+
+
       #Step zero
       steps = document.template.steps.to_enum
       answers = step_answers_enum steps.next
@@ -139,8 +143,6 @@ module PdfDocument
           physical_custody_parent.push physical_custody
         end
 
-
-
         #Step 12   Holiday
         all_holidays = Array.new
 
@@ -185,9 +187,6 @@ module PdfDocument
             all_holidays.push child_holidays
           end
         end
-
-
-
 
         #Step 13   More holiday
         step = steps.next
@@ -266,17 +265,12 @@ module PdfDocument
           child_holidays[:holidays] = holidays
 
           if all_holidays.select{ |h| h[:child] == child_holidays[:child] }.present?
-
              all_holidays.select{ |h| h[:child] == child_holidays[:child] }.first[:holidays].concat child_holidays[:holidays]
           else
-
             all_holidays.push child_holidays
           end
 
         end
-
-
-
 
         #Step 14   Children’s Health Insurance
         answers = step_answers_enum steps.next
@@ -313,7 +307,6 @@ module PdfDocument
       pet_amount = answers.next.answer.to_i rescue 0
 
       if !pet_presence
-
         steps.next
       else
 
@@ -440,9 +433,6 @@ module PdfDocument
       answers = step_answers_looped_enum steps.next
       5.times do steps.next end
 
-
-
-
       #Step 36   Spousal support or Alimony
       answers = step_answers_enum steps.next
       alimony_presence = answers.next.answer == 'Yes' rescue false
@@ -462,6 +452,12 @@ module PdfDocument
       #Step 38   Reason divorce
       answers = step_answers_enum steps.next
       reason_divorce = answers.next.answer
+
+
+
+      # END OF FETCHING
+
+
 
       header_margin_top = 60
       text_indent = 20
@@ -505,8 +501,6 @@ module PdfDocument
 
       push_text "That the parties were married on the #{ marriage_date } #{ marriage_country_string }", text_indent
 
-
-
       move_down header_margin_top
       move_down header_margin_top
       push_header '3. MINOR CHILDREN'
@@ -534,8 +528,6 @@ module PdfDocument
 
       push_text "That the wife in this case #{ wife_pregnacy ? 'is' : 'not' } currently pregnant.", text_indent
 
-
-
       if children_adopted && children_residency
 
         move_down header_margin_top
@@ -550,7 +542,6 @@ module PdfDocument
         when 'Only DAD'
           push_text "#{ dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ number_of_children > 1 ? 'children' : 'child' }", text_indent
         end
-
 
         move_down header_margin_top
         push_header '6. PHYSICAL CUSTODY'
@@ -669,16 +660,8 @@ module PdfDocument
           push_text "That the parties should alternate claiming the minor #{ number_of_children > 1 ? 'children' : 'child' }. as dependent(s) for Federal Tax purposes."
         end
 
-
-
-
       # End of children
       end
-
-
-
-
-
 
       move_down header_margin_top
       push_header '13. COMMUNITY PROPERTY'
@@ -706,7 +689,6 @@ module PdfDocument
             end
           end
         end
-
 
         move_down
         if other_property_presence

@@ -16,5 +16,5 @@ Rails.application.routes.draw do
 
   resources :pdf_files, :only => [:index]
   get 'generate_pdf/document/:document_id' => 'pdf_files#generate', :as => :generate_pdf
-  get 'download/document/:document_id' => 'pdf_files#download', :as => :download_pdf
+  get 'download/document/:filename' => 'pdf_files#download', :as => :download_pdf
 end

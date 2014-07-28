@@ -7,6 +7,7 @@
 #
 #
 
+#NOTICE: name used in link_to_documents tempate AND in lib/pdf_documents/documents/pdf.rb
 Template.where( :name => 'Complaint for Divorce').first.try :destroy
 template = Template.create :name => 'Complaint for Divorce', :description => 'No description' if !template.present?
 

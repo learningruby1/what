@@ -28,18 +28,15 @@
             - if document.is_generated?
               - if current_user
                 - if current_user.paypal_payment_id.present?
-                  &nbsp
-                  = link_to download_pdf_path(document.id), :class => 'btn btn-primary' do
-                    .glyphicon.glyphicon-cloud-download
-                    Download
+                  = render :partial => 'link_to_documents', :locals => { :document => document }
 
                 - else
                   = link_to new_paypal_payment_path, :class => 'btn btn-primary modal_remote',
                     'data-target' => '#modal_window', 'data-toggle' => 'modal' do
                     .glyphicon.glyphicon-cloud-download
                     Pay to Download
+                = render :partial => 'link_to_documents', :locals => { :document => document }
 
-                = link_to 'Download free', download_pdf_path(document.id), :class => 'btn btn-success'
               - else
                 = link_to new_user_session_path, :class => 'btn btn-primary modal_remote',
                   'data-target' => '#modal_window', 'data-toggle' => 'modal' do
