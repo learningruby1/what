@@ -336,7 +336,7 @@ module PdfDocument
       end
 
       move_down 30
-      push_text 'DATED THIS _______day of  ___________, @text_indent___'
+      push_text 'DATED THIS _______day of  ___________, 20___'
       move_down
       push_text 'Submitted by: __________________'
       move_down
@@ -352,7 +352,7 @@ module PdfDocument
       push_text 'I declare under penalty of perjury under the law of the State of Nevada that the foregoing is true and correct.', @text_indent
 
       move_down 30
-      push_text 'DATED THIS _______day of  ___________, @text_indent___'
+      push_text 'DATED THIS _______day of  ___________, 20___'
       move_down
       push_text 'Submitted by: __________________'
       move_down
