@@ -1,5 +1,5 @@
 module PdfDocument
-  class DivorceComplaint < DocumentWrapper
+  class DivorceComplaint < DivorceWrapper
     def generate
       push_text 'COMD', :style => :bold
       move_down
@@ -358,8 +358,7 @@ module PdfDocument
       move_down
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
 
-      @data_array_enum = @data_array.to_enum
-      self
+      finishing
     end
   end
 end

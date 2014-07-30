@@ -1,9 +1,12 @@
-&nbsp
 - case document.title
 - when 'Complaint for Divorce'
-= link_to download_pdf_path("Divorce_complaint_#{ document.id }"), :class => 'btn btn-primary btn-xs' do
-  Complaint
-= link_to download_pdf_path("Divorce_summons_#{ document.id }"), :class => 'btn btn-primary btn-xs' do
-  Summons
-= link_to download_pdf_path("Divorce_injunction_#{ document.id }"), :class => 'btn btn-primary btn-xs' do
-  Injunction
+&nbsp
+= link_to 'Complaint', download_pdf_path("Divorce_complaint_#{ document.id }"), :class => 'btn btn-primary'
+&nbsp
+= link_to 'Summons', download_pdf_path("Divorce_summons_#{ document.id }"), :class => 'btn btn-primary'
+&nbsp
+= link_to 'Injunction', download_pdf_path("Divorce_injunction_#{ document.id }"), :class => 'btn btn-primary'
+&nbsp
+= link_to 'Cover', download_pdf_path("Divorce_cover_#{ document.id }"), :class => 'btn btn-primary'
+
+-# = link_to 'Don\'t press it ;)', generate_pdf_path(document.id), :class => 'btn btn-danger'
