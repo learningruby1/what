@@ -286,9 +286,14 @@ module PdfDocument
         @request_amount_paid = answers.next.answer
 
         #Step 18   Child Tax Exemption
-        answers = step_answers_enum steps.next
-        @tax_examption_who = answers.next.answer
-        @tax_examption_date = answers.next.answer
+        step = steps.next
+        @child_tax_examption = Array.new
+
+        @number_of_children.times do |i|
+          answers = step_answers_enum step, i
+
+          @child_tax_examption.push [ answers.next.answer, answers.next.answer ]
+        end
       end
 
       #Step 19   Pet

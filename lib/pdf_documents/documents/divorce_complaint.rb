@@ -192,11 +192,13 @@ module PdfDocument
         push_header '12. TAX DEDUCTION / EXEMPTIONS'
         move_down
 
-        case @tax_examption_who
-        when /^Mom every|^Dad every/
-          push_text "That #{ @tax_examption_who } should claim the minor #{ @number_of_children > 1 ? 'children' : 'child' }. as #{ @number_of_children > 1 ? 'dependents' : 'dependent' } for Federal Tax purposes every year."
-        when /^Dad and Mom/
-          push_text "That the parties should alternate claiming the minor #{ @number_of_children > 1 ? 'children' : 'child' }. as dependent(s) for Federal Tax purposes."
+        @child_tax_examption.each do |tax|
+          case tax
+          when /^Mom every|^Dad every/
+            push_text "That #{ tax } should claim the minor #{ @number_of_children > 1 ? 'children' : 'child' }. as #{ @number_of_children > 1 ? 'dependents' : 'dependent' } for Federal Tax purposes every year."
+          when /^Dad and Mom/
+            push_text "That the parties should alternate claiming the minor #{ @number_of_children > 1 ? 'children' : 'child' }. as dependent(s) for Federal Tax purposes."
+          end
         end
 
       # End of children
