@@ -11,7 +11,7 @@ module PdfDocument
       move_down
 
       table_row [ { :content => '<font size="10">Do you or any other party in this case (including any minor child) have any other current case(s) or past case(s) in the Family Court or Juvenile Court in Clark County?<br/>0 YES            0 NO<br/>If yes, complete the other side of this form</font>', :align => :center, :font_style => :bold, :border_width => 3 } ]
-      push_table -1
+      push_table -1, 0
       move_down 20
 
       push_header 'PARTY INFORMATION', 10

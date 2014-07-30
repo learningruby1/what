@@ -39,21 +39,21 @@ module PdfDocument
     def create_table
     end
 
-    # E.g
-    # table([
-    #  ["A", {:content => "2x1", :colspan => 2}, "B"],
-    #  [{:content => "1x2", :rowspan => 2}, "C", "D", "E"],
-    #  [{:content => "2x2", :colspan => 2, :rowspan => 2}, "F"],
-    #  ["G", "H"]
-    # ])
-    def table_row(row_hash)
+    #  params:
+    #    row: examples:
+    #           [{:content => "1x2", :rowspan => 2}, "C", "D", "E"],
+    #           [{:content => "2x2", :colspan => 2, :rowspan => 2}, "F"],
+    #           ["G", "H"]
+    def table_row(row)
       @table = Array.new if @table.nil?
-      @table.push row_hash
+      @table.push row
     end
 
-    # mark_extra_row == -1 => no background at all
-    def push_table(mark_extra_row=0)
-      @data_array.push ["table #{ mark_extra_row }", @table]
+    # params:
+    #   mark_extra_row, border_width: default values have no effect on table
+    #   mark_extra_row == -1 => no background at all
+    def push_table(mark_extra_row=0, border_width=-1)
+      @data_array.push ["table #{ mark_extra_row } #{ border_width }", @table]
       @table = nil
     end
 
