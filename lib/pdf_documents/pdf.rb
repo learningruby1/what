@@ -22,13 +22,16 @@ module PdfDocument
 
     def generate_document(wrapped_document, document_name, judical_layout=false, footer_layout=false)
 
-      numbers = ''; 28.times do |i| numbers += "\n\n#{ i + 1 }" end
-      leading = 8
+      if judical_layout
+        numbers = ''; 28.times do |i| numbers += "\n\n#{ i + 1 }" end
+        leading = 8
+      end
 
       Prawn::Document.generate("documents/pdf/#{ document_name }.pdf") do
         font "Times-Roman"
 
         if !judical_layout
+          #default page params
           bound_left = bounds.left
           bound_top = bounds.top
           width = 540
@@ -36,6 +39,7 @@ module PdfDocument
           padding_left = 0
 
         else
+          #page params for judical layout
           bound_left = bounds.left + 20
           bound_top = bounds.top - 37
           width = 503
@@ -96,7 +100,12 @@ module PdfDocument
             next_element = wrapped_document.next
             next_line = next_element.last
             command   = next_element.first
-            command_number = command.split(' ').last.to_i rescue nil
+            command_number = command.split(' ').second.to_i rescue nil
+            if command.split(' ').length > 2
+              additional_command = command.split(' ').last.to_i
+            else
+              additional_command = -1
+            end
 
             case command
             when 'text'
@@ -108,17 +117,18 @@ module PdfDocument
             when /^header /
               font_size(command_number){ text next_line, :align => :center, :inline_format => true }
             when /^table /
-              table next_line, :width => width, :cell_style => { :inline_format => true, :size => 9, :font => "Times-Roman" } do
+              _font_size = additional_command == 0 ? 12 : 9
+              table next_line, :width => width, :cell_style => { :inline_format => true, :size => _font_size, :font => "Times-Roman" } do
 
                 cells.style :valign => :top
-                cells.row(1..99).style :height => 18
                 cells.row(0).background_color = 'DFDFDF' if command_number > -1
                 cells.row(command_number).background_color = 'DFDFDF' if command_number > 0
+                cells.border_width = additional_command if additional_command > -1
               end
             when 'new_page'
               start_new_page
             when /\d/
-              move_down command_number
+              move_down next_line.to_i
             end
           end
         end
