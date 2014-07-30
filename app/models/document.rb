@@ -9,7 +9,7 @@ class Document < ActiveRecord::Base
   #Controller answers Action edit
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
-    _answers = step_answers(next_step).sort_by(&:id) rescue nil
+    _answers = step_answers(next_step) rescue nil
 
     if direction == 'forward' && loop_amount(next_step) != looped_amount(next_step, _answers) && _answers.present?
       _answers.each(&:destroy)
@@ -23,7 +23,7 @@ class Document < ActiveRecord::Base
         _answers.last.template_field.looper_option  == _answers.last.answer
 
       _answers.each{ |a| a.destroy if a.template_field.dont_repeat? }
-      _answers = step_answers(next_step).sort_by(&:id)
+      _answers = step_answers(next_step)
       _answers += create_next_step_answers!(next_step, _answers.first.toggler_offset + _answers.length)
     end
 
@@ -34,21 +34,37 @@ class Document < ActiveRecord::Base
   def update_answers!(answers_params)
     looper = false
     answers_params[:answers].each do |answer|
-      answers.find(answer.first).update answer.last.permit(:answer)
-      if !answers.find(answer.first).template_field.mandatory.nil? && answer.last[:answer].nil? || !answers.find(answer.first).template_field.mandatory.nil? &&
-         !answer.last[:answer].match(answers.find(answer.first).template_field.mandatory[:value])
-        #WARNING: Temporary disable mandatory checking
-        errors.add(:base, 'Check the mandatory fields') if !errors.any?
-        looper = true
-        # looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
-        #######
-        answers.find(answer.first).update answer.last.permit(:answer)
+
+      _answer = answers.find(answer.first)
+      step_number = _answer.template_field.template_step.step_number
+      # save answer
+      _answer.update answer.last.permit(:answer)
+
+      # mandatory checking
+      if !_answer.template_field.mandatory.nil? && answer.last[:answer].nil? || !_answer.template_field.mandatory.nil? &&
+         !answer.last[:answer].match(_answer.template_field.mandatory[:value])
+
+        if !_answer.template_field.toggle_id.nil?
+          if !_answer.template_field.toggle_option.nil? &&
+             step_answers(step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id }.first.answer.match(_answer.template_field.toggle_option) ||
+             step_answers(step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id && a.toggler_offset == _answer.toggler_offset }.first.answer == '1'
+
+            looper = add_mandatory_error
+          end rescue looper = add_mandatory_error
+        else
+          looper = add_mandatory_error
+        end
       else
-        answers.find(answer.first).update answer.last.permit(:answer)
-        looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
+        looper = _answer.template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
       end
     end
     looper
+  end
+
+  def add_mandatory_error
+    errors.add(:base, 'Check the mandatory fields') if !errors.any?
+    true
+    # false
   end
 
   def generate_session_uniq_token
@@ -95,7 +111,7 @@ class Document < ActiveRecord::Base
   end
 
   def step_answers(step)
-    template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten rescue nil
+    template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten.sort_by(&:id) rescue nil
   end
 
   def loop_amount(step)
