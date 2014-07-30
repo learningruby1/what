@@ -568,11 +568,12 @@ current_step.fields.create :field_type => 'amount', :name => 'since separation. 
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#18
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#18
                                      :title => 'Child Tax Exemption /<spain/>Menores en los Impuestos',
                                      :description => 'Who will claim (insert name of child #1) as dependent on tax returns?
                                                       <br/><spain/>¿Quién reclamará (insert name of child #1) como dependiente en los impuestos?'
 
+current_step.fields.create :field_type => 'text', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años
                                                              <option/>Dad every year /<spain/>Papá todos los años
                                                              <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años', :toggle_id => toggle_id, :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select value' }
