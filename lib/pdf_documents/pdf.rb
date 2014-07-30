@@ -1,9 +1,11 @@
 module PdfDocument
   class Pdf
-    require 'pdf_documents/document_wrapper'
+    require 'pdf_documents/wrapper'
+    require 'pdf_documents/divorce_wrapper'
     require 'pdf_documents/documents/divorce_complaint'
     require 'pdf_documents/documents/divorce_summons'
     require 'pdf_documents/documents/divorce_injunction'
+    require 'pdf_documents/documents/divorce_cover'
     require 'prawn'
 
     def generate(document)
@@ -14,6 +16,7 @@ module PdfDocument
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
+        generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
       end
     end
 
@@ -24,7 +27,21 @@ module PdfDocument
 
       Prawn::Document.generate("documents/pdf/#{ document_name }.pdf") do
         font "Times-Roman"
-        if judical_layout
+
+        if !judical_layout
+          bound_left = bounds.left
+          bound_top = bounds.top
+          width = 540
+          height = bounds.height
+          padding_left = 0
+
+        else
+          bound_left = bounds.left + 20
+          bound_top = bounds.top - 37
+          width = 503
+          height = bounds.height - 97
+          padding_left = 5
+
           repeat :all do
             #Header, invisible
             canvas do
@@ -71,15 +88,15 @@ module PdfDocument
         end
 
         # #BODY
-        bounding_box([bounds.left + 20, bounds.top - 37], :width => 503, :height => bounds.height - 97) do
-          cell :width => 503, :height => bounds.height, :borders => [], :padding_left => 5
+        bounding_box([bound_left, bound_top], :width => width, :height => height) do
+          cell :width => width, :height => height, :borders => [], :padding_left => padding_left
 
           wrapped_document.amount.times do
 
             next_element = wrapped_document.next
             next_line = next_element.last
             command   = next_element.first
-            command_number = command.split(' ').last.to_i
+            command_number = command.split(' ').last.to_i rescue nil
 
             case command
             when 'text'
@@ -89,7 +106,17 @@ module PdfDocument
             when /^text /
               text next_line, :inline_format => true, :indent_paragraphs => command_number
             when /^header /
-              font_size(command_number){ text next_line, :align => :center }
+              font_size(command_number){ text next_line, :align => :center, :inline_format => true }
+            when /^table /
+              table next_line, :width => width, :cell_style => { :inline_format => true, :size => 9, :font => "Times-Roman" } do
+
+                cells.style :valign => :top
+                cells.row(1..99).style :height => 18
+                cells.row(0).background_color = 'DFDFDF' if command_number > -1
+                cells.row(command_number).background_color = 'DFDFDF' if command_number > 0
+              end
+            when 'new_page'
+              start_new_page
             when /\d/
               move_down command_number
             end

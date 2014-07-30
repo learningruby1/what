@@ -1,5 +1,5 @@
 module PdfDocument
-  class DivorceInjunction < DocumentWrapper
+  class DivorceInjunction < DivorceWrapper
     def generate
       push_text 'cc12'
 
@@ -46,8 +46,7 @@ module PdfDocument
       move_down 5
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
 
-      @data_array_enum = @data_array.to_enum
-      self
+      finishing
     end
   end
 end

@@ -1,5 +1,5 @@
 module PdfDocument
-  class DivorceSummons < DocumentWrapper
+  class DivorceSummons < DivorceWrapper
     def generate
       push_header "#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT"
       push_header "#{ @clark_nye } JUDICIAL DISTRICT COURT"

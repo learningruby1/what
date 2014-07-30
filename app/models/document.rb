@@ -42,6 +42,7 @@ class Document < ActiveRecord::Base
         looper = true
         # looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
         #######
+        answers.find(answer.first).update answer.last.permit(:answer)
       else
         answers.find(answer.first).update answer.last.permit(:answer)
         looper = answers.find(answer.first).template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
@@ -65,7 +66,7 @@ class Document < ActiveRecord::Base
     document_answers = Array.new
 
     if template.steps.where(:step_number => next_step).exists?
-      (loop_amount(next_step) == 0 ? 1 : loop_amount(next_step)).times do |i|
+      loop_amount(next_step).times do |i|
         template.steps.where(:step_number => next_step).first.fields.reverse_each do |field|
 
           if i == 0 || field.dont_repeat == false
@@ -98,7 +99,7 @@ class Document < ActiveRecord::Base
   end
 
   def loop_amount(step)
-    template.steps.where(:step_number => step).first.amount_fields.where(:document_id => id).first.try(:answer).to_i.presence_in(1..50) || 0 rescue 0
+    template.steps.where(:step_number => step).first.amount_fields.where(:document_id => id).first.try(:answer).to_i.presence_in(1..50) || 1 rescue 1
   end
 
   def looped_amount(step, _answers)
