@@ -30,10 +30,10 @@ module PdfDocument
       push_text '2.  Unless you respond, your default will be entered upon application of the plaintiff and this Court may enter a judgment against you for the relief demanded in the Complaint, which could result in the taking of money or property or other relief requested in the Complaint.', @text_indent
       move_down
       push_text '3.  If you intend to seek the advice of an attorney in this matter, you should do so promptly so that your response may be filed on time.', @text_indent
-      move_down 40
 
       deputy_clerk_info = @clark_nye == 'Clark' ? 'Family Courts and Services Center<br/>601 North Pecos Road<br/>Las Vegas, Nevada 89101<br/><br/>Regional Justice Center<br/>200 Lewis Avenue<br/>Las Vegas, Nevada 89101' : '1520 E. Basin Ave. Ste. 108<br/>Pahrump, NV 89060'
 
+      move_down 40
       table_row [ { :content => 'Submitted by:', :width => 300 }, { :content => 'Clerk of the Court', :width => 240 } ]
       table_row [ { :content => '_'*35, :width => 300 }, { :content => '_'*35, :width => 240 } ]
       table_row [ { :content => 'Signature', :width => 300 }, { :content => 'Deputy Clerk', :width => 240 } ]

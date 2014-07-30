@@ -7,23 +7,18 @@ module PdfDocument
       push_header "#{ @clark_nye } JUDICIAL DISTRICT COURT"
       move_down 40
 
-      push_text_right 'Case No ______________________'
-      move_down
-      push_text_right 'Dept. No ______________________'
-
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Plaintiff,"
-      push_text 'vs.'
-      push_text "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } Defendant"
-
-      push_text '__________________________________         JOINT PRELIMINARY INJUNCTION'
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Plaintiff,<br/>vs.<br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } Defendant", :width => 300, :font_style => :bold }, { :content => "Case  No #{ '_'*20 }<br/><br/>Dept. No #{ '_'*20 }", :width => 240 } ]
+      push_table -1, 0
+      move_down 30
+      push_header '<b>JOINT PRELIMINARY INJUNCTION</b>'
       move_down 15
 
-      push_text 'NOTICE!  THIS INJUNCTION IS EFFECTIVE UPON THE PARTY REQUESTING SAME WHEN ISSUED AND AGAINST THE OTHER PARTY WHEN SERVED.  THIS INJUNCTION SHALL REMAIN IN EFFECT FROM THE TIME OF ITS ISSUANCE UNTIL TRIAL OR UNTIL DISSOLVED OR MODIFIED BY THE COURT.  DISOBEDIENCE OF THIS INJUNCTION IS PUNISHABLE BY CONTEMPT.'
+      push_text '<b>NOTICE!  THIS INJUNCTION IS EFFECTIVE UPON THE PARTY REQUESTING SAME WHEN ISSUED AND AGAINST THE OTHER PARTY WHEN SERVED.  THIS INJUNCTION SHALL REMAIN IN EFFECT FROM THE TIME OF ITS ISSUANCE UNTIL TRIAL OR UNTIL DISSOLVED OR MODIFIED BY THE COURT.  DISOBEDIENCE OF THIS INJUNCTION IS PUNISHABLE BY CONTEMPT.</b>'
       move_down 20
-      push_text 'TO: Plaintiff and Defendant:'
+      push_text '<b>TO: Plaintiff and Defendant:</b>'
 
       move_down
-      push_text 'YOU ARE HEREBY PROHIBITED AND RESTRAINED FROM:', @text_indent
+      push_text '<b>YOU ARE HEREBY PROHIBITED AND RESTRAINED FROM:</b>', @text_indent
       move_down
       push_text '1. Transferring, encumbering, concealing, selling or otherwise disposing of any of your', @text_indent
       push_text 'joint, common or community property, except in the usual course of business or for ', @text_indent + 15
@@ -37,14 +32,15 @@ module PdfDocument
       push_text 'or effect to deprive the court of jurisdiction as to said child without the prior written', @text_indent + 15
       push_text 'consent of the parties or the advance permission of the court.', @text_indent + 15
 
+      clerk_or_judge  = @clark_nye == 'Clark' ? 'CLERK OF COURT' : 'JUDGE'
+      deputy_or_judge = @clark_nye == 'Clark' ? 'Deputy Clerk' : 'Judge'
+
       move_down 40
-      push_text 'Submitted by:                                                          Clerk of the Court'
-      move_down 30
-      push_text '____________________________                        By: ____________________________'
-      move_down 5
-      push_text 'Signature                                                                 Deputy Clerk'
-      move_down 5
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
+      table_row [ { :content => 'Submitted by:', :width => 300 }, { :content => clerk_or_judge, :width => 240 } ]
+      table_row [ { :content => '_'*35, :width => 300 }, { :content => '_'*35, :width => 240 } ]
+      table_row [ { :content => 'Signature', :width => 300 }, { :content => deputy_or_judge, :width => 240 } ]
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }", :width => 300 }, { :content => "#{  }", :width => 240 } ]
+      push_table -1, 0
 
       finishing
     end
