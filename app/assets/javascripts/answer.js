@@ -3,18 +3,18 @@ $(function(){
   var date = $('.date');
   if (date.length > 0){
 
-    var months = '<option value="1">January</option>' +
-                 '<option value="2">February</option>' +
-                 '<option value="3">March</option>' +
-                 '<option value="4">April</option>' +
-                 '<option value="5">May</option>' +
-                 '<option value="6">June</option>' +
-                 '<option value="7">July</option>' +
-                 '<option value="8">August</option>' +
-                 '<option value="9">September</option>' +
-                 '<option value="10">October</option>' +
-                 '<option value="11">November</option>' +
-                 '<option value="12">December</option>';
+    var months = '<option value="1">January / Enero</option>' +
+                 '<option value="2">February / Febrero</option>' +
+                 '<option value="3">March / Marzo</option>' +
+                 '<option value="4">April / Abril</option>' +
+                 '<option value="5">May / Mayo</option>' +
+                 '<option value="6">June / Junio</option>' +
+                 '<option value="7">July / Julio</option>' +
+                 '<option value="8">August / Agosto</option>' +
+                 '<option value="9">September / Septiembre</option>' +
+                 '<option value="10">October / Octubre</option>' +
+                 '<option value="11">November / Noviembre</option>' +
+                 '<option value="12">December / Diciembre</option>';
 
     var days = '';
     var years = '';
@@ -26,9 +26,9 @@ $(function(){
     for( i = new Date().getFullYear(); i >= start_year; --i )
       years += '<option>' + i + '</option>';
 
-    date.append('<div class="col-md-2 margin-left"><select class="month form-control">' + months + '</select></div>' +
-                '<div class="col-md-1 margin-left"><select class="day form-control">' + days + '</select></div>' +
-                '<div class="col-md-2 margin-left"><select class="year form-control">' + years + '</select></div>');
+    date.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
+                '<div class="col-md-2 margin-left"><select class="day form-control">'  + '<option disabled="disabled" selected="selected">Day / Día</option>' + days + '</select></div>' +
+                '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + years + '</select></div>');
 
     $('.date select').each(function(){
       $(this).change(function(){
