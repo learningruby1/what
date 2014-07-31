@@ -24,5 +24,8 @@
       - when /string/
         = render :partial => 'document_answers/fields/string', :locals => { :a => a, :answer => answer }
 
+      - when /sub_amount/
+        = render :partial => 'document_answers/fields/sub_amount', :locals => { :a => a, :answer => answer }
+
       - else
         = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }
