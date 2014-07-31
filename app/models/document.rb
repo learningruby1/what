@@ -88,13 +88,13 @@ class Document < ActiveRecord::Base
 
           if field.raw_question == true
             if field.sort_index.nil?
-              if i == 0 || field.dont_repeat == false
+              #if i == 0 || field.dont_repeat == false
                 document_answers.push answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + i * template.steps.count)
-              end
+              #end
             else
-              if i == 0 || field.dont_repeat == false
+              #if i == 0 || field.dont_repeat == false
                 document_answers.push answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + i * template.steps.count, :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i)
-              end
+              #end
             end
           end
         end
