@@ -4,7 +4,8 @@ class DocumentAnswer < ActiveRecord::Base
   belongs_to :document
 
   NUMBER_NAME = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh']
-  STATES = [['Alabama', 'AL'],
+  STATES = [['', ''],
+            ['Alabama', 'AL'],
             ['Alaska', 'AK'],
             ['Arizona', 'AZ'],
             ['Arkansas', 'AR'],
