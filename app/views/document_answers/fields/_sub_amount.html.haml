@@ -1,0 +1,12 @@
+%div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }" } }
+  .container
+    %div{ :class => "sub_amount_#{answer.template_field.toggle_id}"}
+      .row.new_roman.col-md-12
+        = render :partial => 'render_text', :locals => { :answer => answer }
+      .row.new_roman.col-md-2
+        %p= a.text_field :answer, :class => 'form-control'
+      .row.new_roman.col-md-2
+        %input{ :type => 'hidden', :value => answer.id }
+        %a.btn.btn-default.ajax-count{ :href => '#' }
+          %span.new_roman fill /
+          %span.new_roman.spain llenar
