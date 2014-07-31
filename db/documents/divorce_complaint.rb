@@ -29,7 +29,7 @@ current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento:
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\-[0-9]{2}\-[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX' }
 current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ ]+$/, :hint => 'Please enter a valid mailing address' }
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid city' }
-current_step.fields.create :name => 'State /<spain/>Estado: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid state' }
+current_step.fields.create :name => 'State /<spain/>Estado: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid state' }, :field_type => 'states'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *', :mandatory => { :value => /^[0-9]{5}(\-[0-9]{4})?$/, :hint => 'Please enter a valid zip code. e.g. XXXXX or XXXXX-XXXX' }
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^([0-9]{3}\s[0-9]{3}\-[0-9]{4})?$/, :hint => 'Please enter a valid Phone Number. e.g. XXX XXX-XXXX' }
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email' }
@@ -51,7 +51,7 @@ current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento:
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\-[0-9]{2}\-[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX' }
 current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ ]+)?$/, :hint => 'Please enter a valid mailing address' }
 current_step.fields.create :name => 'City /<spain/>Ciudad:', :mandatory => { :value => /^([a-zA-Z\- ]+)?$/, :hint => 'Please enter a valid city' }
-current_step.fields.create :name => 'State /<spain/>Estado:', :mandatory => { :value => /^([a-zA-Z\- ]+)?$/, :hint => 'Please enter a valid state' }
+current_step.fields.create :name => 'State /<spain/>Estado:', :mandatory => { :value => /^([a-zA-Z\- ]+)?$/, :hint => 'Please enter a valid state' }, :field_type => 'states'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal:', :mandatory => { :value => /^([0-9]{5}(\-[0-9]{4})?)?$/, :hint => 'Please enter a valid zip code. e.g. XXXXX or XXXXX-XXXX' }
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico:', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})?+$/, :hint => 'Please enter a valid email' }
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^([0-9]{3}\s[0-9]{3}\-[0-9]{4})?$/, :hint => 'Please enter a valid Phone Number. e.g. XXX XXX-XXXX' }
@@ -66,7 +66,7 @@ current_step = template.steps.create :step_number => step_number += 1,#3
 current_step.fields.create :name => 'In the United States /<spain/>En los Estados Unidos
                                      <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one' }
 current_step.fields.create :name => 'City /<spain/>Ciudad: *',  :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage city' }
-current_step.fields.create :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage state' }
+current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage state' }
 
 current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage City/Town/Province' }
 current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage country' }
