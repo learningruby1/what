@@ -75,7 +75,7 @@ class Document < ActiveRecord::Base
   end
 
   def to_s
-    title
+    template.name
   end
 
   def create_next_step_answers!(next_step, toggler_offset=0)
@@ -120,5 +120,16 @@ class Document < ActiveRecord::Base
 
   def looped_amount(step, _answers)
     _answers.count / template.steps.where(:step_number => step).first.fields.count rescue 0
+  end
+
+
+  def assign_owner_save!(cookies, user=nil)
+    if !user.nil?
+      self.user_id = user.id
+    else
+      cookies[:session_uniq_token] = generate_session_uniq_token if !cookies[:session_uniq_token].present?
+      self.session_uniq_token  = cookies[:session_uniq_token]
+    end
+    save!
   end
 end

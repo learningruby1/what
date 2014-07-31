@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :paypal_payments, :only => [:new, :create]
 
   resources :templates, :only => [:index] do
-    resources :documents, :only => [:new, :create]
+    resources :documents, :only => [:create]
   end
 
   resources :documents, :only => [] do
