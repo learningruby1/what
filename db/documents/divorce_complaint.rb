@@ -16,26 +16,26 @@ step_number = 0
 current_step = template.steps.create :step_number => step_number += 1,#0
                                      :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su formulario?'
 
-current_step.fields.create :name => 'Clark<option/>Nye', :field_type => 'radio', :mandatory => { :value => /^\w+$/, :hint => 'Please select one' }
+current_step.fields.create :name => 'Clark<option/>Nye', :field_type => 'radio', :mandatory => { :value => /^\w+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1,#1
                                      :title => 'Your information /<spain/>Su Información'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name /<spain/>Por favor, ponga un nombre válido' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
-current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX' }
-current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ ]+$/, :hint => 'Please enter a valid mailing address' }
-current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid city' }
-current_step.fields.create :name => 'State /<spain/>Estado: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid state' }, :field_type => 'states'
-current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *  e.g. XXXXX or XXXXX-XXXX', :mandatory => { :value => /^[0-9]{5}(\-[0-9]{4})?$/, :hint => 'Please enter a valid zip code.' }
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^[0-9]{3}(\-|\s)*[0-9]{3}(\-|\s)*[0-9]{4}\D{0,10}$/, :hint => 'Please enter a valid Phone Number. e.g. XXX XXX-XXXX' }
-current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email' }
+current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name /<spain/>Por favor, ponga un apellido válido' }
+current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX /<spain/>Por favor, ponga un número de Seguro Social válido' }
+current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ ]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
+current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please enter a valid city /<spain/>Por favor, ponga una ciudad válida' }
+current_step.fields.create :name => 'State /<spain/>Estado: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Please select a state /<spain/>Por favor seleccione un estado' }, :field_type => 'states'
+current_step.fields.create :name => 'Zip Code /<spain/>Código postal: *', :mandatory => { :value => /^[0-9]{5}(\-[0-9]{4})?$/, :hint => 'Please enter a valid zip code e.g. XXXXX or XXXXX-XXXX /<spain/>Please enter a valid zip code' }
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^([0-9]{3}(\-|\s)*[0-9]{3}(\-|\s)*[0-9]{4}\D{0,10})?$/, :hint => 'Please enter a valid Phone Number /<spain/>Por favor, ponga un número de teléfono válido' }
+current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email /<spain/>Por favor, ponga un correo electrónico válido' }
 current_step.fields.create :name => 'I am /<spain/>Yo soy:', :field_type => 'label'
 current_step.fields.create :name => 'Wife /<spain/>Esposa
-                                     <option/>Husband /<spain/>Esposo', :field_type => 'radio', :mandatory => { :value => /^Wife|Husband/, :hint => 'Please select one' }
+                                     <option/>Husband /<spain/>Esposo', :field_type => 'radio', :mandatory => { :value => /^Wife|Husband/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :name => 'Since you are the person starting the divorce action, you will be referred as the PLAINTIFF.
                                      <br/><spain/>Ya que usted es la persona que inicia la acción de divorcio, usted será referido como el demandante (PLAINTIFF)', :field_type => 'text'
 
@@ -44,17 +44,17 @@ current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'Your Spouse\'s Information /<spain/>Información de su esposa(o)',
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona serà referida como el demandado (DEFENDANT)'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name /<spain/>Por favor, ponga un nombre válido' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
-current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX' }
-current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ ]+)?$/, :hint => 'Please enter a valid mailing address' }
-current_step.fields.create :name => 'City /<spain/>Ciudad:', :mandatory => { :value => /^([a-zA-Z\- ]+)?$/, :hint => 'Please enter a valid city' }
-current_step.fields.create :name => 'State /<spain/>Estado:', :mandatory => { :value => /^([a-zA-Z\- ]+)?$/, :hint => 'Please enter a valid state' }, :field_type => 'states'
-current_step.fields.create :name => 'Zip Code /<spain/>Código postal:  e.g. XXXXX or XXXXX-XXXX', :mandatory => { :value => /^([0-9]{5}(\-[0-9]{4})?)?$/, :hint => 'Please enter a valid zip code.' }
-current_step.fields.create :name => 'Email /<spain/>Correo Electrónico:', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})?+$/, :hint => 'Please enter a valid email' }
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^([0-9]{3}(\-|\s)*[0-9]{3}(\-|\s)*[0-9]{4}\D{0,10})?$/, :hint => 'Please enter a valid Phone Number. e.g. XXX XXX-XXXX' }
+current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name /<spain/>Por favor, ponga un apellido válido' }
+current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX /<spain/>Por favor, ponga un número de Seguro Social válido' }
+current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ ]+)?$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
+current_step.fields.create :name => 'City /<spain/>Ciudad:', :mandatory => { :value => /^([a-zA-Z\- ]+)?$/, :hint => 'Please enter a valid city /<spain/>Por favor, ponga una ciudad válida' }
+current_step.fields.create :name => 'State /<spain/>Estado:', :mandatory => { :value => /^([a-zA-Z\- ]+)?$/, :hint => 'Please select a state /<spain/>Por favor seleccione un estado' }, :field_type => 'states'
+current_step.fields.create :name => 'Zip Code /<spain/>Código postal:', :mandatory => { :value => /^([0-9]{5}(\-[0-9]{4})?)?$/, :hint => 'Please enter a valid zip code e.g. XXXXX or XXXXX-XXXX/<spain/>Please enter a valid zip code' }
+current_step.fields.create :name => 'Email /<spain/>Correo Electrónico:', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})?+$/, :hint => 'Please enter a valid email /<spain/>Por favor, ponga un correo electrónico válido' }
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :mandatory => { :value => /^([0-9]{3}(\-|\s)*[0-9]{3}(\-|\s)*[0-9]{4}\D{0,10})?$/, :hint => 'Please enter a valid Phone Number /<spain/>Por favor, ponga un número de teléfono válido' }
 
 
 toggle_id = 0
@@ -64,14 +64,14 @@ current_step = template.steps.create :step_number => step_number += 1,#3
                                      :description => 'Where were you married? /<spain/>¿Dónde se casaron?'
 
 current_step.fields.create :name => 'In the United States /<spain/>En los Estados Unidos
-                                     <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one' }
-current_step.fields.create :name => 'City /<spain/>Ciudad: *',  :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage city' }
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage state' }
+                                     <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :name => 'City /<spain/>Ciudad: *',  :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage city /<spain/>Por favor, proporciona una ciudad donde se casaron' }
+current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage state /<spain/>Por favor, proporciona un estado donde se casaron' }
 
-current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage City/Town/Province' }
-current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage country' }
+current_step.fields.create :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage City/Town/Province /<spain/>Por favor, proporciona una Ciudad/Pueblo/Provincia donde se casaron' }
+current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage country /<spain/>Por favor, proporciona el país donde se casaron' }
 
-current_step.fields.create :name => 'Marriage Date /<spain/>Fecha de matrimonio:', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Provide a marriage date' }
+current_step.fields.create :name => 'Marriage Date /<spain/>Fecha de matrimonio:', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Provide a marriage date /<spain/>Por favor proporciona una fecha de matrimonio' }
 current_step.fields.create :name => 'Don’t remember the date? Got married in Clark County? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Click here</a><br/><spain/>¿No recuerda la fecha? ¿Se casó en el Condado de Clark? <a href="https://recorder.co.clark.nv.us/RecorderEcommerce/">Haz clic</a>', :field_type => 'text'
 
 
@@ -82,14 +82,14 @@ current_step = template.steps.create :step_number => step_number += 1,#4
                                                       <spain/>Si usted es la persona que está presentando el divorcio, debe ser residente de Nevada por lo menos 6 semanas antes de archivar la demanda de divorcio.<br/>
                                                       El testigo de residencia deberá firmar una declaración jurada indicando que usted es residente de Nevada (se permiten familiares).'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in Nevada for over 6 weeks. /<spain/>Yo, he vivido en Nevada por más de 6 semanas.', :mandatory => { :value => /^1$/, :hint => '<br/>You need to be a Nevada resident before you can file for a divorce.' }
+current_step.fields.create :field_type => 'checkbox', :name => 'I have lived in Nevada for over 6 weeks. /<spain/>Yo, he vivido en Nevada por más de 6 semanas.', :mandatory => { :value => /^1$/, :hint => 'You need to be a Nevada resident before you can file for a divorce /<spain/>Usted tiene que ser un residente de Nevada antes de poder solicitar el divorcio' }
 
 current_step = template.steps.create :step_number => step_number += 1,#5
                                      :title => 'Pregnancy /<spain/>Embarazada',
                                      :description => 'To my knowledge wife /<spain/>A mi conocimiento la esposa'
 
 current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pregnant /<spain/>NO ESTÁ embarazada en este momento.
-                                                             <option/>IS currently pregnant /<spain/>ESTÁ embarazada en este momento.', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>IS currently pregnant /<spain/>ESTÁ embarazada en este momento.', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1,#6 and 7
@@ -98,7 +98,7 @@ current_step = template.steps.create :step_number => step_number += 1,#6 and 7
 
 toggle_id = 0
 toggle_id += 1
-children_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+children_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'text', :name => 'Children must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
                                                             Have the child(ren) lived in Nevada for over 6 months?<br/>
@@ -106,7 +106,7 @@ current_step.fields.create :field_type => 'text', :name => 'Children must have r
                                                             ¿Han vivido los menores en Nevada por más de 6 meses?', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                              <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                              <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'text', :name => 'Nevada Court does not have the legal right to set
                                                             custody at this time, BUT you can still get a divorce
@@ -123,21 +123,21 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'text', :name => 'How many minor children were born or legally adopted during this marriage?
                                                             <br/><spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?'
-children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value' }
+children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value /<spain>Por favor, introduzca el valor correcto' }
 
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
                                      :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
 
-child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name' }
+child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name /<spain/>Por favor, ponga un nombre válido' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 
-child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name' }
-current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday' }
-current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX' }
+child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name /<spain/>Por favor, ponga un apellido válido' }
+current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX /<spain/>Por favor, ponga un número de Seguro Social válido' }
 current_step.fields.create :name => 'Son /<spain/>Hijo
-                                     <option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                     <option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -150,7 +150,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
-                                                             <option/>Only DAD /<spain/>Solo PAPÁ', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Only DAD /<spain/>Solo PAPÁ', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#11
@@ -169,7 +169,7 @@ current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and vi
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/>
                                                                  <separate/>SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
                                                                  <option/>Only with the mom /<spain/>Solo conmigo
-                                                                 <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                 <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#12
@@ -184,11 +184,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'New Year’s Eve
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -196,11 +196,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'New Year’s Day
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -208,11 +208,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Martin Luther Ki
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -220,11 +220,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'President’s da
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -232,11 +232,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Passover', :togg
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -244,11 +244,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Easter /<spain/>
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -256,11 +256,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Memorial Day', :
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -303,11 +303,11 @@ current_step.fields.create :field_type => 'checkbox', :name => '4th of July /<sp
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -315,11 +315,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Labor Day /<spai
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -327,11 +327,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Rosh Hashanah /<
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -339,11 +339,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Yom Kippur', :to
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -351,11 +351,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Nevada Day /<spa
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -363,11 +363,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Halloween', :tog
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -375,11 +375,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Veteran’s Day 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -387,11 +387,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Thanksgiving Day
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -399,11 +399,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Christmas Eve /<
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -411,11 +411,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Christmas /<spai
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -435,11 +435,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Child’s Birthd
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -447,11 +447,11 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Chinese  New Yea
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -459,47 +459,47 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Chanukkah', :tog
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Spring Break /<spain/>Vacaciones de primavera', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'radio-last', :name => 'all /<spain/>Todo la vacacion
-                                                                  <option/>portion /<spain/>porcion de la vacacion con', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>portion /<spain/>porcion de la vacacion con', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                             <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>odd years /<spain/>año  impares
-                                                             <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Winter Break /<spain/>Vacaciones de invierno', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'radio-last', :name => 'all /<spain/>Todo la vacacion
-                                                                  <option/>portion /<spain/>porcion de la vacacion con', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>portion /<spain/>porcion de la vacacion con', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                             <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>odd years /<spain/>año  impares
-                                                             <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Summer Break /<spain/>Vacaciones de verano', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'radio-last', :name => 'all /<spain/>Todo la vacacion
-                                                                  <option/>portion /<spain/>porcion de la vacacion con', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>portion /<spain/>porcion de la vacacion con', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                             <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>odd years /<spain/>año  impares
-                                                             <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
@@ -509,11 +509,11 @@ current_step.fields.create :field_type => 'date', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
-                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                  <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>año
                                                              <option/>every odd years /<spain/>año  impares
-                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#14
@@ -523,7 +523,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>Mamá
                                                              <option/>Dad /<spain/>Papá
-                                                             <option/>Both Parents /<spain/>Ambos Padres', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Both Parents /<spain/>Ambos Padres', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 0
 toggle_id += 1
@@ -532,9 +532,9 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'radio', :name => 'No child support /<spain/>No habrá manutención de menores
                                                              <option/>Dad will pay $ /<spain/>El papá pagara $
-                                                             <option/>Mom will pay $ /<spain/>La mamá pagara $', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Mom will pay $ /<spain/>La mamá pagara $', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'amount', :name => 'per month as child support /<spain/>mensual de manutención para los menores', :toggle_id => toggle_id, :toggle_option => 'will', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'amount', :name => 'per month as child support /<spain/>mensual de manutención para los menores', :toggle_id => toggle_id, :toggle_option => 'will', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -547,7 +547,7 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting w
                                                             <br/><spain/>¿Está pidiendo retención de salario para cobrar la manutención de los menores?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -560,11 +560,11 @@ current_step.fields.create :field_type => 'text', :name => 'You can request up t
 
 current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS? /<br/><spain/>¿Está solicitando manutención ATRASADA de menores?'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'date', :name => 'I want back child support starting /<spain/>Quiero la manutención de niños a partir', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'text', :name => 'The OTHER parent has paid /<spain/>del otro padre ha pagado', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 0
 toggle_id += 1
@@ -576,7 +576,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 current_step.fields.create :field_type => 'text', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años
                                                              <option/>Dad every year /<spain/>Papá todos los años
-                                                             <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'date', :name => 'Mom  will start claiming start from and up /<spain/>La mamá comenzara a reclamar a en (ponga el año de comienzo)', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom'
 
@@ -588,9 +588,9 @@ current_step = template.steps.create :step_number => step_number += 1,#19
                                                       <spain/>¿Va a pedir la custodia de sus mascotas en la corte?'
 
 pet_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                         <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                         <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-pet_amount_field = current_step.fields.create :field_type => 'amount', :name => 'How many: /<spain/>Cuántos:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+pet_amount_field = current_step.fields.create :field_type => 'amount', :name => 'How many: /<spain/>Cuántos:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -599,11 +599,11 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Pet Custody /<spain/>Custodia de Mascota'
 
 current_step.fields.create :name => 'Name of your Pet: *
-                                     <spain/>Nombre de su mascota:*', :mandatory => { :value => /\w+/, :hint => 'Please enter a valid pet name' }
+                                     <spain/>Nombre de su mascota:*', :mandatory => { :value => /\w+/, :hint => 'Please enter a valid pet name /<spain/>Por favor, ponga un nombre válido de mascota' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife will KEEP /<spain/>Se QUEDARA con la esposa
                                                              <option/>Husband will keep WILL keep /<spain/>Se QUEDARA con el esposo
-                                                             <option/>Both Equally /<spain/>AMBOS TENDREMOS custodia ', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Both Equally /<spain/>AMBOS TENDREMOS custodia ', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -622,7 +622,7 @@ current_step.fields.create :field_type => 'text', :name => 'Do you have communit
 
 property_division_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No
-                                                             <option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id = 1
@@ -631,11 +631,11 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Do you have a marital home purchased during the marriage?
                                                       <br/><spain/>¿Tienen usted una casa que compraron durante el matrimonio?'
 
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
-                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -643,7 +643,7 @@ current_step.fields.create :field_type => 'text', :name => 'Was there more prope
                                                             <br/><spain/>¿Compraron más propiedades durante el matrimonio?'
 
 property_division_more_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                                            <option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                                                            <option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_division_more_field.id, :render_if_field_value => 'Yes',#23
@@ -653,29 +653,29 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'checkbox', :name => 'Home /<spain/>Casa', :toggle_id => toggle_id
 
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :mandatory => { :value => /\w+/, :hint => 'Please enter address' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
-                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra', :toggle_id => toggle_id
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
-                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Business /<spain/>Negocio', :toggle_id => toggle_id
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
-                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
 current_step.fields.create :field_type => 'text', :name => 'Was there more properties bought during the marriage?
                                                             <br/><spain/>¿Compraron más propiedades durante el matrimonio?', :dont_repeat => true
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :looper_option => 'Yes', :dont_repeat => true, :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+                                                             <option/>No', :looper_option => 'Yes', :dont_repeat => true, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -685,7 +685,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Was there a car, motorcycle, rv, boat, trailer purchased during the marriage?
                                                       <br/><spain/>¿Compraron carro, moto, rv, barco, remolque durante el matrimonio?'
 
-property_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /\w+/, :hint => 'Please select one' }
+property_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -753,7 +753,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Hay beneficio de Pensión, 401 k, 403B, pensión militar, otros beneficios de jubilación durante a matrimonio?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Name of the plan: /<spain/>Nombre del plan de beneficios:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :name => 'I will keep /<spain/>Para Mi
@@ -777,7 +777,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Hay cuentas bancarias, de inversiones, u otro tipo de cuenta financiera obtenida  durante el matrimonio?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Name of the account /<spain/>Nombre de la cuenta', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'approximate amount in it /<spain/>la cantidad aproximada', :toggle_id => toggle_id, :toggle_option => 'Yes'
@@ -802,7 +802,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Compro algo más durante el matrimonio que desea quedarse?'
 
 
-other_property_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+other_property_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => other_property_field.id, :render_if_field_value => 'Yes',#29
                                      :title => 'Property Division: Other /<spain/>División de Bienes: Otro',
@@ -840,7 +840,7 @@ current_step.fields.create :field_type => 'text', :name => 'Nevada is a communit
                                                             <br/><spain/>Nevada es un estado de propiedad comunitaria.  Esto significa que la ley presupone que todas las deudas (tarjetas de crédito, préstamos, impuestos, cuenta de hospital, etc.) adquiridas o incurridas durante el matrimonio son responsabilidad de ambas partes y pertenecen igualmente a los dos, con la excepción de deudas individuales.'
 
 debts_division_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                                    <option/>No<option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /^Yes|No|No, we already divided them$/, :hint => 'Please select one' }
+                                                                                    <option/>No<option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /^Yes|No|No, we already divided them$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -852,7 +852,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Bank and amount owe /<spain/>Banco y cantidad que se debe:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 other_property_field = current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
@@ -876,7 +876,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tiene tarjetas de créditos, cuenta de hospital o doctores que dividir?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Card, amount, last 4# (if possible): (example Visa, $1000, #1234) /<spain/>Tarjeta, cantidad, últimos 4#: (ejemplo Visa, $ 1000, #1234)', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
@@ -900,7 +900,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tiene algún préstamo de carro, rv, barco, moto que dividir?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Bank and amount owe: (example Ford about $10,000) /<spain/>Banco y cantidad que se debe: (ejemplo Ford $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
@@ -922,7 +922,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tiene algún préstamo estudiantil, IRS, otra deuda para dividir?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Type and amount owe: (example IRS about $10,000)
                                      <spain/>Tipo y deuda: (ejemplo IRS $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
@@ -947,7 +947,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Make a list of debts that need to be divided:
                                      <br/><spain/>Haga una lista de las deudas que se tienen que', :toggle_id => toggle_id, :toggle_option => 'Yes'
@@ -973,7 +973,7 @@ current_step = template.steps.create :step_number => step_number += 1,#36
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.
                                                              <option/>Husband WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes'
@@ -992,7 +992,7 @@ toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Wife never change her name /<spain/>La esposa nunca se cambió el apellido
                                                              <option/>Wife will keep married name /<spain/>La esposa se va a quedar con el apellido de casada
-                                                             <option/>Wife will return to her maiden name /<spain/>La esposa volverá a su apellido de soltera que es', :toggle_id => toggle_id, :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one' }
+                                                             <option/>Wife will return to her maiden name /<spain/>La esposa volverá a su apellido de soltera que es', :toggle_id => toggle_id, :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden name', :toggle_option => 'Wife will return'
 
@@ -1004,7 +1004,7 @@ current_step = template.steps.create :step_number => step_number += 1,#38
                                                       <br/><spain/>Nevada es un estado de divorcio "sin culpa".  Esto significa que la persona que busca el divorcio no tiene que probar en la corte que él o ella tiene el derecho a divorciarse.'
 
 current_step.fields.create :field_type => 'radio', :name => 'I no longer want to be married /<spain/>Ya no quiero seguir casado porque no nos entendemos
-                                                             <option/>I no longer want to be married and have lived separated and apart for over 1 year /<spain/>Ya no quiero seguir casada y hemos vivido separados desde hace más de 1 año', :mandatory => { :value => /^[1a-zA-Z\s]+$/, :hint => 'Please select one' }
+                                                             <option/>I no longer want to be married and have lived separated and apart for over 1 year /<spain/>Ya no quiero seguir casada y hemos vivido separados desde hace más de 1 año', :mandatory => { :value => /^[1a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -1013,7 +1013,7 @@ current_step = template.steps.create :step_number => step_number += 1,#39
                                      :description => 'Do you or other party in this case (including any minor child) have any other current case(s) or past case(s) in the Family Court or Juvenile Court in (insert county) County?
                                                       <br/><spain/>¿Ha tenido o tiene usted u la otra persona en este caso (incluyendo cualquier de sus menores) otros casos en la corte de familia en el Condado de (insert county)?'
 
-other_cases_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one' }
+other_cases_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 

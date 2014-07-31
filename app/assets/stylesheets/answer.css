@@ -12,8 +12,9 @@
   margin-top: 15px;
   margin-bottom: -15px;
 }
-.padding-horizontal-10{
-  padding: 0px 10px 0px 10px;
+.mandatory-box{
+  padding: 1px 5px 1px 5px;
+  border-radius: 2px;
 }
 .marin-top-50{
   margin-top: 50px;
