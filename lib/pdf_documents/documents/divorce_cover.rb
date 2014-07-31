@@ -42,7 +42,7 @@ module PdfDocument
       table_row [ '', { :content => '', :colspan => 3 }]
       push_table
 
-      if @children_info.length > 0
+      if @children_residency
         move_down
         push_header 'List children involved in this case', 10
 
