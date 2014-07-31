@@ -2,4 +2,5 @@
   %div{ :class => "alert alert-#{ name == 'notice' ? 'success' : 'danger' }" }
     .container
       %button.close{ 'aria-hidden' => 'true', 'data-dismiss' => 'alert', :type => 'button' } &times;
-      = raw message
+      = message.split('<spain/>').first
+      %span.spain= message.split('<spain/>').last if message.split('<spain/>').length > 1

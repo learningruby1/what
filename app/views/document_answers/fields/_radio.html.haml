@@ -14,7 +14,9 @@
 - if answer.kind_of?(DocumentAnswer) && flash.any?
   - if !answer.template_field.mandatory.nil? && answer.answer.nil? || !answer.template_field.mandatory.nil? && !answer.answer.match(answer.template_field.mandatory[:value])
     .container
-      %span.alert-danger.padding-horizontal-10= answer.template_field.mandatory[:hint]
+      %span.alert-danger.mandatory-box
+        = answer.template_field.mandatory[:hint].split('<spain/>').first
+        %span.spain= answer.template_field.mandatory[:hint].split('<spain/>').last
 
 - if answer.template_field.field_type.match /last\z/
   .col-md-12

@@ -62,7 +62,7 @@ class Document < ActiveRecord::Base
   end
 
   def add_mandatory_error
-    errors.add(:base, 'Check the mandatory fields') if !errors.any?
+    errors.add(:base, 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios') if !errors.any?
     true
     # false
   end
