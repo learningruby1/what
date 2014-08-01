@@ -11,7 +11,7 @@ class Document < ActiveRecord::Base
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
 
-    step = TemplateStep.find next_step
+    step = TemplateStep.find next_step rescue nil
     if direction == 'forward' && loop_amount(next_step) != looped_amount(next_step, _answers) && _answers.present? && !step.amount_field_id.nil?
       _answers.each(&:destroy)
       _answers = nil

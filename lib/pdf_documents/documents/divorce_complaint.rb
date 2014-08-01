@@ -221,16 +221,13 @@ module PdfDocument
         end
 
         @properties_more.each do |property|
-          property_string = ''
+          property_string = []
           property.each_with_index do |p, i|
 
-            if i != 1 && i % 3 == 0
-              push_text property_string, @text_indent if property_string != '' || property_string != ','
-              property_string = p.answer == '1' ? p.template_field.name.split(' /<spain/>').first : ''
-            else
-              property_string += ", #{ p.answer }" if !p.answer.nil? && p.answer.length > 0
-            end
+            property_string.push p.answer == '1' ? p.template_field.name.split(' /<spain/>').first : p.answer
+
           end
+          push_text property_string.join(', '), @text_indent if property_string != '' || property_string != ','
         end
 
         move_down
