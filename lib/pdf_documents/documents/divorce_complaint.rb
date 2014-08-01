@@ -31,20 +31,20 @@ module PdfDocument
       push_text "COMES NOW Plaintiff, #{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
 
       move_down @header_margin_top
-      push_header _counter += 1 + '. RESIDENCY'
+      push_header "#{ _counter += 1 }. RESIDENCY"
       move_down
 
       push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of the #{ @clark_nye } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
 
       move_down @header_margin_top
-      push_header _counter += 1 + '. DATE OF MARRIAGE'
+      push_header "#{ _counter += 1 }. DATE OF MARRIAGE"
       move_down
 
       push_text "That the parties were married on the #{ @marriage_date } #{ @marriage_country_string }", @text_indent
 
       move_down @header_margin_top
       move_down @header_margin_top
-      push_header _counter += 1 + '. MINOR CHILDREN'
+      push_header "#{ _counter += 1 }. MINOR CHILDREN"
       move_down
 
       if @children_residency
@@ -72,7 +72,7 @@ module PdfDocument
       if @children_adopted && @children_residency
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. LEGAL CUSTODY'
+        push_header "#{ _counter += 1 }. LEGAL CUSTODY"
         move_down
 
         case @legal_custody_parent
@@ -85,7 +85,7 @@ module PdfDocument
         end
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. PHYSICAL CUSTODY'
+        push_header "#{ _counter += 1 }. PHYSICAL CUSTODY"
         move_down
 
         @physical_custody_parent.each do |physical_custody|
@@ -116,7 +116,7 @@ module PdfDocument
         end
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. HOLIDAYS VISITATION'
+        push_header "#{ _counter += 1 }. HOLIDAYS VISITATION"
         move_down
 
         if @all_holidays.length > 0
@@ -149,7 +149,7 @@ module PdfDocument
         end
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. CHILD INSURANCE'
+        push_header "#{ _counter += 1 }. CHILD INSURANCE"
         move_down
 
         case @child_insurance
@@ -160,7 +160,7 @@ module PdfDocument
         end
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. CHILD SUPPORT'
+        push_header "#{ _counter += 1 }. CHILD SUPPORT"
         move_down
 
         case @child_suport_who
@@ -171,7 +171,7 @@ module PdfDocument
         end
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. WAGE WITHHOLDING'
+        push_header "#{ _counter += 1 }. WAGE WITHHOLDING"
         move_down
 
         if @request_withhold
@@ -181,7 +181,7 @@ module PdfDocument
         end
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. CHILD SUPPORT ARREARS'
+        push_header "#{ _counter += 1 }. CHILD SUPPORT ARREARS"
         move_down
 
         if @request_arrears
@@ -191,7 +191,7 @@ module PdfDocument
         end
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. TAX DEDUCTION / EXEMPTIONS'
+        push_header "#{ _counter += 1 }. TAX DEDUCTION / EXEMPTIONS"
         move_down
 
         @child_tax_examption.each do |tax|
@@ -207,7 +207,7 @@ module PdfDocument
       end
 
       move_down @header_margin_top
-      push_header _counter += 1 + '. COMMUNITY PROPERTY'
+      push_header "#{ _counter += 1 }. COMMUNITY PROPERTY"
       move_down
 
       case @property_presence
@@ -246,7 +246,7 @@ module PdfDocument
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. COMMUNITY DEBTS'
+        push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
         move_down
 
         push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
@@ -289,20 +289,20 @@ module PdfDocument
         push_text 'That the parties have already made an equal distribution of their community property.', @text_indent
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. COMMUNITY DEBTS'
+        push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
         move_down
         push_text 'That the parties have already equally divided their existing community debts.'
       else # Means 'No'
         push_text ' That there is no community property which should be divided by the Court. Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
 
         move_down @header_margin_top
-        push_header _counter += 1 + '. COMMUNITY DEBTS'
+        push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
         move_down
         push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified'
       end
 
       move_down @header_margin_top
-      push_header _counter += 1 + '. SPOUSAL SUPPORT'
+      push_header "#{ _counter += 1 }. SPOUSAL SUPPORT"
       move_down
 
       if @alimony_presence
@@ -312,7 +312,7 @@ module PdfDocument
       end
 
       move_down @header_margin_top
-      push_header _counter += 1 + '. NAME CHANGE'
+      push_header "#{ _counter += 1 }. NAME CHANGE"
       move_down
 
       case @wife_name_changing
@@ -325,7 +325,7 @@ module PdfDocument
       end
 
       move_down @header_margin_top
-      push_header _counter += 1 + '. REASON FOR DIVORCE'
+      push_header "#{ _counter += 1 }. REASON FOR DIVORCE"
       move_down
 
       case @reason_divorce
