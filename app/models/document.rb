@@ -37,9 +37,9 @@ class Document < ActiveRecord::Base
 
       _answer = answers.find(answer.first)
       step_number = _answer.template_field.template_step.step_number
-      # upcase
       # save answer
       _answer.update answer.last.permit(:answer)
+      # upcase
       _answer.update :answer => _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
 
       # mandatory checking
