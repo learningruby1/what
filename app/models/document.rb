@@ -37,8 +37,10 @@ class Document < ActiveRecord::Base
 
       _answer = answers.find(answer.first)
       step_number = _answer.template_field.template_step.step_number
+      # upcase
       # save answer
       _answer.update answer.last.permit(:answer)
+      _answer.update :answer => _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
 
       # mandatory checking
       if !_answer.template_field.mandatory.nil? && answer.last[:answer].nil? || !_answer.template_field.mandatory.nil? &&
@@ -64,7 +66,6 @@ class Document < ActiveRecord::Base
   def add_mandatory_error
     errors.add(:base, 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios') if !errors.any?
     true
-    # false
   end
 
   def generate_session_uniq_token
