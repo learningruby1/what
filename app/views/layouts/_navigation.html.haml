@@ -9,13 +9,21 @@
         %ul.nav.navbar-nav.navbar-right
 
           %li
-            = link_to 'Documents', pdf_files_path
+            = link_to pdf_files_path do
+              Documents /
+              %span.spain Documentos
 
           %li
-            = link_to 'Templates', templates_path
+            = link_to templates_path do
+              Templates
+              %span.spain Plantillas
 
           %li
             - if user_signed_in?
-              = link_to 'Sign out', destroy_user_session_path, :method => :delete
+              = link_to destroy_user_session_path, :method => :delete do
+                Sign out
+                %span.spain Cerrado la sesión
             - else
-              = link_to 'Sign in', new_user_session_path
+              = link_to new_user_session_path do
+                Sign in /
+                %span.spain Inciar sesión

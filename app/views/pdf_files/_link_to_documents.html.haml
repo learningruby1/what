@@ -1,5 +1,5 @@
 - case document.title
-- when 'Complaint for Divorce'
+- when /^Complaint for Divorce/
 &nbsp
 = link_to 'Complaint', download_pdf_path("Divorce_complaint_#{ document.id }"), :class => 'btn btn-primary'
 &nbsp
