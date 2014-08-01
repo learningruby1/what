@@ -22,7 +22,7 @@ current_step.fields.create :name => 'Clark<option/>Nye', :field_type => 'radio',
 current_step = template.steps.create :step_number => step_number += 1,#1
                                      :title => 'Your information /<spain/>Su Información'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombreand' }, :field_type => 'string-upcase'
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :field_type => 'string-upcase'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
@@ -44,7 +44,7 @@ current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'Your Spouse\'s Information /<spain/>Información de su esposa(o)',
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona serà referida como el demandado (DEFENDANT)'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombreand' }, :field_type => 'string-upcase'
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :field_type => 'string-upcase'
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
@@ -130,7 +130,7 @@ children_amount_field = current_step.fields.create :field_type => 'amount', :man
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
                                      :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
 
-child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombreand' }, :field_type => 'string-upcase'
+child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :field_type => 'string-upcase'
 
 child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }, :field_type => 'string-upcase'
