@@ -1097,20 +1097,3 @@ current_step.fields.create :field_type => 'text', :toggle_id => toggle_id
 #
 # END OF ALIMONY
 #
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
