@@ -1,9 +1,11 @@
 .container
   %div{ :class => "sub_amount_#{answer.template_field.toggle_id}"}
-    .row.new_roman.col-md-12
-      = render :partial => 'render_text', :locals => { :answer => answer }
-    .row.new_roman.col-md-2
-      %p= a.text_field :answer, :class => 'form-control'
+    .row.new_roman
+      .col-md-12
+        = render :partial => 'render_text', :locals => { :answer => answer }
+    .row.new_roman
+      .col-md-2
+        %p= a.text_field :answer, :class => 'form-control'
     .row.new_roman.col-md-2
       %input{ :type => 'hidden', :value => answer.id }
       %a.btn.btn-default.ajax-count{ :href => '#' }
