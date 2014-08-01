@@ -9,7 +9,6 @@ module PdfDocument
     require 'prawn'
 
     def generate(document)
-      p '-'*100
       case document.template.to_s
       when /^Complaint for Divorce/
 

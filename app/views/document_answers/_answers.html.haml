@@ -21,5 +21,8 @@
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 
+      - when /string/
+        = render :partial => 'document_answers/fields/string', :locals => { :a => a, :answer => answer }
+
       - else
         = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }
