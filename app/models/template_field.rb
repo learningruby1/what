@@ -17,9 +17,8 @@ class TemplateField < ActiveRecord::Base
       additional_info += (" #{ TemplateField.find(_header_ids.last).document_answers.where(:document_id => document.id)[amount_index].answer }" if _header_ids.length > 1)
 
       text = ''
-      text += name.split('<spain/>').first if !name.nil?
-      text += '<i>' + additional_info + '</i>'
-      text += '<div class="spain">' + name.split('<spain/>').last + '<i>' + additional_info + '</i>' + '</div>' if !name.nil? && name.split('<spain/>').length > 1
+      text += name.split('<spain/>').first.sub(/<insert>/, additional_info) if !name.nil?
+      text += '<div class="spain">' + name.split('<spain/>').last.sub(/<insert>/, additional_info) + '</div>'
       text
     else
       to_s

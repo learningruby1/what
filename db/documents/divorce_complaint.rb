@@ -3,7 +3,7 @@
 #
 # <separate/>  -  for radio only
 # postfix '-last' could be added to radio for extra <br/>
-#
+# <insert> is marker for :header_ids
 #
 #
 
@@ -158,7 +158,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Select  the type of custody you would like to have:
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
-current_step.fields.create :field_type => 'text', :name => 'Who will have legal custody of <spain/>¿Quién tendrá la custodia legal', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text', :name => 'Who will have legal custody of <insert>? <spain/>¿Quién tendrá la custodia legal <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA<spain/>
                                                             <br/>When the child(ren) live with one parent for most of the time (more than 60%) and has limited visitation with the other parent.
                                                             <br/><spain/>Cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
@@ -176,7 +176,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Holiday /<spain/>Feriados',
                                      :description => 'Check all the holiday that apply for your child(ren):<br/><spain/>Marque todos los feriados que aplican a su (s) menor (es):'
 
-current_step.fields.create :field_type => 'text', :name => 'Holidays schedule for <spain/>Holidays schedule para', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text', :name => 'Holidays schedule for <insert><spain/>Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 
 toggle_id = 0
 toggle_id += 1
@@ -295,7 +295,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Check all the holiday that apply for your child(ren):<br/>
                                                       <spain/>Marque todos los feriados que aplican a su (s) menor (es):'
 
-current_step.fields.create :field_type => 'text', :name => 'More Holidays schedule for <spain/>Más Holidays schedule para', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text', :name => 'More Holidays schedule for <insert><spain/>Más Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 
 toggle_id = 0
 toggle_id += 1
@@ -569,11 +569,9 @@ current_step.fields.create :field_type => 'amount', :name => 'since separation. 
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#18
-                                     :title => 'Child Tax Exemption /<spain/>Menores en los Impuestos',
-                                     :description => 'Who will claim (insert name of child #1) as dependent on tax returns?
-                                                      <br/><spain/>¿Quién reclamará (insert name of child #1) como dependiente en los impuestos?'
+                                     :title => 'Child Tax Exemption /<spain/>Menores en los Impuestos'
 
-current_step.fields.create :field_type => 'text', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text', :name => 'Who will claim <insert> as dependent on tax returns?<br/><spain/>¿Quién reclamará <insert> como dependiente en los impuestos?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años
                                                              <option/>Dad every year /<spain/>Papá todos los años
                                                              <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
