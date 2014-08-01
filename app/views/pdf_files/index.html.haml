@@ -1,29 +1,37 @@
 .jumbotron
   .container
-    %h2 Your documents
+    %h2
+      Your documents /
+      %span.spain Tus documentos
 
 .container
   - if @documents.blank?
-    %h5 You have no documents...
+    %h5
+      You have no Documents...
+      %br
+      %br
+      .spain No hay Documentos...
   - else
     %table.table
       %thead
         %tr
           %td
-            %h4 Documents
+            %h4
+              Documents /
+              %span.spain Documentos
           %td
-            %h4 Actions
 
       - @documents.each do |document|
         %tr
           %td
             %h5
-              = document
-              %i= " (#{ document.template.to_s })"
+              = document.to_s.split('<spain/>').first
+              %span.spain= document.to_s.split('<spain/>').last
           %td
             = link_to document_answer_path(document, 1), :class => 'btn btn-default' do
               .glyphicon.glyphicon-edit
-              Edit
+              Edit /
+              %span.spain Editar
 
             - if document.is_generated?
               - if current_user
@@ -34,11 +42,13 @@
                   = link_to new_paypal_payment_path, :class => 'btn btn-primary modal_remote',
                     'data-target' => '#modal_window', 'data-toggle' => 'modal' do
                     .glyphicon.glyphicon-cloud-download
-                    Pay to Download
+                    Pay to Download /
+                    %span= Pagar por descargar
                 = render :partial => 'link_to_documents', :locals => { :document => document }
 
               - else
                 = link_to new_user_session_path, :class => 'btn btn-primary modal_remote',
                   'data-target' => '#modal_window', 'data-toggle' => 'modal' do
                   .glyphicon.glyphicon-pencil
-                  Sign In
+                  Sign In /
+                  %span Iniciar sesión

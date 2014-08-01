@@ -8,8 +8,8 @@
 #
 
 #NOTICE: name used in link_to_documents tempate AND in lib/pdf_documents/documents/pdf.rb
-Template.where( :name => 'Complaint for Divorce').first.try :destroy
-template = Template.create :name => 'Complaint for Divorce', :description => 'No description' if !template.present?
+Template.where( :name => 'Complaint for Divorce /<spain/>Demanda de Divorcio').first.try :destroy
+template = Template.create :name => 'Complaint for Divorce /<spain/>Demanda de Divorcio', :description => 'No description /<spain/>No hay descripción' if !template.present?
 
 step_number = 0
 
@@ -22,9 +22,9 @@ current_step.fields.create :name => 'Clark<option/>Nye', :field_type => 'radio',
 current_step = template.steps.create :step_number => step_number += 1,#1
                                      :title => 'Your information /<spain/>Su Información'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name /<spain/>Por favor, ponga un nombre válido' }
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombreand' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name /<spain/>Por favor, ponga un apellido válido' }
+current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX /<spain/>Por favor, ponga un número de Seguro Social válido' }
 current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ ]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
@@ -44,9 +44,9 @@ current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'Your Spouse\'s Information /<spain/>Información de su esposa(o)',
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona serà referida como el demandado (DEFENDANT)'
 
-current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name /<spain/>Por favor, ponga un nombre válido' }
+current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombreand' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
-current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name /<spain/>Por favor, ponga un apellido válido' }
+current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX /<spain/>Por favor, ponga un número de Seguro Social válido' }
 current_step.fields.create :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ ]+)?$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
@@ -123,17 +123,17 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'text', :name => 'How many minor children were born or legally adopted during this marriage?
                                                             <br/><spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?'
-children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value /<spain>Por favor, introduzca el valor correcto' }
+children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value /<spain/>Por favor, introduzca el valor correcto' }
 
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
                                      :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
 
-child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid name /<spain/>Por favor, ponga un nombre válido' }
+child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter name /<spain/>Escriba el nombreand' }
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:'
 
-child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Please enter a valid last name /<spain/>Por favor, ponga un apellido válido' }
+child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\-]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social:', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. e.g. XXX-XX-XXXX /<spain/>Por favor, ponga un número de Seguro Social válido' }
 current_step.fields.create :name => 'Son /<spain/>Hijo
@@ -632,7 +632,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tienen usted una casa que compraron durante el matrimonio?'
 
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -653,19 +653,19 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'checkbox', :name => 'Home /<spain/>Casa', :toggle_id => toggle_id
 
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra', :toggle_id => toggle_id
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Business /<spain/>Negocio', :toggle_id => toggle_id
-current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain>Por favor, ponga una dirección' }
+current_step.fields.create :name => 'Address /<spain/>Dirección:', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }

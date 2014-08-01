@@ -11,7 +11,7 @@ module PdfDocument
     def generate(document)
 
       case document.template.to_s
-      when 'Complaint for Divorce'
+      when /^Complaint for Divorce/
 
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
