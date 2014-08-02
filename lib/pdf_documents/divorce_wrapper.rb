@@ -362,7 +362,7 @@ module PdfDocument
             tmp_land = land.first
             loop_answer = land.second.answer.to_i
             loop_answer.times do
-              business.shift 2
+              land.shift 2
               @properties_more.push [tmp_land, land.first, land.second]
             end
           end
