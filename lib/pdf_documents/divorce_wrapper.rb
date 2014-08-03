@@ -472,17 +472,18 @@ module PdfDocument
         end
 
         #Step 27   Property Division: Bank and Investment Account
-        answers = step_answers_looped_enum steps.next
-
         @bank_account = Array.new
-        answers.first.length.times do
-          @bank_account.push Array.new
-        end
+        answers = document.step_answers steps.next
 
-        answers.each do |answer|
-          answer.each_with_index do |a, i|
-
-            @bank_account[i].push a
+        bank = answers.select{ |item| item.sort_index == 'a' }
+        bank.sort_by!{ |item| item.sort_number }
+        if bank.first.answer == 'Yes'
+          tmp_bank = bank.first
+          loop_answer = bank.second.answer.to_i
+          bank.shift 2
+          loop_answer.times do
+            @bank_account.push [tmp_bank, bank.first, bank.second, bank.third, bank.fourth]
+            bank.shift 4
           end
         end
 

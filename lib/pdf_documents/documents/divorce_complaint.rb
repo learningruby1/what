@@ -262,17 +262,13 @@ module PdfDocument
         end
 
         @bank_account.each do |property|
-          property_string = ''
+          property_string = []
           property.each_with_index do |p, i|
 
-            if i % 4 == 0
-              push_text property_string + ", #{ p.answer }", @text_indent if property_string != '' && property_string != ', Yes'
-              property_string = p.answer == 'Yes' ? p.template_field.template_step.to_s.split('<br/><spain/>').first.split(': ').last.strip : ''
-            else
-              property_string += ', ' if property_string.length > 0
-              property_string += "#{ p.answer }" if !p.answer.nil? && p.answer.length > 0
-            end
+            property_string.push p.answer
+
           end
+          push_text property_string.join(', '), @text_indent if property_string != '' || property_string != ','
         end
 
         move_down

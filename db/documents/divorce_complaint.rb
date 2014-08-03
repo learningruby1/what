@@ -759,23 +759,14 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Hay cuentas bancarias, de inversiones, u otro tipo de cuenta financiera obtenida  durante el matrimonio?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :name => 'Name of the account /<spain/>Nombre de la cuenta', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'approximate amount in it /<spain/>la cantidad aproximada', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'last 4# (if possible) /<spain/>los ultimos 4# (si es posible):', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
+bank_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2'
+current_step.fields.create :name => 'Name of the account /<spain/>Nombre de la cuenta', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter name of the account /<spain/>Por favor introduce el nombre de la cuenta' }
+current_step.fields.create :name => 'approximate amount in it /<spain/>la cantidad aproximada', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter approximate amount in it /<spain/>Por favor, ingrese el monto aproximado en ella' }
+current_step.fields.create :name => 'last 4# (if possible) /<spain/>los ultimos 4# (si es posible):', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter last 4# /<spain/>Por favor introduce el pasado 4 #' }
 current_step.fields.create :field_type => 'radio', :name => 'I will keep /<spain/>Para Mi
                                                              <option/>I want a portion /<spain/>Quiero una porción
-                                                             <option/>My spouse will keep it /<spain/>Para mi esposa(o)', :toggle_id => toggle_id, :toggle_option => 'Yes'
-
-current_step.fields.create :field_type => 'text', :name => 'Is there another account? /<spain/>¿Hay otra cuenta?', :toggle_id => toggle_id, :toggle_option => 'Yes', :dont_repeat => true
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :looper_option => 'Yes', :dont_repeat => true
-
-
-
-
-
+                                                             <option/>My spouse will keep it /<spain/>Para mi esposa(o)', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',#28
