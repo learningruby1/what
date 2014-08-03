@@ -457,19 +457,20 @@ module PdfDocument
         end
 
         #Step 26   Property Division: Pension Benefit
-        answers = step_answers_looped_enum steps.next
-
         @debts_accounts = Array.new
-        answers.first.length.times do
-          @debts_accounts.push Array.new
-        end
+        answers = document.step_answers steps.next
 
-        answers.each do |answer|
-          answer.each_with_index do |a, i|
-
-            @debts_accounts[i].push a
+        plan = answers.select{ |item| item.sort_index == 'a' }
+        plan.sort_by!{ |item| item.sort_number }
+        if plan.first.answer == 'Yes'
+          tmp_plan = plan.first
+          loop_answer = plan.second.answer.to_i
+          loop_answer.times do
+            plan.shift 2
+            @debts_accounts.push [tmp_plan, plan.first, plan.second]
           end
         end
+
         #Step 27   Property Division: Bank and Investment Account
         answers = step_answers_looped_enum steps.next
 
@@ -518,6 +519,7 @@ module PdfDocument
 
       #Step 37   Wife’s Name
       answers = step_answers_enum steps.next
+
       @wife_name_changing = answers.next.answer
       @wife_name = answers.next.answer
 

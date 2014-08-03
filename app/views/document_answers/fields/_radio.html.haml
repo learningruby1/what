@@ -5,6 +5,7 @@
       %label.new_roman.radio{ :class => ('margin-left' if !answer.template_field.field_type.match('sub')) }
         = a.radio_button :answer, title_array.first.split(' /<spain/>').first
         = render :partial => 'render_text', :locals => { :answer => title_array.first }
+        %input{ :type => 'hidden', :value => answer.id }
 
 
   - if title_array.length > 1
