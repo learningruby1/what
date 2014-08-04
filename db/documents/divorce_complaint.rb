@@ -830,7 +830,7 @@ current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<sp
 current_step.fields.create :name => 'Bank and amount owe /<spain/>Banco y cantidad que se debe:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 other_property_field = current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                                                     <option/>Husband will keep /<spain/>Esposo va a pagar
-                                                                                    <option/>Pay with sell of home /<spain/>Pagar con venta de casa', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                                                    <option/>Pay with sell of home /<spain/>Pagar con venta de casa', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step.fields.create :field_type => 'text', :name => 'Is there another debt associated with the marital home?
@@ -851,11 +851,11 @@ toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :name => 'Card, amount, last 4# (if possible): (example Visa, $1000, #1234) /<spain/>Tarjeta, cantidad, últimos 4#: (ejemplo Visa, $ 1000, #1234)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :name => 'Card, amount, last 4# (if possible): (example Visa, $1000, #1234) /<spain/>Tarjeta, cantidad, últimos 4#: (ejemplo Visa, $ 1000, #1234)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                             <option/>Divide /<spain/>Dividir
-                                                            <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                            <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'text', :name => 'Is there another credit card, hospital or doctor bill?
                                                             <br/><spain/>¿Hay otra tarjeta de crédito, cuenta de hospital o doctor que dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes', :dont_repeat => true
@@ -878,7 +878,7 @@ current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<sp
 current_step.fields.create :name => 'Bank and amount owe: (example Ford about $10,000) /<spain/>Banco y cantidad que se debe: (ejemplo Ford $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
-                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'text', :name => 'Is there another car, rv, boat, motorcycle loan to divide?
                                                             <br/><spain/>¿Tiene otro préstamo de carro, rv, barco, moto que dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes', :dont_repeat => true
@@ -895,13 +895,13 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tiene algún préstamo estudiantil, IRS, otra deuda para dividir?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Type and amount owe: (example IRS about $10,000)
                                      <spain/>Tipo y deuda: (ejemplo IRS $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
-                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'text', :name => 'Is there another student loan, IRS, payday loans, other debt to divide?
                                                             <br/><spain/>¿Tiene otro préstamo estudiantil, IRS, otra deuda para dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes', :dont_repeat => true
@@ -920,7 +920,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :name => 'Make a list of debts that need to be divided:
                                      <br/><spain/>Haga una lista de las deudas que se tienen que', :toggle_id => toggle_id, :toggle_option => 'Yes'
@@ -946,16 +946,16 @@ current_step = template.steps.create :step_number => step_number += 1,#36
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.
-                                                             <option/>Husband WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                             <option/>Husband WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $(ponga la cantidad mensual) por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
+current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
-                                                             <option/>Year(s) (example 1 year) /<spain/>Año(s)  (ejemplo 1 año)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                             <option/>Year(s) (example 1 year) /<spain/>Año(s)  (ejemplo 1 año)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1,#37
@@ -965,9 +965,9 @@ toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Wife never change her name /<spain/>La esposa nunca se cambió el apellido
                                                              <option/>Wife will keep married name /<spain/>La esposa se va a quedar con el apellido de casada
-                                                             <option/>Wife will return to her maiden name /<spain/>La esposa volverá a su apellido de soltera que es', :toggle_id => toggle_id, :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>Wife will return to her maiden name /<spain/>La esposa volverá a su apellido de soltera que es', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden name', :toggle_option => 'Wife will return'
+current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden name', :toggle_option => 'Wife will return', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
 
 
 
@@ -977,7 +977,7 @@ current_step = template.steps.create :step_number => step_number += 1,#38
                                                       <br/><spain/>Nevada es un estado de divorcio "sin culpa".  Esto significa que la persona que busca el divorcio no tiene que probar en la corte que él o ella tiene el derecho a divorciarse.'
 
 current_step.fields.create :field_type => 'radio', :name => 'I no longer want to be married /<spain/>Ya no quiero seguir casado porque no nos entendemos
-                                                             <option/>I no longer want to be married and have lived separated and apart for over 1 year /<spain/>Ya no quiero seguir casada y hemos vivido separados desde hace más de 1 año', :mandatory => { :value => /^[1a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>I no longer want to be married and have lived separated and apart for over 1 year /<spain/>Ya no quiero seguir casada y hemos vivido separados desde hace más de 1 año', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -986,7 +986,7 @@ current_step = template.steps.create :step_number => step_number += 1,#39
                                      :description => 'Do you or other party in this case (including any minor child) have any other current case(s) or past case(s) in the Family Court or Juvenile Court in (insert county) County?
                                                       <br/><spain/>¿Ha tenido o tiene usted u la otra persona en este caso (incluyendo cualquier de sus menores) otros casos en la corte de familia en el Condado de (insert county)?'
 
-other_cases_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+other_cases_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -1087,12 +1087,6 @@ current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :togg
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la ultima orden:', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :toggle_id => toggle_id
-
-
-
-# current_step.fields.create :field_type => 'link:sep:https://www.clarkcountycourts.us/Anonymous/default.aspx', :name => 'Don’t remember the date? Click here
-#                                                                                                                         <br/><spain/>¿No recuerda la fecha? Haz clic'
-
 
 #
 # END OF ALIMONY
