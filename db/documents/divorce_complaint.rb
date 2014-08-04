@@ -849,21 +849,29 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tiene tarjetas de créditos, cuenta de hospital o doctores que dividir?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :name => 'Card, amount, last 4# (if possible): (example Visa, $1000, #1234) /<spain/>Tarjeta, cantidad, últimos 4#: (ejemplo Visa, $ 1000, #1234)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
+current_step.fields.create :field_type => 'checkbox', :name => 'Credit Cards /<spain/>Tarjetas de crédito', :sort_index => 'a1', :toggle_id => toggle_id
+credits_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2'
+current_step.fields.create :name => 'Card, amount, last 4# (if possible): (example Visa, $1000, #1234) /<spain/>Tarjeta, cantidad, últimos 4#: (ejemplo Visa, $ 1000, #1234)', :toggle_id => toggle_id, :amount_field_id => credits_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Card, amount, last 4# /<spain/>Por favor introduce la tarjeta, la cantidad, el pasado 4 #' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                             <option/>Divide /<spain/>Dividir
-                                                            <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                            <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => credits_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Hospital bills /<spain/>Las facturas del hospital', :toggle_id => toggle_id, :sort_index => 'b1'
+hospital_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2'
+current_step.fields.create :name => 'Hospital bill $ (enter amount) /<spain/>Cuenta de hospital', :toggle_id => toggle_id, :amount_field_id => hospital_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Hospital bill /<spain/>Por favor introduce factura del hospital' }
 
-current_step.fields.create :field_type => 'text', :name => 'Is there another credit card, hospital or doctor bill?
-                                                            <br/><spain/>¿Hay otra tarjeta de crédito, cuenta de hospital o doctor que dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes', :dont_repeat => true
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :looper_option => 'Yes', :dont_repeat => true
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                            <option/>Divide /<spain/>Dividir
+                                                            <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => hospital_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Doctor bills /<spain/>Facturas del médico', :toggle_id => toggle_id, :sort_index => 'c1'
+doctor_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2'
+current_step.fields.create :name => 'Doctor bill $ (enter amount) /<spain/>Cuenta de doctor', :toggle_id => toggle_id, :amount_field_id => doctor_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Doctor bill /<spain/>Por favor introduce proyecto de ley médico' }
 
-
-
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                            <option/>Divide /<spain/>Dividir
+                                                            <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => doctor_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 

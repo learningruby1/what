@@ -505,7 +505,45 @@ module PdfDocument
 
       #Step 30   Debts
       answers = step_answers_looped_enum steps.next
-      5.times do steps.next end
+      1.times do steps.next end
+
+      #Step 32
+      @bill_accounts = Array.new
+      answers = document.step_answers steps.next
+
+      card = answers.select{ |item| item.sort_index == 'a' }
+      card.sort_by!{ |item| item.sort_number }
+      if card.first.answer == '1'
+        tmp_card = card.first
+        loop_answer = card.second.answer.to_i
+        loop_answer.times do
+          card.shift 2
+          @bill_accounts.push [tmp_card, card.first, card.second]
+        end
+      end
+
+      hospital = answers.select{ |item| item.sort_index == 'b' }
+      hospital.sort_by!{ |item| item.sort_number }
+      if hospital.first.answer == '1'
+        tmp_hospital = hospital.first
+        loop_answer = hospital.second.answer.to_i
+        loop_answer.times do
+          hospital.shift 2
+          @bill_accounts.push [tmp_hospital, hospital.first, hospital.second]
+        end
+      end
+
+      doctor = answers.select{ |item| item.sort_index == 'c' }
+      doctor.sort_by!{ |item| item.sort_number }
+      if doctor.first.answer == '1'
+        tmp_doctor = doctor.first
+        loop_answer = doctor.second.answer.to_i
+        loop_answer.times do
+          doctor.shift 2
+          @bill_accounts.push [tmp_doctor, doctor.first, doctor.second]
+        end
+      end
+      3.times do steps.next end
 
       #Step 36   Spousal support or Alimony
       answers = step_answers_enum steps.next
