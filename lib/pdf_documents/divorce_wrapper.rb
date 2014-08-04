@@ -75,7 +75,7 @@ module PdfDocument
 
       #Step 5   Pregnacy
       answers = step_answers_enum steps.next
-      @wife_pregnacy = answers.next.answer == 'IS currently pregnant.'
+      @wife_pregnacy = answers.next.answer == 'IS currently pregnant'
 
       #Step 6   Children
       answers = step_answers_enum steps.next

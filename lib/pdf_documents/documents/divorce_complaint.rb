@@ -43,7 +43,6 @@ module PdfDocument
       push_text "That the parties were married on the #{ @marriage_date } #{ @marriage_country_string }", @text_indent
 
       move_down @header_margin_top
-      move_down @header_margin_top
       push_header "#{ _counter += 1 }. MINOR CHILDREN"
       move_down
 

@@ -42,6 +42,7 @@ class Document < ActiveRecord::Base
       _answer.update answer.last.permit(:answer)
       # upcase
       _answer.update :answer => _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
+      _answer.update :answer => _answer.answer.split(' ').map(&:capitalize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
 
       # mandatory checking
       if !_answer.template_field.mandatory.nil? && answer.last[:answer].nil? || !_answer.template_field.mandatory.nil? &&

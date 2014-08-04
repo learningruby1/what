@@ -2,4 +2,6 @@
   .row.new_roman.col-md-12
     = render :partial => 'render_text', :locals => { :answer => answer }
   .row.new_roman.col-md-12
-    %p= a.text_field :answer, :class => 'form-control'
+    = a.text_field :answer, :class => 'form-control'
+  .row.new_roman.col-md-12
+    = render :partial => 'render_example', :locals => { :answer => answer }
