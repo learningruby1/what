@@ -1,15 +1,14 @@
 .jumbotron
   .container
-    %h2
+    %h3
       Your documents /
       %span.spain Tus documentos
 
 .container
   - if @documents.blank?
-    %h5
-      You have no Documents...
-      %hr
-      .spain No hay Documentos...
+    %h4
+      You have no Documents /
+      %span.spain No hay Documentos
   - else
     %table.table
       %thead

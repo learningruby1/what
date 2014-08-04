@@ -220,13 +220,13 @@ module PdfDocument
         end
 
         @properties_more.each do |property|
-          property_string = []
+          property_array = []
           property.each_with_index do |p, i|
 
-            property_string.push p.answer == '1' ? p.template_field.name.split(' /<spain/>').first : p.answer
+            property_array.push p.answer == '1' ? p.template_field.name.split(' /<spain/>').first : p.answer
 
           end
-          push_text property_string.join(', '), @text_indent if property_string != '' || property_string != ','
+          push_text property_array.join(', '), @text_indent
         end
 
         move_down
