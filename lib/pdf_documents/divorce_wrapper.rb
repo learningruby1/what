@@ -385,20 +385,75 @@ module PdfDocument
         @vehicles_presence = answers.next.answer == 'Yes' rescue false
 
         #Step 25   Property Division: Vehicles
-        answers = step_answers_looped_enum steps.next
+        answers = document.step_answers steps.next
         if @vehicles_presence
 
-          answers.first.length.times do
-            @properties_more.push Array.new
-          end
-
-          answers.each do |answer|
-            answer.each_with_index do |a, i|
-
-              @properties_more[i + @property_count].push a
+          car = answers.select{ |item| item.sort_index == 'a' }
+          car.sort_by!{ |item| item.sort_number }
+          if car.first.answer == '1'
+            tmp_car = car.first
+            loop_answer = car.second.answer.to_i
+            loop_answer.times do
+              car.shift 2
+              @properties_more.push [tmp_car, car.first, car.second]
             end
           end
-          @property_count = @properties_more.length
+
+          motorcycle = answers.select{ |item| item.sort_index == 'b' }
+          motorcycle.sort_by!{ |item| item.sort_number }
+          if motorcycle.first.answer == '1'
+            tmp_motorcycle = motorcycle.first
+            loop_answer = motorcycle.second.answer.to_i
+            loop_answer.times do
+              motorcycle.shift 2
+              @properties_more.push [tmp_motorcycle, motorcycle.first, motorcycle.second]
+            end
+          end
+
+          rv = answers.select{ |item| item.sort_index == 'c' }
+          rv.sort_by!{ |item| item.sort_number }
+          if rv.first.answer == '1'
+            tmp_rv = rv.first
+            loop_answer = rv.second.answer.to_i
+            loop_answer.times do
+              rv.shift 2
+              @properties_more.push [tmp_rv, rv.first, rv.second]
+            end
+          end
+
+          boat = answers.select{ |item| item.sort_index == 'd' }
+          boat.sort_by!{ |item| item.sort_number }
+          if boat.first.answer == '1'
+            tmp_boat = boat.first
+            loop_answer = boat.second.answer.to_i
+            loop_answer.times do
+              boat.shift 2
+              @properties_more.push [tmp_boat, boat.first, boat.second]
+            end
+          end
+
+          trailer = answers.select{ |item| item.sort_index == 'e' }
+          trailer.sort_by!{ |item| item.sort_number }
+          if trailer.first.answer == '1'
+            tmp_trailer = trailer.first
+            loop_answer = trailer.second.answer.to_i
+            loop_answer.times do
+              trailer.shift 2
+              @properties_more.push [tmp_trailer, trailer.first, trailer.second]
+            end
+          end
+
+          other = answers.select{ |item| item.sort_index == 'f' }
+          other.sort_by!{ |item| item.sort_number }
+          if other.first.answer == '1'
+            tmp_other = other.first
+            loop_answer = other.second.answer.to_i
+            loop_answer.times do
+              other.shift 2
+              @properties_more.push [tmp_other, other.first, other.second]
+            end
+          end
+
         end
 
         #Step 26   Property Division: Pension Benefit
