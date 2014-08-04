@@ -201,33 +201,44 @@ $(function(){
       if(e.keyCode > 47 && e.keyCode < 58){
         if($(this).val().length == 3 || $(this).val().length > 3)
           $('.phone_fields [name="second"]').focus();
+
         if($(this).val().length > 3)
-          return false;
+          $(this).val($(this).val().substring(0, $(this).val().length - 1));
       }
       Answer.phone_handler();
     });
 
     $('.phone_fields [name="second"]').keyup(function(e){
+      if(e.keyCode == 8 && $(this).val().length == 0)
+        $('.phone_fields [name="first"]').focus();
       if(e.keyCode > 47 && e.keyCode < 58){
         if($(this).val().length == 3 || $(this).val().length > 3)
           $('.phone_fields [name="third"]').focus();
+
         if($(this).val().length > 3)
-          return false;
+          $(this).val($(this).val().substring(0, $(this).val().length - 1));
       }
       Answer.phone_handler();
     });
 
     $('.phone_fields [name="third"]').keyup(function(e){
+      if(e.keyCode == 8 && $(this).val().length == 0)
+        $('.phone_fields [name="second"]').focus();
+
       if(e.keyCode > 47 && e.keyCode < 58){
         if($(this).val().length == 4 || $(this).val().length > 4)
           $('.phone_fields [name="ext"]').focus();
         if($(this).val().length > 4)
-          return false;
+          $(this).val($(this).val().substring(0, $(this).val().length - 1));
       }
       Answer.phone_handler();
     });
 
     $('.phone_fields [name="ext"]').keyup(function(e){
+      if(e.keyCode == 8 && $(this).val().length == 0)
+        $('.phone_fields [name="third"]').focus();
+      if($(this).val().length > 10)
+        $(this).val($(this).val().substring(0, $(this).val().length - 1));
       Answer.phone_handler();
     });
   }
@@ -235,13 +246,20 @@ $(function(){
 
 var Answer = {
   phone_handler: function(){
-    $('.phone_fields [type="hidden"]').val($('.phone_fields [name="first"]').val() + ' ' + $('.phone_fields [name="second"]').val() + '-' + $('.phone_fields [name="third"]').val() + ' ' + $('.phone_fields [name="ext"]').val());
+    var phone = $('.phone_fields [name="first"]').val() + ' ' + $('.phone_fields [name="second"]').val() + '-' + $('.phone_fields [name="third"]').val() + ' ' + $('.phone_fields [name="ext"]').val();
+    if(phone.length > 3)
+      $('.phone_fields [type="hidden"]').val($('.phone_fields [name="first"]').val() + ' ' + $('.phone_fields [name="second"]').val() + '-' + $('.phone_fields [name="third"]').val() + ' ' + $('.phone_fields [name="ext"]').val());
+    else
+      $('.phone_fields [type="hidden"]').val('');
   },
   fill_phone: function(){
     var _phone_number = $('.phone_fields [type="hidden"]').val();
     $('.phone_fields [name="first"]').val(_phone_number.split(' ')[0]);
-    $('.phone_fields [name="second"]').val(_phone_number.split(' ')[1].split('-')[0]);
-    $('.phone_fields [name="third"]').val(_phone_number.split(' ')[1].split('-')[1]);
-    $('.phone_fields [name="ext"]').val(_phone_number.split(' ')[2]);
+    if(_phone_number.split(' ').length > 1){
+      $('.phone_fields [name="second"]').val(_phone_number.split(' ')[1].split('-')[0]);
+      if(_phone_number.split(' ')[1].split('-').length > 1)
+        $('.phone_fields [name="third"]').val(_phone_number.split(' ')[1].split('-')[1]);
+      $('.phone_fields [name="ext"]').val(_phone_number.split(' ')[2]);
+    }
   }
 }
