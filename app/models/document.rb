@@ -11,7 +11,8 @@ class Document < ActiveRecord::Base
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
 
-    if direction == 'forward' && loop_amount(next_step) != looped_amount(next_step, _answers) && _answers.present?
+    step = TemplateStep.find next_step rescue nil
+    if direction == 'forward' && loop_amount(next_step) != looped_amount(next_step, _answers) && _answers.present? && !step.amount_field_id.nil?
       _answers.each(&:destroy)
       _answers = nil
     end
@@ -86,13 +87,74 @@ class Document < ActiveRecord::Base
       loop_amount(next_step).times do |i|
         template.steps.where(:step_number => next_step).first.fields.reverse_each do |field|
 
-          if i == 0 || field.dont_repeat == false
-            document_answers.push answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + i * template.steps.count)
+          if field.raw_question == true
+            if field.sort_index.nil?
+              #if i == 0 || field.dont_repeat == false
+                document_answers.push answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + i * template.steps.count)
+              #end
+            else
+              #if i == 0 || field.dont_repeat == false
+                document_answers.push answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + i * template.steps.count, :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i)
+              #end
+            end
           end
         end
       end
     end
     document_answers
+  end
+
+  def create_hidden_answers!(next_step, amount_field_id, loop_amount, last_answer, toggler_offset=0)
+    if template.steps.where(:step_number => next_step).exists?
+      index = last_answer.sort_number
+      loop_amount.times do
+        template.steps.where(:step_number => next_step).first.fields.where(:amount_field_id => amount_field_id).reverse_each do |field|
+          index += 1
+          answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index )
+        end
+      end
+    end
+  end
+
+  def delete_hidden_answers!(next_step, sort_char, loop_amount, amount_field_id)
+    if template.steps.where(:step_number => next_step).exists?
+      tmp_answers = step_answers(next_step)
+      answers = []
+      tmp_answers.each do |item|
+        answers << item if item.sort_index.include?(sort_char)
+      end
+      answers.sort!{ |a, b| b[:sort_number] <=> a[:sort_number] }
+      loop_amount *= template.steps.where(:step_number => next_step).first.fields.where(:amount_field_id => amount_field_id).count
+      loop_amount.times do
+        answers.first.delete
+        answers.shift
+      end
+    end
+  end
+
+  def get_last_sort_answer(step, sort_char)
+    tmp_answers = step_answers(step)
+    answers = []
+    tmp_answers.each do |item|
+      answers << item if item.sort_index.include?(sort_char)
+    end
+    answers.sort_by!{ |item| [item.sort_index, item.sort_number] }
+    answers.last
+  end
+
+  def create_or_delete_answer(value, answer, step, tmp_value)
+     if answer.answer.nil?
+      answer.update :answer => value
+      create_hidden_answers! step, answer.template_field_id, value, get_last_sort_answer(step, answer.sort_index)
+    else
+      create_hidden_answers! step, answer.template_field_id, value - answer.answer.to_i, get_last_sort_answer(step, answer.sort_index) if tmp_value < value
+      delete_hidden_answers! step, answer.sort_index, answer.answer.to_i - value, answer.template_field_id if tmp_value > value
+      answer.update :answer => value
+    end
+  end
+
+  def step_answers(step)
+    template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten rescue nil
   end
 
   def skip_steps(next_step, direction='forward')

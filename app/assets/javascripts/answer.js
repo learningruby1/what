@@ -116,16 +116,15 @@ $(function(){
         $(this_prop_class   + ':not(:first)').hide();
 
       //Checkbox event
-      $('.' + $(this).prop('class') + ':first:has(:checkbox)').change(function(){
-        if($('.' + $(this).prop('class') + ':first :checkbox').prop('checked') == true)
-          $('.' + $(this).prop('class') + ':not(:first)').show();
+      $(document).change( '.' + $(this).prop('class') + ':first:has(:checkbox)', function(){
+        if(!$(this_prop_class + ':first :checkbox').is(':checked'))
+          $(this_prop_class   + ':not(:first)').hide();
         else
-          $('.' + $(this).prop('class') + ':not(:first)').hide();
+          $(this_prop_class   + ':not(:first)').show();
       });
     }
 
     if($(this_prop_class + ':first [type="radio"]').length > 0){
-
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
       $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
         if(selected_value != undefined)
@@ -174,4 +173,24 @@ $(function(){
 
     });
   }
+
+  //For sub_amount click
+  $('[class^="sub_amount_"]').each(function(){
+    var $this = '.' + $(this).prop('class');
+
+    $(document).on('click', $this + ' div:last-child a', function(event){
+      event.preventDefault();
+
+      var form = $('#answer_form').serialize();
+      var answer_id = $(this).prev().val();
+      var value = $(this).parent().prev().find('p input').val();
+      var answer_id_question = $(this).parent().parent().parent().parent().prev().prev().find('div label input:last-child').val();
+
+      $.ajax({
+        type: "GET",
+        data: form + "&value=" + value + "&step=" + $('#step_id').val() + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val(),
+        url: "/documents/"+$('#document_id').val()+"/step/"+$('#step_id').val()+"/render_questions"
+      });
+    })
+  });
 });

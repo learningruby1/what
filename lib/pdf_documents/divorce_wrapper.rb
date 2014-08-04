@@ -339,23 +339,45 @@ module PdfDocument
         @property_presence_more = answers.next.answer == 'Yes' rescue false
 
         @properties_more = Array.new
-        @property_count = 0
 
         #Step 23   Property Division: Marital Home
-        answers = step_answers_looped_enum steps.next
+        answers = document.step_answers steps.next
+
         if @property_presence_more
 
-          answers.first.length.times do
-            @properties_more.push Array.new
-          end
-
-          answers.each do |answer|
-            answer.each_with_index do |a, i|
-
-              @properties_more[i].push a
+          house = answers.select{ |item| item.sort_index == 'a' }
+          house.sort_by!{ |item| item.sort_number }
+          if house.first.answer == '1'
+            tmp_house = house.first
+            loop_answer = house.second.answer.to_i
+            loop_answer.times do
+              house.shift 2
+              @properties_more.push [tmp_house, house.first, house.second]
             end
           end
-          @property_count = @properties_more.length
+
+          land = answers.select{ |item| item.sort_index == 'b' }
+          land.sort_by!{ |item| item.sort_number }
+          if land.first.answer == '1'
+            tmp_land = land.first
+            loop_answer = land.second.answer.to_i
+            loop_answer.times do
+              land.shift 2
+              @properties_more.push [tmp_land, land.first, land.second]
+            end
+          end
+
+          business = answers.select{ |item| item.sort_index == 'c' }
+          business.sort_by!{ |item| item.sort_number }
+          if business.first.answer == '1'
+            tmp_business = business.first
+            loop_answer = business.second.answer.to_i
+            business.shift 2
+            loop_answer.times do
+              @properties_more.push [tmp_business, business.first, business.second, business.third]
+              business.shift 3
+            end
+          end
         end
 
         #Step 24   Property Division: Vehicles
