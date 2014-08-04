@@ -1,7 +1,9 @@
 .container
   .col-md-3
     %fieldset
-      %legend Change password
+      %legend
+        Change password
+        %span.spain Cambiar la contraseña
 
       = devise_error_messages!
 
@@ -9,10 +11,10 @@
         = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
           = f.hidden_field :reset_password_token
           .form-group
-            = f.password_field :password, :placeholder => "Password", :autofocus => true, :class => 'form-control'
+            = f.password_field :password, :placeholder => "Password / Contraseña", :autofocus => true, :class => 'form-control'
           .form-group
-            = f.password_field :password_confirmation, :placeholder => "Password confirm", :class => 'form-control'
+            = f.password_field :password_confirmation, :placeholder => "Password confirm / Confirmar contraseña", :class => 'form-control'
           .form-group
-            = f.submit "Change my password", :class => 'btn btn-default btn-block'
+            = f.submit "Change my password / Cambiar mi contraseña", :class => 'btn btn-default btn-block'
           .form-group
             = render "devise/shared/links"
