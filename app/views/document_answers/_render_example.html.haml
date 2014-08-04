@@ -1,0 +1,3 @@
+- text_array = answer.template_field.to_text(@document, @amount_index).split('<spain/>')
+- if text_array.length > 2
+  %p.new_roman.text-muted.example= text_array[2]

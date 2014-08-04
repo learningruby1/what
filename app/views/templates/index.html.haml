@@ -1,8 +1,9 @@
 .jumbotron
   .container
-    %h2 Forms Mama
-    %p A unique online multilingual Self-Help forms site
-    %p.spain Un sitio único y multilingüe de solicitudes de auto ayuda
+    %h3
+      Recent documents /
+      %span.spain Documentos recientes
+
     - if @documents.present?
       %h2.text-muted
         - if user_signed_in?
@@ -13,6 +14,10 @@
           = document.to_s.split('<spain/>').first
           %span.spain= document.to_s.split('<spain/>').last
         %br
+    - else
+      You have no documents filed recently
+      %hr
+      .spain No hay documentos presentados recientemente
 
 .container
   - @templates.each_with_index do |template, index|
@@ -20,8 +25,4 @@
       .row
     .col-md-4
       %h3
-        = template.to_s.split('/<spain/>').first
-        %span.spain= template.to_s.split('/<spain/>').last
-      %p= template.to_desc.split('/<spain/>').first
-      %p.spain= template.to_desc.split('/<spain/>').last
-      %p= link_to 'Start new / Iniciar nueva >>', template_documents_path(template), :class => 'btn btn-default', :method => :post
+      %p= link_to 'Complaint for Divorce / Demanda de Divorcio >>', template_documents_path(template), :class => 'btn btn-default', :method => :post
