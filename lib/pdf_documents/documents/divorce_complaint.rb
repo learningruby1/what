@@ -216,9 +216,19 @@ module PdfDocument
 
         if @property_marital_presence
 
-          push_text "Marital home: #{ @property_marital_address }, #{ @property_marital_who }", @text_indent
+          @property_marital.each do |property|
+            property_array = []
+            property.each_with_index do |p, i|
+
+              property_array.push p.answer == '1' ? p.template_field.name.split(' /<spain/>').first : p.answer
+
+            end
+            push_text property_array.join(', '), @text_indent
+          end
+
         end
 
+        move_down
         @properties_more.each do |property|
           property_array = []
           property.each_with_index do |p, i|

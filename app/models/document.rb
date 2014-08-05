@@ -137,7 +137,7 @@ class Document < ActiveRecord::Base
     tmp_answers = step_answers(step)
     answers = []
     tmp_answers.each do |item|
-      answers << item if item.sort_index.include?(sort_char)
+      answers << item if item.sort_index.include?(sort_char) rescue nil
     end
     answers.sort_by!{ |item| [item.sort_index, item.sort_number] }
     answers.last

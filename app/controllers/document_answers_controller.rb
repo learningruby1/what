@@ -31,7 +31,7 @@ class DocumentAnswersController < ApplicationController
     @document.create_or_delete_answer params[:value].to_i, answer2, params[:step], tmp_value
 
     @answers = @document.prepare_answers! params[:step], true
-    @answers.sort_by!{ |item| [item.sort_index, item.sort_number] }
+    @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
   end
 
   private
