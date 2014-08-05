@@ -620,8 +620,56 @@ module PdfDocument
             @car_loan.push [tmp_motorcycle, motorcycle.first, motorcycle.second]
           end
         end
+
+        #Step 34
+        @student_loan = Array.new
+        answers = document.step_answers steps.next
+
+        student = answers.select{ |item| item.sort_index == 'a' }
+        student.sort_by!{ |item| item.sort_number }
+        if student.first.answer == '1'
+          tmp_student = student.first
+          loop_answer = student.second.answer.to_i
+          loop_answer.times do
+            student.shift 2
+            @student_loan.push [tmp_student, student.first, student.second]
+          end
+        end
+
+        irs = answers.select{ |item| item.sort_index == 'b' }
+        irs.sort_by!{ |item| item.sort_number }
+        if irs.first.answer == '1'
+          tmp_irs = irs.first
+          loop_answer = irs.second.answer.to_i
+          loop_answer.times do
+            irs.shift 2
+            @student_loan.push [tmp_irs, irs.first, irs.second]
+          end
+        end
+
+        payday = answers.select{ |item| item.sort_index == 'c' }
+        payday.sort_by!{ |item| item.sort_number }
+        if payday.first.answer == '1'
+          tmp_payday = payday.first
+          loop_answer = payday.second.answer.to_i
+          loop_answer.times do
+            payday.shift 2
+            @student_loan.push [tmp_payday, payday.first, payday.second]
+          end
+        end
+
+        other_loan = answers.select{ |item| item.sort_index == 'd' }
+        other_loan.sort_by!{ |item| item.sort_number }
+        if other_loan.first.answer == '1'
+          tmp_other_loan = other_loan.first
+          loop_answer = other_loan.second.answer.to_i
+          loop_answer.times do
+            other_loan.shift 2
+            @student_loan.push [tmp_other_loan, other_loan.first, other_loan.second]
+          end
+        end
       end
-      2.times do steps.next end
+      1.times do steps.next end
 
       #Step 36   Spousal support or Alimony
       answers = step_answers_enum steps.next
