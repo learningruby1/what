@@ -331,12 +331,24 @@ module PdfDocument
       else
 
         #Step 22   Property Division: Marital Home
-        answers = step_answers_enum steps.next
-        @property_marital_presence = answers.next.answer == 'Yes' rescue false
-        @property_marital_address = answers.next.answer
-        @property_marital_who = answers.next.answer
-        answers.next
-        @property_presence_more = answers.next.answer == 'Yes' rescue false
+        answers = document.step_answers steps.next
+        @property_marital_presence = answers.first.answer == 'Yes' rescue false
+
+        if @property_marital_presence
+          @property_marital = Array.new
+          house_marital = answers.select{ |item| item.sort_index == 'a' }
+          house_marital.sort_by!{ |item| item.sort_number }
+          tmp_house_marital = house_marital.first
+          loop_answer = house_marital.second.answer.to_i
+          loop_answer.times do
+            house_marital.shift 2
+            @property_marital.push [tmp_house_marital, house_marital.first, house_marital.second]
+          end
+        end
+
+        property_presence = answers.select{ |item| item.sort_index == 'b' }
+        property_presence.sort_by!{ |item| item.sort_number }
+        @property_presence_more = property_presence.first.answer == 'Yes' rescue false
 
         @properties_more = Array.new
 
@@ -668,8 +680,9 @@ module PdfDocument
             @student_loan.push [tmp_other_loan, other_loan.first, other_loan.second]
           end
         end
+      else
+        5.times do steps.next end
       end
-      1.times do steps.next end
 
       #Step 36   Spousal support or Alimony
       answers = step_answers_enum steps.next
