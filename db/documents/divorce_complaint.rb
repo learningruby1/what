@@ -881,19 +881,33 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tiene algún préstamo de carro, rv, barco, moto que dividir?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :name => 'Bank and amount owe: (example Ford about $10,000) /<spain/>Banco y cantidad que se debe: (ejemplo Ford $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'checkbox', :name => 'Car /<spain/>Carro', :sort_index => 'a1', :toggle_id => toggle_id
+debt_car_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2'
+current_step.fields.create :name => 'Car Amount owe: (example Ford about $10,000) /<spain/>Carro y cantidad que se debe: (ejemplo Ford $10,000)', :toggle_id => toggle_id, :amount_field_id => debt_car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter car amount owe /<spain/>Por favor, ingrese el monto coche debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
-                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :field_type => 'text', :name => 'Is there another car, rv, boat, motorcycle loan to divide?
-                                                            <br/><spain/>¿Tiene otro préstamo de carro, rv, barco, moto que dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes', :dont_repeat => true
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :looper_option => 'Yes', :dont_repeat => true
-
-
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => debt_car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'RV', :sort_index => 'b1', :toggle_id => toggle_id
+debt_rv_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2'
+current_step.fields.create :name => 'RV Amount owe: (example about $10,000) /<spain/>RV y cantidad que se debe: (ejemplo  $10,000)', :toggle_id => toggle_id, :amount_field_id => debt_rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter rv amount owe /<spain/>Por favor, ingrese el monto rv debo' }
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => debt_rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Boat /<spain/>Barco', :sort_index => 'c1', :toggle_id => toggle_id
+debt_boat_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2'
+current_step.fields.create :name => 'Boat Amount owe: (example about $10,000) /<spain/>Barco cantidad que se debe: (ejemplo 10,000)', :toggle_id => toggle_id, :amount_field_id => debt_boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter boat amount owe /<spain/>Por favor, ingrese el monto barco debo' }
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => debt_boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Motorcycle /<spain/>Moto', :sort_index => 'd1', :toggle_id => toggle_id
+debt_motorcycle_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2'
+current_step.fields.create :name => 'Motorcycle Amount owe: (example Honda about $10,000) /<spain/>Moto y cantidad que se debe: (ejemplo Honda $10,000)', :toggle_id => toggle_id, :amount_field_id => debt_motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter motorcycle amount owe /<spain/>Por favor, ingrese el monto de la motocicleta le debe' }
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => debt_motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 

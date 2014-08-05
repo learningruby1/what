@@ -572,8 +572,56 @@ module PdfDocument
             @bill_accounts.push [tmp_doctor, doctor.first, doctor.second]
           end
         end
+
+        #Step 33
+        @car_loan = Array.new
+        answers = document.step_answers steps.next
+
+        car = answers.select{ |item| item.sort_index == 'a' }
+        car.sort_by!{ |item| item.sort_number }
+        if car.first.answer == '1'
+          tmp_car = car.first
+          loop_answer = car.second.answer.to_i
+          loop_answer.times do
+            car.shift 2
+            @car_loan.push [tmp_car, car.first, car.second]
+          end
+        end
+
+        rv = answers.select{ |item| item.sort_index == 'b' }
+        rv.sort_by!{ |item| item.sort_number }
+        if rv.first.answer == '1'
+          tmp_rv = rv.first
+          loop_answer = rv.second.answer.to_i
+          loop_answer.times do
+            rv.shift 2
+            @car_loan.push [tmp_rv, rv.first, rv.second]
+          end
+        end
+
+        boat = answers.select{ |item| item.sort_index == 'c' }
+        boat.sort_by!{ |item| item.sort_number }
+        if boat.first.answer == '1'
+          tmp_boat = boat.first
+          loop_answer = boat.second.answer.to_i
+          loop_answer.times do
+            boat.shift 2
+            @car_loan.push [tmp_boat, boat.first, boat.second]
+          end
+        end
+
+        motorcycle = answers.select{ |item| item.sort_index == 'd' }
+        motorcycle.sort_by!{ |item| item.sort_number }
+        if motorcycle.first.answer == '1'
+          tmp_motorcycle = motorcycle.first
+          loop_answer = motorcycle.second.answer.to_i
+          loop_answer.times do
+            motorcycle.shift 2
+            @car_loan.push [tmp_motorcycle, motorcycle.first, motorcycle.second]
+          end
+        end
       end
-      3.times do steps.next end
+      2.times do steps.next end
 
       #Step 36   Spousal support or Alimony
       answers = step_answers_enum steps.next
