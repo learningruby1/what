@@ -917,20 +917,33 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Tiene algún préstamo estudiantil, IRS, otra deuda para dividir?'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :name => 'Type and amount owe: (example IRS about $10,000)
-                                     <spain/>Tipo y deuda: (ejemplo IRS $10,000)', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'checkbox', :name => 'Student loan /<spain/>Préstamo estudiantil', :sort_index => 'a1', :toggle_id => toggle_id
+student_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2'
+current_step.fields.create :name => 'Student loan, amount owe: (example $10,000) /<spain/>Préstamo estudiantil  deuda: (ejemplo $10,000)', :toggle_id => toggle_id, :amount_field_id => student_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter student loan, amount owe /<spain/>Por favor introduce préstamo estudiantil, cantidad debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
-                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :field_type => 'text', :name => 'Is there another student loan, IRS, payday loans, other debt to divide?
-                                                            <br/><spain/>¿Tiene otro préstamo estudiantil, IRS, otra deuda para dividir?', :toggle_id => toggle_id, :toggle_option => 'Yes', :dont_repeat => true
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :looper_option => 'Yes', :dont_repeat => true
-
-
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => student_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'IRS /<spain/>Impuestos', :sort_index => 'b1', :toggle_id => toggle_id
+irs_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2'
+current_step.fields.create :name => 'IRS amount owe: (example $10,000) /<spain/>Impuestos deuda: (ejemplo $10,000)', :toggle_id => toggle_id, :amount_field_id => irs_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter IRS amount owe /<spain/>Por favor, ingrese el monto Impuestos le debe' }
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => irs_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Payday loan /<spain/>Préstamo de Día de pago ', :sort_index => 'c1', :toggle_id => toggle_id
+payday_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2'
+current_step.fields.create :name => 'Payday loan, amount owe: (example $1,000) /<spain/>Préstamo de Día de pago deuda: (ejemplo $1,000)', :toggle_id => toggle_id, :amount_field_id => payday_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter payday loan, amount owe /<spain/>Por favor introduce préstamo de día de pago, cantidad debo' }
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => payday_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+toggle_id += 1
+current_step.fields.create :field_type => 'checkbox', :name => 'Other loan /<spain/>Otro préstamo', :sort_index => 'd1', :toggle_id => toggle_id
+other_loan_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2'
+current_step.fields.create :name => 'Loan amount owe: (example $2,000) /<spain/>Préstamo deuda: (ejemplo $2,000)', :toggle_id => toggle_id, :amount_field_id => other_loan_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Loan amount owe /<spain/>Por favor, ingrese el monto del préstamo debo' }
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => other_loan_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
