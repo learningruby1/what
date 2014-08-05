@@ -505,14 +505,41 @@ module PdfDocument
 
       #Step 30   Debts
       answers = document.step_answers steps.next
-
       @community_debts = answers.last.answer == 'Yes' rescue false
-      1.times do steps.next end
 
-      #Step 32
-      @bill_accounts = Array.new
-      answers = document.step_answers steps.next
       if @community_debts
+        #Step 31 Debts Division
+        @debt_devision_accounts = Array.new
+        answers = document.step_answers steps.next
+
+        house = answers.select{ |item| item.sort_index == 'a' }
+        house.sort_by!{ |item| item.sort_number }
+        if house.first.answer == '1'
+          tmp_house = house.first
+          loop_answer = house.second.answer.to_i
+          house.shift 2
+          loop_answer.times do
+            @debt_devision_accounts.push [tmp_house, house.first, house.second, house.third]
+            house.shift 3
+          end
+        end
+
+        land = answers.select{ |item| item.sort_index == 'b' }
+        land.sort_by!{ |item| item.sort_number }
+        if land.first.answer == '1'
+          tmp_land = land.first
+          loop_answer = land.second.answer.to_i
+          land.shift 2
+          loop_answer.times do
+            @debt_devision_accounts.push [tmp_land, land.first, land.second, land.third]
+            land.shift 3
+          end
+        end
+
+        #Step 32
+        @bill_accounts = Array.new
+        answers = document.step_answers steps.next
+
         card = answers.select{ |item| item.sort_index == 'a' }
         card.sort_by!{ |item| item.sort_number }
         if card.first.answer == '1'
