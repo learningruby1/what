@@ -1,12 +1,23 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
-  - text.split('<spain/>').each_with_index do |value, index|
-    - case index
-    - when 0
-      %strong.new_roman= value.strip.html_safe
-    - when 1
-      %strong.new_roman.spain= value.strip.html_safe
+  - new_text = get_beginText(text, @count_index)
+  - if new_text.nil?
+    - text.split('<spain/>').each_with_index do |value, index|
+      - case index
+      - when 0
+        %strong.new_roman= value.strip.html_safe
+      - when 1
+        %strong.new_roman.spain= value.strip.html_safe
+  - else
+    %strong.new_roman= "#{new_text.first} /"
+    %strong.new_roman.spain= "#{new_text.second} :"
+    - new_text.last.split('<spain/>').each_with_index do |value, index|
+      - case index
+      - when 0
+        %strong.new_roman= value.strip.html_safe
+      - when 1
+        %strong.new_roman.spain= value.strip.html_safe
 
 - if answer.kind_of?(DocumentAnswer) && flash.any?
   - if !answer.template_field.mandatory.nil? && answer.answer.nil? || !answer.template_field.mandatory.nil? && !answer.answer.match(answer.template_field.mandatory[:value])
