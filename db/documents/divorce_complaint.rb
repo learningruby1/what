@@ -120,16 +120,11 @@ current_step.fields.create :field_type => 'text', :name => 'Children must have r
                                                             ¿Han vivido los menores en Nevada por más de 6 meses?', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                              <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :field_type => 'text', :name => 'Nevada Court does not have the legal right to set
+                                                                              <option/>No. Nevada Court does not have the legal right to set
                                                             custody at this time, BUT you can still get a divorce
-                                                            without custody.
-                                                            <br/><spain/>La corte de Nevada no tiene el poder para establecer
+                                                            without custody.<br/><spain/>No. La corte de Nevada no tiene el poder para establecer
                                                             custodia en este momento, PERO usted todavía puede
-                                                            divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'Yes'
-
-
+                                                            divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#8
