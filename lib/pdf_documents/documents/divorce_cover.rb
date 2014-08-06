@@ -22,7 +22,15 @@ module PdfDocument
       table_row [ { :content => "Home Address: no such field", :colspan => 2 }, { :content => "Home Address: no such field", :colspan => 2 } ]
       table_row [ { :content => "City, State, Zip: no such fields", :colspan => 2 }, { :content => "City, State, Zip: no such fields", :colspan => 2 } ]
       table_row [ { :content => "Mailing Address: #{ @plaintiff_mailing_addres }", :colspan => 2 }, { :content => "Mailing Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
-      table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+      if @defendant_country.present? && @plaintiff_country.present?
+        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
+      elsif @defendant_country.present? && !@plaintiff_country.present?
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
+      elsif !@defendant_country.present? && @plaintiff_country.present?
+        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+      else
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+      end
       table_row [ "Phone: #{ @plaintiff_phone }", "Date of birth: #{ @plaintiff_date_of_birth }", "Phone: #{ @defendant_phone }", "Date of birth: #{ @defendant_date_of_birth }" ]
       push_table
 

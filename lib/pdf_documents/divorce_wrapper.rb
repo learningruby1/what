@@ -23,8 +23,15 @@ module PdfDocument
       @plaintiff_date_of_birth = answers.next.answer
       @plaintiff_social_security = answers.next.answer
       @plaintiff_mailing_addres = answers.next.answer
-      @plaintiff_city = answers.next.answer
-      @plaintiff_state = answers.next.answer
+      if answers.next.answer == "Outside the United States"
+        2.times do answers.next end
+        @plaintiff_city = answers.next.answer
+        @plaintiff_country = answers.next.answer
+      else
+        @plaintiff_city = answers.next.answer
+        @plaintiff_state = answers.next.answer
+        2.times do answers.next end
+      end
       @plaintiff_zip = answers.next.answer
       @plaintiff_phone = answers.next.answer
       @plaintiff_email = answers.next.answer
@@ -42,8 +49,15 @@ module PdfDocument
       @defendant_date_of_birth = answers.next.answer
       @defendant_social_security = answers.next.answer
       @defendant_mailing_address = answers.next.answer
-      @defendant_city = answers.next.answer
-      @defendant_state = answers.next.answer
+      if answers.next.answer == "Outside the United States"
+        2.times do answers.next end
+        @defendant_city = answers.next.answer
+        @defendant_country = answers.next.answer
+      else
+        @defendant_city = answers.next.answer
+        @defendant_state = answers.next.answer
+        2.times do answers.next end
+      end
       @defendant_zip = answers.next.answer
 
       @defendant_email = answers.next.answer
