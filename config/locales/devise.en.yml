@@ -18,11 +18,11 @@ en:
       unconfirmed: "You have to confirm your account before continuing. /<spain/>Usted tiene que confirmar su cuenta antes de continuar."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions /<spain/>instrucciones de confirmación"
+        subject: "Confirmation instructions / Instrucciones de confirmación"
       reset_password_instructions:
-        subject: "Reset password instructions /<spain/>Restablecer contraseña instrucciones"
+        subject: "Reset password instructions / Restablecer contraseña instrucciones"
       unlock_instructions:
-        subject: "Unlock Instructions /<spain/>Instrucciones de Desbloqueo"
+        subject: "Unlock Instructions / Instrucciones de Desbloqueo"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\""
       success: "Successfully authenticated from %{kind} account."
