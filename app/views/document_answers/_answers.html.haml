@@ -1,4 +1,5 @@
 - @amount_index = 0
+- hash_index = get_index_hash(@answers)
 - @answers.each do |answer|
   = f.fields_for 'answers[]', answer do |a|
     = a.hidden_field :template_field_id, :value => answer.template_field_id
@@ -22,7 +23,10 @@
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 
       - when /string/
+        - @count_index = hash_index[answer.sort_index]
         = render :partial => 'document_answers/fields/string', :locals => { :a => a, :answer => answer }
+        - if answer.template_field.to_text(@document, @amount_index).match(/<beginText\/>/)
+          - hash_index[answer.sort_index] += 1 rescue nil
 
       - when /sub_amount/
         = render :partial => 'document_answers/fields/sub_amount', :locals => { :a => a, :answer => answer }

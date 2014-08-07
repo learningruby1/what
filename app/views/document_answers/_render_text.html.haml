@@ -1,6 +1,12 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - new_text = get_begin_text(text, @count_index)
+  - unless new_text.nil?
+    %strong.new_roman= "#{new_text.first} /"
+    %strong.new_roman.spain= "#{new_text.second} :"
+    - text = new_text.last
+
   - text.split('<spain/>').each_with_index do |value, index|
     - case index
     - when 0
