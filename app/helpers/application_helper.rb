@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  def get_beginText(text, index)
+  def get_begin_text(text, index)
     if text.match(/<beginText\/>/)
       tmp_array = text.split('<beginText/>').first.split('/')
       tmp_array[0] = "#{tmp_array.first} #{index}"
@@ -12,7 +12,7 @@ module ApplicationHelper
     end
   end
 
-  def get_index_hush(answers)
+  def get_index_hash(answers)
     number = answers.group_by(&:sort_index).count
     hash_index = Hash.new
     char = 97

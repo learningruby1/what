@@ -1,5 +1,5 @@
 - @amount_index = 0
-- hash_index = get_index_hush(@answers)
+- hash_index = get_index_hash(@answers)
 - @answers.each do |answer|
   = f.fields_for 'answers[]', answer do |a|
     = a.hidden_field :template_field_id, :value => answer.template_field_id
