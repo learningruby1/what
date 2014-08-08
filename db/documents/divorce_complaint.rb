@@ -565,9 +565,9 @@ toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#17
                                      :title => 'Child  Support Arrears /<spain/>Manutención de Menores Retroactiva'
 
-current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years of back child support. /<br/><spain/>Puede pedir hasta 4 años atrasados de manutención de menores.'
+current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years of back child support.<br/><spain/>Puede pedir hasta 4 años atrasados de manutención de menores.'
 
-current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS? /<br/><spain/>¿Está solicitando manutención ATRASADA de menores?'
+current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS?<br/><spain/>¿Está solicitando manutención ATRASADA de menores?'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
