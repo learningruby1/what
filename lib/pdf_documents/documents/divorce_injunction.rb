@@ -4,7 +4,7 @@ module PdfDocument
       push_text 'cc12'
 
       push_header "#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT"
-      push_header "#{ @clark_nye } JUDICIAL DISTRICT COURT"
+      push_header "#{ @clark_nye } COUNTY, NEVADA"
       move_down 40
 
       table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Plaintiff,<br/>vs.<br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } Defendant", :width => 300, :font_style => :bold }, { :content => "Case  No #{ '_'*20 }<br/><br/>Dept. No #{ '_'*20 }", :width => 240 } ]
