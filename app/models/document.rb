@@ -46,7 +46,6 @@ class Document < ActiveRecord::Base
       _answer.update :answer => _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
 
       looper = add_mandatory_error unless check_mandatory(_answer)
-      # looper = _answer.template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
     end
     looper
   end
