@@ -631,30 +631,10 @@ property_division_field = current_step.fields.create :field_type => 'radio', :na
                                                              <option/>No
                                                              <option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
+#22 deleted
 
 toggle_id = 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',#22
-                                     :title => 'Property Division: Marital Home /<spain/>División de Propiedad: Casa',
-                                     :description => 'Do you have a marital home purchased during the marriage?
-                                                      <br/><spain/>¿Tienen usted una casa que compraron durante el matrimonio?'
-
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :sort_index => 'a1', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-house_count_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2'
-current_step.fields.create :name => 'House/Casa<beginText/>Address /<spain/>Dirección:', :toggle_id => toggle_id, :amount_field_id => house_count_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
-current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
-                                                             <option/>Sell it /<spain/>Vender
-                                                             <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :amount_field_id => house_count_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-
-
-current_step.fields.create :field_type => 'text', :name => 'Was there more properties bought during the marriage?
-                                                            <br/><spain/>¿Compraron más propiedades durante el matrimonio?', :sort_index => 'b1'
-
-property_division_more_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                                            <option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'b2'
-
-toggle_id = 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_division_more_field.id, :render_if_field_value => 'Yes',#23
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_division_field.id, :render_if_field_value => 'Yes',#23
                                      :title => 'Property Division: Home/Mobile home/land/Business /<spain/>División de Propiedad: Casa/lote/Negocio',
                                      :description => 'What did you buy during the marriage and need to be divided?
                                                       <br/><spain/>¿Qué compraron durante el matrimonio se tiene que dividir?'
@@ -688,7 +668,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Was there a car, motorcycle, rv, boat, trailer purchased during the marriage?
                                                       <br/><spain/>¿Compraron carro, moto, rv, barco, remolque durante el matrimonio?'
 
-property_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+property_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
