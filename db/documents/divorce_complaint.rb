@@ -137,7 +137,7 @@ children_amount_field = current_step.fields.create :field_type => 'amount', :man
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
-                                     :title => 'Child’s or children’s Information/ Información del Menor or de los menores'
+                                     :title => 'Child’s or children’s Information /<spain/>Niño de la Información o de los niños'
 
 child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :field_type => 'string-upcase'
@@ -526,7 +526,7 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#14
-                                     :title => 'Child’s or children’s Health Insurance /<spain/>Seguro Médico (del Menor or de los menores) ',
+                                     :title => 'Child’s or children’s Health Insurance /<spain/>Seguro Médico (del Menor o de los menores) ',
                                      :description => 'Who will be responsible for maintaining health and dental insurance for the child or children? /
                                                       <spain/>¿Quién será responsable de mantener el seguro médico y dental para el menor o los menores)?'
 
@@ -565,9 +565,9 @@ toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#17
                                      :title => 'Child  Support Arrears /<spain/>Manutención de Menores Retroactiva'
 
-current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years of back child support.<br/><spain/>Puede pedir hasta 4 años atrasados de manutención de menores.'
+current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years of back child support. <br/><spain/>Puede pedir hasta 4 años atrasados de manutención de menores.'
 
-current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS?<br/><spain/>¿Está solicitando manutención ATRASADA de menores?'
+current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS? <br/><spain/>¿Está solicitando manutención ATRASADA de menores?'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
@@ -976,7 +976,7 @@ current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<sp
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $ por mes.
                                                              <option/>Husband WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $ por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
+current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
 current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
