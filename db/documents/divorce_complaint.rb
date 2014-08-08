@@ -167,7 +167,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Select  the type of custody you would like to have:
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
-current_step.fields.create :field_type => 'text', :name => 'Who will have legal custody of <insert>? <spain/>¿Quién tendrá la custodia legal <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text', :name => '<insert> legal custody to physical custody.<spain/><insert> custodia legal to custodia física.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA<spain/>
                                                             <br/>When the child(ren) live with one parent for most of the time (more than 60%) and has limited visitation with the other parent.
                                                             <br/><spain/>Cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
