@@ -6,6 +6,8 @@ class Document < ActiveRecord::Base
   belongs_to :template
   accepts_nested_attributes_for :answers
 
+  MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
+
   #Controller answers Action edit
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
@@ -37,36 +39,35 @@ class Document < ActiveRecord::Base
     answers_params[:answers].each do |answer|
 
       _answer = answers.find(answer.first)
-      step_number = _answer.template_field.template_step.step_number
       # save answer
       _answer.update answer.last.permit(:answer)
       # upcase
       _answer.update :answer => _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
       _answer.update :answer => _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
 
-      # mandatory checking
-      if !_answer.template_field.mandatory.nil? && answer.last[:answer].nil? || !_answer.template_field.mandatory.nil? &&
-         !answer.last[:answer].match(_answer.template_field.mandatory[:value])
-
-        if !_answer.template_field.toggle_id.nil?
-          if !_answer.template_field.toggle_option.nil? &&
-             step_answers(step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id }.first.answer.match(_answer.template_field.toggle_option) ||
-             step_answers(step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id && a.toggler_offset == _answer.toggler_offset }.first.answer == '1'
-
-            looper = add_mandatory_error
-          end rescue looper = add_mandatory_error
-        else
-          looper = add_mandatory_error
-        end
-      else
-        looper = _answer.template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
-      end
+      looper = add_mandatory_error unless check_mandatory(_answer)
+      # looper = _answer.template_field.looper_option == answer.last.permit(:answer)[:answer] if !looper && !answer.last.permit(:answer)[:answer].nil?
     end
     looper
   end
 
+  def check_mandatory(_answer)
+
+    if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
+
+      return false if _answer.template_field.toggle_id.nil?
+
+      parent_toggler = step_answers(_answer.template_field.template_step.step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id && a.toggler_offset == _answer.toggler_offset }.first
+      toggle_option = _answer.template_field.toggle_option
+
+      return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
+                      toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1'
+    end
+    true
+  end
+
   def add_mandatory_error
-    errors.add(:base, 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios') if !errors.any?
+    errors.add(:base, MANDATORY_MESSAGE) if !errors.any?
     true
   end
 
