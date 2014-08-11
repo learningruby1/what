@@ -140,7 +140,7 @@ module PdfDocument
           move_down
 
           @all_holidays.each do |holiday|
-            push_text holiday[:child] if holiday[:holidays].count > 0
+            push_text holiday[:child]
 
             holiday[:holidays].each do |holy|
               holiday_string = holy[0].template_field.name.split(' /<spain/>').first
@@ -155,7 +155,6 @@ module PdfDocument
                 holiday_string += ": #{ holy[1] }, #{ holy[2] } from #{ holy[3] } to #{ holy[4] }, with #{ holy[5] }, #{ holy[6] }"
               end
               push_text holiday_string, @text_indent
-
             end
           end
         else

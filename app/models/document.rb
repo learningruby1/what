@@ -12,9 +12,15 @@ class Document < ActiveRecord::Base
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
-
     step = TemplateStep.find next_step rescue nil
-    if direction == 'forward' && loop_amount(next_step) != looped_amount(next_step, _answers) && _answers.present? && !step.amount_field_id.nil?
+
+    # Delete answers
+    _looped_amount = looped_amount(next_step, _answers)
+    # NOTICE amount_if_answer => amount_answer_if.answer
+    if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
+      (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
+      _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
+
       _answers.each(&:destroy)
       _answers = nil
     end
@@ -54,9 +60,8 @@ class Document < ActiveRecord::Base
 
     if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
 
-      return false if _answer.template_field.toggle_id.nil?
-
       parent_toggler = step_answers(_answer.template_field.template_step.step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id && a.toggler_offset == _answer.toggler_offset }.first
+      return false if _answer.template_field.toggle_id.nil? || parent_toggler == _answer
       toggle_option = _answer.template_field.toggle_option
 
       return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
@@ -86,7 +91,9 @@ class Document < ActiveRecord::Base
 
     if template.steps.where(:step_number => next_step).exists?
       loop_amount(next_step).times do |i|
-        template.steps.where(:step_number => next_step).first.fields.reverse_each do |field|
+
+        current_step = template.steps.where(:step_number => next_step).first
+        current_step.fields.reverse_each do |field|
 
           if field.raw_question == true
             if field.sort_index.nil?
@@ -100,6 +107,8 @@ class Document < ActiveRecord::Base
             end
           end
         end
+        break if current_step.amount_field_id.present? && current_step.amount_field_if.present? &&
+                 !answers.where(:template_field_id => current_step.amount_field_if).first.answer.match(current_step.amount_field_if_option)
       end
     end
     document_answers
@@ -179,7 +188,7 @@ class Document < ActiveRecord::Base
   end
 
   def loop_amount(step)
-    template.steps.where(:step_number => step).first.amount_fields.where(:document_id => id).first.try(:answer).to_i.presence_in(1..50) || 1 rescue 1
+    template.steps.where(:step_number => step).first.amount_fields.this_document(self).first.try(:answer).to_i.presence_in(1..50) || 1 rescue 1
   end
 
   def looped_amount(step, _answers)

@@ -152,19 +152,127 @@ module PdfDocument
         #Step 12   Holiday
         @all_holidays = Array.new
 
-        step = steps.next
-        @number_of_children.times do |i|
-          answers = step_answers_enum step, i
+        answers = step_answers_enum steps.next
+        holiday_now = answers.next.answer == 'Yes'
+        answers.next
+        same_schedule = answers.next.answer == 'Yes'
+        holidays_amount = same_schedule ? 1 : @number_of_children
 
-          holidays = Array.new
-          child_holidays = Hash.new
+        if !holiday_now
+          2.times do steps.next end
+        else
+          step = steps.next
 
-          child_holidays[:child] = get_headed_info answers.next, i
+          holidays_amount.times do |i|
+            answers = step_answers_enum step, i
 
-          7.times do
+            holidays = Array.new
+            child_holidays = Hash.new
+
+            answer = answers.next
+            child_holidays[:child] = get_headed_info(answer, i) if holidays_amount > 1
+
+            7.times do
+              holiday = Array.new
+              holiday.push answers.next
+
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+
+              if holiday[0].answer == '1'
+                holidays.push holiday
+              end
+            end
+
+            #Father and mother days, haven't who
+            4.times do
+              holiday = Array.new
+              holiday.push answers.next
+
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+
+              if holiday[0].answer == '1'
+                holidays.push holiday
+              end
+            end
+
+
+            if holidays.length > 0
+
+              child_holidays[:holidays] = holidays
+              @all_holidays.push child_holidays
+            end
+          end
+
+          #Step 13   More holiday
+          step = steps.next
+          holidays_amount.times do |i|
+            answers = step_answers_enum step, i
+
+            holidays = Array.new
+            child_holidays = Hash.new
+
+            answer = answers.next
+            child_holidays[:child] = get_headed_info(answer, i) if holidays_amount > 1
+
+            10.times do
+              holiday = Array.new
+              holiday.push answers.next
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+
+              if holiday[0].answer == '1'
+                holidays.push holiday
+              end
+            end
+
+            #Father and mother days, havent who
+            2.times do
+              holiday = Array.new
+              holiday.push answers.next
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+
+              if holiday[0].answer == '1'
+                holidays.push holiday
+              end
+            end
+
+            3.times do
+              holiday = Array.new
+              holiday.push answers.next
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+
+              if holiday[0].answer == '1'
+                holidays.push holiday
+              end
+            end
+
+            #Holidays have no time
+            3.times do
+              holiday = Array.new
+              holiday.push answers.next
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+              holiday.push answers.next.answer
+
+              if holiday[0].answer == '1'
+                holidays.push holiday
+              end
+            end
+
             holiday = Array.new
             holiday.push answers.next
-
+            holiday.push answers.next.answer
+            holiday.push answers.next.answer
             holiday.push answers.next.answer
             holiday.push answers.next.answer
             holiday.push answers.next.answer
@@ -173,113 +281,14 @@ module PdfDocument
             if holiday[0].answer == '1'
               holidays.push holiday
             end
-          end
-
-          #Father and mother days, haven't who
-          4.times do
-            holiday = Array.new
-            holiday.push answers.next
-
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            if holiday[0].answer == '1'
-              holidays.push holiday
-            end
-          end
-
-
-          if holidays.length > 0
 
             child_holidays[:holidays] = holidays
-            @all_holidays.push child_holidays
-          end
-        end
-
-        #Step 13   More holiday
-        step = steps.next
-        @number_of_children.times do |i|
-          answers = step_answers_enum step, i
-
-          holidays = Array.new
-          child_holidays = Hash.new
-
-          child_holidays[:child] = get_headed_info answers.next, i
-
-          10.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            if holiday[0].answer == '1'
-              holidays.push holiday
+            if @all_holidays.select{ |h| h[:child] == child_holidays[:child] }.present?
+              @all_holidays.select{ |h| h[:child] == child_holidays[:child] }.first[:holidays].concat child_holidays[:holidays]
+            else
+              @all_holidays.push child_holidays
             end
           end
-
-          #Father and mother days, havent who
-          2.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            if holiday[0].answer == '1'
-              holidays.push holiday
-            end
-          end
-
-          3.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            if holiday[0].answer == '1'
-              holidays.push holiday
-            end
-          end
-
-          #Holidays have no time
-          3.times do
-            holiday = Array.new
-            holiday.push answers.next
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-            holiday.push answers.next.answer
-
-            if holiday[0].answer == '1'
-              holidays.push holiday
-            end
-          end
-
-          holiday = Array.new
-          holiday.push answers.next
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-          holiday.push answers.next.answer
-
-          if holiday[0].answer == '1'
-            holidays.push holiday
-          end
-
-
-          child_holidays[:holidays] = holidays
-
-          if @all_holidays.select{ |h| h[:child] == child_holidays[:child] }.present?
-            @all_holidays.select{ |h| h[:child] == child_holidays[:child] }.first[:holidays].concat child_holidays[:holidays]
-          else
-            @all_holidays.push child_holidays
-          end
-
-
         end
 
         #Step 14   Children’s Health Insurance

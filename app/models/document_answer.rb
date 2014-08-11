@@ -3,6 +3,8 @@ class DocumentAnswer < ActiveRecord::Base
   belongs_to :template_field, -> { includes(:template_step) }
   belongs_to :document
 
+  scope :this_document, -> (document){ where(:document_id => document.id) }
+
   NUMBER_NAME = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh']
   STATES = [['', ''],
             ['Alabama', 'AL'],
