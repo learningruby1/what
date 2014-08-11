@@ -20,7 +20,6 @@
               %span.new_roman Back /
               %span.new_roman.spain Retroceder
         .pull-right
-          -#= f.submit :class => 'form-control' do
-          %a.btn.btn-default{ :href => 'javascript: $("#answer_form").submit();' }
-            %span.new_roman Next /
-            %span.new_roman.spain Continuar
+          / %a.btn.btn-default{ :href => 'javascript: $("#answer_form").submit();' }
+          = f.submit 'Next / Continuar', :class => 'form-control new_roman'
+
