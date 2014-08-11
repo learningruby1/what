@@ -187,12 +187,18 @@ module PdfDocument
             end
 
             #Father and mother days, haven't who
-            4.times do
+            4.times do |i|
               holiday = Array.new
               holiday.push answers.next
 
               holiday.push answers.next.answer
               holiday.push answers.next.answer
+
+              if i > 1
+                holiday.push 'with Dad, every year'
+              else
+                holiday.push 'with Mom, every year'
+              end
 
               if holiday[0].answer == '1'
                 holidays.push holiday
@@ -232,11 +238,16 @@ module PdfDocument
             end
 
             #Father and mother days, havent who
-            2.times do
+            2.times do |i|
               holiday = Array.new
               holiday.push answers.next
               holiday.push answers.next.answer
               holiday.push answers.next.answer
+              if i == 0
+                holiday.push 'with Dad, every year'
+              else
+                holiday.push 'with Mom, every year'
+              end
 
               if holiday[0].answer == '1'
                 holidays.push holiday
