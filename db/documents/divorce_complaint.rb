@@ -540,6 +540,7 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
                                                              <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
+#                 END OF HOLIDAY
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#14
                                      :title => 'Child’s or children’s Health Insurance /<spain/>Seguro Médico (del Menor o de los menores) ',

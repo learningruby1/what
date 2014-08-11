@@ -63,8 +63,8 @@ module PdfDocument
 
     def get_headed_info(answer, amount_index)
       _header_ids = answer.template_field.header_ids.split('/')
-      additional_info = TemplateField.find(_header_ids.first).document_answers.where(:document_id => @document_id)[amount_index].answer
-      additional_info += (" #{ TemplateField.find(_header_ids.last).document_answers.where(:document_id => @document_id)[amount_index].answer }" if _header_ids.length > 1)
+      additional_info = TemplateField.find(_header_ids.first).document_answers.where(:document_id => @document_id).order(:id)[amount_index].answer
+      additional_info += (" #{ TemplateField.find(_header_ids.last).document_answers.where(:document_id => @document_id).order(:id)[amount_index].answer }" if _header_ids.length > 1)
 
       additional_info
     end
