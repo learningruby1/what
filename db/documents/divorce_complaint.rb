@@ -181,7 +181,23 @@ current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and vi
                                                                  <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#12
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#11.5
+                                     :title => 'Holiday /<spain/>Feriados',
+                                     :description => 'Do you want to discuss holidays at this time?<spain/>¿Quieres hablar de horario festivo en este momento?'
+toggle_id = 0
+toggle_id += 1
+children_holidays_now = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+
+
+current_step.fields.create :field_type => 'text', :name => 'Do you want all children to have the same holiday schedule?
+                                                            <br/><spain/>¿Quiere que todos los menores tengan el mismo horario de vacaciones?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+same_schedule = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
+                                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
+
+
+
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_holidays_now.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule.id, :amount_field_if_option => 'No',#12
                                      :title => 'Holiday /<spain/>Feriados',
                                      :description => 'Check all the holiday that apply for your child(ren):<br/><spain/>Marque todos los feriados que aplican a su (s) menor (es):'
 
@@ -196,7 +212,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -208,7 +224,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -220,7 +236,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -232,7 +248,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -244,7 +260,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -256,7 +272,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -268,7 +284,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -299,7 +315,7 @@ current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name
 
 
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#13
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_holidays_now.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule.id, :amount_field_if_option => 'No',#13
                                      :title => 'More Holiday /<spain/>Más Feriados',
                                      :description => 'Check all the holiday that apply for your child(ren):<br/>
                                                       <spain/>Marque todos los feriados que aplican a su (s) menor (es):'
@@ -315,7 +331,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -327,7 +343,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -339,7 +355,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -351,7 +367,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -363,7 +379,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -375,7 +391,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -387,7 +403,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -399,7 +415,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -411,7 +427,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -423,7 +439,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -447,7 +463,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -459,7 +475,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -471,7 +487,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -483,7 +499,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                              <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>odd years /<spain/>año  impares
+                                                             <option/>odd years /<spain/>año impares
                                                              <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -495,7 +511,7 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                              <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>odd years /<spain/>año  impares
+                                                             <option/>odd years /<spain/>año impares
                                                              <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -507,21 +523,21 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>M
                                                              <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>odd years /<spain/>año  impares
+                                                             <option/>odd years /<spain/>año impares
                                                              <option/>even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Holiday /<spain/>Otro Feriado', :toggle_id => toggle_id
-current_step.fields.create :name => 'Holiday Name /<spain/>Holiday Nombre', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :toggle_id => toggle_id
+current_step.fields.create :name => 'Holiday Name /<spain/>Holiday Nombre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter holiday name /<spain/>Por favor, ponga el feriado' }
+current_step.fields.create :field_type => 'date', :toggle_id => toggle_id, :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, ponga la fecha' }
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'from /<spain/>desde'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name => 'to /<spain/>hasta'
 current_step.fields.create :field_type => 'radio-last', :name => 'Mom /<spain/>Madre
                                                                   <option/>Dad /<spain/>Padre', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/>todos los años
-                                                             <option/>every odd years /<spain/>año  impares
+                                                             <option/>every odd years /<spain/>año impares
                                                              <option/>every even years /<spain/>año pares', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
