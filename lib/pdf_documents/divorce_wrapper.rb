@@ -346,8 +346,7 @@ module PdfDocument
       @property_presence = answers.next.answer
 
       if @property_presence != 'Yes'
-
-        8.times do steps.next end
+        7.times do steps.next end
       else
 
         #Step 22   Property Division: Marital Home
@@ -685,6 +684,22 @@ module PdfDocument
           loop_answer.times do
             other_loan.shift 2
             @student_loan.push [tmp_other_loan, other_loan.first, other_loan.second]
+          end
+        end
+
+        #Step 35
+        @other_debt_division = Array.new
+        answers = document.step_answers steps.next
+
+        other_debt = answers.select{ |item| item.sort_index == 'a' }
+        other_debt.sort_by!{ |item| item.sort_number }
+        if other_debt.first.answer == '1'
+          tmp_other_debt = other_debt.first
+          loop_answer = other_debt.second.answer.to_i
+          other_debt.shift 2
+          loop_answer.times do
+            @other_debt_division.push [tmp_other_debt, other_debt.first]
+            other_debt.shift
           end
         end
       else
