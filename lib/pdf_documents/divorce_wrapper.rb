@@ -119,9 +119,9 @@ module PdfDocument
           answers = step_answers_enum step, i
           child_info = Hash.new
           child_info[:first_name] = answers.next.answer
-          @children_names << child_info[:first_name]
           child_info[:middle_name] = answers.next.answer
           child_info[:last_name] = answers.next.answer
+          @children_names << "#{child_info[:first_name]} #{child_info[:middle_name]} #{child_info[:last_name]}"
           child_info[:date_of_birth] = answers.next.answer
           child_info[:social_security] = answers.next.answer
           child_info[:is_son] = answers.next.answer == 'Son'
@@ -332,7 +332,7 @@ module PdfDocument
         @number_of_children.times do |i|
           answers = step_answers_enum step, i
           answers.next.answer
-          @child_tax_examption.push answers.next.answer
+          @child_tax_examption.push [answers.next.answer, i]
         end
       end
 
