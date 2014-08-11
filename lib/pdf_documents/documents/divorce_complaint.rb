@@ -245,13 +245,16 @@ module PdfDocument
           end
 
         end
-        if @property_presence != 'Yes' && !@community_debts
+
+        if @property_presence != 'Yes'
           mom_array.each do |p|
             push_text p, @text_indent
           end
+          move_down
           dad_array.each do |p|
             push_text p, @text_indent
           end
+          move_down
           other_chosen.each do |p|
             push_text p, @text_indent
           end
@@ -274,7 +277,6 @@ module PdfDocument
         end
 
         move_down
-
         @debts_accounts.each do |property|
           if @mom.capitalize == 'Plaintiff'
             case property.last
@@ -354,74 +356,69 @@ module PdfDocument
 
         move_down
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
-
-        move_down
-        if @community_debts
-          push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
-          move_down
-
-          push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
-
-          mom_array = []
-          dad_array = []
-          other_chosen = []
-          mom_array.push "To the #{ @mom.capitalize}: \n\r"
-          dad_array.push "To the #{ @dad.capitalize}: \n\r"
-
-          @debt_devision.each do |property|
-            case property.last
-            when /^Wife will keep/
-              mom_array.push property.join(', ') if property != '' || property != ','
-            when /^Husband will keep/
-              dad_array.push property.join(', ') if property != '' || property != ','
-            else
-              other_chosen.push property.join(', ') if property != '' || property != ','
-            end
-          end
-
-          alphabet = 96
-          mom_array.each_with_index do |p, index|
-            if mom_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-          move_down
-          alphabet = 96
-          dad_array.each_with_index do |p, index|
-            if dad_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-          move_down
-          alphabet = 97
-          other_chosen.each_with_index do |p, index|
-            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-          end
-
-          move_down
-          push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
-        end
-
       when 'No, we already divided them'
         move_down
         push_text 'That the parties have already made an equal distribution of their community property.', @text_indent
-
-        move_down
-        push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
-        move_down
-        push_text 'That the parties have already equally divided their existing community debts.'
       else # Means 'No'
         move_down
         push_text ' That there is no community property which should be divided by the Court. Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
+      end
 
-        move_down
+      case @community_debts
+      when 'Yes'
         push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
         move_down
-        push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified'
+
+        push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
+
+        mom_array = []
+        dad_array = []
+        other_chosen = []
+        mom_array.push "To the #{ @mom.capitalize}: \n\r"
+        dad_array.push "To the #{ @dad.capitalize}: \n\r"
+
+        @debt_devision.each do |property|
+          case property.last
+          when /^Wife will keep/
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep/
+            dad_array.push property.join(', ') if property != '' || property != ','
+          else
+            other_chosen.push property.join(', ') if property != '' || property != ','
+          end
+        end
+
+        alphabet = 96
+        mom_array.each_with_index do |p, index|
+          if mom_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        end
+        move_down
+        alphabet = 96
+        dad_array.each_with_index do |p, index|
+          if dad_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        end
+        move_down
+        alphabet = 97
+        other_chosen.each_with_index do |p, index|
+          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+        end
+
+        move_down
+        push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
+      when 'No, we already divided them'
+        move_down
+        push_text 'That the parties have already equally divided their existing community debts.', @text_indent
+      else # Means 'No'
+        move_down
+        push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified', @text_indent
       end
 
 

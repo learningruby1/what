@@ -531,10 +531,10 @@ module PdfDocument
 
       #Step 30   Debts
       answers = document.step_answers steps.next
-      @community_debts = answers.last.answer == 'Yes' rescue false
+      @community_debts = answers.last.answer
       @debt_devision = Array.new
 
-      if @community_debts
+      if @community_debts == 'Yes'
         #Step 31 Debts Division
         answers = document.step_answers steps.next
 
