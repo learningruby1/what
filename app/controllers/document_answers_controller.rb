@@ -1,5 +1,4 @@
 class DocumentAnswersController < ApplicationController
-  skip_filter :authenticate_user!
   before_action :get_document, :only => [:edit, :update, :render_questions]
 
   def edit
