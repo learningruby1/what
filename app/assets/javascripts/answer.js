@@ -1,7 +1,8 @@
 $(function(){
 
   var date = $('.date');
-  if (date.length > 0){
+  var date_without_day = $('.date_without_day');
+  if (date.length > 0 || date_without_day.length > 0){
 
     var months = '<option value="1">January / Enero</option>' +
                  '<option value="2">February / Febrero</option>' +
@@ -18,13 +19,21 @@ $(function(){
 
     var days = '';
     var years = '';
+    var years_without_day = '';
     var start_year = 1900;
+    var start_year_without_day = 2009;
 
     for( i = 1; i <= 31; ++i )
       days += '<option>' + i + '</option>';
 
     for( i = new Date().getFullYear(); i >= start_year; --i )
       years += '<option>' + i + '</option>';
+
+    for( i = new Date().getFullYear(); i >= start_year_without_day; --i )
+      years_without_day += '<option>' + i + '</option>';
+
+    date_without_day.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
+                '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + years_without_day + '</select></div>');
 
     date.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
                 '<div class="col-md-2 margin-left"><select class="day form-control">'  + '<option disabled="disabled" selected="selected">Day / Día</option>' + days + '</select></div>' +
@@ -53,6 +62,32 @@ $(function(){
         selects.first().val(_this.val().split('/')[0]);
         selects.first().parent().next().children().val(_this.val().split('/')[1]);
         selects.last().val(_this.val().split('/')[2]);
+      }
+    });
+
+    $('.date_without_day select').each(function(){
+      $(this).change(function(){
+
+        var _this = $(this);
+        date_without_day = _this.parent().parent().find('[type="hidden"]');
+        date_without_day.val('');
+
+        _this.parent().parent().find('.form-control').each(function(){
+          if (date_without_day.val().length > 0)
+            date_without_day.val(date_without_day.val() + '/');
+          date_without_day.val(date_without_day.val() + $(this).val());
+        });
+      });
+    });
+
+    date_without_day.find('[type="hidden"]').each(function(){
+
+      var _this = $(this);
+      if(_this.val().length > 0){
+        selects = _this.parent().find('.form-control');
+        console.log(_this.val().split('/')[2])
+        selects.first().val(_this.val().split('/')[0]);
+        selects.first().parent().next().children().val(_this.val().split('/')[1]);
       }
     });
   }
