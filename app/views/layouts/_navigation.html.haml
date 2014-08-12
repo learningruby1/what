@@ -6,26 +6,21 @@
 
     .navbar-header
       = link_to 'Forms Mama', root_path, :class => 'navbar-brand'
+    - if user_signed_in?
+      .collapse.navbar-collapse
+        %ul.nav.navbar-nav.navbar-right
 
-    .collapse.navbar-collapse
-      %ul.nav.navbar-nav.navbar-right
+          %li
+            = link_to pdf_files_path do
+              Documents /
+              %span.spain Documentos
 
-        %li
-          = link_to pdf_files_path do
-            Documents /
-            %span.spain Documentos
+          %li
+            = link_to templates_path do
+              Templates /
+              %span.spain Plantillas
 
-        %li
-          = link_to templates_path do
-            Templates
-            %span.spain Plantillas
-
-        %li
-          - if user_signed_in?
+          %li
             = link_to destroy_user_session_path, :method => :delete do
-              Sign out
+              Sign out /
               %span.spain Cerrado la sesión
-          - else
-            = link_to new_user_session_path do
-              Sign in /
-              %span.spain Inciar sesión

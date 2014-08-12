@@ -1,5 +1,4 @@
 class TemplatesController < ApplicationController
-  skip_filter :authenticate_user!
 
   def index
     @templates = Template.all

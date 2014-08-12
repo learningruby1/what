@@ -1,5 +1,4 @@
 class DocumentsController < ApplicationController
-  skip_filter :authenticate_user!
 
   def create
     document = Template.find(params[:template_id]).documents.build
