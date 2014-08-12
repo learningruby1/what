@@ -4,7 +4,6 @@ module PdfDocument
       _counter = 0
 
       push_text 'COMD', :style => :bold
-      move_down
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
       if @plaintiff_country.present?
@@ -199,7 +198,7 @@ module PdfDocument
 
           case tax.first
           when /^Mom every|^Dad every/
-            push_text "That #{ tax == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_names[tax.second] }, as dependent for Federal Tax purposes every year.", @text_indent
+            push_text "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_names[tax.second] }, as dependent for Federal Tax purposes every year.", @text_indent
           when /^Dad and Mom/
             if @number_of_children == 1
               push_text "That the parties should alternate claiming the minor child: #{ @children_names.first }, as dependent(s) for Federal Tax purposes.", @text_indent
@@ -225,108 +224,201 @@ module PdfDocument
 
       move_down
       push_header "#{ _counter += 1 }. COMMUNITY PROPERTY"
-
+      mom_array = []
+      dad_array = []
+      other_chosen = []
+      mom_array.push "To the #{ @mom.capitalize}, as her sole and separate property: \n\r"
+      dad_array.push "To the #{ @dad.capitalize}, as his sole and separate property: \n\r"
       if @pet_presence
         move_down
         push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
         move_down
-        @pets.each do |property|
-          property_string = []
-          property.each_with_index do |p, i|
+        @pets.each do |pet|
 
-            property_string.push p
-
+          case pet.last
+          when /^Wife will keep/
+            mom_array.push pet.join(', ') if pet != '' || pet != ','
+          when /^Husband will keep/
+            dad_array.push pet.join(', ') if pet != '' || pet != ','
+          else
+            other_chosen.push pet.join(', ') if pet != '' || pet != ','
           end
-          push_text property_string.join(', '), @text_indent if property_string != '' || property_string != ','
+
+        end
+
+        if @property_presence != 'Yes'
+          mom_array.each do |p|
+            push_text p, @text_indent
+          end
+          move_down
+          dad_array.each do |p|
+            push_text p, @text_indent
+          end
+          move_down
+          other_chosen.each do |p|
+            push_text p, @text_indent
+          end
         end
       end
 
       case @property_presence
       when 'Yes'
-        if @property_marital_presence
-          push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
-          move_down
+        push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent if !@pet_presence
 
-          @property_marital.each do |property|
-            property_array = []
-            property.each_with_index do |p, i|
-
-              property_array.push p.answer == '1' ? p.template_field.name.split(' /<spain/>').first : p.answer
-
-            end
-            push_text property_array.join(', '), @text_indent
-          end
-
-        end
-
-        move_down
         @properties_more.each do |property|
-          property_array = []
-          property.each_with_index do |p, i|
-
-            property_array.push p.answer == '1' ? p.template_field.name.split(' /<spain/>').first : p.answer
-
+          case property.last
+          when /^Wife will keep/
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep/
+            dad_array.push property.join(', ') if property != '' || property != ','
+          else
+            other_chosen.push property.join(', ') if property != '' || property != ','
           end
-          push_text property_array.join(', '), @text_indent
         end
 
         move_down
+        @debts_accounts.each do |property|
+          if @mom.capitalize == 'Plaintiff'
+            case property.last
+            when /^I will keep/
+              mom_array.push property.join(', ') if property != '' || property != ','
+            when /^My spouse will keep/
+              dad_array.push property.join(', ') if property != '' || property != ','
+            else
+              other_chosen.push property.join(', ') if property != '' || property != ','
+            end
+          else
+            case property.last
+            when /^I will keep/
+              dad_array.push property.join(', ') if property != '' || property != ','
+            when /^My spouse will keep/
+              mom_array.push property.join(', ') if property != '' || property != ','
+            else
+              other_chosen.push property.join(', ') if property != '' || property != ','
+            end
+          end
+        end
+
+        @bank_account.each do |property|
+          if @mom.capitalize == 'Plaintiff'
+            case property.last
+            when /^I will keep/
+              mom_array.push property.join(', ') if property != '' || property != ','
+            when /^My spouse will keep/
+              dad_array.push property.join(', ') if property != '' || property != ','
+            else
+              other_chosen.push property.join(', ') if property != '' || property != ','
+            end
+          else
+            case property.last
+            when /^I will keep/
+              dad_array.push property.join(', ') if property != '' || property != ','
+            when /^My spouse will keep/
+              mom_array.push property.join(', ') if property != '' || property != ','
+            else
+              other_chosen.push property.join(', ') if property != '' || property != ','
+            end
+          end
+        end
+
         if @other_property_presence
-
-          push_text 'Plaintiff wants to keep next properties:', @text_indent
           @other_properties.each do |other_property|
-            push_text "#{ @other_property }", @text_indent
+            if @mom.capitalize == 'Plaintiff'
+              mom_array.push other_property
+            else
+              dad_array.push other_property
+            end
           end
         end
 
-        push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
+        alphabet = 96
+        mom_array.each_with_index do |p, index|
+          if mom_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        end
+        move_down
+        alphabet = 96
+        dad_array.each_with_index do |p, index|
+          if dad_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        end
+        move_down
+        alphabet = 97
+        other_chosen.each_with_index do |p, index|
+          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+        end
 
         move_down
+        push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
+      when 'No, we already divided them'
+        move_down
+        push_text 'That the parties have already made an equal distribution of their community property.', @text_indent
+      else # Means 'No'
+        move_down
+        push_text ' That there is no community property which should be divided by the Court. Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
+      end
+
+      case @community_debts
+      when 'Yes'
         push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
         move_down
 
         push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
-        #push_text 'To the Plaintiff:',
-        #  20
-        move_down
 
-        @debts_accounts.each do |property|
-          property_string = []
-          property.each_with_index do |p, i|
+        mom_array = []
+        dad_array = []
+        other_chosen = []
+        mom_array.push "To the #{ @mom.capitalize}: \n\r"
+        dad_array.push "To the #{ @dad.capitalize}: \n\r"
 
-            property_string.push p.answer
-
+        @debt_devision.each do |property|
+          case property.last
+          when /^Wife will keep/
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep/
+            dad_array.push property.join(', ') if property != '' || property != ','
+          else
+            other_chosen.push property.join(', ') if property != '' || property != ','
           end
-          push_text property_string.join(', '), @text_indent if property_string != '' || property_string != ','
         end
 
-        @bank_account.each do |property|
-          property_string = []
-          property.each_with_index do |p, i|
-
-            property_string.push p.answer
-
+        alphabet = 96
+        mom_array.each_with_index do |p, index|
+          if mom_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
           end
-          push_text property_string.join(', '), @text_indent if property_string != '' || property_string != ','
+        end
+        move_down
+        alphabet = 96
+        dad_array.each_with_index do |p, index|
+          if dad_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        end
+        move_down
+        alphabet = 97
+        other_chosen.each_with_index do |p, index|
+          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
         end
 
         move_down
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
-
       when 'No, we already divided them'
-        push_text 'That the parties have already made an equal distribution of their community property.', @text_indent
-
         move_down
-        push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
-        move_down
-        push_text 'That the parties have already equally divided their existing community debts.'
+        push_text 'That the parties have already equally divided their existing community debts.', @text_indent
       else # Means 'No'
-        push_text ' That there is no community property which should be divided by the Court. Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
-
         move_down
-        push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
-        move_down
-        push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified'
+        push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified', @text_indent
       end
 
 

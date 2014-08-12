@@ -625,8 +625,8 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 current_step.fields.create :name => 'Name of your Pet: *
                                      <spain/>Nombre de su mascota:*', :mandatory => { :value => /\w+/, :hint => 'Please enter a valid pet name /<spain/>Por favor, ponga un nombre válido de mascota' }
 
-current_step.fields.create :field_type => 'radio', :name => 'Wife will KEEP /<spain/>Se QUEDARA con la esposa
-                                                             <option/>Husband will keep WILL keep /<spain/>Se QUEDARA con el esposo
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Se QUEDARA con la esposa
+                                                             <option/>Husband will keep /<spain/>Se QUEDARA con el esposo
                                                              <option/>Both Equally /<spain/>AMBOS TENDREMOS custodia ', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
@@ -644,9 +644,7 @@ current_step = template.steps.create :step_number => step_number += 1,#21
 current_step.fields.create :field_type => 'text', :name => 'Do you have community property to divide?
                                                             <br/><spain/>¿Tienen propiedad en común que dividir?'
 
-property_division_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No
-                                                             <option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+property_division_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No<option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 #22 deleted
 
