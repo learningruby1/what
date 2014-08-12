@@ -137,7 +137,7 @@ children_amount_field = current_step.fields.create :field_type => 'amount', :man
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
-                                     :title => 'Child’s or children’s Information /<spain/>Niño de la Información o de los niños'
+                                     :title => '<child_count> Information /<spain/><child_count_spain> Información'
 
 child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :field_type => 'string-upcase'
@@ -152,10 +152,10 @@ current_step.fields.create :name => 'Son /<spain/>Hijo
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', #:amount_field_id => children_amount_field.id,#10
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
-                                     :description => 'Legal Custody: the right of the parents to make legal decision for the child regarding education, health care, religion, etc. for the welfare of the child.
-                                                      Who will have legal custody of the child(ren)?
-                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca del menor en cuanto a la educación, salud, religión, etc. para el bienestar del menor.<br/>
-                                                      ¿Quién tendrá la custodia legal de los menores?'
+                                     :description => 'Legal Custody: the right of the parents to make legal decision for <child_count> regarding education, health care, religion, etc. for the welfare of <child_count>.
+                                                      Who will have legal custody of <child_count>?
+                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca del <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
+                                                      ¿Quién tendrá la custodia legal de <child_count_spain>?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
@@ -169,14 +169,14 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'text', :name => '<insert> physical custody.<spain/><insert> custodia física.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA<spain/>
-                                                            <br/>When the child(ren) live with one parent for most of the time (more than 60%) and has limited visitation with the other parent.
-                                                            <br/><spain/>Cuando los menores viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
+                                                            <br/>When the child live with one parent for most of the time (more than 60%) and has limited visitation with the other parent.
+                                                            <br/><spain/>Cuando el menore viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.'
 
 current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
                                                                  <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.<spain/>
-                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child(ren) live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando los menores viven con ambos padres 50/50 o 60/40 del tiempo.
+                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menore viven con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/>
-                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child(ren) live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando los menores  viven solamente con uno de los padres.
+                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando el menore viven solamente con uno de los padres.
                                                                  <option/>Only with the mom /<spain/>Solo conmigo
                                                                  <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
@@ -199,7 +199,7 @@ same_schedule = current_step.fields.create :field_type => 'radio', :name => 'Yes
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_holidays_now.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule.id, :amount_field_if_option => 'No',#12
                                      :title => 'Holiday /<spain/>Feriados',
-                                     :description => 'Check all the holiday that apply for your child(ren):<br/><spain/>Marque todos los feriados que aplican a su (s) menor (es):'
+                                     :description => 'Check all the holiday that apply for your <child_count>:<br/><spain/>Marque todos los feriados que aplican para su <child_count_spain>:'
 
 current_step.fields.create :field_type => 'text', :name => 'Holidays schedule for <insert><spain/>Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 
@@ -317,8 +317,8 @@ current_step.fields.create :field_type => 'time', :toggle_id => toggle_id, :name
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_holidays_now.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule.id, :amount_field_if_option => 'No',#13
                                      :title => 'More Holiday /<spain/>Más Feriados',
-                                     :description => 'Check all the holiday that apply for your child(ren):<br/>
-                                                      <spain/>Marque todos los feriados que aplican a su (s) menor (es):'
+                                     :description => 'Check all the holiday that apply for your <child_count>:<br/>
+                                                      <spain/>Marque todos los feriados que aplican para su <child_count_spain>:'
 
 current_step.fields.create :field_type => 'text', :name => 'More Holidays schedule for <insert><spain/>Más Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 
@@ -543,9 +543,9 @@ current_step.fields.create :field_type => 'radio', :name => 'every year /<spain/
 #                 END OF HOLIDAY
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#14
-                                     :title => 'Child’s or children’s Health Insurance /<spain/>Seguro Médico (del Menor o de los menores) ',
-                                     :description => 'Who will be responsible for maintaining health and dental insurance for the child or children? /
-                                                      <spain/>¿Quién será responsable de mantener el seguro médico y dental para el menor o los menores)?'
+                                     :title => '<child_count> Health Insurance /<spain/>Seguro Médico <child_count_spain> ',
+                                     :description => 'Who will be responsible for maintaining health and dental insurance for <child_count>? /
+                                                      <spain/>¿Quién será responsable de mantener el seguro médico y dental para <child_count_spain>?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>Mamá
                                                              <option/>Dad /<spain/>Papá
@@ -554,13 +554,13 @@ current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>Mamá
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#15
-                                     :title => 'Child Support /<spain/>Manutención de menores'
+                                     :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
 
-current_step.fields.create :field_type => 'radio', :name => 'No child support /<spain/>No habrá manutención de menores
+current_step.fields.create :field_type => 'radio', :name => 'No <child_count> support /<spain/>No habrá manutención <child_count_spain>
                                                              <option/>Dad will pay $ /<spain/>El papá pagara $
                                                              <option/>Mom will pay $ /<spain/>La mamá pagara $', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'amount', :name => 'per month as child support /<spain/>mensual de manutención para los menores', :toggle_id => toggle_id, :toggle_option => 'will', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'amount', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'will', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -569,8 +569,8 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Wage withholding /<spain/>Retención de Sueldo'
 
 
-current_step.fields.create :field_type => 'text', :name => 'Are you requesting wage withholding to collect child support?
-                                                            <br/><spain/>¿Está pidiendo retención de salario para cobrar la manutención de los menores?'
+current_step.fields.create :field_type => 'text', :name => 'Are you requesting wage withholding to collect <child_count> support?
+                                                            <br/><spain/>¿Está pidiendo retención de salario para cobrar la manutención de <child_count_spain>?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -580,22 +580,22 @@ current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#17
-                                     :title => 'Child  Support Arrears /<spain/>Manutención de Menores Retroactiva'
+                                     :title => '<child_count> Support Arrears /<spain/>Manutención <child_count_spain> Retroactiva'
 
-current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years of back child support. <br/><spain/>Puede pedir hasta 4 años atrasados de manutención de menores.'
+current_step.fields.create :field_type => 'text', :name => 'You can request up to 4 years of back <child_count> support. <br/><spain/>Puede pedir hasta 4 años atrasados de manutención de <child_count_spain>.'
 
-current_step.fields.create :field_type => 'text', :name => 'Are you requesting child support ARREARS? <br/><spain/>¿Está solicitando manutención ATRASADA de menores?'
+current_step.fields.create :field_type => 'text', :name => 'Are you requesting <child_count> support ARREARS? <br/><spain/>¿Está solicitando manutención ATRASADA de <child_count_spain>?'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'date', :name => 'I want back child support starting /<spain/>Quiero la manutención de niños a partir', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'date', :name => 'I want back <child_count> support starting /<spain/>Quiero la manutención de <child_count_spain> a partir', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'text', :name => 'The OTHER parent has paid /<spain/>del otro padre ha pagado', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'amount', :name => 'since separation. /<spain/>ya la separación.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#18
-                                     :title => 'Child Tax Exemption /<spain/>Menores en los Impuestos'
+                                     :title => '<child_count> Tax Exemption /<spain/><child_count_spain> en los Impuestos'
 
 current_step.fields.create :field_type => 'text', :name => 'Who will claim <insert> as dependent on tax returns?<br/><spain/>¿Quién reclamará <insert> como dependiente en los impuestos?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años

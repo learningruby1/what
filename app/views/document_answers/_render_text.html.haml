@@ -1,6 +1,16 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - unless get_number_of_child(@document).nil?
+    - if get_number_of_child(@document).to_i == 1
+      - text.gsub!('<child_count>', 'the child')
+      - text.gsub!('<child_count_spain>', 'el menor ')
+      - text.capitalize!
+    - if get_number_of_child(@document).to_i > 1
+      - text.gsub!('<child_count>', 'children')
+      - text.gsub!('<child_count_spain>', 'los menores')
+      - text.capitalize!
+
   - new_text = get_begin_text(text, @count_index)
   - unless new_text.nil?
     %strong.new_roman= "#{new_text.first} /"
