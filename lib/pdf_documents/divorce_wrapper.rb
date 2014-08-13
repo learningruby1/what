@@ -335,7 +335,7 @@ module PdfDocument
         @number_of_children.times do |i|
           answers = step_answers_enum step, i
           answers.next.answer
-          @child_tax_examption.push [answers.next.answer, i]
+          @child_tax_examption.push [answers.next.answer, i, answers.next.answer]
         end
       end
 
