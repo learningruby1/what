@@ -137,7 +137,7 @@ children_amount_field = current_step.fields.create :field_type => 'amount', :man
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
-                                     :title => '<child_count> Information /<spain/><child_count_spain> Información'
+                                     :title => '<child_count> Information /<spain/>Información <child_count_spain>'
 
 child_name = current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo Nombre:', :field_type => 'string-upcase'
@@ -595,7 +595,7 @@ current_step.fields.create :field_type => 'amount', :name => 'since separation. 
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#18
-                                     :title => '<child_count> Tax Exemption /<spain/><child_count_spain> en los Impuestos'
+                                     :title => '<child_count> Tax Exemption /<spain/>En los Impuestos <child_count_spain>'
 
 current_step.fields.create :field_type => 'text', :name => 'Who will claim <insert> as dependent on tax returns?<br/><spain/>¿Quién reclamará <insert> como dependiente en los impuestos?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años
