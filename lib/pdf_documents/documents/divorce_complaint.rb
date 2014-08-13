@@ -2,7 +2,7 @@ module PdfDocument
   class DivorceComplaint < DivorceWrapper
     def generate
       _counter = 0
-
+      default_leading 5
       push_text 'COMD', :style => :bold
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
@@ -21,44 +21,36 @@ module PdfDocument
       push_header "#{ @clark_nye.upcase } COUNTY, NEVADA"
       move_down 20
 
+      default_leading 0
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },", :inline_format => true
       push_text "Plaintiff,                                                             Case No:", 20
       push_text "vs.                                                                             Dept. No."
       push_text "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },", :inline_format => true
       push_text 'Defendant.',80
 
+      default_leading 8
       move_down 30
       push_header 'COMPLAINT FOR DIVORCE'
-      move_down
 
       push_text "COMES NOW Plaintiff, #{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
 
-      move_down
       push_header "#{ _counter += 1 }. RESIDENCY"
-      move_down
-
       push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of #{ @clark_nye.upcase } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
 
-      move_down
       push_header "#{ _counter += 1 }. DATE OF MARRIAGE"
-      move_down
-
       push_text "That the parties were married on #{ @marriage_date } #{ @marriage_country_string }", @text_indent
 
-      move_down
       push_header "#{ _counter += 1 }. MINOR CHILDREN"
-
       if @children_residency
         tmp_text = "That the parties have #{ @number_of_children } minor #{ @number_of_children > 1 ? 'children' : 'child' } to wit:"
 
         @children_info.each do |c|
           tmp_text += " #{ c[:first_name] } #{ c[:middle_name] } #{ c[:last_name] } born #{ c[:date_of_birth] }, "
-          move_down
         end
         tmp_text += " who #{ @number_of_children > 1 ? 'are' : 'is' } the issue of this marriage, and here are no other minor children adopted or otherwise."
 
-        if !@children_adopted
-          tmp_text += " That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of  Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months."
+        if @children_adopted
+          tmp_text += " That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months."
         else
           tmp_text += " That the minor #{ @number_of_children > 1 ? 'children are not' : 'child is not' } residents of the State of  Nevada and #{ @number_of_children > 1 ? 'have not' : 'has not' } lived in this state for at least the past six (6) months."
         end
@@ -74,23 +66,18 @@ module PdfDocument
       push_text "That the wife in this case #{ @wife_pregnacy ? 'is' : 'is not' } currently pregnant.", @text_indent
 
       if @children_adopted && @children_residency
-
-        move_down
         push_header "#{ _counter += 1 }. LEGAL CUSTODY"
-        move_down
 
         case @legal_custody_parent
         when 'Both Parents'
-          push_text = "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @children_names.join(', ') }.", @text_indent
+          push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @children_names.join(', ') }.", @text_indent
         when 'Only MOM'
           push_text "#{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
         when 'Only DAD'
           push_text "#{ @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
         end
 
-        move_down
         push_header "#{ _counter += 1 }. PHYSICAL CUSTODY"
-        move_down
 
         @physical_custody_parent.each do |physical_custody|
 
@@ -119,14 +106,11 @@ module PdfDocument
           end
         end
 
-        move_down
         push_header "#{ _counter += 1 }. HOLIDAYS VISITATION"
-        move_down
 
         if @all_holidays.length > 0
 
           push_text 'That the parties should follow the following Holiday schedule:', @text_indent
-          move_down
 
           @all_holidays.each do |holiday|
             push_text holiday[:child]
@@ -150,9 +134,7 @@ module PdfDocument
           push_text 'That the parties should not follow a specific Holiday schedule.', @text_indent
         end
 
-        move_down
         push_header "#{ _counter += 1 }. CHILD INSURANCE"
-        move_down
 
         case @child_insurance
         when /^Both/
@@ -161,9 +143,7 @@ module PdfDocument
           push_text "That #{ @child_insurance == 'Dad' ? @dad.capitalize : @mom.capitalize } should maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } if available.  Any deductibles and expenses not covered by insurance should be paid equally by both parties, pursuant to the 30/30 Rule.", @text_indent
         end
 
-        move_down
         push_header "#{ _counter += 1 }. CHILD SUPPORT"
-        move_down
 
         case @child_suport_who
         when /^No/
@@ -172,9 +152,7 @@ module PdfDocument
           push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children' : 'child' } #{ @number_of_children > 1 ? 'reach' : 'reaches' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
 
-        move_down
         push_header "#{ _counter += 1 }. WAGE WITHHOLDING"
-        move_down
 
         if @request_withhold
           push_text 'That a wage withholding order be issued against the obligor parent to secure payment of child support and spousal support, if any.', @text_indent
@@ -182,9 +160,7 @@ module PdfDocument
           push_text 'That Plaintiff is not asking for wage withholding.', @text_indent
         end
 
-        move_down
         push_header "#{ _counter += 1 }. CHILD SUPPORT ARREARS"
-        move_down
 
         if @request_arrears
           push_text "That Plaintiff should be awarded back child support from #{ @request_arrears_from }, which is when the parties separated and Plaintiff become the custodial parent, Plaintiff asks that this award be reduced to judgment and collectable by any legal means.", @text_indent
@@ -192,9 +168,7 @@ module PdfDocument
           push_text 'The Plaintiff is not asking for back child support and waives Plaintiff’s rights to child support arrears.', @text_indent
         end
 
-        move_down
         push_header "#{ _counter += 1 }. TAX DEDUCTION / EXEMPTIONS"
-        move_down
         @child_tax_examption.each do |tax|
 
           case tax.first
@@ -214,25 +188,25 @@ module PdfDocument
       # End of children
       end
 
-      move_down
       push_header "#{ _counter += 1 }. COMMUNITY PROPERTY"
       mom_array = []
       dad_array = []
       other_chosen = []
-      mom_array.push "To the #{ @mom.capitalize}, as her sole and separate property: \n\r"
-      dad_array.push "To the #{ @dad.capitalize}, as his sole and separate property: \n\r"
+      mom_array.push "To the #{ @mom.capitalize}, as her sole and separate property: "
+      dad_array.push "To the #{ @dad.capitalize}, as his sole and separate property: "
       if @pet_presence
-        move_down
-        push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
-        move_down
+        push_text 'That there are community property which should be divided by the Court as follows:', @text_indent
         @pets.each do |pet|
 
           case pet.last
           when /^Wife will keep/
+            pet.pop
             mom_array.push pet.join(', ') if pet != '' || pet != ','
           when /^Husband will keep/
+            pet.pop
             dad_array.push pet.join(', ') if pet != '' || pet != ','
           else
+            pet.pop
             other_chosen.push pet.join(', ') if pet != '' || pet != ','
           end
 
@@ -242,11 +216,9 @@ module PdfDocument
           mom_array.each do |p|
             push_text p, @text_indent
           end
-          move_down
           dad_array.each do |p|
             push_text p, @text_indent
           end
-          move_down
           other_chosen.each do |p|
             push_text p, @text_indent
           end
@@ -260,32 +232,40 @@ module PdfDocument
         @properties_more.each do |property|
           case property.last
           when /^Wife will keep/
+            property.pop
             mom_array.push property.join(', ') if property != '' || property != ','
           when /^Husband will keep/
+            property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
+            property.pop
             other_chosen.push property.join(', ') if property != '' || property != ','
           end
         end
 
-        move_down
         @debts_accounts.each do |property|
           if @mom.capitalize == 'Plaintiff'
             case property.last
             when /^I will keep/
+              property.pop
               mom_array.push property.join(', ') if property != '' || property != ','
             when /^My spouse will keep/
+              property.pop
               dad_array.push property.join(', ') if property != '' || property != ','
             else
+              property.pop
               other_chosen.push property.join(', ') if property != '' || property != ','
             end
           else
             case property.last
             when /^I will keep/
+              property.pop
               dad_array.push property.join(', ') if property != '' || property != ','
             when /^My spouse will keep/
+              property.pop
               mom_array.push property.join(', ') if property != '' || property != ','
             else
+              property.pop
               other_chosen.push property.join(', ') if property != '' || property != ','
             end
           end
@@ -295,19 +275,25 @@ module PdfDocument
           if @mom.capitalize == 'Plaintiff'
             case property.last
             when /^I will keep/
+              property.pop
               mom_array.push property.join(', ') if property != '' || property != ','
             when /^My spouse will keep/
+              property.pop
               dad_array.push property.join(', ') if property != '' || property != ','
             else
+              property.pop
               other_chosen.push property.join(', ') if property != '' || property != ','
             end
           else
             case property.last
             when /^I will keep/
+              property.pop
               dad_array.push property.join(', ') if property != '' || property != ','
             when /^My spouse will keep/
+              property.pop
               mom_array.push property.join(', ') if property != '' || property != ','
             else
+              property.pop
               other_chosen.push property.join(', ') if property != '' || property != ','
             end
           end
@@ -316,47 +302,62 @@ module PdfDocument
         if @other_property_presence
           @other_properties.each do |other_property|
             if @mom.capitalize == 'Plaintiff'
+              other_property.pop
               mom_array.push other_property
             else
+              other_property.pop
               dad_array.push other_property
             end
           end
         end
 
-        alphabet = 96
-        mom_array.each_with_index do |p, index|
-          if mom_array.first == p
-            push_text p, @text_indent
-          else
-            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+        if @mom == 'plaintiff'
+          alphabet = 96
+          mom_array.each_with_index do |p, index|
+            if mom_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
+          end
+          alphabet = 96
+          dad_array.each_with_index do |p, index|
+            if dad_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
+          end
+        else
+          alphabet = 96
+          dad_array.each_with_index do |p, index|
+            if dad_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
+          end
+          alphabet = 96
+          mom_array.each_with_index do |p, index|
+            if mom_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
           end
         end
-        move_down
-        alphabet = 96
-        dad_array.each_with_index do |p, index|
-          if dad_array.first == p
-            push_text p, @text_indent
-          else
-            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-          end
-        end
-        move_down
         alphabet = 97
         other_chosen.each_with_index do |p, index|
           push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
         end
 
-        move_down
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
       when 'No, we already divided them'
-        move_down
         push_text 'That the parties have already made an equal distribution of their community property.', @text_indent
       else # Means 'No'
-        move_down
         push_text ' That there is no community property which should be divided by the Court. Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
       end
 
-      move_down
       push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
       case @community_debts
       when 'Yes'
@@ -365,57 +366,70 @@ module PdfDocument
         mom_array = []
         dad_array = []
         other_chosen = []
-        mom_array.push "To the #{ @mom.capitalize}: \n\r"
-        dad_array.push "To the #{ @dad.capitalize}: \n\r"
+        mom_array.push "To the #{ @mom.capitalize}: "
+        dad_array.push "To the #{ @dad.capitalize}: "
 
         @debt_devision.each do |property|
           case property.last
           when /^Wife will keep/
+            property.pop
             mom_array.push property.join(', ') if property != '' || property != ','
           when /^Husband will keep/
+            property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
+            property.pop
             other_chosen.push property.join(', ') if property != '' || property != ','
           end
         end
-
-        alphabet = 96
-        mom_array.each_with_index do |p, index|
-          if mom_array.first == p
-            push_text p, @text_indent
-          else
-            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+        if @mom == 'plaintiff'
+          alphabet = 96
+          mom_array.each_with_index do |p, index|
+            if mom_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
+          end
+          alphabet = 96
+          dad_array.each_with_index do |p, index|
+            if dad_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
+          end
+        else
+          alphabet = 96
+          dad_array.each_with_index do |p, index|
+            if dad_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
+          end
+          alphabet = 96
+          mom_array.each_with_index do |p, index|
+            if mom_array.first == p
+              push_text p, @text_indent
+            else
+              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+            end
           end
         end
-        move_down
-        alphabet = 96
-        dad_array.each_with_index do |p, index|
-          if dad_array.first == p
-            push_text p, @text_indent
-          else
-            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-          end
-        end
-        move_down
         alphabet = 97
         other_chosen.each_with_index do |p, index|
           push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
         end
 
-        move_down
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
       when 'No, we already divided them'
-        move_down
         push_text 'That the parties have already equally divided their existing community debts.', @text_indent
       when 'No'
-        move_down
         push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified', @text_indent
       end
 
-
-      move_down
       push_header "#{ _counter += 1 }. SPOUSAL SUPPORT"
-      move_down
 
       if @alimony_presence
         push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support $' ? @mom.capitalize : @dad.capitalize} in the amount of $ #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month.downcase }.", @text_indent
@@ -423,9 +437,7 @@ module PdfDocument
         push_text 'That neither party should be awarded spousal support.', @text_indent
       end
 
-      move_down
       push_header "#{ _counter += 1 }. NAME CHANGE"
-      move_down
 
       case @wife_name_changing
       when /^Wife never/
@@ -436,9 +448,7 @@ module PdfDocument
         push_text "That the wife should have her former or maiden name of #{ @wife_name } restored to her.", @text_indent
       end
 
-      move_down
       push_header "#{ _counter += 1 }. REASON FOR DIVORCE"
-      move_down
 
       case @reason_divorce
       when /^I no longer want to be married and/
@@ -453,11 +463,12 @@ module PdfDocument
 
       move_down 30
       push_text 'DATED THIS _______day of  ___________, 20___'
-      move_down
+      default_leading 0
       push_text 'Submitted by: __________________', 130
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }   Signature", 200
 
       move_down @header_margin_top
+      default_leading 8
       push_header 'VERIFICATION'
       move_down
 
@@ -469,6 +480,7 @@ module PdfDocument
       move_down
       push_text 'DATED this _______day of  ___________, 20___'
       move_down 30
+      default_leading 0
       push_text 'Submitted by: __________________'
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
 
