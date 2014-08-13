@@ -8,7 +8,7 @@
         - text.gsub!('<child_count_spain>', 'el menor ')
         - if text[0] == 't'
           - text[0] = 'T'
-      - else get_number_of_child(@document).to_i > 1
+      - else
         - text.gsub!('<child_count>', 'children')
         - text.gsub!('<child_count_spain>', 'los menores')
         - if text[0] == 'c'
