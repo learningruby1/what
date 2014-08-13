@@ -123,6 +123,42 @@ $(function(){
     });
   }
 
+  /*Script for field 'number'*/
+  var number = $('.number')
+
+  if (number.length > 0){
+    var iterator = '';
+
+    for( i = 1; i <= 12; ++i )
+      iterator += '<option>' + i + '</option>';
+
+    number.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + iterator + '</select></div>');
+
+     $('.number select').each(function(){
+      $(this).change(function(){
+
+        var _this = $(this);
+        number = _this.parent().parent().find('[type="hidden"]');
+        number.val('');
+
+        _this.parent().parent().find('.form-control').each(function(){
+          if (number.val().length > 0)
+            number.val(number.val() + '/');
+          number.val(number.val() + $(this).val());
+        });
+      });
+    });
+
+    number.find('[type="hidden"]').each(function(){
+
+      var _this = $(this);
+      if(_this.val().length > 0){
+        selects = _this.parent().find('.form-control');
+        selects.first().val(_this.val().split('/')[0]);
+      }
+    });
+  }
+
   var time = $('.time');
   if (time.length > 0){
 

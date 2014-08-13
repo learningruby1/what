@@ -22,6 +22,9 @@
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 
+      - when /number/
+        = render :partial => 'document_answers/fields/number', :locals => { :a => a, :answer => answer }
+
       - when /string/
         - @count_index = hash_index[answer.sort_index]
         = render :partial => 'document_answers/fields/string', :locals => { :a => a, :answer => answer }
