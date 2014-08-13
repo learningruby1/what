@@ -6,6 +6,7 @@ module PdfDocument
       push_text 'COMD', :style => :bold
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
+      push_text "#{ @plaintiff_mailing_addres }"
       if @plaintiff_country.present?
         push_text "#{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }"
       else
@@ -36,13 +37,13 @@ module PdfDocument
       push_header "#{ _counter += 1 }. RESIDENCY"
       move_down
 
-      push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of the #{ @clark_nye.upcase } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
+      push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of #{ @clark_nye.upcase } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
 
       move_down
       push_header "#{ _counter += 1 }. DATE OF MARRIAGE"
       move_down
 
-      push_text "That the parties were married on the #{ @marriage_date } #{ @marriage_country_string }", @text_indent
+      push_text "That the parties were married on #{ @marriage_date } #{ @marriage_country_string }", @text_indent
 
       move_down
       push_header "#{ _counter += 1 }. MINOR CHILDREN"
@@ -70,7 +71,7 @@ module PdfDocument
       # push_header '4. PREGNACY'
       # move_down
 
-      push_text "That the wife in this case #{ @wife_pregnacy ? 'is' : 'not' } currently pregnant.", @text_indent
+      push_text "That the wife in this case #{ @wife_pregnacy ? 'is' : 'is not' } currently pregnant.", @text_indent
 
       if @children_adopted && @children_residency
 
@@ -80,7 +81,7 @@ module PdfDocument
 
         case @legal_custody_parent
         when 'Both Parents'
-          push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          push_text = "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @children_names.join(', ') }.", @text_indent
         when 'Only MOM'
           push_text "#{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
         when 'Only DAD'
@@ -136,7 +137,7 @@ module PdfDocument
               when 3
                 holiday_string += ": from #{ holy[1] } to #{ holy[2] }"
               when 4
-                holiday_string += ": #{ holy[1] } with #{ holy[2] }, #{ holy[3] }"
+                holiday_string += ": from #{ holy[1] } to #{ holy[2] }, #{ holy[3] }"
               when 5
                 holiday_string += ": from #{ holy[1] } to #{ holy[2] } with #{ holy[3] }, #{ holy[4] }"
               when 7
@@ -168,7 +169,7 @@ module PdfDocument
         when /^No/
           push_text "That neither party should pay child support.", @text_indent
         when /^Dad|^Mom/
-          push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children' : 'child' } #{ @number_of_children > 1 ? 'reaches' : 'reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+          push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children' : 'child' } #{ @number_of_children > 1 ? 'reach' : 'reaches' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
 
         move_down
@@ -201,18 +202,9 @@ module PdfDocument
             push_text "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_names[tax.second] }, as dependent for Federal Tax purposes every year.", @text_indent
           when /^Dad and Mom/
             if @number_of_children == 1
-              push_text "That the parties should alternate claiming the minor child: #{ @children_names.first }, as dependent(s) for Federal Tax purposes.", @text_indent
+              push_text "That the parties should alternate claiming the minor child: #{ @children_names.first }, as dependent(s) for Federal Tax purposes. Plaintiff will start claiming the child starting #{tax.last}.", @text_indent
             elsif @number_of_children > 1
-              tmp_text = "That Plaintiff should claim minor"
-              @children_names.each do |name|
-                tmp_text += ", #{name}"
-              end
-              tmp_text += " as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor"
-              @children_names.each do |name|
-                tmp_text += ", #{name}"
-              end
-              tmp_text += " as dependent(s) for Federal Tax purposes every year."
-              push_text tmp_text, @text_indent
+              push_text = "That Plaintiff should claim minor #{ @children_names.join(', ') }, as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor #{ @children_names.join(', ') }, as dependent(s) for Federal Tax purposes every year.", @text_indent
               break
             end
           end
@@ -364,11 +356,10 @@ module PdfDocument
         push_text ' That there is no community property which should be divided by the Court. Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
       end
 
+      move_down
+      push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
       case @community_debts
       when 'Yes'
-        push_header "#{ _counter += 1 }. COMMUNITY DEBTS"
-        move_down
-
         push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
 
         mom_array = []
@@ -416,7 +407,7 @@ module PdfDocument
       when 'No, we already divided them'
         move_down
         push_text 'That the parties have already equally divided their existing community debts.', @text_indent
-      else # Means 'No'
+      when 'No'
         move_down
         push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified', @text_indent
       end
@@ -427,7 +418,7 @@ module PdfDocument
       move_down
 
       if @alimony_presence
-        push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support $' ? @mom.capitalize : @dad.capitalize} in the amount of $ #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month }.", @text_indent
+        push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support $' ? @mom.capitalize : @dad.capitalize} in the amount of $ #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month.downcase }.", @text_indent
       else
         push_text 'That neither party should be awarded spousal support.', @text_indent
       end
@@ -463,8 +454,8 @@ module PdfDocument
       move_down 30
       push_text 'DATED THIS _______day of  ___________, 20___'
       move_down
-      push_text 'Submitted by: __________________', 180
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }   Signature", 250
+      push_text 'Submitted by: __________________', 130
+      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }   Signature", 200
 
       move_down @header_margin_top
       push_header 'VERIFICATION'
