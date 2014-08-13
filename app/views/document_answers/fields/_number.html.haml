@@ -1,0 +1,7 @@
+.container
+  .col-md-12.input-group{ :class => answer.template_field.field_type }
+    = a.hidden_field :answer, :value => answer.answer
+    &nbsp;
+    = render :partial => 'render_text', :locals => { :answer => answer }
+.col-md-12
+  %br
