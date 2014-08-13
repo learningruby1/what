@@ -2,7 +2,8 @@ $(function(){
 
   var date = $('.date');
   var date_without_day = $('.date_without_day');
-  if (date.length > 0 || date_without_day.length > 0){
+  var only_year = $('.only_year')
+  if (date.length > 0 || date_without_day.length > 0 || only_year.length > 0){
 
     var months = '<option value="1">January / Enero</option>' +
                  '<option value="2">February / Febrero</option>' +
@@ -20,8 +21,10 @@ $(function(){
     var days = '';
     var years = '';
     var years_without_day = '';
+    var only_years = '';
     var start_year = 1900;
     var start_year_without_day = 2009;
+    var start_only_year = 2013;
 
     for( i = 1; i <= 31; ++i )
       days += '<option>' + i + '</option>';
@@ -31,6 +34,11 @@ $(function(){
 
     for( i = new Date().getFullYear(); i >= start_year_without_day; --i )
       years_without_day += '<option>' + i + '</option>';
+
+    for( i = new Date().getFullYear(); i >= start_only_year; --i )
+      only_years += '<option>' + i + '</option>';
+
+    only_year.append('<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + only_years + '</select></div>');
 
     date_without_day.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
                 '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + years_without_day + '</select></div>');
@@ -85,9 +93,32 @@ $(function(){
       var _this = $(this);
       if(_this.val().length > 0){
         selects = _this.parent().find('.form-control');
-        console.log(_this.val().split('/')[2])
         selects.first().val(_this.val().split('/')[0]);
         selects.first().parent().next().children().val(_this.val().split('/')[1]);
+      }
+    });
+
+    $('.only_year select').each(function(){
+      $(this).change(function(){
+
+        var _this = $(this);
+        only_year = _this.parent().parent().find('[type="hidden"]');
+        only_year.val('');
+
+        _this.parent().parent().find('.form-control').each(function(){
+          if (only_year.val().length > 0)
+            only_year.val(only_year.val() + '/');
+          only_year.val(only_year.val() + $(this).val());
+        });
+      });
+    });
+
+    only_year.find('[type="hidden"]').each(function(){
+
+      var _this = $(this);
+      if(_this.val().length > 0){
+        selects = _this.parent().find('.form-control');
+        selects.first().val(_this.val().split('/')[0]);
       }
     });
   }
