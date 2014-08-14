@@ -570,7 +570,7 @@ module PdfDocument
           land.shift 2
           loop_answer.times do
             @debt_devision_accounts.push [tmp_land, land.first, land.second, land.third]
-            # land.shift 3
+            land.shift 3
           end
         end
 
