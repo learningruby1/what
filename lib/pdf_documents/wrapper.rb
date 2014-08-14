@@ -36,6 +36,10 @@ module PdfDocument
       @data_array.push [number.to_s]
     end
 
+    def default_leading(number=2)
+      @data_array.push ["default_leading #{ number.to_s }"]
+    end
+
     def create_table
     end
 

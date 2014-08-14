@@ -35,10 +35,11 @@ module PdfDocument
       @plaintiff_zip = answers.next.answer
       @plaintiff_phone = answers.next.answer
       @plaintiff_email = answers.next.answer
+      answers.next
       @plaintiff_wife_husband = answers.next.answer
 
-      @mom = @plaintiff_wife_husband == 'I am Wife' ? 'plaintiff' : 'defendant'
-      @dad = @plaintiff_wife_husband == 'I am Wife' ? 'defendant' : 'plaintiff'
+      @mom = @plaintiff_wife_husband == 'Wife' ? 'plaintiff' : 'defendant'
+      @dad = @plaintiff_wife_husband == 'Wife' ? 'defendant' : 'plaintiff'
 
       #Second step   Your Spouse\'s Information
       answers = step_answers_enum steps.next
@@ -705,8 +706,23 @@ module PdfDocument
 
         @alimony_who = answers.next.answer
         @alimony_how_much = answers.next.answer
-        @alimony_how_long = answers.next.answer
         @alimony_year_month = answers.next.answer
+        @alimony_how_long = answers.next.answer
+
+        if @alimony_year_month == 'Year(s) (example 1 year)'
+          if @alimony_how_long == '1'
+            @alimony_year_month = 'year'
+          else
+            @alimony_year_month = 'years'
+          end
+        else
+          if @alimony_how_long == '1'
+            @alimony_year_month = 'month'
+          else
+            @alimony_year_month = 'months'
+          end
+
+        end
       end
 
       #Step 37   Wife’s Name
