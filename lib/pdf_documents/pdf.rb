@@ -135,8 +135,8 @@ module PdfDocument
         end
 
         if footer_layout
-          bounding_box [bounds.left + 90, bounds.bottom + 35], :width  => bounds.width do
-            number_pages "Page <page> of <total>                    Complaint for divorce #{ Time.now.year }", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
+          bounding_box [bounds.left, bounds.bottom + 35], :width  => bounds.width do
+            number_pages "www.FormsMama.com                          Page <page> of <total>                    Complaint for divorce #{ Time.now.year }", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
           end
         end
       end

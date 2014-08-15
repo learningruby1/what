@@ -143,6 +143,7 @@ module PdfDocument
 
           physical_custody = Hash.new
 
+          physical_custody[:number] = i
           physical_custody[:child] = get_headed_info answers.next, i
           answers.next
           physical_custody[:custody] = answers.next.answer
