@@ -40,6 +40,10 @@ module PdfDocument
       @data_array.push ["default_leading #{ number.to_s }"]
     end
 
+    def move_to_left(text, size=13)
+      @data_array.push ["move_to_left #{ size.to_s }", text]
+    end
+
     def create_table
     end
 

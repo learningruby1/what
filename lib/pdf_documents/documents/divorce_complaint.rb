@@ -33,13 +33,13 @@ module PdfDocument
 
       push_text "COMES NOW Plaintiff, #{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
 
-      push_header "#{ _counter += 1 }.  RESIDENCY"
+      move_to_left "#{ _counter += 1 }.  RESIDENCY"
       push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of #{ @clark_nye.upcase } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
 
-      push_header "#{ _counter += 1 }.  DATE OF MARRIAGE"
+      move_to_left "#{ _counter += 1 }.  DATE OF MARRIAGE"
       push_text "That the parties were married on #{ @marriage_date } #{ @marriage_country_string }", @text_indent
 
-      push_header "#{ _counter += 1 }.  MINOR CHILDREN"
+      move_to_left "#{ _counter += 1 }.  MINOR CHILDREN"
       if @children_residency
         tmp_text = "That the parties have #{ @number_of_children } minor #{ @number_of_children > 1 ? 'children' : 'child' } to wit:"
 
@@ -65,18 +65,18 @@ module PdfDocument
       push_text "That the wife in this case #{ @wife_pregnacy ? 'is' : 'is not' } currently pregnant.", @text_indent
 
       if @children_adopted && @children_residency
-        push_header "#{ _counter += 1 }.  LEGAL CUSTODY"
+        move_to_left "#{ _counter += 1 }.  LEGAL CUSTODY"
 
         case @legal_custody_parent
         when 'Both Parents'
-          push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @children_names.join(', ') }.", @text_indent
+          push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the #{ @children_names.join(', ') }.", @text_indent
         when 'Only MOM'
           push_text "#{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
         when 'Only DAD'
           push_text "#{ @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
         end
 
-        push_header "#{ _counter += 1 }.  PHYSICAL CUSTODY"
+        move_to_left "#{ _counter += 1 }.  PHYSICAL CUSTODY"
 
         @physical_custody_parent.each do |physical_custody|
 
@@ -105,7 +105,7 @@ module PdfDocument
           end
         end
 
-        push_header "#{ _counter += 1 }.  HOLIDAYS VISITATION"
+        move_to_left "#{ _counter += 1 }.  HOLIDAYS VISITATION"
 
         if @all_holidays.length > 0
 
@@ -133,7 +133,7 @@ module PdfDocument
           push_text 'That the parties should not follow a specific Holiday schedule.', @text_indent
         end
 
-        push_header "#{ _counter += 1 }.  CHILD INSURANCE"
+        move_to_left "#{ _counter += 1 }.  CHILD INSURANCE"
 
         case @child_insurance
         when /^Both/
@@ -142,7 +142,7 @@ module PdfDocument
           push_text "That #{ @child_insurance == 'Dad' ? @dad.capitalize : @mom.capitalize } should maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } if available.  Any deductibles and expenses not covered by insurance should be paid equally by both parties, pursuant to the 30/30 Rule.", @text_indent
         end
 
-        push_header "#{ _counter += 1 }.  CHILD SUPPORT"
+        move_to_left "#{ _counter += 1 }.  CHILD SUPPORT"
 
         case @child_suport_who
         when /^No/
@@ -151,7 +151,7 @@ module PdfDocument
           push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children' : 'child' } #{ @number_of_children > 1 ? 'reach' : 'reaches' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
 
-        push_header "#{ _counter += 1 }. WAGE WITHHOLDING"
+        move_to_left "#{ _counter += 1 }. WAGE WITHHOLDING"
 
         if @request_withhold
           push_text 'That a wage withholding order be issued against the obligor parent to secure payment of child support and spousal support, if any.', @text_indent
@@ -159,7 +159,7 @@ module PdfDocument
           push_text 'That Plaintiff is not asking for wage withholding.', @text_indent
         end
 
-        push_header "#{ _counter += 1 }.  CHILD SUPPORT ARREARS"
+        move_to_left "#{ _counter += 1 }.  CHILD SUPPORT ARREARS"
 
         if @request_arrears
           push_text "That Plaintiff should be awarded back child support from #{ @request_arrears_from }, which is when the parties separated and Plaintiff become the custodial parent, Plaintiff asks that this award be reduced to judgment and collectable by any legal means.", @text_indent
@@ -167,7 +167,7 @@ module PdfDocument
           push_text 'The Plaintiff is not asking for back child support and waives Plaintiff’s rights to child support arrears.', @text_indent
         end
 
-        push_header "#{ _counter += 1 }.  TAX DEDUCTION / EXEMPTIONS"
+        move_to_left "#{ _counter += 1 }.  TAX DEDUCTION / EXEMPTIONS"
         @child_tax_examption.each do |tax|
 
           case tax.first
@@ -187,7 +187,7 @@ module PdfDocument
       # End of children
       end
 
-      push_header "#{ _counter += 1 }.  COMMUNITY PROPERTY"
+      move_to_left "#{ _counter += 1 }.  COMMUNITY PROPERTY"
       mom_array = []
       dad_array = []
       other_chosen = []
@@ -237,13 +237,17 @@ module PdfDocument
             property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
-            property.pop
-            other_chosen.push property.join(', ') if property != '' || property != ','
+            property[property.count - 1] = 'Sell'
+            if @mom == 'plaintiff'
+              mom_array.push property.join(', ') if property != '' || property != ','
+            else
+              dad_array.push property.join(', ') if property != '' || property != ','
+            end
           end
         end
 
         @debts_accounts.each do |property|
-          if @mom.capitalize == 'Plaintiff'
+          if @mom == 'plaintiff'
             case property.last
             when /^I will keep/
               property.pop
@@ -252,8 +256,8 @@ module PdfDocument
               property.pop
               dad_array.push property.join(', ') if property != '' || property != ','
             else
-              property.pop
-              other_chosen.push property.join(', ') if property != '' || property != ','
+              property[2] = 'Portion'
+              mom_array.push property.join(', ') if property != '' || property != ','
             end
           else
             case property.last
@@ -264,14 +268,14 @@ module PdfDocument
               property.pop
               mom_array.push property.join(', ') if property != '' || property != ','
             else
-              property.pop
-              other_chosen.push property.join(', ') if property != '' || property != ','
+              property[2] = 'Portion'
+              dad_array.push property.join(', ') if property != '' || property != ','
             end
           end
         end
 
         @bank_account.each do |property|
-          if @mom.capitalize == 'Plaintiff'
+          if @mom == 'plaintiff'
             case property.last
             when /^I will keep/
               property.pop
@@ -280,8 +284,8 @@ module PdfDocument
               property.pop
               dad_array.push property.join(', ') if property != '' || property != ','
             else
-              property.pop
-              other_chosen.push property.join(', ') if property != '' || property != ','
+              property[4] = 'Portion'
+              mom_array.push property.join(', ') if property != '' || property != ','
             end
           else
             case property.last
@@ -292,8 +296,8 @@ module PdfDocument
               property.pop
               mom_array.push property.join(', ') if property != '' || property != ','
             else
-              property.pop
-              other_chosen.push property.join(', ') if property != '' || property != ','
+              property[4] = 'Portion'
+              dad_array.push property.join(', ') if property != '' || property != ','
             end
           end
         end
@@ -355,7 +359,7 @@ module PdfDocument
         push_text ' That there is no community property which should be divided by the Court. Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
       end
 
-      push_header "#{ _counter += 1 }.  COMMUNITY DEBTS"
+      move_to_left "#{ _counter += 1 }.  COMMUNITY DEBTS"
       case @community_debts
       when 'Yes'
         push_text 'That there are community debts which should be divided by the Court as follows:', @text_indent
@@ -375,8 +379,12 @@ module PdfDocument
             property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
-            property.pop
-            other_chosen.push property.join(', ') if property != '' || property != ','
+            property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home'
+            if @mom == 'plaintiff'
+              mom_array.push property.join(', ') if property != '' || property != ','
+            else
+              dad_array.push property.join(', ') if property != '' || property != ','
+            end
           end
         end
         if @mom == 'plaintiff'
@@ -426,7 +434,7 @@ module PdfDocument
         push_text 'There are no community debts which should be divided by the court. Plaintiff ask for leave to amend the Complaint once other debts are discovered and identified', @text_indent
       end
 
-      push_header "#{ _counter += 1 }.  SPOUSAL SUPPORT"
+      move_to_left "#{ _counter += 1 }.  SPOUSAL SUPPORT"
 
       if @alimony_presence
         push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support $' ? @mom.capitalize : @dad.capitalize} in the amount of $ #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month.downcase }.", @text_indent
@@ -434,7 +442,7 @@ module PdfDocument
         push_text 'That neither party should be awarded spousal support.', @text_indent
       end
 
-      push_header "#{ _counter += 1 }.  NAME CHANGE"
+      move_to_left "#{ _counter += 1 }.  NAME CHANGE"
 
       case @wife_name_changing
       when /^Wife never/
@@ -445,7 +453,7 @@ module PdfDocument
         push_text "That the wife should have her former or maiden name of #{ @wife_name } restored to her.", @text_indent
       end
 
-      push_header "#{ _counter += 1 }.  REASON FOR DIVORCE"
+      move_to_left "#{ _counter += 1 }.  REASON FOR DIVORCE"
 
       case @reason_divorce
       when /^I no longer want to be married and/

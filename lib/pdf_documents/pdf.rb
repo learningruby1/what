@@ -128,6 +128,8 @@ module PdfDocument
               start_new_page
             when /^default_leading/
               default_leading command[command.length - 1].to_i
+            when /^move_to_left/
+              font_size(command_number){ text next_line, :indent_paragraphs => 200, :inline_format => true }
             when /\d/
               move_down next_line.to_i
             end

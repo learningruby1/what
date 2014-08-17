@@ -707,8 +707,8 @@ module PdfDocument
 
         @alimony_who = answers.next.answer
         @alimony_how_much = answers.next.answer
-        @alimony_year_month = answers.next.answer
         @alimony_how_long = answers.next.answer
+        @alimony_year_month = answers.next.answer
 
         if @alimony_year_month == 'Year(s) (example 1 year)'
           if @alimony_how_long == '1'
