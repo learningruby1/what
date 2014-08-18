@@ -177,8 +177,7 @@ module PdfDocument
             if @number_of_children == 1
               push_text "That the parties should alternate claiming the minor child: #{ @children_names.first }, as dependent(s) for Federal Tax purposes. Plaintiff will start claiming the child starting #{tax.last}.", @text_indent
             elsif @number_of_children > 1
-              push_text = "That Plaintiff should claim minor #{ @children_names.join(', ') }, as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor #{ @children_names.join(', ') }, as dependent(s) for Federal Tax purposes every year.", @text_indent
-              break
+              push_text "That Plaintiff should claim minor #{ @children_names[tax.second] }, as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor #{ @children_names[tax.second] }, as dependent(s) for Federal Tax purposes every year.", @text_indent
             end
           end
 
