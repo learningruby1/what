@@ -128,6 +128,16 @@ module PdfDocument
               start_new_page
             when /^default_leading/
               default_leading command[command.length - 1].to_i
+            when /^rectangle/
+              array_tmp = command.split(' ')
+              stroke_color '000000'
+              stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 10, 10
+            when /^checked_rectangle/
+              array_tmp = command.split(' ')
+              stroke_color '000000'
+              stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 10, 10
+              stroke_line [array_tmp.second.to_i, array_tmp.last.to_i - 5], [array_tmp.second.to_i + 5, array_tmp.last.to_i - 10]
+              stroke_line [array_tmp.second.to_i + 5, array_tmp.last.to_i - 10], [array_tmp.second.to_i + 10, array_tmp.last.to_i]
             when /^move_to_left/
               font_size(command_number){ text next_line, :indent_paragraphs => 200, :inline_format => true }
             when /\d/

@@ -44,6 +44,14 @@ module PdfDocument
       @data_array.push ["move_to_left #{ size.to_s }", text]
     end
 
+    def rectangle(x_position, y_position)
+      @data_array.push ["rectangle #{x_position} #{y_position}"]
+    end
+
+    def rectangle_checked(x_position, y_position)
+      @data_array.push ["checked_rectangle #{x_position} #{y_position}"]
+    end
+
     def create_table
     end
 
