@@ -21,5 +21,7 @@
               %span.new_roman.spain Retroceder
         .pull-right
           / %a.btn.btn-default{ :href => 'javascript: $("#answer_form").submit();' }
-          = f.submit 'Next / Continuar', :class => 'form-control new_roman'
+          = f.button :submit, :class => 'form-control new_roman' do
+            %span Next /
+            %span.spain Continuar
 
