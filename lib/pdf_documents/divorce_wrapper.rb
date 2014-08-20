@@ -735,6 +735,10 @@ module PdfDocument
       #Step 38   Reason divorce
       answers = step_answers_enum steps.next
       @reason_divorce = answers.next.answer
+
+      #Step 39 Other cases in Family court
+      answers = step_answers_enum steps.next
+      @family_court = answers.next.answer == 'Yes' rescue false
     end
   end
 end
