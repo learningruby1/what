@@ -54,8 +54,14 @@ module PdfDocument
       table_row [ { :content => "\b\b\b\b\bAnnulment\n\b\b\b\b\bDivorce –No minor child(ren)\n\b\b\b\b\bDivorce –With minor child(ren)\n\b\b\b\b\bForeign Decree\n\b\b\b\b\bJoint Petition –No minor child(ren)\n\b\b\b\b\bJoint Petition –With minor child(ren)\n\b\b\b\b\bSeparate Maintenance" }, { :content => "\b\b\b\b\bAdoption –Minor\n\b\b\b\b\bAdoption –Adult\n\b\b\b\b\bChild Custody (Non-Divorce)\n\b\b\b\b\bMental Health\n\b\b\b\b\bName Change\n\b\b\b\b\bPaternity\n\b\b\b\b\bPermission to Marry\n\b\b\b\b\bSupport - Other\n\b\b\b\b\bTemporary Protective Order (TPO)\n\b\b\b\b\bTermination of Parental Rights\n\b\b\b\b\bVisitation (Non-Divorce)\n\b\b\b\b\bOther (identify)__________" }, { :content => "<b>\b\b\b\bGuardianship of an Adult</b>\n\b\b\b\b\bPerson\n\b\b\b\b\bEstate\n\b\b\b\b\bPerson and Estate\n\n<b>\b\b\b\bGuardianship of a Minor</b>\n\b\b\b\b\bPerson\n\b\b\b\b\bEstate\n\b\b\b\b\bPerson and Estate\n\n\b\b\b\b\b<b>\b\b\b\b\bGuardianship Trust</b>" }, { :content => "\b\b\b\b\bSummary Administration\n\b\b\b\b\bGeneral Administration\n\b\b\b\b\bSpecial Administration\n\b\b\b\b\bSet Aside Estates\n\b\b\b\b\bTrust/Conservatorships\n\b\b\b\b\b\b\b\b\bIndividual Trustee\n\b\b\b\b\b\b\b\b\bCorporate Trustee\n\b\b\b\b\bOther Probate" }]
       #first column
       rectangle 3, 218
-      rectangle 3, 205
-      rectangle 3, 192
+      if @children_residency
+        rectangle 3, 205
+        rectangle_checked 3, 192
+      else
+        rectangle_checked 3, 205
+        rectangle 3, 192
+      end
+
       rectangle 3, 179
       rectangle 3, 166
       rectangle 3, 140
@@ -124,28 +130,117 @@ module PdfDocument
       move_down 20
       push_header 'Supply the following information about any other proceeding:'
       move_down
-      push_header '0 Divorce    0 Temporary Protective Orders (TPO)   0 Custody/Child Support<br/>0 UIFSA/URESA   0 Paternity    0 Juvenile Court    0 Other'
+      push_header "Divorce      Temporary Protective Orders (TPO)      Custody/Child Support\nUIFSA/URESA      Paternity      Juvenile Court      Other"
       move_down 20
+      if @family_court
+        if @divorce
+          rectangle_checked 64, 557
+        else
+          rectangle 64, 557
+        end
+
+        if @tpo
+          rectangle_checked 124, 557
+        else
+          rectangle 124, 557
+        end
+
+        if @custody_support
+          rectangle_checked 331, 557
+        else
+          rectangle 331, 557
+        end
+
+        if @paternity
+          rectangle_checked 111, 543
+        else
+          rectangle 111, 543
+        end
+
+        if @juvenile_court
+          rectangle_checked 214, 543
+        else
+          rectangle 214, 543
+        end
+
+        if @guardianship
+          rectangle_checked 280, 543
+        else
+          rectangle 280, 543
+        end
+
+        if @termination_parental_right
+          rectangle_checked 376, 543
+        else
+          rectangle 376, 543
+        end
+      else
+        rectangle 64, 557
+        rectangle 124, 557
+        rectangle 331, 557
+        rectangle 111, 543
+        rectangle 214, 543
+        rectangle 280, 543
+        rectangle 376, 543
+      end
 
       push_header 'Please Print', 10
       table_row [ { :content => 'List full name of all adult parties involved', :align => :center, :font_style => :bold, :colspan => 3 }, { :content => 'Case number<br/>of other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 }, { :content => 'Approximate date<br/>of last order in other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 } ]
       table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 } ]
-      table_row [ '1. ', '', '', '', '' ]
-      table_row [ '... ', '', '', '', '' ]
+      print_index = 0
+      if @divorce
+        table_row [ "#{ print_index += 1 }. #{ @divorce_array[1] }", "#{ @divorce_array[0] }", "#{ @divorce_array[2] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
+        if @divorce_array[3].present?
+          table_row [ "#{ print_index += 1 }. #{ @divorce_array[4] }", "#{ @divorce_array[3] }", "#{ @divorce_array[5] }", '', '' ]
+        end
+      end
+
+      if @tpo
+        table_row [ "#{ print_index += 1 }. #{ @tpo_array[1] }", "#{ @tpo_array[0] }", "#{ @tpo_array[2] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
+        if @tpo_array[3].present?
+          table_row [ "#{ print_index += 1 }. #{ @tpo_array[4] }", "#{ @tpo_array[3] }", "#{ @tpo_array[5] }", '', '' ]
+        end
+      end
+
+      if @custody_support
+        table_row [ "#{ print_index += 1 }. #{ @custody_support_array[1] }", "#{ @custody_support_array[0] }", "#{ @custody_support_array[2] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
+        if @custody_support_array[3].present?
+          table_row [ "#{ print_index += 1 }. #{ @custody_support_array[4] }", "#{ @custody_support_array[3] }", "#{ @custody_support_array[5] }", '', '' ]
+        end
+      end
+
+      if @paternity
+        table_row [ "#{ print_index += 1 }. #{ @paternity_array[1] }", "#{ @paternity_array[0] }", "#{ @paternity_array[2] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
+        if @paternity_array[3].present?
+          table_row [ "#{ print_index += 1 }. #{ @paternity_array[4] }", "#{ @paternity_array[3] }", "#{ @paternity_array[5] }", '', '' ]
+        end
+      end
+
+      if @guardianship
+        table_row [ "#{ print_index += 1 }. #{ @guardianship_array[1] }", "#{ @guardianship_array[0] }", "#{ @guardianship_array[2] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
+        if @guardianship_array[3].present?
+          table_row [ "#{ print_index += 1 }. #{ @guardianship_array[4] }", "#{ @guardianship_array[3] }", "#{ @guardianship_array[5] }", '', '' ]
+        end
+      end
+
+      if @termination_parental_right
+        table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[1] }", "#{ @termination_parental_right_array[0] }", "#{ @termination_parental_right_array[2] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
+        if @termination_parental_right_array[3].present?
+          table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[4] }", "#{ @termination_parental_right_array[3] }", "#{ @termination_parental_right_array[5] }", '', '' ]
+        end
+      end
       push_table 1
 
       move_down
       push_header 'If children were involved (other than those listed on front page), please provide:', 10
       table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
-      table_row [ '1. ', '', '', '', '' ]
-      table_row [ '... ', '', '', '', '' ]
-      push_table
-
-      move_down
-      push_header 'Children involved in this case', 10
-      table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
-      table_row [ '1. ', '', '', '', '' ]
-      table_row [ '... ', '', '', '', '' ]
+      print_index = 0
+      if @juvenile_court
+        table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[1] }", "#{ @juvenile_court_array[0] }", "#{ @juvenile_court_array[2] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
+        if @juvenile_court_array[3].present?
+          table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[4] }", "#{ @juvenile_court_array[3] }", "#{ @juvenile_court_array[5] }", '', '' ]
+        end
+      end
       push_table
 
       move_down 160
