@@ -739,6 +739,123 @@ module PdfDocument
       #Step 39 Other cases in Family court
       answers = step_answers_enum steps.next
       @family_court = answers.next.answer == 'Yes' rescue false
+
+      #Step 40 Other cases in Family court
+      if @family_court
+        answers = step_answers_enum steps.next
+
+        @divorce = answers.next.answer == '1' rescue false
+        if @divorce
+          @divorce_array = Array.new
+          answers.next
+          3.times do
+            @divorce_array.push answers.next.answer
+          end
+          answers.next
+          5.times do
+            @divorce_array.push answers.next.answer
+          end
+          answers.next
+        else
+          11.times do answers.next end
+        end
+
+        @tpo = answers.next.answer == '1' rescue false
+        if @tpo
+          @tpo_array = Array.new
+          answers.next
+          3.times do
+            @tpo_array.push answers.next.answer
+          end
+          answers.next
+          5.times do
+            @tpo_array.push answers.next.answer
+          end
+          answers.next
+        else
+          11.times do answers.next end
+        end
+
+        @custody_support = answers.next.answer == '1' rescue false
+        if @custody_support
+          @custody_support_array = Array.new
+          answers.next
+          3.times do
+            @custody_support_array.push answers.next.answer
+          end
+          answers.next
+          5.times do
+            @custody_support_array.push answers.next.answer
+          end
+          answers.next
+        else
+          11.times do answers.next end
+        end
+
+        @paternity = answers.next.answer == '1' rescue false
+        if @paternity
+          @paternity_array = Array.new
+          answers.next
+          3.times do
+            @paternity_array.push answers.next.answer
+          end
+          answers.next
+          5.times do
+            @paternity_array.push answers.next.answer
+          end
+          answers.next
+        else
+          11.times do answers.next end
+        end
+
+        @juvenile_court = answers.next.answer == '1' rescue false
+        if @juvenile_court
+          @juvenile_court_array = Array.new
+          answers.next
+          3.times do
+            @juvenile_court_array.push answers.next.answer
+          end
+          answers.next
+          5.times do
+            @juvenile_court_array.push answers.next.answer
+          end
+          answers.next
+        else
+          11.times do answers.next end
+        end
+
+        @guardianship = answers.next.answer == '1' rescue false
+        if @guardianship
+          @guardianship_array = Array.new
+          answers.next
+          3.times do
+            @guardianship_array.push answers.next.answer
+          end
+          answers.next
+          5.times do
+            @guardianship_array.push answers.next.answer
+          end
+          answers.next
+        else
+          11.times do answers.next end
+        end
+
+        @termination_parental_right = answers.next.answer == '1' rescue false
+        if @termination_parental_right
+          @termination_parental_right_array = Array.new
+          answers.next
+          3.times do
+            @termination_parental_right_array.push answers.next.answer
+          end
+          answers.next
+          5.times do
+            @termination_parental_right_array.push answers.next.answer
+          end
+          answers.next
+        else
+          11.times do answers.next end
+        end
+      end
     end
   end
 end
