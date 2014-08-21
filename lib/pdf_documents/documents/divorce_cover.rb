@@ -113,13 +113,20 @@ module PdfDocument
       if @children_residency
         move_down
         push_header 'List children involved in this case', 10
+        if @children_info.count == 1
+          y_position = 577
+        else
+          y_position = 577 - 20 * (@children_info.count - 1)
+        end
 
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold }, { :content => 'Last name', :align => :center, :font_style => :bold }, { :content => 'Middle name', :align => :center, :font_style => :bold }, { :content => 'Date of birth', :align => :center, :font_style => :bold }, { :content => 'Relationship', :align => :center, :font_style => :bold } ]
         @children_info.each_with_index do |child, i|
 
-          table_row [ "#{ i+1 }. #{ child[:first_name] }", child[:last_name], child[:middle_name], child[:date_of_birth], 'no such fild' ]
+          table_row [ "#{ i+1 }. #{ child[:first_name] }", child[:last_name], child[:middle_name], child[:date_of_birth], "#{ child[:is_son] ? 'SON' : 'DAUGHTER' }" ]
         end
         push_table
+      else
+        y_position = 649
       end
 
       move_down 20
@@ -134,54 +141,54 @@ module PdfDocument
       move_down 20
       if @family_court
         if @divorce
-          rectangle_checked 64, 557
+          rectangle_checked 64, y_position
         else
-          rectangle 64, 557
+          rectangle 64, y_position
         end
 
         if @tpo
-          rectangle_checked 124, 557
+          rectangle_checked 124, y_position
         else
-          rectangle 124, 557
+          rectangle 124, y_position
         end
 
         if @custody_support
-          rectangle_checked 331, 557
+          rectangle_checked 331, y_position
         else
-          rectangle 331, 557
+          rectangle 331, y_position
         end
 
         if @paternity
-          rectangle_checked 111, 543
+          rectangle_checked 111, y_position - 14
         else
-          rectangle 111, 543
+          rectangle 111, y_position - 14
         end
 
         if @juvenile_court
-          rectangle_checked 214, 543
+          rectangle_checked 214, y_position - 14
         else
-          rectangle 214, 543
+          rectangle 214, y_position - 14
         end
 
         if @guardianship
-          rectangle_checked 280, 543
+          rectangle_checked 280, y_position - 14
         else
-          rectangle 280, 543
+          rectangle 280, y_position - 14
         end
 
         if @termination_parental_right
-          rectangle_checked 376, 543
+          rectangle_checked 376, y_position - 14
         else
-          rectangle 376, 543
+          rectangle 376, y_position - 14
         end
       else
-        rectangle 64, 557
-        rectangle 124, 557
-        rectangle 331, 557
-        rectangle 111, 543
-        rectangle 214, 543
-        rectangle 280, 543
-        rectangle 376, 543
+        rectangle 64, y_position
+        rectangle 124, y_position
+        rectangle 331, y_position
+        rectangle 111, y_position - 14
+        rectangle 214, y_position - 14
+        rectangle 280, y_position - 14
+        rectangle 376, y_position - 14
       end
 
       push_header 'Please Print', 10
@@ -236,7 +243,7 @@ module PdfDocument
       table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
       print_index = 0
       if @juvenile_court
-        table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[1] }", "#{ @juvenile_court_array[0] }", "#{ @juvenile_court_array[2] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
+        table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[1] }", "#{ @juvenile_court_array[0] }", "#{ @juvenile_court_array[2] }", "#{ @juvenile_court_array[7] }", "#{ @juvenile_court_array[6] }" ]
         if @juvenile_court_array[3].present?
           table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[4] }", "#{ @juvenile_court_array[3] }", "#{ @juvenile_court_array[5] }", '', '' ]
         end
