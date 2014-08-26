@@ -165,7 +165,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Legal Custody: the right of the parents to make legal decision for <child_count> regarding education, health care, religion, etc. for the welfare of <child_count>.
                                                       Who will have legal custody of <child_count>?
-                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca de <child_count_spain> los menores en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
+                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca de <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
                                                       ¿Quién tendrá la custodia legal de <child_count_spain>?'
 
 current_step.fields.create :field_type => 'radio', :name => 'BOTH Parents /<spain/>AMBOS padres
