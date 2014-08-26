@@ -185,9 +185,9 @@ current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and vi
                                                                  <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.<spain/>
                                                                  <separate/>JOINT PHYSICAL CUSTODY: when the child live with both parent 50/50 or 60/40 of the time.<spain/><br/>Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/>
-                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child live with  one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA : cuando el menore viven solamente con uno de los padres.
-                                                                 <option/>Only with the mom /<spain/>Solo conmigo
-                                                                 <option/>Only with the dad /<spain/>Solo con el OTRO padre', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child live with one parent.<spain/><br/>CUSTODIA FÍSICA ÚNICA : cuando el menore viven solamente con uno de los padres.
+                                                                 <option/>Only with the mom /<spain/>Solo con mamá
+                                                                 <option/>Only with the dad /<spain/>Solo con papá', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#11.5
