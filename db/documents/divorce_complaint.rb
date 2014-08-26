@@ -122,9 +122,9 @@ current_step.fields.create :field_type => 'text', :name => 'Children must have r
 children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                                               <option/>No. Nevada Court does not have the legal right to set
                                                             custody at this time, BUT you can still get a divorce
-                                                            without custody.<br/><spain/>No. La corte de Nevada no tiene el poder para establecer
+                                                            without custody. However, you will need to address the children"s health insurance and child\'s support issue.<br/><spain/>No. La corte de Nevada no tiene el poder para establecer
                                                             custodia en este momento, PERO usted todavía puede
-                                                            divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                            divorciarse sin custodia. Sin embargo tiene que hacer decisiones sobre el seguro médico y la y la manutención de los menores.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#8
@@ -135,7 +135,8 @@ current_step.fields.create :field_type => 'text', :name => 'How many minor child
 children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value /<spain/>Por favor, introduzca el valor correcto' }
 
 
-
+toggle_id = 0
+toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#9
                                      :title => '<child_count> Information /<spain/>Información <child_count_spain>'
 
@@ -144,6 +145,16 @@ current_step.fields.create :name => 'Middle Initial /<spain/>Inicial de Segundo 
 
 child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+
+current_step.fields.create :name => 'Place of Birth /<spain/>Lugar de nacimiento:', :field_type => 'text'
+current_step.fields.create :name => 'In the United States /<spain/>En los Estados Unidos
+                                     <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :name => 'City /<spain/>Ciudad: *',  :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage city /<spain/>Por favor, proporciona una ciudad donde se casaron' }, :field_type => 'string-capitalize'
+current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage state /<spain/>Por favor, proporciona un estado donde se casaron' }
+
+current_step.fields.create :name => 'City/Town/Province: <spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage City/Town/Province /<spain/>Por favor, proporciona una Ciudad/Pueblo/Provincia donde se casaron' }, :field_type => 'string-capitalize'
+current_step.fields.create :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage country /<spain/>Por favor, proporciona el país donde se casaron' }, :field_type => 'string-capitalize'
+
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social: <spain/>e.g. XXX-XX-XXXX', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. /<spain/>Por favor, ponga un número de Seguro Social válido' }
 current_step.fields.create :name => 'Son /<spain/>Hijo
                                      <option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -154,10 +165,10 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Legal Custody: the right of the parents to make legal decision for <child_count> regarding education, health care, religion, etc. for the welfare of <child_count>.
                                                       Who will have legal custody of <child_count>?
-                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca del <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
+                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca de <child_count_spain> los menores en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
                                                       ¿Quién tendrá la custodia legal de <child_count_spain>?'
 
-current_step.fields.create :field_type => 'radio', :name => 'Both Parents /<spain/>AMBOS padres
+current_step.fields.create :field_type => 'radio', :name => 'BOTH Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
                                                              <option/>Only DAD /<spain/>Solo PAPÁ', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
@@ -724,7 +735,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :amount_field_id => boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Trailer /<spain/>Remolque', :toggle_id => toggle_id, :sort_index => 'e1'
-trailer_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'e2', :mandatory => { :value => /^[1-9]$/, :hint => :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+trailer_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'e2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
 current_step.fields.create :name => 'Trailer/Remolque<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => trailer_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender

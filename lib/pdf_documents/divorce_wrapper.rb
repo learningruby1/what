@@ -124,6 +124,15 @@ module PdfDocument
           child_info[:last_name] = answers.next.answer
           @children_names << "#{child_info[:first_name]} #{child_info[:middle_name]} #{child_info[:last_name]}"
           child_info[:date_of_birth] = answers.next.answer
+          answers.next
+          if answers.next.answer == 'In the United States'
+            child_info[:city] = answers.next.answer
+            child_info[:state] = answers.next.answer
+          else
+            2.times do answers.next end
+            child_info[:city] = answers.next.answer
+            child_info[:country] = answers.next.answer
+          end
           child_info[:social_security] = answers.next.answer
           child_info[:is_son] = answers.next.answer == 'Son'
 
