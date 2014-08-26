@@ -165,7 +165,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Legal Custody: the right of the parents to make legal decision for <child_count> regarding education, health care, religion, etc. for the welfare of <child_count>.
                                                       Who will have legal custody of <child_count>?
-                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca de <child_count_spain> los menores en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
+                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca de <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
                                                       ¿Quién tendrá la custodia legal de <child_count_spain>?'
 
 current_step.fields.create :field_type => 'radio', :name => 'BOTH Parents /<spain/>AMBOS padres
@@ -185,7 +185,7 @@ current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and vi
                                                                  <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.<spain/>
                                                                  <separate/>JOINT PHYSICAL CUSTODY: when the child live with both parent 50/50 or 60/40 of the time.<spain/><br/>Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/>
-                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child live with one parent.<spain/><br/>CUSTODIA FÍSICA ÚNICA : cuando el menore viven solamente con uno de los padres.
+                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child live with one parent.<spain/><br/>CUSTODIA FÍSICA ÚNICA : cuando el menor vive solamente con uno de los padres.
                                                                  <option/>Only with the mom /<spain/>Solo con mamá
                                                                  <option/>Only with the dad /<spain/>Solo con papá', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
