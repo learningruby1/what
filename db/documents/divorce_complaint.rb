@@ -989,8 +989,9 @@ current_step.fields.create :name => 'Other Debt Division/Otra división de la de
 
 current_step = template.steps.create :step_number => step_number += 1,#36
                                      :title => 'Spousal support or Alimony /<spain/>Manutención de Esposa(o)',
-                                     :description => 'Will there be spousal support/alimony?
-                                                      <br/><spain/>¿Va haber manutención de esposa(o)?'
+                                     :description => 'There is no precise formula for awarding spousal support/alimony; it is decided on a case by case basis.
+ <br/><spain/>No hay ninguna fórmula precisa para determinar la manutención de esposo(a); se decide caso por caso.'
+
 
 toggle_id = 0
 toggle_id += 1
