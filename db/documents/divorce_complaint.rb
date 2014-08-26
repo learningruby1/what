@@ -179,7 +179,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
 current_step.fields.create :field_type => 'text', :name => '<insert> physical custody.<spain/><insert> custodia física.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
-current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child live with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA: cuando el menor viven con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
+current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child live with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : uando el menor vive con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
 
 current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
                                                                  <option/>With dad and visit  with mom /<spain/>Con papá y visitas con mamá.<spain/>
