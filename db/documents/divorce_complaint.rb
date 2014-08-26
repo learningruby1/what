@@ -122,7 +122,7 @@ current_step.fields.create :field_type => 'text', :name => 'Children must have r
 children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                                               <option/>No. Nevada Court does not have the legal right to set
                                                             custody at this time, BUT you can still get a divorce
-                                                            without custody. However, you will need to address the children"s health insurance and child\'s support issue.<br/><spain/>No. La corte de Nevada no tiene el poder para establecer
+                                                            without custody. However, you will need to address the children\'s health insurance and child\'s support issue.<br/><spain/>No. La corte de Nevada no tiene el poder para establecer
                                                             custodia en este momento, PERO usted todavía puede
                                                             divorciarse sin custodia. Sin embargo tiene que hacer decisiones sobre el seguro médico y la y la manutención de los menores.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
