@@ -647,8 +647,8 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
 
 current_step = template.steps.create :step_number => step_number += 1,#21
                                      :title => 'Property /<spain/>Bienes',
-                                     :description => 'Nevada is a community property state. This means that the law presumes that all property (bank account, 401K, house, military pension, car, furniture, jewelry, etc.) acquired or incurred during the marriage is community property, and belongs equally to both parties, with the exception of separate property.
-                                                      <br/><spain/>Nevada es un estado de propiedad comunitaria.  Esto significa que la ley presupone que todas las propiedades (cuenta bancaria, 401 k, casa, pensión militar, carro, muebles, joyería, etc.) adquiridas o compradas durante el matrimonio son bienes comunitarios y pertenece igualmente a ambas partes, con la excepción de la propiedad individual.'
+                                     :description => 'Nevada is a community property state, regardless of your immigration status. This means that the law presumes that all property (bank account, 401K, house, military pension, car, furniture, jewelry, etc.) acquired or incurred during the marriage is community property, and belongs equally to both parties, with the exception of separate property.
+                                                      <br/><spain/>Nevada es un estado de propiedad comunitaria, no importa su estatus migratorio. Esto significa que la ley presupone que todas las propiedades (cuenta bancaria, 401 k, casa, pensión militar, carro, muebles, joyería, etc.) adquiridas o compradas durante el matrimonio son bienes comunitarios y pertenece igualmente a ambas partes, con la excepción de la propiedad individual.'
 
 current_step.fields.create :field_type => 'text', :name => 'Do you have community property to divide?
                                                             <br/><spain/>¿Tienen propiedad en común que dividir?'
@@ -823,8 +823,8 @@ current_step = template.steps.create :step_number => step_number += 1,#30
                                      :description => 'Do you have community debts to divide?
                                                       <br/><spain/>¿Tienen deudas en común que dividir?'
 
-current_step.fields.create :field_type => 'text', :name => 'Nevada is a community property state.  This means that the law presumes that all debts (credit cards, loans, mortgage, taxes, hospital bills, etc.) acquired or incurred during the marriage is community debts, and belongs equally to both parties, with the exception of separate debt.
-                                                            <br/><spain/>Nevada es un estado de propiedad comunitaria.  Esto significa que la ley presupone que todas las deudas (tarjetas de crédito, préstamos, impuestos, cuenta de hospital, etc.) adquiridas o incurridas durante el matrimonio son responsabilidad de ambas partes y pertenecen igualmente a los dos, con la excepción de deudas individuales.'
+current_step.fields.create :field_type => 'text', :name => 'Nevada is a community property state, regardless of your immigration status. This means that the law presumes that all debts (credit cards, loans, mortgage, taxes, hospital bills, etc.) acquired or incurred during the marriage is community debts, and belongs equally to both parties, with the exception of separate debt.
+                                                            <br/><spain/>Nevada es un estado de propiedad comunitaria, no importa su estatus migratorio. Esto significa que la ley presupone que todas las deudas (tarjetas de crédito, préstamos, impuestos, cuenta de hospital, etc.) adquiridas o incurridas durante el matrimonio son responsabilidad de ambas partes y pertenecen igualmente a los dos, con la excepción de deudas individuales.'
 
 debts_division_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                                                     <option/>No<option/>No, we already divided them /<spain/>No ya las dividimos', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -972,6 +972,9 @@ toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Debt Division /<spain/>Otra división de la deuda', :sort_index => 'a1', :toggle_id => toggle_id
 other_debt_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
 current_step.fields.create :name => 'Other Debt Division/Otra división de la deuda<beginText/>(example: Parents $ 300) /<spain/>(ejemplo: Los padres $ 300)', :toggle_id => toggle_id, :amount_field_id => other_debt_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter value /<spain/>Por favor introduce el valor' }
+current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
+                                                             <option/>Divide /<spain/>Dividir
+                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => other_debt_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
@@ -989,8 +992,9 @@ current_step.fields.create :name => 'Other Debt Division/Otra división de la de
 
 current_step = template.steps.create :step_number => step_number += 1,#36
                                      :title => 'Spousal support or Alimony /<spain/>Manutención de Esposa(o)',
-                                     :description => 'Will there be spousal support/alimony?
-                                                      <br/><spain/>¿Va haber manutención de esposa(o)?'
+                                     :description => 'There is no precise formula for awarding spousal support/alimony; it is decided on a case by case basis.
+ <br/><spain/>No hay ninguna fórmula precisa para determinar la manutención de esposo(a); se decide caso por caso.'
+
 
 toggle_id = 0
 toggle_id += 1
@@ -1015,7 +1019,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife never change h
                                                              <option/>Wife will keep married name /<spain/>La esposa se va a quedar con el apellido de casada
                                                              <option/>Wife will return to her maiden name /<spain/>La esposa volverá a su apellido de soltera que es', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden name', :toggle_option => 'Wife will return', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
+current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden name /<spain/>Apellido de soltera.', :toggle_option => 'Wife will return', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
 
 
 
