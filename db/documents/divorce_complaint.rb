@@ -1016,7 +1016,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife never change h
                                                              <option/>Wife will keep married name /<spain/>La esposa se va a quedar con el apellido de casada
                                                              <option/>Wife will return to her maiden name /<spain/>La esposa volverá a su apellido de soltera que es', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden name', :toggle_option => 'Wife will return', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
+current_step.fields.create :toggle_id => toggle_id, :name => 'Wife\'s maiden name /<spain/>Apellido de soltera.', :toggle_option => 'Wife will return', :mandatory => { :value => /\w+/, :hint => 'Please enter /<spain/>Seleccione, por favor' }
 
 
 
