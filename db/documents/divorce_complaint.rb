@@ -609,9 +609,9 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 current_step.fields.create :field_type => 'text', :name => 'Who will claim <insert> as dependent on tax returns?<br/><spain/>¿Quién reclamará <insert> como dependiente en los impuestos?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años
                                                              <option/>Dad every year /<spain/>Papá todos los años
-                                                             <option/>Dad and Mom alternating years /<spain/>Mamá y Papá  con los años', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>Dad and Mom alternating years /<spain/>Mamá y Papá años por medio', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'only_year', :name => 'Mom  will start claiming start from and up /<spain/>La mamá comenzara a reclamar a en (ponga el año de comienzo)', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom', :mandatory => { :value => /\w+/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'only_year', :name => 'Mom will start claiming the child from /<spain/>La mamá comenzara a reclamar el menor desde:', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom', :mandatory => { :value => /\w+/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 0
 toggle_id += 1
