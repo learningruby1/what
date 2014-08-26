@@ -647,8 +647,8 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
 
 current_step = template.steps.create :step_number => step_number += 1,#21
                                      :title => 'Property /<spain/>Bienes',
-                                     :description => 'Nevada is a community property state. This means that the law presumes that all property (bank account, 401K, house, military pension, car, furniture, jewelry, etc.) acquired or incurred during the marriage is community property, and belongs equally to both parties, with the exception of separate property.
-                                                      <br/><spain/>Nevada es un estado de propiedad comunitaria.  Esto significa que la ley presupone que todas las propiedades (cuenta bancaria, 401 k, casa, pensión militar, carro, muebles, joyería, etc.) adquiridas o compradas durante el matrimonio son bienes comunitarios y pertenece igualmente a ambas partes, con la excepción de la propiedad individual.'
+                                     :description => 'Nevada is a community property state, regardless of your immigration status. This means that the law presumes that all property (bank account, 401K, house, military pension, car, furniture, jewelry, etc.) acquired or incurred during the marriage is community property, and belongs equally to both parties, with the exception of separate property.
+                                                      <br/><spain/>Nevada es un estado de propiedad comunitaria, no importa su estatus migratorio. Esto significa que la ley presupone que todas las propiedades (cuenta bancaria, 401 k, casa, pensión militar, carro, muebles, joyería, etc.) adquiridas o compradas durante el matrimonio son bienes comunitarios y pertenece igualmente a ambas partes, con la excepción de la propiedad individual.'
 
 current_step.fields.create :field_type => 'text', :name => 'Do you have community property to divide?
                                                             <br/><spain/>¿Tienen propiedad en común que dividir?'
