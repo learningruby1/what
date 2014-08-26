@@ -699,10 +699,9 @@ module PdfDocument
         other_debt.sort_by!{ |item| item.sort_number }
         if other_debt.first.answer == '1'
           loop_answer = other_debt.second.answer.to_i
-          other_debt.shift 2
           loop_answer.times do
-            @debt_devision.push ['Other debt', other_debt.first.answer]
-            other_debt.shift
+            other_debt.shift 2
+            @debt_devision.push ['Other debt', other_debt.first.answer, other_debt.second.answer]
           end
         end
       else
