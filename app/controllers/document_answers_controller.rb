@@ -4,7 +4,7 @@ class DocumentAnswersController < ApplicationController
   def edit
     if @document.present?
       @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
-      @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+      @answers.sort_by!{ |item| [item.sort_index, item.sort_number, item.template_field_id] } rescue nil
       redirect_to generate_pdf_path(@document.id) if @answers.blank?
     else
       redirect_to root_path
