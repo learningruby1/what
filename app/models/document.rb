@@ -72,7 +72,7 @@ class Document < ActiveRecord::Base
       if _answer.answer != ''
         fields_count = TemplateField.where(:template_step_id => _answer.template_field.template_step_id, :toggle_id => _answer.template_field.toggle_id).count
         answers_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index) }.flatten.count rescue nil
-        return false unless answers_count - 2 == fields_count * _answer.answer.to_i
+        return false unless answers_count - 2 == (fields_count - 2) * _answer.answer.to_i
       end
     end
     true
