@@ -128,6 +128,7 @@ module PdfDocument
           if answers.next.answer == 'In the United States'
             child_info[:city] = answers.next.answer
             child_info[:state] = answers.next.answer
+            2.times do answers.next end
           else
             2.times do answers.next end
             child_info[:city] = answers.next.answer
