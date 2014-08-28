@@ -750,145 +750,146 @@ module PdfDocument
 
       #Step 40 Other cases in Family court
       if @family_court
-        answers = step_answers_enum steps.next
+        answers = document.step_answers steps.next
         @child_array = Array.new
+        answers.sort_by!{ |item| item.template_field_id } rescue nil
 
-        @divorce = answers.next.answer == '1' rescue false
+        array_index = 0
+        @divorce = answers[array_index].answer == '1' rescue false
         if @divorce
           @divorce_array = Array.new
-          answers.next
+          array_index += 1
           3.times do
-            @divorce_array.push answers.next.answer
+            @divorce_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @divorce_array.push answers.next.answer
+            @divorce_array.push answers[array_index += 1].answer
           end
         else
-          10.times do answers.next end
+          array_index += 10
         end
 
-        @tpo = answers.next.answer == '1' rescue false
+        @tpo = answers[array_index += 1].answer == '1' rescue false
         if @tpo
           @tpo_array = Array.new
-          answers.next
+          array_index += 1
           3.times do
-            @tpo_array.push answers.next.answer
+            @tpo_array.push answers[array_index += 1].answer
           end
-          answers.next
+          [array_index += 1]
           5.times do
-            @tpo_array.push answers.next.answer
+            @tpo_array.push answers[array_index += 1].answer
           end
         else
-          10.times do answers.next end
+          array_index += 10
         end
 
-        @custody_support = answers.next.answer == '1' rescue false
+        @custody_support = answers[array_index += 1].answer == '1' rescue false
         if @custody_support
           @custody_support_array = Array.new
-          answers.next
+          array_index += 1
           3.times do
-            @custody_support_array.push answers.next.answer
+            @custody_support_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @custody_support_array.push answers.next.answer
+            @custody_support_array.push answers[array_index += 1].answer
           end
-          2.times do answers.next end
+          array_index += 2
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
         else
-          23.times do answers.next end
+          array_index += 23
         end
 
-        @paternity = answers.next.answer == '1' rescue false
+        @paternity = answers[array_index += 1].answer == '1' rescue false
         if @paternity
           @paternity_array = Array.new
-          answers.next
+          array_index += 1
           3.times do
-            @paternity_array.push answers.next.answer
+            @paternity_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @paternity_array.push answers.next.answer
+            @paternity_array.push answers[array_index += 1].answer
           end
-          2.times do answers.next end
+          array_index += 2
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
         else
-          23.times do answers.next end
+          array_index += 23
         end
 
-
-        @juvenile_court = answers.next.answer == '1' rescue false
+        @juvenile_court = answers[array_index += 1].answer == '1' rescue false
         if @juvenile_court
           @juvenile_court_array = Array.new
-          answers.next
+          array_index += 1
           3.times do
-            @juvenile_court_array.push answers.next.answer
+            @juvenile_court_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @juvenile_court_array.push answers.next.answer
+            @juvenile_court_array.push answers[array_index += 1].answer
           end
-          2.times do answers.next end
+          array_index += 2
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
         else
-          23.times do answers.next end
+          array_index += 23
         end
 
-        @guardianship = answers.next.answer == '1' rescue false
+        @guardianship = answers[array_index += 1].answer == '1' rescue false
         if @guardianship
           @guardianship_array = Array.new
-          answers.next
+          array_index += 1
           3.times do
-            @guardianship_array.push answers.next.answer
+            @guardianship_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @guardianship_array.push answers.next.answer
+            @guardianship_array.push answers[array_index += 1].answer
           end
         else
-          10.times do answers.next end
+          array_index += 10
         end
 
-        @termination_parental_right = answers.next.answer == '1' rescue false
+        @termination_parental_right = answers[array_index += 1].answer == '1' rescue false
         if @termination_parental_right
           @termination_parental_right_array = Array.new
-          answers.next
+          array_index += 1
           3.times do
-            @termination_parental_right_array.push answers.next.answer
+            @termination_parental_right_array.push answers[array_index += 1].answer
           end
-          answers.next
+          [array_index += 1]
           5.times do
-            @termination_parental_right_array.push answers.next.answer
+            @termination_parental_right_array.push answers[array_index += 1].answer
           end
-          2.times do answers.next end
+          array_index += 2
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
-          answers.next
+          array_index += 1
           5.times do
-            @child_array.push answers.next.answer
+            @child_array.push answers[array_index += 1].answer
           end
         else
-          23.times do answers.next end
+          array_index += 23
         end
       end
     end
