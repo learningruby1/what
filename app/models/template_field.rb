@@ -13,8 +13,8 @@ class TemplateField < ActiveRecord::Base
 
     if !header_ids.nil?
       _header_ids = header_ids.split('/')
-      additional_info = TemplateField.find(_header_ids.first).document_answers.where(:document_id => document.id)[amount_index].answer
-      additional_info += (" #{ TemplateField.find(_header_ids.last).document_answers.where(:document_id => document.id)[amount_index].answer }" if _header_ids.length > 1)
+      additional_info = TemplateField.find(_header_ids.first).document_answers.where(:document_id => document.id).order('id')[amount_index].answer
+      additional_info += (" #{ TemplateField.find(_header_ids.last).document_answers.where(:document_id => document.id).order('id')[amount_index].answer }" if _header_ids.length > 1)
 
       text = ''
       text += name.split('<spain/>').first.sub(/<insert>/, additional_info) if !name.nil?

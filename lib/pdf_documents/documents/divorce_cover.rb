@@ -137,7 +137,7 @@ module PdfDocument
       move_down 20
       push_header 'Supply the following information about any other proceeding:'
       move_down
-      push_header "Divorce      Temporary Protective Orders (TPO)      Custody/Child Support\nUIFSA/URESA      Paternity      Juvenile Court      Other"
+      push_header "Divorce      Temporary Protective Orders (TPO)      Custody/Child Support\nGuardianship      Paternity      Juvenile Court      Termination of Parental Rights"
       move_down 20
       if @family_court
         if @divorce
@@ -158,37 +158,37 @@ module PdfDocument
           rectangle 331, y_position
         end
 
-        if @paternity
-          rectangle_checked 111, y_position - 14
+        if @guardianship
+          rectangle_checked 52, y_position - 14
         else
-          rectangle 111, y_position - 14
+          rectangle 52, y_position - 14
+        end
+
+        if @paternity
+          rectangle_checked 142, y_position - 14
+        else
+          rectangle 142, y_position - 14
         end
 
         if @juvenile_court
-          rectangle_checked 214, y_position - 14
+          rectangle_checked 207, y_position - 14
         else
-          rectangle 214, y_position - 14
-        end
-
-        if @guardianship
-          rectangle_checked 280, y_position - 14
-        else
-          rectangle 280, y_position - 14
+          rectangle 207, y_position - 14
         end
 
         if @termination_parental_right
-          rectangle_checked 376, y_position - 14
+          rectangle_checked 303, y_position - 14
         else
-          rectangle 376, y_position - 14
+          rectangle 303, y_position - 14
         end
       else
         rectangle 64, y_position
         rectangle 124, y_position
         rectangle 331, y_position
-        rectangle 111, y_position - 14
-        rectangle 214, y_position - 14
-        rectangle 280, y_position - 14
-        rectangle 376, y_position - 14
+        rectangle 52, y_position - 14
+        rectangle 142, y_position - 14
+        rectangle 207, y_position - 14
+        rectangle 303, y_position - 14
       end
 
       push_header 'Please Print', 10

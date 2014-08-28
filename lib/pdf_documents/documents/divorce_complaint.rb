@@ -68,7 +68,7 @@ module PdfDocument
         move_to_left "#{ _counter += 1 }.  LEGAL CUSTODY"
 
         case @legal_custody_parent
-        when 'Both Parents'
+        when 'BOTH Parents'
           push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the #{ @children_names.join(', ') }.", @text_indent
         when 'Only MOM'
           push_text "#{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
