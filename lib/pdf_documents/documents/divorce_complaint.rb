@@ -204,8 +204,8 @@ module PdfDocument
             pet.pop
             dad_array.push pet.join(', ') if pet != '' || pet != ','
           else
-            pet.pop
-            other_chosen.push pet.join(', ') if pet != '' || pet != ','
+            mom_array.push pet.join(', ') if pet != '' || pet != ','
+            dad_array.push pet.join(', ') if pet != '' || pet != ','
           end
 
         end
@@ -215,9 +215,6 @@ module PdfDocument
             push_text p, @text_indent
           end
           dad_array.each do |p|
-            push_text p, @text_indent
-          end
-          other_chosen.each do |p|
             push_text p, @text_indent
           end
         end
