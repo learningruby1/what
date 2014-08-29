@@ -30,7 +30,7 @@ class DocumentAnswersController < ApplicationController
     answer2 = DocumentAnswer.find params[:answer_id_second]
     tmp_value = answer2.answer.to_i
 
-    @document.update_answers!(answers_params)
+    @document.update_answers!(answers_params, params[:step].to_i)
     @document.create_or_delete_answer params[:value].to_i, answer2, params[:step], tmp_value
 
     @answers = @document.prepare_answers! params[:step], true
