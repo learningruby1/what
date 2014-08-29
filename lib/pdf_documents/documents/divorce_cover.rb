@@ -245,7 +245,7 @@ module PdfDocument
       end
       push_table 1
 
-      if @child_array.count > 0
+      if !@child_array.blank? && @child_array.count > 0
         move_down
         push_header 'If children were involved (other than those listed on front page), please provide:', 10
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
