@@ -16,7 +16,7 @@ class DocumentAnswersController < ApplicationController
   end
 
   def update
-    params[:step] = params[:step].to_i.next if !@document.update_answers!(answers_params)
+    params[:step] = params[:step].to_i.next if !@document.update_answers!(answers_params, params[:step].to_i)
     if @document.errors.any?
       redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
     else
