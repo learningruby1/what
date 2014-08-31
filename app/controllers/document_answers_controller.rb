@@ -6,7 +6,11 @@ class DocumentAnswersController < ApplicationController
       @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
       @answers = DocumentAnswer.sort @answers, params[:step]
 
-      @url = @document.return_url params[:review], @answers
+      if params[:review].present?
+        @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
+      else
+        @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)
+      end
       redirect_to generate_pdf_path(@document.id) if @answers.blank?
     else
       redirect_to root_path
