@@ -1,14 +1,12 @@
 class DocumentAnswersController < ApplicationController
-  before_action :get_document, :only => [:edit, :update, :render_questions]
+  before_action :get_document, :only => [:edit, :update, :render_questions, :index]
 
   def edit
     if @document.present?
       @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
-      if params[:step] == '40'
-        @answers.sort_by!{ |item| [item.sort_index, item.sort_number, item.template_field_id] } rescue nil
-      else
-        @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
-      end
+      @answers = DocumentAnswer.sort @answers, params[:step]
+
+      @url = @document.return_url params[:review], @answers
       redirect_to generate_pdf_path(@document.id) if @answers.blank?
     else
       redirect_to root_path
@@ -19,6 +17,8 @@ class DocumentAnswersController < ApplicationController
     params[:step] = params[:step].to_i.next if !@document.update_answers!(answers_params, params[:step].to_i)
     if @document.errors.any?
       redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
+    elsif params[:review].present?
+      redirect_to document_review_path(@document)
     else
       redirect_to document_answer_path(@document, params[:step].to_i)
     end
@@ -35,6 +35,9 @@ class DocumentAnswersController < ApplicationController
 
     @answers = @document.prepare_answers! params[:step], true
     @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+  end
+
+  def index
   end
 
   private
