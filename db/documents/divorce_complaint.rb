@@ -858,7 +858,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',#32
                                      :title => 'Debt Division: Credit Cards, hospital or medical bills
-                                                <br/><spain/>División de Deuda: Tarjeta de Crédito, Cuenta de hospital o doctor:',
+                                                <br/><spain/>División de Deuda: Tarjeta de Crédito, Cuenta de hospital o doctor',
                                      :description => 'Are there any credit cards, hospital or medical bills to divide?
                                                       <br/><spain/>¿Tiene tarjetas de créditos, cuenta de hospital o doctores que dividir?'
 toggle_id = 0
