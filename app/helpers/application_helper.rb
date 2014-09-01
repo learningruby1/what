@@ -22,4 +22,14 @@ module ApplicationHelper
     end
     return hash_index
   end
+
+  def get_number_of_child(document)
+    answer = document.step_answers(8).last
+
+    if answer.nil?
+      return nil
+    else
+      return answer.answer
+    end
+  end
 end

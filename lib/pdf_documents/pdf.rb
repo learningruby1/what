@@ -126,6 +126,20 @@ module PdfDocument
               end
             when 'new_page'
               start_new_page
+            when /^default_leading/
+              default_leading command[command.length - 1].to_i
+            when /^rectangle/
+              array_tmp = command.split(' ')
+              stroke_color '000000'
+              stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 10, 10
+            when /^checked_rectangle/
+              array_tmp = command.split(' ')
+              stroke_color '000000'
+              stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 10, 10
+              stroke_line [array_tmp.second.to_i, array_tmp.last.to_i - 5], [array_tmp.second.to_i + 5, array_tmp.last.to_i - 10]
+              stroke_line [array_tmp.second.to_i + 5, array_tmp.last.to_i - 10], [array_tmp.second.to_i + 10, array_tmp.last.to_i]
+            when /^move_to_left/
+              font_size(command_number){ text next_line, :indent_paragraphs => 200, :inline_format => true }
             when /\d/
               move_down next_line.to_i
             end
@@ -134,7 +148,7 @@ module PdfDocument
 
         if footer_layout
           bounding_box [bounds.left, bounds.bottom + 35], :width  => bounds.width do
-            number_pages "Page <page> of <total>", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
+            number_pages "www.FormsMama.com                          Page <page> of <total>                    Complaint for divorce #{ Time.now.year }", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
           end
         end
       end

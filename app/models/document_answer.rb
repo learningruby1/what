@@ -63,4 +63,12 @@ class DocumentAnswer < ActiveRecord::Base
   def to_s
     answer
   end
+
+  def self.sort _answers, step
+    if step == '40'
+      _answers.sort_by!{ |item| [item.sort_index, item.sort_number, item.template_field_id] } rescue nil
+    else
+      _answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+    end
+  end
 end

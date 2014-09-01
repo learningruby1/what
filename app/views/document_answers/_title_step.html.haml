@@ -1,0 +1,26 @@
+.row
+  .col-md-10
+    - step_array = @document.template.steps.where(:step_number => @index).first.title.split('<spain/>')
+    - if step_array.first.match(/<br\/>/)
+      - text_new = step_array.first.gsub!('<br/>', '/')
+      %strong.new_roman= "#{ text_new }"
+      %strong.new_roman.spain= "#{step_array.last}:"
+    - elsif step_array.first.match(/<child_count>/) || step_array.first.match(/<child_count_spain>/)
+      - unless @children_number.nil?
+        - if @children_number == '1'
+          - text_first = step_array.first.gsub('<child_count>', 'the child')
+          - text_first[0] = 'T' if text_first[0] == 't'
+          - text_second = step_array.last.gsub('<child_count_spain>', 'el menor ')
+        - else
+          - text_first = step_array.first.gsub('<child_count>', 'children')
+          - text_first[0] = 'C' if text_first[0] == 'c'
+          - text_second = step_array.last.gsub('<child_count_spain>', 'los menores')
+        %strong.new_roman= "#{text_first}"
+        %strong.new_roman.spain= "#{text_second}:"
+    - else
+      %strong.new_roman= "#{step_array.first}"
+      %strong.new_roman.spain= "#{step_array.last}:"
+  .col-md-2
+    = link_to document_answer_path(@document, @index, :review => true), :class => 'btn btn-default' do
+      %span.new_roman Change /
+      %span.new_roman.spain Cambiar

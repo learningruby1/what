@@ -1,7 +1,6 @@
 class PdfFilesController < ApplicationController
   require 'pdf_documents/pdf'
 
-  skip_filter :authenticate_user!, :only => [:index, :generate]
   before_action :get_user_document, :only => [:generate]
 
   def index

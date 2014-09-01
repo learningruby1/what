@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get 'step/:step/edit' => 'document_answers#edit', :as => :answer
     post 'step/:step' => 'document_answers#update', :as => :answer_update
     get 'step/:step/render_questions' => 'document_answers#render_questions', :as => :render_questions
+    get 'review' => 'document_answers#index'
   end
 
   resources :pdf_files, :only => [:index]

@@ -4,7 +4,11 @@
       %fieldset
         %legend
           Sign up
-          %span.spain Contratar
+          %span.spain Contratar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          - if controller_name != 'sessions'
+            = link_to "Sign in /", new_session_path(resource_name)
+            = link_to " Iniciar sesión", new_session_path(resource_name), :class => 'spain'
+            %br
 
         = devise_error_messages!
         = render :partial => 'layouts/messages'
@@ -19,4 +23,4 @@
         .form-group
           = f.submit 'SIGN UP / CONTRATAR', :class => 'btn btn-default btn-block'
 
-        = render "devise/shared/links"
+        /= render "devise/shared/links"

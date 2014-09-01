@@ -36,6 +36,22 @@ module PdfDocument
       @data_array.push [number.to_s]
     end
 
+    def default_leading(number=2)
+      @data_array.push ["default_leading #{ number.to_s }"]
+    end
+
+    def move_to_left(text, size=13)
+      @data_array.push ["move_to_left #{ size.to_s }", text]
+    end
+
+    def rectangle(x_position, y_position)
+      @data_array.push ["rectangle #{x_position} #{y_position}"]
+    end
+
+    def rectangle_checked(x_position, y_position)
+      @data_array.push ["checked_rectangle #{x_position} #{y_position}"]
+    end
+
     def create_table
     end
 

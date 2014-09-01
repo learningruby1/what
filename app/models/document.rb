@@ -40,7 +40,7 @@ class Document < ActiveRecord::Base
   end
 
   #Controller answers Action update
-  def update_answers!(answers_params)
+  def update_answers!(answers_params, _step)
     looper = false
     answers_params[:answers].each do |answer|
 
@@ -51,21 +51,40 @@ class Document < ActiveRecord::Base
       _answer.update :answer => _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
       _answer.update :answer => _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
 
-      looper = add_mandatory_error unless check_mandatory(_answer)
+      looper = add_mandatory_error unless check_mandatory(_answer, _step)
     end
     looper
   end
 
-  def check_mandatory(_answer)
+  def check_mandatory(_answer, _step)
+    if _step != 14 && _step != 13
+      if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
+        parent_toggler = step_answers(_answer.template_field.template_step.step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id && a.toggler_offset == _answer.toggler_offset }.first
+        return false if _answer.template_field.toggle_id.nil? || parent_toggler == _answer
+        toggle_option = _answer.template_field.toggle_option
 
-    if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
+        return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
+                        toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
+                        toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : '0')
+      end
 
-      parent_toggler = step_answers(_answer.template_field.template_step.step_number).keep_if{ |a| a.template_field.toggle_id == _answer.template_field.toggle_id && a.toggler_offset == _answer.toggler_offset }.first
-      return false if _answer.template_field.toggle_id.nil? || parent_toggler == _answer
-      toggle_option = _answer.template_field.toggle_option
+      prev_answer = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index, :sort_number => 1) }.flatten.first.answer rescue nil
+      if _answer.sort_number == 2 && (prev_answer == '1' || prev_answer == 'Yes')
+        if _answer.answer != ''
+          fields_count = TemplateField.where(:template_step_id => _answer.template_field.template_step_id, :toggle_id => _answer.template_field.toggle_id).count
+          answers_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index) }.flatten.count rescue nil
+          return false unless answers_count - 2 == (fields_count - 2) * _answer.answer.to_i
+        end
+      end
+    else
+      if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
+        template = TemplateField.where(:template_step_id => _step, :toggle_id => _answer.template_field.toggle_id).first
+        parent_toggler = DocumentAnswer.where(:template_field_id => template.id, :toggler_offset => _answer.toggler_offset).first
+        toggle_option = _answer.template_field.toggle_option
 
-      return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
-                      toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1'
+        return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
+                        toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1'
+      end
     end
     true
   end

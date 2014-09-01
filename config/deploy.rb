@@ -8,7 +8,7 @@ set :repo_url, 'git@github.com:teamvoydev/forms_mama.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/formsmama/www/formsmama'
+#set :deploy_to, '/home/formsmama/www/formsmama'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -37,9 +37,6 @@ set :linked_dirs, %w{ bin log tmp/pids tmp/cache tmp/sockets vendor/bundle publi
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
-
-# Puma custum config
-set :puma_conf, "#{ shared_path }/config/puma.rb"
 
 namespace :deploy do
   desc 'Restart application'

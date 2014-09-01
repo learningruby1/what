@@ -35,10 +35,11 @@ module PdfDocument
       @plaintiff_zip = answers.next.answer
       @plaintiff_phone = answers.next.answer
       @plaintiff_email = answers.next.answer
+      answers.next
       @plaintiff_wife_husband = answers.next.answer
 
-      @mom = @plaintiff_wife_husband == 'I am Wife' ? 'plaintiff' : 'defendant'
-      @dad = @plaintiff_wife_husband == 'I am Wife' ? 'defendant' : 'plaintiff'
+      @mom = @plaintiff_wife_husband == 'Wife' ? 'plaintiff' : 'defendant'
+      @dad = @plaintiff_wife_husband == 'Wife' ? 'defendant' : 'plaintiff'
 
       #Second step   Your Spouse\'s Information
       answers = step_answers_enum steps.next
@@ -101,7 +102,7 @@ module PdfDocument
 
       if !@children_residency
 
-        11.times do steps.next end
+        12.times do steps.next end
       else
 
         #Step 8   Number of children
@@ -123,6 +124,16 @@ module PdfDocument
           child_info[:last_name] = answers.next.answer
           @children_names << "#{child_info[:first_name]} #{child_info[:middle_name]} #{child_info[:last_name]}"
           child_info[:date_of_birth] = answers.next.answer
+          answers.next
+          if answers.next.answer == 'In the United States'
+            child_info[:city] = answers.next.answer
+            child_info[:state] = answers.next.answer
+            2.times do answers.next end
+          else
+            2.times do answers.next end
+            child_info[:city] = answers.next.answer
+            child_info[:country] = answers.next.answer
+          end
           child_info[:social_security] = answers.next.answer
           child_info[:is_son] = answers.next.answer == 'Son'
 
@@ -142,6 +153,7 @@ module PdfDocument
 
           physical_custody = Hash.new
 
+          physical_custody[:number] = i
           physical_custody[:child] = get_headed_info answers.next, i
           answers.next
           physical_custody[:custody] = answers.next.answer
@@ -153,6 +165,7 @@ module PdfDocument
         @all_holidays = Array.new
 
         answers = step_answers_enum steps.next
+
         holiday_now = answers.next.answer == 'Yes'
         answers.next
         same_schedule = answers.next.answer == 'Yes'
@@ -215,6 +228,7 @@ module PdfDocument
 
           #Step 13   More holiday
           step = steps.next
+
           holidays_amount.times do |i|
             answers = step_answers_enum step, i
 
@@ -306,6 +320,7 @@ module PdfDocument
         answers = step_answers_enum steps.next
         @child_insurance = answers.next.answer
 
+
         #Step 15   Child Support
         answers = step_answers_enum steps.next
         @child_suport_who = answers.next.answer
@@ -332,7 +347,7 @@ module PdfDocument
         @number_of_children.times do |i|
           answers = step_answers_enum step, i
           answers.next.answer
-          @child_tax_examption.push [answers.next.answer, i]
+          @child_tax_examption.push [answers.next.answer, i, answers.next.answer]
         end
       end
 
@@ -354,6 +369,7 @@ module PdfDocument
           answers = step_answers_enum step, i
           pet = Array.new
 
+          pet.push 'pet'
           pet.push answers.next.answer
           pet.push answers.next.answer
           @pets.push pet
@@ -364,7 +380,6 @@ module PdfDocument
       answers = step_answers_enum steps.next
       answers.next
       @property_presence = answers.next.answer
-
       if @property_presence != 'Yes'
         7.times do steps.next end
       else
@@ -372,47 +387,40 @@ module PdfDocument
         #Step 22   Property Division: Marital Home
         #Deleted
 
-        property_presence = answers.select{ |item| item.sort_index == 'b' }
-        property_presence.sort_by!{ |item| item.sort_number }
-        @property_presence_more = property_presence.first.answer == 'Yes' rescue false
-
         @properties_more = Array.new
 
         #Step 23   Property Division: Marital Home
         answers = document.step_answers steps.next
 
-        if @property_presence_more
+        if @property_presence
 
           house = answers.select{ |item| item.sort_index == 'a' }
           house.sort_by!{ |item| item.sort_number }
           if house.first.answer == '1'
-            tmp_house = house.first
             loop_answer = house.second.answer.to_i
             loop_answer.times do
               house.shift 2
-              @properties_more.push [tmp_house, house.first, house.second]
+              @properties_more.push ['House', house.first.answer, house.second.answer]
             end
           end
 
           land = answers.select{ |item| item.sort_index == 'b' }
           land.sort_by!{ |item| item.sort_number }
           if land.first.answer == '1'
-            tmp_land = land.first
             loop_answer = land.second.answer.to_i
             loop_answer.times do
               land.shift 2
-              @properties_more.push [tmp_land, land.first, land.second]
+              @properties_more.push ['Land', land.first.answer, land.second.answer]
             end
           end
 
           business = answers.select{ |item| item.sort_index == 'c' }
           business.sort_by!{ |item| item.sort_number }
           if business.first.answer == '1'
-            tmp_business = business.first
             loop_answer = business.second.answer.to_i
             business.shift 2
             loop_answer.times do
-              @properties_more.push [tmp_business, business.first, business.second, business.third]
+              @properties_more.push ['Business', business.first.answer, business.second.answer, business.third.answer]
               business.shift 3
             end
           end
@@ -429,66 +437,60 @@ module PdfDocument
           car = answers.select{ |item| item.sort_index == 'a' }
           car.sort_by!{ |item| item.sort_number }
           if car.first.answer == '1'
-            tmp_car = car.first
             loop_answer = car.second.answer.to_i
             loop_answer.times do
               car.shift 2
-              @properties_more.push [tmp_car, car.first, car.second]
+              @properties_more.push ['Car', car.first.answer, car.second.answer]
             end
           end
 
           motorcycle = answers.select{ |item| item.sort_index == 'b' }
           motorcycle.sort_by!{ |item| item.sort_number }
           if motorcycle.first.answer == '1'
-            tmp_motorcycle = motorcycle.first
             loop_answer = motorcycle.second.answer.to_i
             loop_answer.times do
               motorcycle.shift 2
-              @properties_more.push [tmp_motorcycle, motorcycle.first, motorcycle.second]
+              @properties_more.push ['Motorcycle', motorcycle.first.answer, motorcycle.second.answer]
             end
           end
 
           rv = answers.select{ |item| item.sort_index == 'c' }
           rv.sort_by!{ |item| item.sort_number }
           if rv.first.answer == '1'
-            tmp_rv = rv.first
             loop_answer = rv.second.answer.to_i
             loop_answer.times do
               rv.shift 2
-              @properties_more.push [tmp_rv, rv.first, rv.second]
+              @properties_more.push ['RV', rv.first.answer, rv.second.answer]
             end
           end
 
           boat = answers.select{ |item| item.sort_index == 'd' }
           boat.sort_by!{ |item| item.sort_number }
           if boat.first.answer == '1'
-            tmp_boat = boat.first
             loop_answer = boat.second.answer.to_i
             loop_answer.times do
               boat.shift 2
-              @properties_more.push [tmp_boat, boat.first, boat.second]
+              @properties_more.push ['Boat', boat.first.answer, boat.second.answer]
             end
           end
 
           trailer = answers.select{ |item| item.sort_index == 'e' }
           trailer.sort_by!{ |item| item.sort_number }
           if trailer.first.answer == '1'
-            tmp_trailer = trailer.first
             loop_answer = trailer.second.answer.to_i
             loop_answer.times do
               trailer.shift 2
-              @properties_more.push [tmp_trailer, trailer.first, trailer.second]
+              @properties_more.push ['Trailer', trailer.first.answer, trailer.second.answer]
             end
           end
 
           other = answers.select{ |item| item.sort_index == 'f' }
           other.sort_by!{ |item| item.sort_number }
           if other.first.answer == '1'
-            tmp_other = other.first
             loop_answer = other.second.answer.to_i
             loop_answer.times do
               other.shift 2
-              @properties_more.push [tmp_other, other.first, other.second]
+              @properties_more.push ['Other', other.first.answer, other.second.answer]
             end
           end
 
@@ -501,11 +503,10 @@ module PdfDocument
         plan = answers.select{ |item| item.sort_index == 'a' }
         plan.sort_by!{ |item| item.sort_number }
         if plan.first.answer == 'Yes'
-          tmp_plan = plan.first
           loop_answer = plan.second.answer.to_i
           loop_answer.times do
             plan.shift 2
-            @debts_accounts.push [tmp_plan, plan.first, plan.second]
+            @debts_accounts.push ['Plan', plan.first.answer, plan.second.answer]
           end
         end
 
@@ -516,11 +517,10 @@ module PdfDocument
         bank = answers.select{ |item| item.sort_index == 'a' }
         bank.sort_by!{ |item| item.sort_number }
         if bank.first.answer == 'Yes'
-          tmp_bank = bank.first
           loop_answer = bank.second.answer.to_i
           bank.shift 2
           loop_answer.times do
-            @bank_account.push [tmp_bank, bank.first, bank.second, bank.third, bank.fourth]
+            @bank_account.push ['Account', bank.first.answer, bank.second.answer, bank.third.answer, bank.fourth.answer]
             bank.shift 4
           end
         end
@@ -543,11 +543,11 @@ module PdfDocument
 
       #Step 30   Debts
       answers = document.step_answers steps.next
-      @community_debts = answers.last.answer == 'Yes' rescue false
+      @community_debts = answers.last.answer
+      @debt_devision = Array.new
 
-      if @community_debts
+      if @community_debts == 'Yes'
         #Step 31 Debts Division
-        @debt_devision_accounts = Array.new
         answers = document.step_answers steps.next
 
         house = answers.select{ |item| item.sort_index == 'a' }
@@ -557,7 +557,7 @@ module PdfDocument
           loop_answer = house.second.answer.to_i
           house.shift 2
           loop_answer.times do
-            @debt_devision_accounts.push [tmp_house, house.first, house.second, house.third]
+            @debt_devision.push ['House', house.first.answer, house.second.answer, house.third.answer]
             house.shift 3
           end
         end
@@ -569,157 +569,140 @@ module PdfDocument
           loop_answer = land.second.answer.to_i
           land.shift 2
           loop_answer.times do
-            @debt_devision_accounts.push [tmp_land, land.first, land.second, land.third]
+            @debt_devision.push ['Land', land.first.answer, land.second.answer, land.third.answer]
             land.shift 3
           end
         end
 
         #Step 32
-        @bill_accounts = Array.new
         answers = document.step_answers steps.next
 
         card = answers.select{ |item| item.sort_index == 'a' }
         card.sort_by!{ |item| item.sort_number }
         if card.first.answer == '1'
-          tmp_card = card.first
           loop_answer = card.second.answer.to_i
           loop_answer.times do
             card.shift 2
-            @bill_accounts.push [tmp_card, card.first, card.second]
+            @debt_devision.push ['Credit Cards', card.first.answer, card.second.answer]
           end
         end
 
         hospital = answers.select{ |item| item.sort_index == 'b' }
         hospital.sort_by!{ |item| item.sort_number }
         if hospital.first.answer == '1'
-          tmp_hospital = hospital.first
           loop_answer = hospital.second.answer.to_i
           loop_answer.times do
             hospital.shift 2
-            @bill_accounts.push [tmp_hospital, hospital.first, hospital.second]
+            @debt_devision.push ['Hospital bills', hospital.first.answer, hospital.second.answer]
           end
         end
 
         doctor = answers.select{ |item| item.sort_index == 'c' }
         doctor.sort_by!{ |item| item.sort_number }
         if doctor.first.answer == '1'
-          tmp_doctor = doctor.first
           loop_answer = doctor.second.answer.to_i
           loop_answer.times do
             doctor.shift 2
-            @bill_accounts.push [tmp_doctor, doctor.first, doctor.second]
+            @debt_devision.push ['Doctor bills', doctor.first.answer, doctor.second.answer]
           end
         end
 
         #Step 33
-        @car_loan = Array.new
         answers = document.step_answers steps.next
 
         car = answers.select{ |item| item.sort_index == 'a' }
         car.sort_by!{ |item| item.sort_number }
         if car.first.answer == '1'
-          tmp_car = car.first
           loop_answer = car.second.answer.to_i
           loop_answer.times do
             car.shift 2
-            @car_loan.push [tmp_car, car.first, car.second]
+            @debt_devision.push ['Car', car.first.answer, car.second.answer]
           end
         end
 
         rv = answers.select{ |item| item.sort_index == 'b' }
         rv.sort_by!{ |item| item.sort_number }
         if rv.first.answer == '1'
-          tmp_rv = rv.first
           loop_answer = rv.second.answer.to_i
           loop_answer.times do
             rv.shift 2
-            @car_loan.push [tmp_rv, rv.first, rv.second]
+            @debt_devision.push ['RV', rv.first.answer, rv.second.answer]
           end
         end
 
         boat = answers.select{ |item| item.sort_index == 'c' }
         boat.sort_by!{ |item| item.sort_number }
         if boat.first.answer == '1'
-          tmp_boat = boat.first
           loop_answer = boat.second.answer.to_i
           loop_answer.times do
             boat.shift 2
-            @car_loan.push [tmp_boat, boat.first, boat.second]
+            @debt_devision.push ['Boat', boat.first.answer, boat.second.answer]
           end
         end
 
         motorcycle = answers.select{ |item| item.sort_index == 'd' }
         motorcycle.sort_by!{ |item| item.sort_number }
         if motorcycle.first.answer == '1'
-          tmp_motorcycle = motorcycle.first
           loop_answer = motorcycle.second.answer.to_i
           loop_answer.times do
             motorcycle.shift 2
-            @car_loan.push [tmp_motorcycle, motorcycle.first, motorcycle.second]
+            @debt_devision.push ['Motorcycle', motorcycle.first.answer, motorcycle.second.answer]
           end
         end
 
         #Step 34
-        @student_loan = Array.new
         answers = document.step_answers steps.next
 
         student = answers.select{ |item| item.sort_index == 'a' }
         student.sort_by!{ |item| item.sort_number }
         if student.first.answer == '1'
-          tmp_student = student.first
           loop_answer = student.second.answer.to_i
           loop_answer.times do
             student.shift 2
-            @student_loan.push [tmp_student, student.first, student.second]
+            @debt_devision.push ['Student loan', student.first.answer, student.second.answer]
           end
         end
 
         irs = answers.select{ |item| item.sort_index == 'b' }
         irs.sort_by!{ |item| item.sort_number }
         if irs.first.answer == '1'
-          tmp_irs = irs.first
           loop_answer = irs.second.answer.to_i
           loop_answer.times do
             irs.shift 2
-            @student_loan.push [tmp_irs, irs.first, irs.second]
+            @debt_devision.push ['IRS', irs.first.answer, irs.second.answer]
           end
         end
 
         payday = answers.select{ |item| item.sort_index == 'c' }
         payday.sort_by!{ |item| item.sort_number }
         if payday.first.answer == '1'
-          tmp_payday = payday.first
           loop_answer = payday.second.answer.to_i
           loop_answer.times do
             payday.shift 2
-            @student_loan.push [tmp_payday, payday.first, payday.second]
+            @debt_devision.push ['Payday loan', payday.first.answer, payday.second.answer]
           end
         end
 
         other_loan = answers.select{ |item| item.sort_index == 'd' }
         other_loan.sort_by!{ |item| item.sort_number }
         if other_loan.first.answer == '1'
-          tmp_other_loan = other_loan.first
           loop_answer = other_loan.second.answer.to_i
           loop_answer.times do
             other_loan.shift 2
-            @student_loan.push [tmp_other_loan, other_loan.first, other_loan.second]
+            @debt_devision.push ['Other loan', other_loan.first.answer, other_loan.second.answer]
           end
         end
 
         #Step 35
-        @other_debt_division = Array.new
         answers = document.step_answers steps.next
 
         other_debt = answers.select{ |item| item.sort_index == 'a' }
         other_debt.sort_by!{ |item| item.sort_number }
         if other_debt.first.answer == '1'
-          tmp_other_debt = other_debt.first
           loop_answer = other_debt.second.answer.to_i
-          other_debt.shift 2
           loop_answer.times do
-            @other_debt_division.push [tmp_other_debt, other_debt.first]
-            other_debt.shift
+            other_debt.shift 2
+            @debt_devision.push ['Other debt', other_debt.first.answer, other_debt.second.answer]
           end
         end
       else
@@ -735,6 +718,21 @@ module PdfDocument
         @alimony_how_much = answers.next.answer
         @alimony_how_long = answers.next.answer
         @alimony_year_month = answers.next.answer
+
+        if @alimony_year_month == 'Year(s) (example 1 year)'
+          if @alimony_how_long == '1'
+            @alimony_year_month = 'year'
+          else
+            @alimony_year_month = 'years'
+          end
+        else
+          if @alimony_how_long == '1'
+            @alimony_year_month = 'month'
+          else
+            @alimony_year_month = 'months'
+          end
+
+        end
       end
 
       #Step 37   Wife’s Name
@@ -746,6 +744,155 @@ module PdfDocument
       #Step 38   Reason divorce
       answers = step_answers_enum steps.next
       @reason_divorce = answers.next.answer
+
+      #Step 39 Other cases in Family court
+      answers = step_answers_enum steps.next
+      @family_court = answers.next.answer == 'Yes' rescue false
+
+      #Step 40 Other cases in Family court
+      if @family_court
+        answers = document.step_answers steps.next
+        @child_array = Array.new
+        answers.sort_by!{ |item| item.template_field_id } rescue nil
+
+        array_index = 0
+        @divorce = answers[array_index].answer == '1' rescue false
+        if @divorce
+          @divorce_array = Array.new
+          array_index += 1
+          3.times do
+            @divorce_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @divorce_array.push answers[array_index += 1].answer
+          end
+        else
+          array_index += 10
+        end
+
+        @tpo = answers[array_index += 1].answer == '1' rescue false
+        if @tpo
+          @tpo_array = Array.new
+          array_index += 1
+          3.times do
+            @tpo_array.push answers[array_index += 1].answer
+          end
+          [array_index += 1]
+          5.times do
+            @tpo_array.push answers[array_index += 1].answer
+          end
+        else
+          array_index += 10
+        end
+
+        @custody_support = answers[array_index += 1].answer == '1' rescue false
+        if @custody_support
+          @custody_support_array = Array.new
+          array_index += 1
+          3.times do
+            @custody_support_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @custody_support_array.push answers[array_index += 1].answer
+          end
+          array_index += 2
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+        else
+          array_index += 23
+        end
+
+        @paternity = answers[array_index += 1].answer == '1' rescue false
+        if @paternity
+          @paternity_array = Array.new
+          array_index += 1
+          3.times do
+            @paternity_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @paternity_array.push answers[array_index += 1].answer
+          end
+          array_index += 2
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+        else
+          array_index += 23
+        end
+
+        @juvenile_court = answers[array_index += 1].answer == '1' rescue false
+        if @juvenile_court
+          @juvenile_court_array = Array.new
+          array_index += 1
+          3.times do
+            @juvenile_court_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @juvenile_court_array.push answers[array_index += 1].answer
+          end
+          array_index += 2
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+        else
+          array_index += 23
+        end
+
+        @guardianship = answers[array_index += 1].answer == '1' rescue false
+        if @guardianship
+          @guardianship_array = Array.new
+          array_index += 1
+          3.times do
+            @guardianship_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @guardianship_array.push answers[array_index += 1].answer
+          end
+        else
+          array_index += 10
+        end
+
+        @termination_parental_right = answers[array_index += 1].answer == '1' rescue false
+        if @termination_parental_right
+          @termination_parental_right_array = Array.new
+          array_index += 1
+          3.times do
+            @termination_parental_right_array.push answers[array_index += 1].answer
+          end
+          [array_index += 1]
+          5.times do
+            @termination_parental_right_array.push answers[array_index += 1].answer
+          end
+          array_index += 2
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+          array_index += 1
+          5.times do
+            @child_array.push answers[array_index += 1].answer
+          end
+        else
+          array_index += 23
+        end
+      end
     end
   end
 end
