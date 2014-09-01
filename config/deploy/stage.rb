@@ -4,17 +4,16 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{formsmama.com}
-role :web, %w{formsmama.com}
-role :db,  %w{formsmama.com}
+role :app, %w{162.243.154.139}
+role :web, %w{162.243.154.139}
+role :db,  %w{162.243.154.139}
 
 
-set :app_dir, '/home/formsmama/www/formsmama'
-set :deploy_to, '/home/formsmama/www/formsmama'
-set :branch, 'production'
-set :rails_env, 'production'
+set :app_dir, '/home/formsmama/www/formsmama_qa'
+set :deploy_to, '/home/formsmama/www/formsmama_qa'
+set :branch, 'master'
+set :rails_env, 'stage'
 set :puma_conf, "#{shared_path}/config/puma.rb"
-
 
 # Extended Server Syntax
 # ======================
