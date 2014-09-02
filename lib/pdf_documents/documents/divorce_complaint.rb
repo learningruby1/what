@@ -86,13 +86,13 @@ module PdfDocument
             case physical_custody[:custody]
 
             when /^With mom/
-              push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the #{ @children_names[physical_custody[:number].to_i] } with #{ @dad.capitalize } having visitation as follows: (insert the proposed visitation schedule).", @text_indent
+              push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation.", @text_indent
             when /^With dad/
-              push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the #{ @children_names[physical_custody[:number].to_i] } with #{ @mom.capitalize } having visitation as follows: (insert the proposed visitation schedule).", @text_indent
+              push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation.", @text_indent
             end
 
           when /^Both/
-            push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the #{ @children_names[physical_custody[:number].to_i] } and the parties’ timeshare should be as follows: (insert the proposed timeshare)", @text_indent
+            push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
 
 
           when /^Only/
@@ -189,7 +189,6 @@ module PdfDocument
       move_to_left "#{ _counter += 1 }.  COMMUNITY PROPERTY"
       mom_array = []
       dad_array = []
-      other_chosen = []
       mom_array.push "To the #{ @mom.capitalize}, as her sole and separate property: "
       dad_array.push "To the #{ @dad.capitalize}, as his sole and separate property: "
       if @pet_presence
@@ -234,11 +233,8 @@ module PdfDocument
             dad_array.push property.join(', ') if property != '' || property != ','
           else
             property[property.count - 1] = 'Sell'
-            if @mom == 'plaintiff'
-              mom_array.push property.join(', ') if property != '' || property != ','
-            else
-              dad_array.push property.join(', ') if property != '' || property != ','
-            end
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
 
@@ -254,6 +250,7 @@ module PdfDocument
             else
               property[2] = 'Portion'
               mom_array.push property.join(', ') if property != '' || property != ','
+              dad_array.push property.join(', ') if property != '' || property != ','
             end
           else
             case property.last
@@ -265,6 +262,7 @@ module PdfDocument
               mom_array.push property.join(', ') if property != '' || property != ','
             else
               property[2] = 'Portion'
+              mom_array.push property.join(', ') if property != '' || property != ','
               dad_array.push property.join(', ') if property != '' || property != ','
             end
           end
@@ -282,6 +280,7 @@ module PdfDocument
             else
               property[4] = 'Portion'
               mom_array.push property.join(', ') if property != '' || property != ','
+              dad_array.push property.join(', ') if property != '' || property != ','
             end
           else
             case property.last
@@ -294,6 +293,7 @@ module PdfDocument
             else
               property[4] = 'Portion'
               dad_array.push property.join(', ') if property != '' || property != ','
+              mom_array.push property.join(', ') if property != '' || property != ','
             end
           end
         end
@@ -343,10 +343,6 @@ module PdfDocument
             end
           end
         end
-        alphabet = 97
-        other_chosen.each_with_index do |p, index|
-          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-        end
 
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
       when 'No, we already divided them'
@@ -362,7 +358,6 @@ module PdfDocument
 
         mom_array = []
         dad_array = []
-        other_chosen = []
         mom_array.push "To the #{ @mom.capitalize}: "
         dad_array.push "To the #{ @dad.capitalize}: "
 
@@ -376,11 +371,8 @@ module PdfDocument
             dad_array.push property.join(', ') if property != '' || property != ','
           else
             property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home'
-            if @mom == 'plaintiff'
-              mom_array.push property.join(', ') if property != '' || property != ','
-            else
-              dad_array.push property.join(', ') if property != '' || property != ','
-            end
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
         if @mom == 'plaintiff'
@@ -417,10 +409,6 @@ module PdfDocument
               push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
             end
           end
-        end
-        alphabet = 97
-        other_chosen.each_with_index do |p, index|
-          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
         end
 
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
