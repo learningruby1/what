@@ -5,8 +5,9 @@ class DocumentAnswersController < ApplicationController
     if @document.present?
       @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
       @answers = DocumentAnswer.sort @answers, params[:step]
+      @review = params[:review]
 
-      if params[:review].present? && !@answers.blank?
+      if @review.present? && !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
       elsif !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)
@@ -39,8 +40,9 @@ class DocumentAnswersController < ApplicationController
 
     @answers = @document.prepare_answers! params[:step], true
     @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+    @review = params[:review]
 
-    if params[:review].present? && !@answers.blank?
+    if @review.present? && !@answers.blank?
       @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
     elsif !@answers.blank?
       @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)
