@@ -27,8 +27,19 @@ module PdfDocument
       table_row [ { :content => "Last Name: #{ @plaintiff_last_name }", :colspan => 2 }, { :content => "Last Name: #{ @defendant_last_name }", :colspan => 2 } ]
       table_row [ "First Name: #{ @plaintiff_first_name }", "Middle name: #{ @plaintiff_middle_name }", "First Name: #{ @defendant_first_name }", "Middle name: #{ @defendant_middle_name }" ]
       table_row [ { :content => "Home Address: #{ @plaintiff_mailing_addres }", :colspan => 2 }, { :content => "Home Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
-      table_row [ { :content => "City, State, Zip: #{ @plaintiff_mailing_addres }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_mailing_address }", :colspan => 2 } ]
+
+      if @defendant_country.present? && @plaintiff_country.present?
+        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
+      elsif @defendant_country.present? && !@plaintiff_country.present?
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
+      elsif !@defendant_country.present? && @plaintiff_country.present?
+        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+      else
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+      end
+
       table_row [ { :content => "Mailing Address: #{ @plaintiff_mailing_addres }", :colspan => 2 }, { :content => "Mailing Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
+
       if @defendant_country.present? && @plaintiff_country.present?
         table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
       elsif @defendant_country.present? && !@plaintiff_country.present?
@@ -126,7 +137,12 @@ module PdfDocument
         end
         push_table
       else
-        y_position = 649
+        y_position = 557
+        push_header 'List children involved in this case', 10
+        table_row [ { :content => 'First name', :align => :center, :font_style => :bold }, { :content => 'Last name', :align => :center, :font_style => :bold }, { :content => 'Middle name', :align => :center, :font_style => :bold }, { :content => 'Date of birth', :align => :center, :font_style => :bold }, { :content => 'Relationship', :align => :center, :font_style => :bold } ]
+        table_row [ "1.", "", "", "", "" ]
+        table_row [ "2.", "", "", "", "" ]
+        push_table
       end
 
       move_down 20
@@ -192,63 +208,73 @@ module PdfDocument
       end
 
       push_header 'Please Print', 10
-      table_row [ { :content => 'List full name of all adult parties involved', :align => :center, :font_style => :bold, :colspan => 3 }, { :content => 'Case number<br/>of other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 }, { :content => 'Approximate date<br/>of last order in other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 } ]
-      table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 } ]
-      print_index = 0
-      if @divorce
-        table_row [ "#{ print_index += 1 }. #{ @divorce_array[1] }", "#{ @divorce_array[0] }", "#{ @divorce_array[2] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
-        if @divorce_array[3].present?
-          table_row [ "#{ print_index += 1 }. #{ @divorce_array[4] }", "#{ @divorce_array[3] }", "#{ @divorce_array[5] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
+      if @divorce || @tpo || @custody_support || @paternity || @juvenile_court || @guardianship || @termination_parental_right
+        table_row [ { :content => 'List full name of all adult parties involved', :align => :center, :font_style => :bold, :colspan => 3 }, { :content => 'Case number<br/>of other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 }, { :content => 'Approximate date<br/>of last order in other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 } ]
+        table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 } ]
+        print_index = 0
+        if @divorce
+          table_row [ "#{ print_index += 1 }. #{ @divorce_array[1] }", "#{ @divorce_array[0] }", "#{ @divorce_array[2] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
+          if @divorce_array[3].present?
+            table_row [ "#{ print_index += 1 }. #{ @divorce_array[4] }", "#{ @divorce_array[3] }", "#{ @divorce_array[5] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
+          end
         end
+
+        if @tpo
+          table_row [ "#{ print_index += 1 }. #{ @tpo_array[1] }", "#{ @tpo_array[0] }", "#{ @tpo_array[2] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
+          if @tpo_array[3].present?
+            table_row [ "#{ print_index += 1 }. #{ @tpo_array[4] }", "#{ @tpo_array[3] }", "#{ @tpo_array[5] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
+          end
+        end
+
+        if @custody_support
+          table_row [ "#{ print_index += 1 }. #{ @custody_support_array[1] }", "#{ @custody_support_array[0] }", "#{ @custody_support_array[2] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
+          if @custody_support_array[3].present?
+            table_row [ "#{ print_index += 1 }. #{ @custody_support_array[4] }", "#{ @custody_support_array[3] }", "#{ @custody_support_array[5] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
+          end
+        end
+
+        if @paternity
+          table_row [ "#{ print_index += 1 }. #{ @paternity_array[1] }", "#{ @paternity_array[0] }", "#{ @paternity_array[2] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
+          if @paternity_array[3].present?
+            table_row [ "#{ print_index += 1 }. #{ @paternity_array[4] }", "#{ @paternity_array[3] }", "#{ @paternity_array[5] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
+          end
+        end
+
+        if @juvenile_court
+          table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[1] }", "#{ @juvenile_court_array[0] }", "#{ @juvenile_court_array[2] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
+          if @juvenile_court_array[3].present?
+            table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[4] }", "#{ @juvenile_court_array[3] }", "#{ @juvenile_court_array[5] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
+          end
+        end
+
+        if @guardianship
+          table_row [ "#{ print_index += 1 }. #{ @guardianship_array[1] }", "#{ @guardianship_array[0] }", "#{ @guardianship_array[2] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
+          if @guardianship_array[3].present?
+            table_row [ "#{ print_index += 1 }. #{ @guardianship_array[4] }", "#{ @guardianship_array[3] }", "#{ @guardianship_array[5] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
+          end
+        end
+
+        if @termination_parental_right
+          table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[1] }", "#{ @termination_parental_right_array[0] }", "#{ @termination_parental_right_array[2] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
+          if @termination_parental_right_array[3].present?
+            table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[4] }", "#{ @termination_parental_right_array[3] }", "#{ @termination_parental_right_array[5] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
+          end
+        end
+        push_table 1
+      else
+        table_row [ { :content => 'List full name of all adult parties involved', :align => :center, :font_style => :bold, :colspan => 3 }, { :content => 'Case number<br/>of other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 }, { :content => 'Approximate date<br/>of last order in other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 } ]
+        table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 } ]
+        table_row [ "1.", "", "", "", "" ]
+        table_row [ "2.", "", "", "", "" ]
+
+        push_table 1
       end
 
-      if @tpo
-        table_row [ "#{ print_index += 1 }. #{ @tpo_array[1] }", "#{ @tpo_array[0] }", "#{ @tpo_array[2] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
-        if @tpo_array[3].present?
-          table_row [ "#{ print_index += 1 }. #{ @tpo_array[4] }", "#{ @tpo_array[3] }", "#{ @tpo_array[5] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
-        end
-      end
 
-      if @custody_support
-        table_row [ "#{ print_index += 1 }. #{ @custody_support_array[1] }", "#{ @custody_support_array[0] }", "#{ @custody_support_array[2] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
-        if @custody_support_array[3].present?
-          table_row [ "#{ print_index += 1 }. #{ @custody_support_array[4] }", "#{ @custody_support_array[3] }", "#{ @custody_support_array[5] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
-        end
-      end
-
-      if @paternity
-        table_row [ "#{ print_index += 1 }. #{ @paternity_array[1] }", "#{ @paternity_array[0] }", "#{ @paternity_array[2] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
-        if @paternity_array[3].present?
-          table_row [ "#{ print_index += 1 }. #{ @paternity_array[4] }", "#{ @paternity_array[3] }", "#{ @paternity_array[5] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
-        end
-      end
-
-      if @juvenile_court
-        table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[1] }", "#{ @juvenile_court_array[0] }", "#{ @juvenile_court_array[2] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
-        if @juvenile_court_array[3].present?
-          table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[4] }", "#{ @juvenile_court_array[3] }", "#{ @juvenile_court_array[5] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
-        end
-      end
-
-      if @guardianship
-        table_row [ "#{ print_index += 1 }. #{ @guardianship_array[1] }", "#{ @guardianship_array[0] }", "#{ @guardianship_array[2] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
-        if @guardianship_array[3].present?
-          table_row [ "#{ print_index += 1 }. #{ @guardianship_array[4] }", "#{ @guardianship_array[3] }", "#{ @guardianship_array[5] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
-        end
-      end
-
-      if @termination_parental_right
-        table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[1] }", "#{ @termination_parental_right_array[0] }", "#{ @termination_parental_right_array[2] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
-        if @termination_parental_right_array[3].present?
-          table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[4] }", "#{ @termination_parental_right_array[3] }", "#{ @termination_parental_right_array[5] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
-        end
-      end
-      push_table 1
-
+      move_down
+      push_header 'If children were involved (other than those listed on front page), please provide:', 10
+      table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
       if !@child_array.blank? && @child_array.count > 0
-        move_down
-        push_header 'If children were involved (other than those listed on front page), please provide:', 10
-        table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
         print_index = 0
         array_index = 0
         (@child_array.count / 5).times do
@@ -258,7 +284,20 @@ module PdfDocument
           array_index += 5
         end
         push_table
+      else
+        table_row [ "1.", "", "", "", "" ]
+        table_row [ "2.", "", "", "", "" ]
+
+        push_table
       end
+
+      move_down
+      push_header 'Children involved in this case', 10
+      table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
+      table_row [ "1.", "", "", "", "" ]
+      table_row [ "2.", "", "", "", "" ]
+
+      push_table
 
       move_down 160
       push_header 'THIS INFORMATION IS REQUIRED BY', 10

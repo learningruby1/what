@@ -506,7 +506,7 @@ module PdfDocument
           loop_answer = plan.second.answer.to_i
           loop_answer.times do
             plan.shift 2
-            @debts_accounts.push ['Plan', plan.first.answer, plan.second.answer]
+            @debts_accounts.push ['Retirement', plan.first.answer, plan.second.answer]
           end
         end
 
