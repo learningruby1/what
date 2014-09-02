@@ -30,11 +30,11 @@
               .glyphicon.glyphicon-edit
               Edit /
               %span.spain Editar
-          %td
-            = link_to document_review_path(document), :class => 'btn btn-default' do
-              .glyphicon.glyphicon-list-alt
-              Review /
-              %span.spain Opinión
+            /%td
+            /= link_to document_review_path(document), :class => 'btn btn-default' do
+            /  .glyphicon.glyphicon-list-alt
+            /  Review /
+            /  %span.spain Opinión
 
             - if document.is_generated?
               - if current_user

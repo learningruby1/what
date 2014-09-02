@@ -6,9 +6,9 @@ class DocumentAnswersController < ApplicationController
       @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
       @answers = DocumentAnswer.sort @answers, params[:step]
 
-      if params[:review].present?
+      if params[:review].present? && !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
-      else
+      elsif !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)
       end
       redirect_to generate_pdf_path(@document.id) if @answers.blank?
@@ -39,6 +39,12 @@ class DocumentAnswersController < ApplicationController
 
     @answers = @document.prepare_answers! params[:step], true
     @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+
+    if params[:review].present? && !@answers.blank?
+      @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
+    elsif !@answers.blank?
+      @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)
+    end
   end
 
   def index
