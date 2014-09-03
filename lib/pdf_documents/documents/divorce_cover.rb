@@ -126,22 +126,17 @@ module PdfDocument
       if @children_residency
         move_down
         push_header 'List children involved in this case', 10
-        if @children_info.count == 1
-          y_position = 755
-        else
-          y_position = 755 - 20 * (@children_info.count - 1)
-        end
+        y_position = 715
 
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold }, { :content => 'Last name', :align => :center, :font_style => :bold }, { :content => 'Middle name', :align => :center, :font_style => :bold }, { :content => 'Date of birth', :align => :center, :font_style => :bold }, { :content => 'Relationship', :align => :center, :font_style => :bold } ]
         @children_info.each_with_index do |child, i|
-
+          break if i == 3
           table_row [ "#{ i+1 }. #{ child[:first_name] }", child[:last_name], child[:middle_name], child[:date_of_birth], "#{ child[:is_son] ? 'SON' : 'DAUGHTER' }" ]
         end
         if @children_info.count < 3
           print_index = @children_info.count
           (3 - @children_info.count).times do
             table_row [ "#{ print_index += 1 }.", "", "", "", "" ]
-            y_position -= 20
           end
         end
         push_table
@@ -321,15 +316,30 @@ module PdfDocument
       end
 
       move_down
-      push_header 'Children involved in this case', 10
-      table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
-      table_row [ "4.", "", "", "", "" ]
-      table_row [ "5.", "", "", "", "" ]
-      table_row [ "6.", "", "", "", "" ]
-      table_row [ "7.", "", "", "", "" ]
-      table_row [ "8.", "", "", "", "" ]
+      if @children_residency && @children_info.count > 3
+        @children_info.each_with_index do |child, i|
+          if i > 2
+            table_row [ "#{ i+1 }. #{ child[:first_name] }", child[:last_name], child[:middle_name], child[:date_of_birth], "#{ child[:is_son] ? 'SON' : 'DAUGHTER' }" ]
+          end
+        end
+        if @children_info.count < 8
+          print_index = @children_info.count
+          (8 - @children_info.count).times do
+            table_row [ "#{ print_index += 1 }.", "", "", "", "" ]
+          end
+        end
+        push_table -1
+      else
+        push_header 'Children involved in this case', 10
+        table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
+        table_row [ "4.", "", "", "", "" ]
+        table_row [ "5.", "", "", "", "" ]
+        table_row [ "6.", "", "", "", "" ]
+        table_row [ "7.", "", "", "", "" ]
+        table_row [ "8.", "", "", "", "" ]
 
-      push_table
+        push_table
+      end
 
       move_down 160
       push_header 'THIS INFORMATION IS REQUIRED BY', 10
