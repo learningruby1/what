@@ -48,8 +48,16 @@ module PdfDocument
       @data_array.push ["rectangle #{x_position} #{y_position}"]
     end
 
+    def small_rectangle(x_position, y_position)
+      @data_array.push ["small_rectangle #{x_position} #{y_position}"]
+    end
+
     def rectangle_checked(x_position, y_position)
       @data_array.push ["checked_rectangle #{x_position} #{y_position}"]
+    end
+
+    def small_rectangle_checked(x_position, y_position)
+      @data_array.push ["small_checked_rectangle #{x_position} #{y_position}"]
     end
 
     def create_table

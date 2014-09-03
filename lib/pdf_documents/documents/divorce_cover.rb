@@ -2,28 +2,29 @@ module PdfDocument
   class DivorceCover < DivorceWrapper
 
     def generate
-      push_header "#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT", 12
-      push_header "#{ @clark_nye.upcase } COUNTY, NEVADA", 12
+      push_header "<b>#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT</b>", 12
+      push_header "<b>#{ @clark_nye.upcase } COUNTY, NEVADA</b>", 12
       move_down
-      push_header 'FAMILY COURT COVER SHEET', 12
+      push_header '<b>FAMILY COURT COVER SHEET</b>', 12
       move_down 10
-      push_header 'CASE NO.____________________________  (To be assigned by the Clerk’s Office)', 10
-      move_down
+      push_header 'CASE NO._____________  (To be assigned by the Clerk’s Office)', 10
+      push_header "______________________", 10
 
       table_row [ { :content => "<font size='10'>Do you or any other party in this case (including any minor child) have any other current case(s) or past case(s) in the Family Court or Juvenile Court in Clark County?\nYES            NO\nIf yes, complete the other side of this form</font>", :align => :center, :font_style => :bold, :border_width => 3 } ]
       if @family_court
-        rectangle_checked 225, 610
-        rectangle 275, 610
+        rectangle_checked 225, 629
+        rectangle 275, 629
       else
-        rectangle 225, 610
-        rectangle_checked 275, 610
+        rectangle 225, 629
+        rectangle_checked 275, 629
       end
-      push_table -1, 0
-      move_down 20
+      push_table -1
+      move_down 10
 
       push_header 'PARTY INFORMATION', 10
 
       table_row [ { :content => 'Plaintiff/Petitioner', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 }, { :content => 'Defendant/Respondent/Co-Petitioner/Ward/Decedent', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 } ]
+      push_table 1, 0
       table_row [ { :content => "Last Name: #{ @plaintiff_last_name }", :colspan => 2 }, { :content => "Last Name: #{ @defendant_last_name }", :colspan => 2 } ]
       table_row [ "First Name: #{ @plaintiff_first_name }", "Middle name: #{ @plaintiff_middle_name }", "First Name: #{ @defendant_first_name }", "Middle name: #{ @defendant_middle_name }" ]
       table_row [ { :content => "Home Address: #{ @plaintiff_mailing_addres }", :colspan => 2 }, { :content => "Home Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
@@ -50,84 +51,85 @@ module PdfDocument
         table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
       end
       table_row [ "Phone: #{ @plaintiff_phone }", "Date of birth: #{ @plaintiff_date_of_birth }", "Phone: #{ @defendant_phone }", "Date of birth: #{ @defendant_date_of_birth }" ]
-      push_table
+      push_table -1
 
       table_row [ { :content => 'Attorney Information', :colspan => 4, :align => :center, :font_style => :bold, :width => 270 }, { :content => 'Attorney Information', :colspan => 4, :align => :center, :font_style => :bold, :width => 270 } ]
-      table_row [ { :content => 'Name:', :colspan => 3 }, 'Bar No.:', { :content => 'Name:', :colspan => 3 }, 'Bar No.']
+      push_table 1, 0
+      table_row [ { :content => 'Name:', :colspan => 3, :width => 202 }, { :content => 'Bar No.:', :width => 68 }, { :content => 'Name:', :colspan => 3, :width => 202 }, { :content => 'Bar No.:', :width => 68 }]
       table_row [ { :content => 'Address:', :colspan => 4 }, { :content => 'Address:', :colspan => 4 } ]
       table_row [ { :content => 'City, State, Zip:', :colspan => 4 }, { :content => 'City, State, Zip:', :colspan => 4 } ]
       table_row [ { :content => 'Phone #:   Direct/Fax', :colspan => 4 }, { :content => 'Phone #:', :colspan => 4 } ]
-      push_table
+      push_table -1
 
       move_down 20
       table_row [ { :content => 'DOMESTIC', :align => :center, :font_style => :bold, :width => 135 }, { :content => 'OTHER DOMESTIC RELATIONS<br/>PETITIONS', :align => :center, :font_style => :bold, :width => 135 }, { :content => 'GUARDIANSHIP', :align => :center, :font_style => :bold, :width => 135 }, { :content => 'PROBATE', :align => :center, :font_style => :bold, :width => 135 } ]
-      default_leading 3
+      default_leading 4
       table_row [ { :content => "\b\b\b\b\bAnnulment\n\b\b\b\b\bDivorce –No minor child(ren)\n\b\b\b\b\bDivorce –With minor child(ren)\n\b\b\b\b\bForeign Decree\n\b\b\b\b\bJoint Petition –No minor child(ren)\n\b\b\b\b\bJoint Petition –With minor child(ren)\n\b\b\b\b\bSeparate Maintenance" }, { :content => "\b\b\b\b\bAdoption –Minor\n\b\b\b\b\bAdoption –Adult\n\b\b\b\b\bChild Custody (Non-Divorce)\n\b\b\b\b\bMental Health\n\b\b\b\b\bName Change\n\b\b\b\b\bPaternity\n\b\b\b\b\bPermission to Marry\n\b\b\b\b\bSupport - Other\n\b\b\b\b\bTemporary Protective Order (TPO)\n\b\b\b\b\bTermination of Parental Rights\n\b\b\b\b\bVisitation (Non-Divorce)\n\b\b\b\b\bOther (identify)__________" }, { :content => "<b>\b\b\b\bGuardianship of an Adult</b>\n\b\b\b\b\bPerson\n\b\b\b\b\bEstate\n\b\b\b\b\bPerson and Estate\n\n<b>\b\b\b\bGuardianship of a Minor</b>\n\b\b\b\b\bPerson\n\b\b\b\b\bEstate\n\b\b\b\b\bPerson and Estate\n\n\b\b\b\b\b<b>\b\b\b\b\bGuardianship Trust</b>" }, { :content => "\b\b\b\b\bSummary Administration\n\b\b\b\b\bGeneral Administration\n\b\b\b\b\bSpecial Administration\n\b\b\b\b\bSet Aside Estates\n\b\b\b\b\bTrust/Conservatorships\n\b\b\b\b\b\b\b\b\bIndividual Trustee\n\b\b\b\b\b\b\b\b\bCorporate Trustee\n\b\b\b\b\bOther Probate" }]
       #first column
-      rectangle 3, 218
+      small_rectangle 3, 316
       if @children_residency
-        rectangle 3, 205
-        rectangle_checked 3, 192
+        small_rectangle 3, 303
+        small_rectangle_checked 3, 290
       else
-        rectangle_checked 3, 205
-        rectangle 3, 192
+        small_rectangle_checked 3, 303
+        small_rectangle 3, 290
       end
 
-      rectangle 3, 179
-      rectangle 3, 166
-      rectangle 3, 140
-      rectangle 3, 113
+      small_rectangle 3, 277
+      small_rectangle 3, 264
+      small_rectangle 3, 251
+      small_rectangle 3, 238
 
       #second column
-      rectangle 138, 218
-      rectangle 138, 205
-      rectangle 138, 192
-      rectangle 138, 179
-      rectangle 138, 166
-      rectangle 138, 153
-      rectangle 138, 140
-      rectangle 138, 127
-      rectangle 138, 114
-      rectangle 138, 88
-      rectangle 138, 75
-      rectangle 138, 62
+      small_rectangle 138, 316
+      small_rectangle 138, 303
+      small_rectangle 138, 290
+      small_rectangle 138, 277
+      small_rectangle 138, 264
+      small_rectangle 138, 251
+      small_rectangle 138, 238
+      small_rectangle 138, 225
+      small_rectangle 138, 212
+      small_rectangle 138, 186
+      small_rectangle 138, 173
+      small_rectangle 138, 160
 
       #third column
-      rectangle 273, 205
-      rectangle 273, 192
-      rectangle 273, 179
-      rectangle 273, 140
-      rectangle 273, 127
-      rectangle 273, 114
-      rectangle 273, 88
+      small_rectangle 273, 303
+      small_rectangle 273, 290
+      small_rectangle 273, 277
+      small_rectangle 273, 238
+      small_rectangle 273, 225
+      small_rectangle 273, 212
+      small_rectangle 273, 186
 
       #fouth column
-      rectangle 408, 218
-      rectangle 408, 205
-      rectangle 408, 192
-      rectangle 408, 179
-      rectangle 408, 166
-      rectangle 418, 153
-      rectangle 418, 140
-      rectangle 408, 127
+      small_rectangle 408, 316
+      small_rectangle 408, 303
+      small_rectangle 408, 290
+      small_rectangle 408, 277
+      small_rectangle 408, 264
+      small_rectangle 416, 251
+      small_rectangle 416, 238
+      small_rectangle 408, 225
       push_table
 
       default_leading 0
       table_row [ { :content => 'MISC. JUVENILE PETITIONS', :align => :center, :font_style => :bold, :width => 135 }, { :content => 'IV-D CHILD SUPPORT PETITIONS', :align => :center, :font_style => :bold, :colspan => 3, :width => 405 } ]
       table_row [ { :content => "\b\b\b\b\bWork Permit   \b\b\b\b\bEmancipation" }, { :content => "DA – UIFSA    \b\b\b\b\bChild Support In State IV-D", :align => :center, :colspan => 3 }]
-      rectangle 3, 20
-      rectangle 68, 20
-      rectangle 246, 20
-      rectangle 313, 20
+      small_rectangle 3, 141
+      small_rectangle 60, 141
+      small_rectangle 259, 141
+      small_rectangle 319, 141
       push_table
 
       if @children_residency
         move_down
         push_header 'List children involved in this case', 10
         if @children_info.count == 1
-          y_position = 577
+          y_position = 755
         else
-          y_position = 577 - 20 * (@children_info.count - 1)
+          y_position = 755 - 20 * (@children_info.count - 1)
         end
 
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold }, { :content => 'Last name', :align => :center, :font_style => :bold }, { :content => 'Middle name', :align => :center, :font_style => :bold }, { :content => 'Date of birth', :align => :center, :font_style => :bold }, { :content => 'Relationship', :align => :center, :font_style => :bold } ]
@@ -144,7 +146,7 @@ module PdfDocument
         end
         push_table
       else
-        y_position = 537
+        y_position = 715
         push_header 'List children involved in this case', 10
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold }, { :content => 'Last name', :align => :center, :font_style => :bold }, { :content => 'Middle name', :align => :center, :font_style => :bold }, { :content => 'Date of birth', :align => :center, :font_style => :bold }, { :content => 'Relationship', :align => :center, :font_style => :bold } ]
         table_row [ "1.", "", "", "", "" ]

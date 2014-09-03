@@ -32,9 +32,9 @@ module PdfDocument
         if !judical_layout
           #default page params
           bound_left = bounds.left
-          bound_top = bounds.top
+          bound_top = bounds.top + 20
           width = 540
-          height = bounds.height
+          height = bounds.height + 20
           padding_left = 0
 
         else
@@ -116,13 +116,13 @@ module PdfDocument
             when /^header /
               font_size(command_number){ text next_line, :align => :center, :inline_format => true }
             when /^table /
-              _font_size = additional_command == 0 ? 12 : 9
+              _font_size = additional_command == 0 ? 10 : 8
               table next_line, :width => width, :cell_style => { :inline_format => true, :size => _font_size, :font => "Times-Roman" } do
 
                 cells.style :valign => :top
+                cells.style :padding => [3, 0, 4, 3]
                 cells.row(0).background_color = 'DFDFDF' if command_number > -1
                 cells.row(command_number).background_color = 'DFDFDF' if command_number > 0
-                cells.border_width = additional_command if additional_command > -1
               end
             when 'new_page'
               start_new_page
@@ -132,12 +132,22 @@ module PdfDocument
               array_tmp = command.split(' ')
               stroke_color '000000'
               stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 10, 10
+            when /^small_rectangle/
+              array_tmp = command.split(' ')
+              stroke_color '000000'
+              stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 8, 8
             when /^checked_rectangle/
               array_tmp = command.split(' ')
               stroke_color '000000'
               stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 10, 10
               stroke_line [array_tmp.second.to_i, array_tmp.last.to_i - 5], [array_tmp.second.to_i + 5, array_tmp.last.to_i - 10]
               stroke_line [array_tmp.second.to_i + 5, array_tmp.last.to_i - 10], [array_tmp.second.to_i + 10, array_tmp.last.to_i]
+            when /^small_checked_rectangle/
+              array_tmp = command.split(' ')
+              stroke_color '000000'
+              stroke_rectangle [array_tmp.second.to_i, array_tmp.last.to_i], 8, 8
+              stroke_line [array_tmp.second.to_i, array_tmp.last.to_i - 4], [array_tmp.second.to_i + 4, array_tmp.last.to_i - 8]
+              stroke_line [array_tmp.second.to_i + 4, array_tmp.last.to_i - 8], [array_tmp.second.to_i + 8, array_tmp.last.to_i]
             when /^move_to_left/
               font_size(command_number){ text next_line, :indent_paragraphs => 200, :inline_format => true }
             when /\d/
