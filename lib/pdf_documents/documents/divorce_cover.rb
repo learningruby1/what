@@ -161,7 +161,7 @@ module PdfDocument
 
       #start_new_page
       move_down 20
-      push_header 'Supply the following information about any other proceeding:'
+      push_header "<b>Supply the following information about any other proceeding:</b>"
       move_down
       push_header "Divorce      Temporary Protective Orders (TPO)      Custody/Child Support\nGuardianship      Paternity      Juvenile Court      Termination of Parental Rights"
       move_down 20
