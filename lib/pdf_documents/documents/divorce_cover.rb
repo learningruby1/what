@@ -135,13 +135,21 @@ module PdfDocument
 
           table_row [ "#{ i+1 }. #{ child[:first_name] }", child[:last_name], child[:middle_name], child[:date_of_birth], "#{ child[:is_son] ? 'SON' : 'DAUGHTER' }" ]
         end
+        if @children_info.count < 3
+          print_index = @children_info.count
+          (3 - @children_info.count).times do
+            table_row [ "#{ print_index += 1 }.", "", "", "", "" ]
+            y_position -= 20
+          end
+        end
         push_table
       else
-        y_position = 557
+        y_position = 537
         push_header 'List children involved in this case', 10
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold }, { :content => 'Last name', :align => :center, :font_style => :bold }, { :content => 'Middle name', :align => :center, :font_style => :bold }, { :content => 'Date of birth', :align => :center, :font_style => :bold }, { :content => 'Relationship', :align => :center, :font_style => :bold } ]
         table_row [ "1.", "", "", "", "" ]
         table_row [ "2.", "", "", "", "" ]
+        table_row [ "3.", "", "", "", "" ]
         push_table
       end
 
@@ -260,12 +268,19 @@ module PdfDocument
             table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[4] }", "#{ @termination_parental_right_array[3] }", "#{ @termination_parental_right_array[5] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
           end
         end
+        if print_index < 4
+          (4 - print_index).times do
+            table_row [ "#{ print_index += 1 }.", "", "", "", "" ]
+          end
+        end
         push_table 1
       else
         table_row [ { :content => 'List full name of all adult parties involved', :align => :center, :font_style => :bold, :colspan => 3 }, { :content => 'Case number<br/>of other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 }, { :content => 'Approximate date<br/>of last order in other<br/>proceeding(s)', :align => :center, :font_style => :bold, :rowspan => 2, :width => 108 } ]
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 } ]
         table_row [ "1.", "", "", "", "" ]
         table_row [ "2.", "", "", "", "" ]
+        table_row [ "3.", "", "", "", "" ]
+        table_row [ "4.", "", "", "", "" ]
 
         push_table 1
       end
@@ -283,10 +298,22 @@ module PdfDocument
           end
           array_index += 5
         end
+        if print_index < 8
+          (8 - print_index).times do
+            table_row [ "#{ print_index += 1 }.", "", "", "", "" ]
+          end
+        end
+
         push_table
       else
         table_row [ "1.", "", "", "", "" ]
         table_row [ "2.", "", "", "", "" ]
+        table_row [ "3.", "", "", "", "" ]
+        table_row [ "4.", "", "", "", "" ]
+        table_row [ "5.", "", "", "", "" ]
+        table_row [ "6.", "", "", "", "" ]
+        table_row [ "7.", "", "", "", "" ]
+        table_row [ "8.", "", "", "", "" ]
 
         push_table
       end
@@ -294,8 +321,11 @@ module PdfDocument
       move_down
       push_header 'Children involved in this case', 10
       table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Date of birth', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Relationship', :align => :center, :font_style => :bold, :width => 108 } ]
-      table_row [ "1.", "", "", "", "" ]
-      table_row [ "2.", "", "", "", "" ]
+      table_row [ "4.", "", "", "", "" ]
+      table_row [ "5.", "", "", "", "" ]
+      table_row [ "6.", "", "", "", "" ]
+      table_row [ "7.", "", "", "", "" ]
+      table_row [ "8.", "", "", "", "" ]
 
       push_table
 
