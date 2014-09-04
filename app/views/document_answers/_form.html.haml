@@ -24,6 +24,10 @@
         .pull-right
           / %a.btn.btn-default{ :href => 'javascript: $("#answer_form").submit();' }
           = f.button :submit, :class => 'form-control new_roman' do
-            %span Next /
-            %span.spain Continuar
+            - if @review.present?
+              %span Done /
+              %span.spain Done
+            - else
+              %span Next /
+              %span.spain Continuar
 
