@@ -32,4 +32,15 @@ module ApplicationHelper
       return answer.answer
     end
   end
+
+  def get_self(document)
+    answers = document.step_answers(2)
+    answer = answers[answers.count - 2]
+
+    if answer.nil?
+      return nil
+    else
+      return answer.answer
+    end
+  end
 end

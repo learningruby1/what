@@ -1,6 +1,13 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - unless get_self(@document).nil?
+    - if text.match(/<spain_self>/)
+      - if get_self(@document) == 'Wife'
+        - text.gsub!('<spain_self>', 'esposo')
+      - else
+        - text.gsub!('<spain_self>', 'esposa')
+
   - unless get_number_of_child(@document).nil?
     - if text.match(/<child_count>/) || text.match(/<child_count_spain>/)
       - if get_number_of_child(@document).to_i == 1

@@ -48,7 +48,7 @@ current_step.fields.create :name => 'Since you are the person starting the divor
 
 
 current_step = template.steps.create :step_number => step_number += 1,#2
-                                     :title => 'Your Spouse\'s Information /<spain/>Información de su esposa(o)',
+                                     :title => 'Your Spouse\'s Information /<spain/>Información de su <spain_self>',
                                      :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona será referida como el demandado (DEFENDANT)'
 
 current_step.fields.create :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-upcase'
