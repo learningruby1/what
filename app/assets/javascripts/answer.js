@@ -259,4 +259,26 @@ $(function(){
       });
     })
   });
+
+  //Fill fields for Mailing address auto if select option
+  $('.radio_3:first').on('click', function(){
+
+    var city = $('.jumbotron').eq(1).parent().next().next().find('.container div:eq(1) input').val();
+    var state = $('.jumbotron').eq(1).parent().next().next().next().next().find('.container .col-md-2 select').val();
+    var zip = $('.jumbotron').eq(1).parent().next().next().next().next().next().next().find('.container div:eq(1) input').val();
+
+    $('.jumbotron').eq(2).parent().next().next().find('.container div:eq(1) input').prop('value', city);
+    $('.jumbotron').eq(2).parent().next().next().next().next().find('.container .col-md-2 select').prop('value', state);
+    $('.jumbotron').eq(2).parent().next().next().next().next().next().next().find('.container div:eq(1) input').prop('value', zip);
+  });
+
+  $('.jumbotron').eq(2).parent().next().next().find('.container div:eq(1) input').on('keydown', function(){
+    $('.radio_3:first').prop('checked', false)
+  });
+  $('.jumbotron').eq(2).parent().next().next().next().next().next().next().find('.container div:eq(1) input').on('keydown', function(){
+    $('.radio_3:first').prop('checked', false)
+  });
+  $('.jumbotron').eq(2).parent().next().next().next().next().find('.container .col-md-2 select').on('change', function(){
+    $('.radio_3:first').prop('checked', false)
+  });
 });

@@ -26,17 +26,16 @@ module PdfDocument
 
       @plaintiff_date_of_birth = answers.next.answer
       @plaintiff_social_security = answers.next.answer
-      @plaintiff_mailing_addres = answers.next.answer
-      if answers.next.answer == "Outside the United States"
-        2.times do answers.next end
-        @plaintiff_city = answers.next.answer
-        @plaintiff_country = answers.next.answer
-      else
-        @plaintiff_city = answers.next.answer
-        @plaintiff_state = answers.next.answer
-        2.times do answers.next end
-      end
-      @plaintiff_zip = answers.next.answer
+      answers.next
+      @plaintiff_home_address_city = answers.next.answer
+      @plaintiff_home_address_state = answers.next.answer
+      @plaintiff_home_address_zip = answers.next.answer
+      answers.next
+      @plaintiff_mailing_address_city = answers.next.answer
+      @plaintiff_mailing_address_state = answers.next.answer
+      @plaintiff_mailing_address_zip = answers.next.answer
+      answers.next
+      #@plaintiff_zip = answers.next.answer
       @plaintiff_phone = answers.next.answer
       @plaintiff_email = answers.next.answer
       answers.next

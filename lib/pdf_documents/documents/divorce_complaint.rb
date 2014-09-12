@@ -7,11 +7,8 @@ module PdfDocument
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
       push_text "#{ @plaintiff_mailing_addres }"
-      if @plaintiff_country.present?
-        push_text "#{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }"
-      else
-        push_text "#{ @plaintiff_city }, #{ @plaintiff_state } #{ @plaintiff_zip }"
-      end
+      push_text "#{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
       push_text 'Plaintiff In Proper Person', :style => :bold
