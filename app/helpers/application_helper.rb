@@ -24,7 +24,18 @@ module ApplicationHelper
   end
 
   def get_number_of_child(document)
-    answer = document.step_answers(8).last
+    answer = document.step_answers(9).last
+
+    if answer.nil?
+      return nil
+    else
+      return answer.answer
+    end
+  end
+
+  def get_self(document)
+    answers = document.step_answers(3)
+    answer = answers[answers.count - 2]
 
     if answer.nil?
       return nil
