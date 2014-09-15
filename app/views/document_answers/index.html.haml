@@ -351,7 +351,7 @@
       - if @children_number.present?
         = render :partial => 'title_step'
 
-        - if answers[2].answer = 'No'
+        - if answers[2].answer == 'No'
           .move_to_left_20= answers[2]
         - else
           .move_to_left_20= answers[2]
