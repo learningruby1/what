@@ -25,7 +25,7 @@ current_step.fields.create :field_type => 'text', :name => 'You and your spouse 
 current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su formulario?'
 
-clark_nye = current_step.fields.create :name => 'Nye<option/>Esmeralda<option/>Mineral', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+clark_nye = current_step.fields.create :name => 'Nye (5th, Nye)<option/>Esmeralda (5th, Esmeralda)<option/>Mineral (5th, Mineral)<option/>Clark (8th, Clark)', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1,#3
