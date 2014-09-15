@@ -11,20 +11,23 @@ module PdfDocument
 
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
-      push_text 'Plaintiff In Proper Person', :style => :bold
+      push_text 'Plaintiff Self-Represented', :style => :bold
 
       move_down 20
-      push_header "#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT"
-      push_header "#{ @clark_nye.upcase } COUNTY, NEVADA"
+      push_header "IN THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE"
+      push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 20
+
+      default_leading 3
+      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },", :inline_format => true
+      push_text "Plaintiff,#{ ' '*61 }CASE NO.:"
+      move_down 10
+      push_text "vs.#{ ' '*71 }DEPT NO.:"
+      move_down 10
+      push_text "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },", :inline_format => true
+      push_text 'Defendant.'
 
       default_leading 8
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },", :inline_format => true
-      push_text "Plaintiff,                                                             Case No:", 20
-      push_text "vs.                                                                             Dept. No."
-      push_text "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },", :inline_format => true
-      push_text 'Defendant.',80
-
       move_down 30
       push_header 'COMPLAINT FOR DIVORCE'
 
