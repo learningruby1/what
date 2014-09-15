@@ -7,12 +7,12 @@ module PdfDocument
       push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 40
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Plaintiff,<br/>vs.<br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } Defendant", :width => 300, :font_style => :bold, :border_width => 0 },
-                  { :content => "CASE No.: #{ '_'*20 }<br/><br/>DEPT No.: #{ '_'*20 }", :width => 240, :border_width => 0 } ]
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },<br/>                    Plaintiff,<br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },<br/>#{ ' '*20 }Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
+                  { :content => "CASE No.:<br/><br/>DEPT No.:<br/><br/><b><u>JOINT PRELIMINARY INJUNCTION</b>", :width => 240, :border_width => 0 } ]
       push_table -1, 0
       move_down 30
-      push_header '<b>JOINT PRELIMINARY INJUNCTION</b>'
-      move_down 15
+      # push_header '<b>JOINT PRELIMINARY INJUNCTION</b>'
+      # move_down 15
 
       push_text '<b>NOTICE!  THIS INJUNCTION IS EFFECTIVE UPON THE PARTY REQUESTING SAME WHEN ISSUED AND AGAINST THE OTHER PARTY WHEN SERVED.  THIS INJUNCTION SHALL REMAIN IN EFFECT FROM THE TIME OF ITS ISSUANCE UNTIL TRIAL OR UNTIL DISSOLVED OR MODIFIED BY THE COURT.  DISOBEDIENCE OF THIS INJUNCTION IS PUNISHABLE BY CONTEMPT.</b>'
       move_down 20
