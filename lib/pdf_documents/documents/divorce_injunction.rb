@@ -11,8 +11,6 @@ module PdfDocument
                   { :content => "CASE No.:<br/><br/>DEPT No.:<br/><br/><b><u>JOINT PRELIMINARY INJUNCTION</b>", :width => 240, :border_width => 0 } ]
       push_table -1, 0
       move_down 30
-      # push_header '<b>JOINT PRELIMINARY INJUNCTION</b>'
-      # move_down 15
 
       push_text '<b>NOTICE!  THIS INJUNCTION IS EFFECTIVE UPON THE PARTY REQUESTING SAME WHEN ISSUED AND AGAINST THE OTHER PARTY WHEN SERVED.  THIS INJUNCTION SHALL REMAIN IN EFFECT FROM THE TIME OF ITS ISSUANCE UNTIL TRIAL OR UNTIL DISSOLVED OR MODIFIED BY THE COURT.  DISOBEDIENCE OF THIS INJUNCTION IS PUNISHABLE BY CONTEMPT.</b>'
       move_down 20
