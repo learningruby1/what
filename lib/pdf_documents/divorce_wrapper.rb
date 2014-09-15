@@ -15,7 +15,7 @@ module PdfDocument
 
       #Step 2
       answers = step_answers_enum steps.next
-      @clark_nye = answers.next.answer.strip
+      @clark_nye = answers.next.answer.split[0]
 
       #Step 3   Your information
       answers = step_answers_enum steps.next

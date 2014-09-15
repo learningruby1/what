@@ -3,7 +3,7 @@ module PdfDocument
 
     def generate
       push_header "<b>IN THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE</b>", 12
-      push_header "<b>STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.split[0].upcase }</b>", 12
+      push_header "<b>STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }</b>", 12
       move_down
       push_header '<b>FAMILY COURT COVER SHEET</b>', 12
       move_down 10
