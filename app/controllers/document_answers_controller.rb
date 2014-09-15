@@ -19,13 +19,19 @@ class DocumentAnswersController < ApplicationController
   end
 
   def update
+    current_step = params[:step].to_i
     params[:step] = params[:step].to_i.next if !@document.update_answers!(answers_params, params[:step].to_i)
+
     if @document.errors.any?
       redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
     elsif params[:review].present?
       redirect_to document_review_path(@document)
     else
-      redirect_to document_answer_path(@document, params[:step].to_i)
+      if current_step == 10 && @document.check_answers_children_residency(current_step)
+        redirect_to templates_path
+      else
+        redirect_to document_answer_path(@document, params[:step].to_i)
+      end
     end
   end
 
