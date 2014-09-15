@@ -931,3 +931,6 @@
             - family_court_index += 13
 
     - @index += 1
+  .row
+    .col-md-6
+      = link_to 'Generate PDF', generate_pdf_path(@document.id), :class => 'btn btn-default navbar-right'

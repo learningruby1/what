@@ -2,8 +2,8 @@ module PdfDocument
   class DivorceCover < DivorceWrapper
 
     def generate
-      push_header "<b>#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT</b>", 12
-      push_header "<b>#{ @clark_nye.upcase } COUNTY, NEVADA</b>", 12
+      push_header "<b>IN THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE</b>", 12
+      push_header "<b>STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }</b>", 12
       move_down
       push_header '<b>FAMILY COURT COVER SHEET</b>', 12
       move_down 10
@@ -27,28 +27,20 @@ module PdfDocument
       push_table 1, 0
       table_row [ { :content => "Last Name: #{ @plaintiff_last_name }", :colspan => 2 }, { :content => "Last Name: #{ @defendant_last_name }", :colspan => 2 } ]
       table_row [ "First Name: #{ @plaintiff_first_name }", "Middle name: #{ @plaintiff_middle_name }", "First Name: #{ @defendant_first_name }", "Middle name: #{ @defendant_middle_name }" ]
-      table_row [ { :content => "Home Address: #{ @plaintiff_mailing_addres }", :colspan => 2 }, { :content => "Home Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
+      table_row [ { :content => "Home Address: #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state }, #{ @plaintiff_home_address_zip }", :colspan => 2 }, { :content => "Home Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
 
-      if @defendant_country.present? && @plaintiff_country.present?
-        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
-      elsif @defendant_country.present? && !@plaintiff_country.present?
-        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
-      elsif !@defendant_country.present? && @plaintiff_country.present?
-        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+      if @defendant_country.present?
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state }, #{ @plaintiff_home_address_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
       else
-        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state }, #{ @plaintiff_home_address_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
       end
 
-      table_row [ { :content => "Mailing Address: #{ @plaintiff_mailing_addres }", :colspan => 2 }, { :content => "Mailing Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
+      table_row [ { :content => "Mailing Address: #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state }, #{ @plaintiff_mailing_address_zip }", :colspan => 2 }, { :content => "Mailing Address: #{ @defendant_mailing_address }", :colspan => 2 } ]
 
-      if @defendant_country.present? && @plaintiff_country.present?
-        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
-      elsif @defendant_country.present? && !@plaintiff_country.present?
-        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
-      elsif !@defendant_country.present? && @plaintiff_country.present?
-        table_row [ { :content => "Country, City, Zip: #{ @plaintiff_country }, #{ @plaintiff_city }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+      if @defendant_country.present?
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state }, #{ @plaintiff_mailing_address_zip }", :colspan => 2 }, { :content => "Country, City, Zip: #{ @defendant_country }, #{ @defendant_city }, #{ @defendant_zip }", :colspan => 2 } ]
       else
-        table_row [ { :content => "City, State, Zip: #{ @plaintiff_city }, #{ @plaintiff_state }, #{ @plaintiff_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
+        table_row [ { :content => "City, State, Zip: #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state }, #{ @plaintiff_mailing_address_zip }", :colspan => 2 }, { :content => "City, State, Zip: #{ @defendant_city }, #{ @defendant_state }, #{ @defendant_zip }", :colspan => 2 } ]
       end
       table_row [ "Phone: #{ @plaintiff_phone }", "Date of birth: #{ @plaintiff_date_of_birth }", "Phone: #{ @defendant_phone }", "Date of birth: #{ @defendant_date_of_birth }" ]
       push_table -1
