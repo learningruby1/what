@@ -33,8 +33,8 @@ module PdfDocument
       push_text 'or effect to deprive the court of jurisdiction as to said child without the prior written', @text_indent + 15
       push_text 'consent of the parties or the advance permission of the court.', @text_indent + 15
 
-      clerk_or_judge  = @clark_nye == 'Clark' ? 'CLERK OF COURT' : 'JUDGE'
-      deputy_or_judge = @clark_nye == 'Clark' ? 'Deputy Clerk' : 'Judge'
+      clerk_or_judge  = @clark_nye == 'Nye' ? 'JUDGE' : 'CLERK OF COURT'
+      deputy_or_judge = @clark_nye == 'Nye' ? 'Judge' : 'Deputy Clerk'
 
       move_down 40
       table_row [ { :content => 'Submitted by:', :width => 300, :border_width => 0 }, { :content => clerk_or_judge, :width => 240, :border_width => 0 } ]
