@@ -97,19 +97,16 @@ module PdfDocument
 
       #Step 8   Children
       answers = step_answers_enum steps.next
-      @children_adopted = answers.next.answer == 'Yes' rescue false
-      answers.next
       @children_residency = answers.next.answer == 'Yes' rescue false
+      answers.next
+      answers.next
+      @number_of_children = answers.next.answer.to_i
 
       if !@children_residency
-
-        12.times do steps.next end
+        11.times do steps.next end
       else
 
-        #Step 9   Number of children
-        answers = step_answers_enum steps.next
-        answers.next.answer
-        @number_of_children = answers.next.answer.to_i
+        #Deleted Step 9   Number of children
 
         #Step 10   Child(ren)'s Information
         step = steps.next
