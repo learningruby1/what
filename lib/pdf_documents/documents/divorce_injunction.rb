@@ -1,17 +1,16 @@
 module PdfDocument
   class DivorceInjunction < DivorceWrapper
     def generate
-      push_text 'cc12'
+      push_text 'CC12'
 
-      push_header "#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT"
-      push_header "#{ @clark_nye.upcase } COUNTY, NEVADA"
+      push_header "IN THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE"
+      push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 40
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Plaintiff,<br/>vs.<br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } Defendant", :width => 300, :font_style => :bold }, { :content => "Case  No #{ '_'*20 }<br/><br/>Dept. No #{ '_'*20 }", :width => 240 } ]
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },<br/>                    Plaintiff,<br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },<br/>#{ ' '*20 }Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
+                  { :content => "CASE No.:<br/><br/>DEPT No.:<br/><br/><b><u>JOINT PRELIMINARY INJUNCTION</b>", :width => 240, :border_width => 0 } ]
       push_table -1, 0
       move_down 30
-      push_header '<b>JOINT PRELIMINARY INJUNCTION</b>'
-      move_down 15
 
       push_text '<b>NOTICE!  THIS INJUNCTION IS EFFECTIVE UPON THE PARTY REQUESTING SAME WHEN ISSUED AND AGAINST THE OTHER PARTY WHEN SERVED.  THIS INJUNCTION SHALL REMAIN IN EFFECT FROM THE TIME OF ITS ISSUANCE UNTIL TRIAL OR UNTIL DISSOLVED OR MODIFIED BY THE COURT.  DISOBEDIENCE OF THIS INJUNCTION IS PUNISHABLE BY CONTEMPT.</b>'
       move_down 20
@@ -32,14 +31,14 @@ module PdfDocument
       push_text 'or effect to deprive the court of jurisdiction as to said child without the prior written', @text_indent + 15
       push_text 'consent of the parties or the advance permission of the court.', @text_indent + 15
 
-      clerk_or_judge  = @clark_nye == 'Clark' ? 'CLERK OF COURT' : 'JUDGE'
-      deputy_or_judge = @clark_nye == 'Clark' ? 'Deputy Clerk' : 'Judge'
+      clerk_or_judge  = @clark_nye == 'Nye' ? 'JUDGE' : 'CLERK OF COURT'
+      deputy_or_judge = @clark_nye == 'Nye' ? 'Judge' : 'Deputy Clerk'
 
       move_down 40
-      table_row [ { :content => 'Submitted by:', :width => 300 }, { :content => clerk_or_judge, :width => 240 } ]
-      table_row [ { :content => '_'*35, :width => 300 }, { :content => '_'*35, :width => 240 } ]
-      table_row [ { :content => 'Signature', :width => 300 }, { :content => deputy_or_judge, :width => 240 } ]
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }", :width => 300 }, { :content => "#{  }", :width => 240 } ]
+      table_row [ { :content => 'Submitted by:', :width => 300, :border_width => 0 }, { :content => clerk_or_judge, :width => 240, :border_width => 0 } ]
+      table_row [ { :content => '_'*35, :width => 300, :border_width => 0 }, { :content => '_'*35, :width => 240, :border_width => 0 } ]
+      table_row [ { :content => 'Signature', :width => 300, :border_width => 0 }, { :content => deputy_or_judge, :width => 240, :border_width => 0 } ]
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }", :width => 300, :border_width => 0 }, { :content => "#{  }", :width => 240, :border_width => 0 } ]
       push_table -1, 0
 
       finishing
