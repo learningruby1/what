@@ -125,26 +125,11 @@ toggle_id = 0
 toggle_id += 1
 children_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'text', :name => 'Children must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
-                                                            Have the child(ren) lived in Nevada for over 6 months?<br/>
-                                                            <spain/>Los menores deben haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre ellos.<br/>
-                                                            ¿Han vivido los menores en Nevada por más de 6 meses?', :toggle_id => toggle_id, :toggle_option => 'Yes'
-
-children_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                              <option/>No. Nevada Court does not have the legal right to set
-                                                            custody at this time, BUT you can still get a divorce
-                                                            without custody. However, you will need to address the children\'s health insurance and child\'s support issue.<br/><spain/>No. La corte de Nevada no tiene el poder para establecer
-                                                            custodia en este momento, PERO usted todavía puede
-                                                            divorciarse sin custodia. Sin embargo tiene que hacer decisiones sobre el seguro médico y la y la manutención de los menores.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes',#9
-                                     :title => 'Number of children /<spain/>Número de menores'
-
 current_step.fields.create :field_type => 'text', :name => 'How many minor children were born or legally adopted during this marriage?
-                                                            <br/><spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?'
-children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value /<spain/>Por favor, introduzca el valor correcto' }
+                                                            <br/><spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value /<spain/>Por favor, introduzca el valor correcto' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
 
+# Delete step 9
 
 toggle_id = 0
 toggle_id += 1
