@@ -1,20 +1,23 @@
 module PdfDocument
   class DivorceSummons < DivorceWrapper
     def generate
-      push_header "#{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT"
-      push_header "#{ @clark_nye.upcase } COUNTY, NEVADA"
+      push_text '<font size="7">SUMM</font>'
+      push_header "IN THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE"
+      push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 30
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Plaintiff,<br/>vs.<br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } Defendant", :width => 300, :font_style => :bold }, { :content => "Case  No #{ '_'*20 }<br/><br/>Dept. No #{ '_'*20 }", :width => 240 } ]
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.", :width => 300, :font_style => :bold },
+                  { :content => "<br/>CASE  NO.:<br/><br/><br/>DEPT NO.:", :width => 240 } ]
       push_table -1, 0
 
       move_down 20
-      push_text "#{ '_'*50 }#{ ' '*20 } <b>SUMMONS</b>"
+      push_header '<b><u>SUMMONS</u></b>'
+
       move_down 15
 
-      push_text 'NOTICE!  YOU HAVE BEEN SUED.  THE COURT MAY DECIDE AGAINST YOU WITHOUT YOUR BEING HEARD UNLESS YOU RESPOND WITHIN 20 DAYS.  READ THE INFORMATION BELOW.'
+      push_text '<b>NOTICE!  YOU HAVE BEEN SUED.  THE COURT MAY DECIDE AGAINST YOU WITHOUT YOUR BEING HEARD UNLESS YOU RESPOND WITHIN 20 DAYS.  READ THE INFORMATION BELOW.</b>'
       move_down
-      push_text "TO THE DEFENDANT: #{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
+      push_text "<b>TO THE DEFENDANT:</b> #{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
 
       move_down
       push_text 'A civil Complaint for Divorce has been filed by the plaintiff against you; this action is brought to recover a judgment dissolving the bonds of matrimony existing between you and the plaintiff.', @text_indent
@@ -31,13 +34,22 @@ module PdfDocument
       move_down
       push_text '3.  If you intend to seek the advice of an attorney in this matter, you should do so promptly so that your response may be filed on time.', @text_indent
 
-      deputy_clerk_info = @clark_nye == 'Clark' ? 'Family Courts and Services Center<br/>601 North Pecos Road<br/>Las Vegas, Nevada 89101<br/><br/>Regional Justice Center<br/>200 Lewis Avenue<br/>Las Vegas, Nevada 89101' : '1520 E. Basin Ave. Ste. 108<br/>Pahrump, NV 89060'
+      deputy_clerk_info = case @clark_nye
+        when 'Clark'
+          'Family Courts and Services Center<br/>601 North Pecos Road<br/>Las Vegas, Nevada 89101'
+        when 'Nye'
+          '1520 E. Basin Ave. Ste. 108<br/>Pahrump, NV 89060'
+        when 'Esmeralda'
+          'Esmeralda County Clerk Office<br/>P.O. Box 547<br/>Goldfield, NV 89013'
+        when 'Mineral'
+          'Mineral County Clerk Office<br/>P.O. Box 1450<br/>Hawthorne, NV 89415'
+        end
 
       move_down 40
-      table_row [ { :content => 'Submitted by:', :width => 300 }, { :content => 'Clerk of the Court', :width => 240 } ]
-      table_row [ { :content => '_'*35, :width => 300 }, { :content => '_'*35, :width => 240 } ]
-      table_row [ { :content => 'Signature', :width => 300 }, { :content => 'Deputy Clerk', :width => 240 } ]
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }", :width => 300 }, { :content => "#{ deputy_clerk_info }", :width => 240 } ]
+      table_row [ { :content => 'Submitted by:', :width => 300, :border_width => 0 }, { :content => 'Clerk of the Court', :width => 240, :border_width => 0 } ]
+      table_row [ { :content => '_'*35, :width => 300, :border_width => 0 }, { :content => '_'*35, :width => 240, :border_width => 0 } ]
+      table_row [ { :content => 'Signature', :width => 300, :font_style => :bold, :border_width => 0 }, { :content => 'Deputy Clerk', :width => 240, :font_style => :bold, :border_width => 0 } ]
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }", :width => 300, :border_width => 0 }, { :content => "#{ deputy_clerk_info }", :width => 240, :border_width => 0 } ]
       push_table -1, 0
 
       @data_array_enum = @data_array.to_enum
