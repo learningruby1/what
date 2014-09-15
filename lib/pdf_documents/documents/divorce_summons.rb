@@ -34,13 +34,14 @@ module PdfDocument
       move_down
       push_text '3.  If you intend to seek the advice of an attorney in this matter, you should do so promptly so that your response may be filed on time.', @text_indent
 
-      deputy_clerk_info = if @clark_nye == 'Clark'
+      deputy_clerk_info = case @clark_nye
+        when 'Clark'
           'Family Courts and Services Center<br/>601 North Pecos Road<br/>Las Vegas, Nevada 89101'
-        elsif @clark_nye == 'Nye'
+        when 'Nye'
           '1520 E. Basin Ave. Ste. 108<br/>Pahrump, NV 89060'
-        elsif @clark_nye == 'Esmeralda'
+        when 'Esmeralda'
           'Esmeralda County Clerk Office<br/>P.O. Box 547<br/>Goldfield, NV 89013'
-        elsif @clark_nye == 'Mineral'
+        when 'Mineral'
           'Mineral County Clerk Office<br/>P.O. Box 1450<br/>Hawthorne, NV 89415'
         end
 
