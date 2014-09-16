@@ -26,11 +26,11 @@ module PdfDocument
 
       @plaintiff_date_of_birth = answers.next.answer
       @plaintiff_social_security = answers.next.answer
-      answers.next
+      @plaintiff_home_address = answers.next.answer
       @plaintiff_home_address_city = answers.next.answer
       @plaintiff_home_address_state = answers.next.answer
       @plaintiff_home_address_zip = answers.next.answer
-      answers.next
+      @plaintiff_mailing_address = answers.next.answer
       @plaintiff_mailing_address_city = answers.next.answer
       @plaintiff_mailing_address_state = answers.next.answer
       @plaintiff_mailing_address_zip = answers.next.answer
@@ -99,11 +99,10 @@ module PdfDocument
       answers = step_answers_enum steps.next
       @children_residency = answers.next.answer == 'Yes' rescue false
       answers.next
-      answers.next
       @number_of_children = answers.next.answer.to_i
 
       if !@children_residency
-        11.times do steps.next end
+        12.times do steps.next end
       else
 
         #Deleted Step 9   Number of children
@@ -137,6 +136,9 @@ module PdfDocument
 
           @children_info.push child_info
         end
+
+        #Step 10.5   Legal Custody
+        answers = step_answers_enum steps.next
 
         #Step 11   Legal Custody
         answers = step_answers_enum steps.next
