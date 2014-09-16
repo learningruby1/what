@@ -262,23 +262,27 @@ $(function(){
 
   //Fill fields for Mailing address auto if select option
   $('.radio_3:first').on('click', function(){
+    var address = $('.container').eq(7).find('div:eq(1) input').val();
+    var city = $('.container').eq(8).find('div:eq(1) input').val();
+    var state = $('.container').eq(9).find('.col-md-2 select').val();
+    var zip = $('.container').eq(10).find('div:eq(1) input').val();
 
-    var city = $('.jumbotron').eq(1).parent().next().next().find('.container div:eq(1) input').val();
-    var state = $('.jumbotron').eq(1).parent().next().next().next().next().find('.container .col-md-2 select').val();
-    var zip = $('.jumbotron').eq(1).parent().next().next().next().next().next().next().find('.container div:eq(1) input').val();
-
-    $('.jumbotron').eq(2).parent().next().next().find('.container div:eq(1) input').prop('value', city);
-    $('.jumbotron').eq(2).parent().next().next().next().next().find('.container .col-md-2 select').prop('value', state);
-    $('.jumbotron').eq(2).parent().next().next().next().next().next().next().find('.container div:eq(1) input').prop('value', zip);
+    $('.container').eq(11).find('div:eq(1) input').prop('value', address);
+    $('.container').eq(12).find('div:eq(1) input').prop('value', city);
+    $('.container').eq(13).find('.col-md-2 select').prop('value', state);
+    $('.container').eq(14).find('div:eq(1) input').prop('value', zip);
   });
 
-  $('.jumbotron').eq(2).parent().next().next().find('.container div:eq(1) input').on('keydown', function(){
+  $('.container').eq(11).find('div:eq(1) input').on('keydown', function(){
     $('.radio_3:first').prop('checked', false)
   });
-  $('.jumbotron').eq(2).parent().next().next().next().next().next().next().find('.container div:eq(1) input').on('keydown', function(){
+  $('.container').eq(12).find('div:eq(1) input').on('keydown', function(){
     $('.radio_3:first').prop('checked', false)
   });
-  $('.jumbotron').eq(2).parent().next().next().next().next().find('.container .col-md-2 select').on('change', function(){
+  $('.container').eq(14).find('div:eq(1) input').on('keydown', function(){
+    $('.radio_3:first').prop('checked', false)
+  });
+  $('.container').eq(13).find('.col-md-2 select').on('change', function(){
     $('.radio_3:first').prop('checked', false)
   });
 });

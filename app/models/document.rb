@@ -219,7 +219,7 @@ class Document < ActiveRecord::Base
 
   def check_answers_children_residency(_step)
     answers = step_answers(_step)
-    return true if answers.last.answer == "No"
+    return true if answers.last.answer == "No" && answers[2].answer == "No"
     false
   end
 end

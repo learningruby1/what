@@ -25,7 +25,7 @@ current_step.fields.create :field_type => 'text', :name => 'You and your spouse 
 current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su formulario?'
 
-clark_nye = current_step.fields.create :name => 'Nye (5th, Nye)<option/>Esmeralda (5th, Esmeralda)<option/>Mineral (5th, Mineral)<option/>Clark (8th, Clark)', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+clark_nye = current_step.fields.create :name => 'Nye<option/>Esmeralda<option/>Mineral', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1,#3
@@ -36,11 +36,11 @@ current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social: <spain/>e.g. XXX-XX-XXXX', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. /<spain/>Por favor, ponga un número de Seguro Social válido' }
-current_step.fields.create :name => 'Home Address /<spain/>Dirección de casa: *', :field_type => 'text'
+current_step.fields.create :name => 'Home Address /<spain/>Dirección de casa: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
-current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :field_type => 'text'
+current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
@@ -156,7 +156,7 @@ current_step.fields.create :name => 'Son /<spain/>Hijo
                                      <option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
-current_step = template.steps.create :step_number => step_number += 1, #10.5
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', #10.5
                                      :title => 'Children’s Residency /<spain/>Residencia de los Menores'
 
 current_step.fields.create :field_type => 'text', :name => '<child_count> must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
