@@ -26,11 +26,11 @@ module PdfDocument
 
       @plaintiff_date_of_birth = answers.next.answer
       @plaintiff_social_security = answers.next.answer
-      answers.next
+      @plaintiff_home_address = answers.next.answer
       @plaintiff_home_address_city = answers.next.answer
       @plaintiff_home_address_state = answers.next.answer
       @plaintiff_home_address_zip = answers.next.answer
-      answers.next
+      @plaintiff_mailing_address = answers.next.answer
       @plaintiff_mailing_address_city = answers.next.answer
       @plaintiff_mailing_address_state = answers.next.answer
       @plaintiff_mailing_address_zip = answers.next.answer
