@@ -25,7 +25,7 @@ current_step.fields.create :field_type => 'text', :name => 'You and your spouse 
 current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su formulario?'
 
-clark_nye = current_step.fields.create :name => 'Nye (5th, Nye)<option/>Esmeralda (5th, Esmeralda)<option/>Mineral (5th, Mineral)<option/>Clark (8th, Clark)', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+clark_nye = current_step.fields.create :name => 'Nye<option/>Esmeralda<option/>Mineral', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1,#3
@@ -156,7 +156,7 @@ current_step.fields.create :name => 'Son /<spain/>Hijo
                                      <option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
-current_step = template.steps.create :step_number => step_number += 1, #10.5
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id, :render_if_field_value => 'Yes', #10.5
                                      :title => 'Children’s Residency /<spain/>Residencia de los Menores'
 
 current_step.fields.create :field_type => 'text', :name => '<child_count> must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>

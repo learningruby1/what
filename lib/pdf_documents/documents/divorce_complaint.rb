@@ -64,7 +64,7 @@ module PdfDocument
 
       push_text "That the wife in this case #{ @wife_pregnacy ? 'is' : 'is not' } currently pregnant.", @text_indent
 
-      if @children_adopted && @children_residency
+      if @children_residency
         move_to_left "#{ _counter += 1 }.  LEGAL CUSTODY"
 
         case @legal_custody_parent
