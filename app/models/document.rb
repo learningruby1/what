@@ -218,10 +218,8 @@ class Document < ActiveRecord::Base
   end
 
   def check_answers_children_residency(_step)
-    if _step == 10
-      answers = step_answers(_step)
-      return true if answers.last.answer == "No"
-    end
+    answers = step_answers(_step)
+    return true if answers.last.answer == "No"
     false
   end
 end
