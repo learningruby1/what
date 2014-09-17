@@ -939,7 +939,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',#35
-                                     :title => 'Debt Division: Student loans, IRS, payday loans, other /<spain/>División de Deuda: Préstamo estudiantil, IRS, otra deuda',
+                                     :title => 'DEBT DIVISION: STUDENT LOANS, IRS, PAYDAY LOANS, OTHER /<spain/>DIVISIÓN DE DEUDA: PRÉSTAMO ESTUDIANTIL, IRS, OTRA DEUDA',
                                      :description => 'Is there any student loan, IRS, payday loans, other debt to divide?
                                                       <br/><spain/>¿Tiene algún préstamo estudiantil, IRS, otra deuda para dividir?'
 toggle_id = 0
