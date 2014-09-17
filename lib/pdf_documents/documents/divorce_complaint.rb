@@ -171,6 +171,8 @@ module PdfDocument
         @child_tax_examption.each do |tax|
 
           case tax.first
+          when /^Should be/
+            push_text "The tax deduction for #{ @children_names[tax.second] } should be allocated per federal law.", @text_indent
           when /^Mom every|^Dad every/
             push_text "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_names[tax.second] }, as dependent for Federal Tax purposes every year.", @text_indent
           when /^Dad and Mom/

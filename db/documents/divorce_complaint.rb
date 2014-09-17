@@ -622,7 +622,8 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => '<child_count> Tax Exemption /<spain/>En los Impuestos <child_count_spain>'
 
 current_step.fields.create :field_type => 'text', :name => 'Who will claim <insert> as dependent on tax returns?<br/><spain/>¿Quién reclamará <insert> como dependiente en los impuestos?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
-current_step.fields.create :field_type => 'radio', :name => 'Mom every year /<spain/>Mamá todos los años
+current_step.fields.create :field_type => 'radio', :name => 'Should be allocated per federal law /<spain/>Sea asignada por ley federal
+                                                             <option/>Mom every year /<spain/>Mamá todos los años
                                                              <option/>Dad every year /<spain/>Papá todos los años
                                                              <option/>Dad and Mom alternating years /<spain/>Mamá y Papá años por medio', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
