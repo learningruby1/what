@@ -269,32 +269,17 @@ module PdfDocument
         end
 
         @bank_account.each do |property|
-          if @mom == 'plaintiff'
-            case property.last
-            when /^I will keep/
-              property.pop
-              mom_array.push property.join(', ') if property != '' || property != ','
-            when /^My spouse will keep/
-              property.pop
-              dad_array.push property.join(', ') if property != '' || property != ','
-            else
-              property[4] = 'Portion'
-              mom_array.push property.join(', ') if property != '' || property != ','
-              dad_array.push property.join(', ') if property != '' || property != ','
-            end
+          case property.last
+          when /^Wife will keep it/
+            property.pop
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep it/
+            property.pop
+            dad_array.push property.join(', ') if property != '' || property != ','
           else
-            case property.last
-            when /^I will keep/
-              property.pop
-              dad_array.push property.join(', ') if property != '' || property != ','
-            when /^My spouse will keep/
-              property.pop
-              mom_array.push property.join(', ') if property != '' || property != ','
-            else
-              property[4] = 'Portion'
-              dad_array.push property.join(', ') if property != '' || property != ','
-              mom_array.push property.join(', ') if property != '' || property != ','
-            end
+            property[4] = 'Divide'
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
 
