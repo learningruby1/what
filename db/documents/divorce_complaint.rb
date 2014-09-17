@@ -852,9 +852,9 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'checkbox', :name => 'Home /<spain/>Casa', :toggle_id => toggle_id, :sort_index => 'a1'
+current_step.fields.create :field_type => 'checkbox', :name => 'House - Mobile Home /<spain/>Casa - Traila', :toggle_id => toggle_id, :sort_index => 'a1'
 debt_house_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
-current_step.fields.create :name => 'Home/Casa<beginText/>Address /<spain/>Dirección:', :amount_field_id => debt_house_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
+current_step.fields.create :name => 'House - Mobile Home /Casa- Traila <beginText/>Address /<spain/>Dirección:', :amount_field_id => debt_house_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :name => 'Bank and amount owe /<spain/>Banco y cantidad que se debe:', :toggle_id => toggle_id, :amount_field_id => debt_house_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter bank and amount owe /<spain/>Por favor, introduzca banco y la cantidad deben' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                                                     <option/>Husband will keep /<spain/>Esposo va a pagar
@@ -866,7 +866,7 @@ current_step.fields.create :name => 'Empty land/Lote-Tierra<beginText/>Address /
 current_step.fields.create :name => 'Bank and amount owe /<spain/>Banco y cantidad que se debe:', :toggle_id => toggle_id, :amount_field_id => debt_land_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter bank and amount owe /<spain/>Por favor, introduzca banco y la cantidad deben' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                                                     <option/>Husband will keep /<spain/>Esposo va a pagar
-                                                                                    <option/>Pay with sell of home /<spain/>Pagar con venta de casa', :toggle_id => toggle_id, :amount_field_id => debt_land_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                                                    <option/>Pay with sell of land /<spain/>Pagar con venta de lote-tierra', :toggle_id => toggle_id, :amount_field_id => debt_land_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => debts_division_field.id, :render_if_field_value => 'Yes',#33
