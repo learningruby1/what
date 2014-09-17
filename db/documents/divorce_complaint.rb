@@ -581,8 +581,14 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
 
 current_step.fields.create :field_type => 'radio', :name => 'No <child_count> support /<spain/>No habrá manutención <child_count_spain>
-                                                             <option/>Dad will pay $ /<spain/>El papá pagara $
-                                                             <option/>Mom will pay $ /<spain/>La mamá pagara $', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>Dad will pay child support/<spain/>El papá pagara manutención para los menores
+                                                             <option/>Mom will pay child support/<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'text', :name => 'You requested sole/primary custody of your <child_sole_count> / Usted pidio la custodia primary/sole de <child_sole_count_spain>.', :toggle_id => toggle_id, :toggle_option => 'will'
+
+current_step.fields.create :field_type => 'radio', :name => 'Dad will pay the percentage under the law of <child_percentage_sole> of the non-custodial parent’s gross monthly income/<spain/>El papá pagara la el porcentaje bajo la ley <child_percentage_sole_spain> del ingreso bruto mensual de los padres sin custodia
+                                                             <option/>Dad will pay the following amount $/<spain/>El papá pagara la siguiente cantidad $', :toggle_id => toggle_id, :toggle_option => 'Dad', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio', :name => 'Mom will pay the percentage under the law of <child_percentage_sole> of the non-custodial parent’s gross monthly income/<spain/>La mamá pagara la el porcentaje bajo la ley <child_percentage_sole_spain> del ingreso bruto mensual de los padres sin custodia
+                                                             <option/>Mom will pay the following amount $/<spain/>La mamá pagara la siguiente cantidad $', :toggle_id => toggle_id, :toggle_option => 'Mom', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'amount', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'will', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 
