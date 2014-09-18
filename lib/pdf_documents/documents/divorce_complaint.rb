@@ -270,13 +270,18 @@ module PdfDocument
           end
         end
 
-        if @other_property_presence
-          @other_properties.each do |other_property|
-            if @mom.capitalize == 'Plaintiff'
-              mom_array.push other_property
-            else
-              dad_array.push other_property
-            end
+        @other_properties.each do |property|
+          case property.last
+          when /^Wife will keep/
+            property.pop
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep/
+            property.pop
+            dad_array.push property.join(', ') if property != '' || property != ','
+          else
+            property[2] = 'Divide'
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
 
