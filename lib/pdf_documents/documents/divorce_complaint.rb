@@ -171,6 +171,8 @@ module PdfDocument
         @child_tax_examption.each do |tax|
 
           case tax.first
+          when /^Should be/
+            push_text "The tax deduction for #{ @children_names[tax.second] } should be allocated per federal law.", @text_indent
           when /^Mom every|^Dad every/
             push_text "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_names[tax.second] }, as dependent for Federal Tax purposes every year.", @text_indent
           when /^Dad and Mom/
@@ -268,13 +270,18 @@ module PdfDocument
           end
         end
 
-        if @other_property_presence
-          @other_properties.each do |other_property|
-            if @mom.capitalize == 'Plaintiff'
-              mom_array.push other_property
-            else
-              dad_array.push other_property
-            end
+        @other_properties.each do |property|
+          case property.last
+          when /^Wife will keep/
+            property.pop
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep/
+            property.pop
+            dad_array.push property.join(', ') if property != '' || property != ','
+          else
+            property[2] = 'Divide'
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
 
@@ -340,7 +347,7 @@ module PdfDocument
             property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
-            property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home'
+            property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
             mom_array.push property.join(', ') if property != '' || property != ','
             dad_array.push property.join(', ') if property != '' || property != ','
           end
