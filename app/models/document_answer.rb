@@ -65,7 +65,7 @@ class DocumentAnswer < ActiveRecord::Base
   end
 
   def self.sort _answers, step
-    if step == '40'
+    if step == '41'
       _answers.sort_by!{ |item| [item.sort_index, item.sort_number, item.template_field_id] } rescue nil
     else
       _answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
