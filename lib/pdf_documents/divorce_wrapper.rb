@@ -523,28 +523,30 @@ module PdfDocument
         end
 
         #Step 29   Property Division: Other
-        answers = step_answers_enum steps.next
-        @other_property_presence = answers.next.answer == 'Yes' rescue false
-
-        #Step 30   Property Division: Other
-        answers = step_answers_enum steps.next
-        if @other_property_presence
-
-          @other_properties = Array.new
-          answers.each do |answer|
-            @other_properties.push answer.template_field.to_s.split(' /<spain/>').first if answer.answer == '1'
+        answers = document.step_answers steps.next
+        @other_properties = Array.new
+        other_property = answers.select{ |item| item.sort_index == 'a' }
+        other_property.sort_by!{ |item| item.sort_number }
+        if other_property.first.answer == '1'
+          loop_answer = other_property.second.answer.to_i
+          loop_answer.times do
+            other_property.shift 2
+            @other_properties.push ['Other', other_property.first.answer, other_property.second.answer]
           end
         end
 
+        #Step 30   Property Division: Other
+        # answers = step_answers_enum steps.next
+
       end
 
-      #Step 31   Debts
+      #Step 30   Debts
       answers = document.step_answers steps.next
       @community_debts = answers.last.answer
       @debt_devision = Array.new
 
       if @community_debts == 'Yes'
-        #Step 32 Debts Division
+        #Step 31 Debts Division
         answers = document.step_answers steps.next
 
         house = answers.select{ |item| item.sort_index == 'a' }
@@ -571,7 +573,7 @@ module PdfDocument
           end
         end
 
-        #Step 33
+        #Step 32
         answers = document.step_answers steps.next
 
         card = answers.select{ |item| item.sort_index == 'a' }
@@ -604,7 +606,7 @@ module PdfDocument
           end
         end
 
-        #Step 34
+        #Step 33
         answers = document.step_answers steps.next
 
         car = answers.select{ |item| item.sort_index == 'a' }
@@ -647,7 +649,7 @@ module PdfDocument
           end
         end
 
-        #Step 35
+        #Step 34
         answers = document.step_answers steps.next
 
         student = answers.select{ |item| item.sort_index == 'a' }
@@ -690,7 +692,7 @@ module PdfDocument
           end
         end
 
-        #Step 36
+        #Step 35
         answers = document.step_answers steps.next
 
         other_debt = answers.select{ |item| item.sort_index == 'a' }
@@ -706,7 +708,7 @@ module PdfDocument
         5.times do steps.next end
       end
 
-      #Step 37   Spousal support or Alimony
+      #Step 36   Spousal support or Alimony
       answers = step_answers_enum steps.next
       @alimony_presence = answers.next.answer == 'Yes' rescue false
       if @alimony_presence
@@ -732,21 +734,21 @@ module PdfDocument
         end
       end
 
-      #Step 38   Wife’s Name
+      #Step 37   Wife’s Name
       answers = step_answers_enum steps.next
 
       @wife_name_changing = answers.next.answer
       @wife_name = answers.next.answer
 
-      #Step 39   Reason divorce
+      #Step 38   Reason divorce
       answers = step_answers_enum steps.next
       @reason_divorce = answers.next.answer
 
-      #Step 40 Other cases in Family court
+      #Step 39 Other cases in Family court
       answers = step_answers_enum steps.next
       @family_court = answers.next.answer == 'Yes' rescue false
 
-      #Step 41 Other cases in Family court
+      #Step 40 Other cases in Family court
       if @family_court
         answers = document.step_answers steps.next
         @child_array = Array.new
