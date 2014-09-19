@@ -24,7 +24,9 @@ module ApplicationHelper
   end
 
   def get_number_of_child(document)
-    answer = document.step_answers(8).last
+    if document.template.id == 1
+      answer = document.step_answers(8).last
+    end
 
     if answer.nil?
       return nil
@@ -34,8 +36,10 @@ module ApplicationHelper
   end
 
   def get_self(document)
-    answers = document.step_answers(3)
-    answer = answers[answers.count - 2]
+    if document.template.id == 1
+      answers = document.step_answers(3)
+      answer = answers[answers.count - 2]
+    end
 
     if answer.nil?
       return nil
