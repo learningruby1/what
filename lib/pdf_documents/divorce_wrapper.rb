@@ -378,10 +378,11 @@ module PdfDocument
 
       #Step 23   Property
       answers = step_answers_enum steps.next
+
       answers.next
       @property_presence = answers.next.answer
       if @property_presence != 'Yes'
-        7.times do steps.next end
+        6.times do steps.next end
       else
 
         @properties_more = Array.new
@@ -534,10 +535,6 @@ module PdfDocument
             @other_properties.push ['Other', other_property.first.answer, other_property.second.answer]
           end
         end
-
-        #Step 30   Property Division: Other
-        # answers = step_answers_enum steps.next
-
       end
 
       #Step 30   Debts
