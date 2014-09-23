@@ -30,12 +30,7 @@
               .glyphicon.glyphicon-edit
               Edit /
               %span.spain Editar
-            /%td
-            /= link_to document_review_path(document), :class => 'btn btn-default' do
-            /  .glyphicon.glyphicon-list-alt
-            /  Review /
-            /  %span.spain Opinión
-
+            = link_to 'Create Filed Case', template_documents_path(:document_id => document.id, :template_id => 2), :method => :post, :class => 'btn btn-default'
             - if document.is_generated?
               - if current_user
                 - if current_user.paypal_payment_id.present?
@@ -55,3 +50,22 @@
                   .glyphicon.glyphicon-pencil
                   Sign In /
                   %span Iniciar sesión
+
+
+            - if document.sub_documents.present?
+              - document.sub_documents.each do |sub_document|
+                %tr
+                  %td
+                    %h5
+                      = sub_document.to_s.split('<spain/>').first
+                      %span.spain= sub_document.to_s.split('<spain/>').last
+                  %td
+                    = link_to document_answer_path(sub_document, 1), :class => 'btn btn-default' do
+                      .glyphicon.glyphicon-edit
+                      Edit /
+                      %span.spain Editar
+            /%td
+            /= link_to document_review_path(document), :class => 'btn btn-default' do
+            /  .glyphicon.glyphicon-list-alt
+            /  Review /
+            /  %span.spain Opinión

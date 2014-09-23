@@ -3,6 +3,10 @@ class Document < ActiveRecord::Base
   validates :title, :presence => true
 
   has_many :answers, :class_name => 'DocumentAnswer'
+  has_many :dependent_documents
+  has_many :sub_documents, :through => :dependent_documents, :class_name => 'Document', :foreign_key => 'sub_document_id'
+  has_one :dependant_document, :class_name => 'DependentDocument', :foreign_key => 'sub_document_id'
+  has_one :divorce_document, :through => :dependant_document, :class_name => 'Document', :source => :document
   belongs_to :template
   accepts_nested_attributes_for :answers
 
@@ -222,4 +226,5 @@ class Document < ActiveRecord::Base
     return true if answers.last.answer == "No" && answers[2].answer == "No"
     false
   end
+
 end

@@ -20,9 +20,6 @@
       .spain No hay documentos presentados recientemente
 
 .container.new_roman
-  - @templates.each_with_index do |template, index|
-    - if index % 3 == 0
-      .row
-    .col-md-4
-      %h3
-      %p= link_to 'Complaint for Divorce / Demanda de Divorcio >>', template_documents_path(template), :class => 'btn btn-default new_roman', :method => :post
+  .col-md-4
+    %h3
+      %p= link_to 'Complaint for Divorce / Demanda de Divorcio >>', template_documents_path(@templates.first), :class => 'btn btn-default new_roman', :method => :post
