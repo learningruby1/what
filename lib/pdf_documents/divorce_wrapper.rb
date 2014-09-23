@@ -7,19 +7,17 @@ module PdfDocument
 
       @document = document
 
-      @under_document = case document.template.id
+      @divorce_document = case document.template.id
         when 1
           document
         when 2
-          #Need to refactor it in model
-          DependentDocument.where(:sub_document_id => document.id).first.document
+          document.divorce_document
         end
 
         @document_id = document.id
         @data_array = Array.new
 
         if document.template.id == 2
-
     #Filed_Case_Step 1
           steps = document.template.steps.to_enum
           answers = step_answers_enum steps.next
@@ -55,8 +53,8 @@ module PdfDocument
 
 
 
-        @document_id = @under_document.id
-        document = @under_document
+        @document_id = @divorce_document.id
+        document = @divorce_document
         #Step 1
         steps = document.template.steps.to_enum
         answers = step_answers_enum steps.next

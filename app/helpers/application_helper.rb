@@ -40,8 +40,7 @@ module ApplicationHelper
       when 1
         document
       when 2
-      #Need to refactor it in model
-        DependentDocument.where(:sub_document_id => document.id).first.document
+        document.divorce_document
       end
     divorce_document.step_answers(4).map(&:answer)[0..2].join(' ').squeeze(' ')
   end
@@ -51,8 +50,7 @@ module ApplicationHelper
       when 1
         document
       when 2
-      #Need to refactor it in model
-        DependentDocument.where(:sub_document_id => document.id).first.document
+        document.divorce_document
       end
     divorce_document.step_answers(3).map(&:answer)[0..2].join(' ').squeeze(' ')
   end

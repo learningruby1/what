@@ -4,12 +4,8 @@
       Welcome /
       %span.spain Gracias
 
-    / %input{:onclick => "window.location='#{templates_path}';", :type => "radio"}
-    /   Continue with forms /
-    /   %span.spain Continuar con solicitud
-    /   %br/
-    %p= link_to 'Continue with forms / Continuar con solicitud >>', templates_path, :class => 'btn btn-default new_roman', :method => :post
-    %p= link_to 'Filed Case / Caso archivado >>', template_documents_path(2), :class => 'btn btn-default new_roman', :method => :post
+    %p= link_to 'Continue with forms / Continuar con solicitud >>', templates_path, :class => 'btn btn-default new_roman'
+    %p= link_to 'My documents / My documents >>', pdf_files_path, :class => 'btn btn-default new_roman'
 
 
 
