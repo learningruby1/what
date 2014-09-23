@@ -26,7 +26,7 @@ toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'PERSON WHO WILL SERVE <defendant_full_name> /<spain/>PERSONA QUE ENTREGARA LOS DOCUMENTOS <defendant_full_name_spain> '
 
-current_step.fields.create :field_type => 'text', :name => 'Do you have a current address for (insert name of opposing party)? /<spain/>¿Tiene una dirección actual para (insert name of opposing party)?'
+current_step.fields.create :field_type => 'text', :name => 'Do you have a current address for <defendant_full_name>? /<spain/>¿Tiene una dirección actual para <defendant_full_name_spain>?'
 addres_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
