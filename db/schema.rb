@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811065129) do
+ActiveRecord::Schema.define(version: 20140919144948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dependent_documents", force: true do |t|
+    t.integer  "document_id"
+    t.integer  "sub_document_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "document_answers", force: true do |t|
     t.integer "document_id"

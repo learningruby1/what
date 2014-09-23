@@ -5,7 +5,7 @@ class PdfFilesController < ApplicationController
 
   def index
     if user_signed_in?
-      @documents = current_user.documents
+      @documents = current_user.documents.where(:template => 1)
     else
       @documents = Document.where(:session_uniq_token => cookies[:session_uniq_token])
     end

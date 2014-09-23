@@ -3,934 +3,945 @@
   %h5.spain REVISE SUS RESPUESTAS Y HAY CUALQUIER CAMBIO QUE SEA NECESARIO
 
   - @index = 1
-  - 40.times do
-    - answers = @document.step_answers(@index)
-    - if @index == 1
-      = render :partial => 'title_step'
-      .move_to_left_20= answers.first.answer
-    - elsif @index == 2
-      = render :partial => 'title_step'
-      %strong.new_roman.move_to_left_20 Name /
-      %strong.new_roman.spain Nombre:
-      = answers[0]
-      %br
-
-      %strong.new_roman.move_to_left_20 Middle Initial /
-      %strong.new_roman.spain Inicial de Segundo Nombre:
-      = answers[1]
-      %br
-
-      %strong.new_roman.move_to_left_20 Last Name /
-      %strong.new_roman.spain Apellido:
-      = answers[2]
-      %br
-
-      %strong.new_roman.move_to_left_20 Date of Birth /
-      %strong.new_roman.spain Fecha de nacimiento:
-      = answers[3]
-      %br
-
-      %strong.new_roman.move_to_left_20 Social Security # /
-      %strong.new_roman.spain # Seguro Social:
-      = answers[4]
-      %br
-
-      %strong.new_roman.move_to_left_20 Mailing Address /
-      %strong.new_roman.spain Dirección de casa o postal:
-      = answers[5]
-      %br
-
-      - if answers[6].answer == 'In the United States'
-        %strong.new_roman.move_to_left_20 City /
-        %strong.new_roman.spain Ciudad:
-        = answers[7]
+  - if @document.template.id == 1
+    - 40.times do
+      - answers = @document.step_answers(@index)
+      - if @index == 1
+        = render :partial => 'title_step'
+        .move_to_left_20= answers.first.answer
+      - elsif @index == 2
+        = render :partial => 'title_step'
+        %strong.new_roman.move_to_left_20 Name /
+        %strong.new_roman.spain Nombre:
+        = answers[0]
         %br
 
-        %strong.new_roman.move_to_left_20 State /
-        %strong.new_roman.spain Estado:
-        = answers[8]
-        %br
-      - else
-        %strong.new_roman.move_to_left_20 City/Town/Province: /
-        %strong.new_roman.spain Ciudad/Pueblo/Provincia:
-        = answers[9]
-        %br
-
-        %strong.new_roman.move_to_left_20 Country /
-        %strong.new_roman.spain País:
-        = answers[10]
-        %br
-
-      %strong.new_roman.move_to_left_20 Zip Code /
-      %strong.new_roman.spain Código postal:
-      = answers[11]
-      %br
-
-      %strong.new_roman.move_to_left_20 Phone number /
-      %strong.new_roman.spain Número de teléfono:
-      = answers[12]
-      %br
-
-      %strong.new_roman.move_to_left_20 Email /
-      %strong.new_roman.spain Correo Electrónico:
-      = answers[13]
-      %br
-
-      %strong.new_roman.move_to_left_20 I am /
-      %strong.new_roman.spain Yo soy:
-      = answers[15]
-      %br
-    - elsif @index == 3
-      = render :partial => 'title_step'
-      %strong.new_roman.move_to_left_20 Name /
-      %strong.new_roman.spain Nombre:
-      = answers[0]
-      %br
-
-      %strong.new_roman.move_to_left_20 Middle Initial /
-      %strong.new_roman.spain Inicial de Segundo Nombre:
-      = answers[1]
-      %br
-
-      %strong.new_roman.move_to_left_20 Last Name /
-      %strong.new_roman.spain Apellido:
-      = answers[2]
-      %br
-
-      %strong.new_roman.move_to_left_20 Date of Birth /
-      %strong.new_roman.spain Fecha de nacimiento:
-      = answers[3]
-      %br
-
-      %strong.new_roman.move_to_left_20 Social Security # /
-      %strong.new_roman.spain # Seguro Social:
-      = answers[4]
-      %br
-
-      %strong.new_roman.move_to_left_20 Mailing Address /
-      %strong.new_roman.spain Dirección de casa o postal:
-      = answers[5]
-      %br
-
-      - if answers[6].answer == 'In the United States'
-        %strong.new_roman.move_to_left_20 City /
-        %strong.new_roman.spain Ciudad:
-        = answers[7]
-        %br
-
-        %strong.new_roman.move_to_left_20 State /
-        %strong.new_roman.spain Estado:
-        = answers[8]
-        %br
-      - else
-        %strong.new_roman.move_to_left_20 City/Town/Province: /
-        %strong.new_roman.spain Ciudad/Pueblo/Provincia:
-        = answers[9]
-        %br
-
-        %strong.new_roman.move_to_left_20 Country /
-        %strong.new_roman.spain País:
-        = answers[10]
-        %br
-
-      %strong.new_roman.move_to_left_20 Zip Code /
-      %strong.new_roman.spain Código postal:
-      = answers[11]
-      %br
-
-      %strong.new_roman.move_to_left_20 Email /
-      %strong.new_roman.spain Correo Electrónico:
-      = answers[12]
-      %br
-
-      %strong.new_roman.move_to_left_20 Phone number /
-      %strong.new_roman.spain Número de teléfono:
-      = answers[13]
-      %br
-    - elsif @index == 4
-      = render :partial => 'title_step'
-      - if answers[0].answer == 'In the United States'
-        %strong.new_roman.move_to_left_20 City /
-        %strong.new_roman.spain Ciudad:
+        %strong.new_roman.move_to_left_20 Middle Initial /
+        %strong.new_roman.spain Inicial de Segundo Nombre:
         = answers[1]
         %br
 
-        %strong.new_roman.move_to_left_20 State /
-        %strong.new_roman.spain Estado:
+        %strong.new_roman.move_to_left_20 Last Name /
+        %strong.new_roman.spain Apellido:
         = answers[2]
         %br
-      - else
-        %strong.new_roman.move_to_left_20 City/Town/Province: /
-        %strong.new_roman.spain Ciudad/Pueblo/Provincia:
+
+        %strong.new_roman.move_to_left_20 Date of Birth /
+        %strong.new_roman.spain Fecha de nacimiento:
         = answers[3]
         %br
 
-        %strong.new_roman.move_to_left_20 Country /
-        %strong.new_roman.spain País:
+        %strong.new_roman.move_to_left_20 Social Security # /
+        %strong.new_roman.spain # Seguro Social:
         = answers[4]
         %br
 
-      %strong.new_roman.move_to_left_20 Marriage Date /
-      %strong.new_roman.spain Fecha de matrimonio:
-      = answers[5]
-      %br
-    - elsif @index == 5
-      = render :partial => 'title_step'
-      - if answers[0].answer == '1'
-        %strong.new_roman.move_to_left_20 I have lived in Nevada for over 6 weeks. /
-        %strong.new_roman.spain Yo, he vivido en Nevada por más de 6 semanas.
-        %br
-    - elsif @index == 6
-      = render :partial => 'title_step'
-      %strong.new_roman.move_to_left_20 To my knowledge wife /
-      %strong.new_roman.spain A mi conocimiento la esposa:
-      = answers[0]
-      %br
-
-    - elsif @index == 7
-      = render :partial => 'title_step'
-      %strong.new_roman.move_to_left_20 Are there children born or legally adopted of this marriage UNDER the age of 18?
-      %br
-      %strong.new_roman.spain.move_to_left_20 ¿Hay menores de 18 años nacidos o adoptados legalmente de este matrimonio?
-      %br
-      .move_to_left_20= answers[0]
-
-      - @child_has = answers[0].answer == 'Yes' rescue false
-
-    - elsif @index == 8
-      - if @child_has
-        = render :partial => 'title_step'
-        %strong.new_roman.move_to_left_20 How many? /
-        %strong.new_roman.spain ¿Cuántos? :
-        = @children_number = answers[1]
+        %strong.new_roman.move_to_left_20 Mailing Address /
+        %strong.new_roman.spain Dirección de casa o postal:
+        = answers[5]
         %br
 
-    - elsif @index == 9
-      - if @children_number.present?
-        = render :partial => 'title_step'
-
-        - child_index = 0
-        - @children_names_array = Array.new
-        - @children_number.answer.to_i.times do
-          - tmp_array = []
-          %strong.new_roman.move_to_left_20 Name /
-          %strong.new_roman.spain Nombre:
-          = answers[child_index]
-          - tmp_array << answers[child_index].answer
-          - child_index += 1
+        - if answers[6].answer == 'In the United States'
+          %strong.new_roman.move_to_left_20 City /
+          %strong.new_roman.spain Ciudad:
+          = answers[7]
           %br
 
-          %strong.new_roman.move_to_left_20 Middle Initial /
-          %strong.new_roman.spain Inicial de Segundo Nombre:
-          = answers[child_index]
-          - tmp_array << answers[child_index].answer
-          - child_index += 1
+          %strong.new_roman.move_to_left_20 State /
+          %strong.new_roman.spain Estado:
+          = answers[8]
           %br
-
-          %strong.new_roman.move_to_left_20 Last Name /
-          %strong.new_roman.spain Apellido:
-          = answers[child_index]
-          - tmp_array << answers[child_index].answer
-          - child_index += 1
-          %br
-
-          %strong.new_roman.move_to_left_20 Date of Birth /
-          %strong.new_roman.spain Fecha de nacimiento:
-          = answers[child_index]
-          - child_index += 1
-          %br
-
-          - child_index += 1
-          %strong.new_roman.move_to_left_20 Place of Birth /
-          %strong.new_roman.spain Lugar de nacimiento:
-          %br
-          .move_to_left_20
-            - if answers[child_index].answer == 'In the United States'
-              - child_index += 1
-              %strong.new_roman.move_to_left_20 City /
-              %strong.new_roman.spain Ciudad:
-              = answers[child_index]
-              - child_index += 1
-              %br
-
-              %strong.new_roman.move_to_left_20 State /
-              %strong.new_roman.spain Estado:
-              = answers[child_index]
-              - child_index += 3
-              %br
-            - else
-              - child_index += 3
-              %strong.new_roman.move_to_left_20 City/Town/Province /
-              %strong.new_roman.spain Ciudad/Pueblo/Provincia:
-              = answers[child_index]
-              - child_index += 1
-              %br
-
-              %strong.new_roman.move_to_left_20 Country /
-              %strong.new_roman.spain País:
-              = answers[child_index]
-              - child_index += 1
-              %br
-
-          %strong.new_roman.move_to_left_20 Social Security # /
-          %strong.new_roman.spain # Seguro Social:
-          = answers[child_index]
-          - child_index += 1
-          %br
-
-          %strong.new_roman.move_to_left_20 Relationship /
-          %strong.new_roman.spain Relación:
-          = answers[child_index]
-          - child_index += 1
-          %br
-          - @children_names_array.push tmp_array
-
-    - elsif @index == 10
-      - if @children_number.present?
-        = render :partial => 'title_step'
-        .move_to_left_20= answers[0]
-
-    - elsif @index == 11
-      - if @children_number.present?
-        = render :partial => 'title_step'
-
-        - child_index = 0
-        - @children_number.answer.to_i.times do
-          %strong.new_roman.move_to_left_20= " #{ @children_names_array[child_index].join(' ') } physical custody. /"
-          %strong.new_roman.spain= "#{ @children_names_array[child_index].join(' ') } custodia física :"
-          = answers[(3 * (child_index + 1)) - 1]
-          %br
-          - child_index += 1
-
-    - elsif @index == 12
-      - if @children_number.present?
-        = render :partial => 'title_step'
-
-        .move_to_left_20= answers[0]
-        - @holliday = answers[0].answer == 'Yes' rescue false
-
-    - elsif @index == 13
-      - if @children_number.present? && @holliday
-        = render :partial => 'title_step'
-
-        - answers.each do |answer|
-          - if answer.answer == '1'
-            .move_to_left_20= answer.template_field.to_s.split(' /<spain/>').first
-
-    - elsif @index == 14
-      - if @children_number.present? && @holliday
-        = render :partial => 'title_step'
-
-        - answers.each do |answer|
-          - if answer.answer == '1'
-            .move_to_left_20= answer.template_field.to_s.split(' /<spain/>').first
-
-    - elsif @index == 15
-      - if @children_number.present?
-        = render :partial => 'title_step'
-
-        .move_to_left_20= answers[0]
-
-    - elsif @index == 16
-      - if @children_number.present?
-        = render :partial => 'title_step'
-
-        - if answers[0].answer == 'No <child_count> support'
-          .move_to_left_20 No
         - else
-          .move_to_left_20
-            = answers[0]
-            = answers[1]
+          %strong.new_roman.move_to_left_20 City/Town/Province: /
+          %strong.new_roman.spain Ciudad/Pueblo/Provincia:
+          = answers[9]
+          %br
 
-    - elsif @index == 17
-      - if @children_number.present?
+          %strong.new_roman.move_to_left_20 Country /
+          %strong.new_roman.spain País:
+          = answers[10]
+          %br
+
+        %strong.new_roman.move_to_left_20 Zip Code /
+        %strong.new_roman.spain Código postal:
+        = answers[11]
+        %br
+
+        %strong.new_roman.move_to_left_20 Phone number /
+        %strong.new_roman.spain Número de teléfono:
+        = answers[12]
+        %br
+
+        %strong.new_roman.move_to_left_20 Email /
+        %strong.new_roman.spain Correo Electrónico:
+        = answers[13]
+        %br
+
+        %strong.new_roman.move_to_left_20 I am /
+        %strong.new_roman.spain Yo soy:
+        = answers[15]
+        %br
+      - elsif @index == 3
         = render :partial => 'title_step'
-        .move_to_left_20= answers[1]
+        %strong.new_roman.move_to_left_20 Name /
+        %strong.new_roman.spain Nombre:
+        = answers[0]
+        %br
 
-    - elsif @index == 18
-      - if @children_number.present?
-        = render :partial => 'title_step'
+        %strong.new_roman.move_to_left_20 Middle Initial /
+        %strong.new_roman.spain Inicial de Segundo Nombre:
+        = answers[1]
+        %br
 
-        - if answers[2].answer == 'No'
-          .move_to_left_20= answers[2]
+        %strong.new_roman.move_to_left_20 Last Name /
+        %strong.new_roman.spain Apellido:
+        = answers[2]
+        %br
+
+        %strong.new_roman.move_to_left_20 Date of Birth /
+        %strong.new_roman.spain Fecha de nacimiento:
+        = answers[3]
+        %br
+
+        %strong.new_roman.move_to_left_20 Social Security # /
+        %strong.new_roman.spain # Seguro Social:
+        = answers[4]
+        %br
+
+        %strong.new_roman.move_to_left_20 Mailing Address /
+        %strong.new_roman.spain Dirección de casa o postal:
+        = answers[5]
+        %br
+
+        - if answers[6].answer == 'In the United States'
+          %strong.new_roman.move_to_left_20 City /
+          %strong.new_roman.spain Ciudad:
+          = answers[7]
+          %br
+
+          %strong.new_roman.move_to_left_20 State /
+          %strong.new_roman.spain Estado:
+          = answers[8]
+          %br
         - else
-          .move_to_left_20= answers[2]
-          %strong.new_roman.move_to_left_20 Starting /
-          %strong.new_roman.spain Comenzando:
+          %strong.new_roman.move_to_left_20 City/Town/Province: /
+          %strong.new_roman.spain Ciudad/Pueblo/Provincia:
+          = answers[9]
+          %br
+
+          %strong.new_roman.move_to_left_20 Country /
+          %strong.new_roman.spain País:
+          = answers[10]
+          %br
+
+        %strong.new_roman.move_to_left_20 Zip Code /
+        %strong.new_roman.spain Código postal:
+        = answers[11]
+        %br
+
+        %strong.new_roman.move_to_left_20 Email /
+        %strong.new_roman.spain Correo Electrónico:
+        = answers[12]
+        %br
+
+        %strong.new_roman.move_to_left_20 Phone number /
+        %strong.new_roman.spain Número de teléfono:
+        = answers[13]
+        %br
+      - elsif @index == 4
+        = render :partial => 'title_step'
+        - if answers[0].answer == 'In the United States'
+          %strong.new_roman.move_to_left_20 City /
+          %strong.new_roman.spain Ciudad:
+          = answers[1]
+          %br
+
+          %strong.new_roman.move_to_left_20 State /
+          %strong.new_roman.spain Estado:
+          = answers[2]
+          %br
+        - else
+          %strong.new_roman.move_to_left_20 City/Town/Province: /
+          %strong.new_roman.spain Ciudad/Pueblo/Provincia:
           = answers[3]
           %br
 
-          %strong.new_roman.move_to_left_20 Paid /
-          %strong.new_roman.spain Pagado:
-          = answers[5]
-
-    - elsif @index == 19
-      - if @children_number.present?
-        = render :partial => 'title_step'
-
-        - child_index = 0
-        - @children_number.answer.to_i.times do
-          %strong.new_roman.move_to_left_20= " #{ @children_names_array[child_index].join(' ') } tax returns. /"
-          %strong.new_roman.spain= "#{ @children_names_array[child_index].join(' ') } declaraciones de impuestos :"
-          = answers[(3 * (child_index + 1)) - 2]
+          %strong.new_roman.move_to_left_20 Country /
+          %strong.new_roman.spain País:
+          = answers[4]
           %br
-          - if answers[(3 * (child_index + 1)) - 1].answer.present?
-            %strong.new_roman.move_to_left_20 Start from /
-            %strong.new_roman.spain Empezar desde :
+
+        %strong.new_roman.move_to_left_20 Marriage Date /
+        %strong.new_roman.spain Fecha de matrimonio:
+        = answers[5]
+        %br
+      - elsif @index == 5
+        = render :partial => 'title_step'
+        - if answers[0].answer == '1'
+          %strong.new_roman.move_to_left_20 I have lived in Nevada for over 6 weeks. /
+          %strong.new_roman.spain Yo, he vivido en Nevada por más de 6 semanas.
+          %br
+      - elsif @index == 6
+        = render :partial => 'title_step'
+        %strong.new_roman.move_to_left_20 To my knowledge wife /
+        %strong.new_roman.spain A mi conocimiento la esposa:
+        = answers[0]
+        %br
+
+      - elsif @index == 7
+        = render :partial => 'title_step'
+        %strong.new_roman.move_to_left_20 Are there children born or legally adopted of this marriage UNDER the age of 18?
+        %br
+        %strong.new_roman.spain.move_to_left_20 ¿Hay menores de 18 años nacidos o adoptados legalmente de este matrimonio?
+        %br
+        .move_to_left_20= answers[0]
+
+        - @child_has = answers[0].answer == 'Yes' rescue false
+
+      - elsif @index == 8
+        - if @child_has
+          = render :partial => 'title_step'
+          %strong.new_roman.move_to_left_20 How many? /
+          %strong.new_roman.spain ¿Cuántos? :
+          = @children_number = answers[1]
+          %br
+
+      - elsif @index == 9
+        - if @children_number.present?
+          = render :partial => 'title_step'
+
+          - child_index = 0
+          - @children_names_array = Array.new
+          - @children_number.answer.to_i.times do
+            - tmp_array = []
+            %strong.new_roman.move_to_left_20 Name /
+            %strong.new_roman.spain Nombre:
+            = answers[child_index]
+            - tmp_array << answers[child_index].answer
+            - child_index += 1
+            %br
+
+            %strong.new_roman.move_to_left_20 Middle Initial /
+            %strong.new_roman.spain Inicial de Segundo Nombre:
+            = answers[child_index]
+            - tmp_array << answers[child_index].answer
+            - child_index += 1
+            %br
+
+            %strong.new_roman.move_to_left_20 Last Name /
+            %strong.new_roman.spain Apellido:
+            = answers[child_index]
+            - tmp_array << answers[child_index].answer
+            - child_index += 1
+            %br
+
+            %strong.new_roman.move_to_left_20 Date of Birth /
+            %strong.new_roman.spain Fecha de nacimiento:
+            = answers[child_index]
+            - child_index += 1
+            %br
+
+            - child_index += 1
+            %strong.new_roman.move_to_left_20 Place of Birth /
+            %strong.new_roman.spain Lugar de nacimiento:
+            %br
+            .move_to_left_20
+              - if answers[child_index].answer == 'In the United States'
+                - child_index += 1
+                %strong.new_roman.move_to_left_20 City /
+                %strong.new_roman.spain Ciudad:
+                = answers[child_index]
+                - child_index += 1
+                %br
+
+                %strong.new_roman.move_to_left_20 State /
+                %strong.new_roman.spain Estado:
+                = answers[child_index]
+                - child_index += 3
+                %br
+              - else
+                - child_index += 3
+                %strong.new_roman.move_to_left_20 City/Town/Province /
+                %strong.new_roman.spain Ciudad/Pueblo/Provincia:
+                = answers[child_index]
+                - child_index += 1
+                %br
+
+                %strong.new_roman.move_to_left_20 Country /
+                %strong.new_roman.spain País:
+                = answers[child_index]
+                - child_index += 1
+                %br
+
+            %strong.new_roman.move_to_left_20 Social Security # /
+            %strong.new_roman.spain # Seguro Social:
+            = answers[child_index]
+            - child_index += 1
+            %br
+
+            %strong.new_roman.move_to_left_20 Relationship /
+            %strong.new_roman.spain Relación:
+            = answers[child_index]
+            - child_index += 1
+            %br
+            - @children_names_array.push tmp_array
+
+      - elsif @index == 10
+        - if @children_number.present?
+          = render :partial => 'title_step'
+          .move_to_left_20= answers[0]
+
+      - elsif @index == 11
+        - if @children_number.present?
+          = render :partial => 'title_step'
+
+          - child_index = 0
+          - @children_number.answer.to_i.times do
+            %strong.new_roman.move_to_left_20= " #{ @children_names_array[child_index].join(' ') } physical custody. /"
+            %strong.new_roman.spain= "#{ @children_names_array[child_index].join(' ') } custodia física :"
             = answers[(3 * (child_index + 1)) - 1]
             %br
-          - child_index += 1
+            - child_index += 1
 
-    - elsif @index == 20
-      = render :partial => 'title_step'
-      .move_to_left_20= answers[0]
+      - elsif @index == 12
+        - if @children_number.present?
+          = render :partial => 'title_step'
 
-      - if answers[0].answer == 'Yes'
-        - @pet_number = answers[1].answer.to_i
+          .move_to_left_20= answers[0]
+          - @holliday = answers[0].answer == 'Yes' rescue false
 
-    - elsif @index == 21
-      - if @pet_number.present?
-        = render :partial => 'title_step'
+      - elsif @index == 13
+        - if @children_number.present? && @holliday
+          = render :partial => 'title_step'
 
-        - pet_index = 0
-        - @pet_number.times do
-          .move_to_left_20
-            %strong.new_roman Name of your Pet /
-            %strong.new_roman.spain Nombre de su mascota:
+          - answers.each do |answer|
+            - if answer.answer == '1'
+              .move_to_left_20= answer.template_field.to_s.split(' /<spain/>').first
 
-            = answers[pet_index]
-            - pet_index += 1
+      - elsif @index == 14
+        - if @children_number.present? && @holliday
+          = render :partial => 'title_step'
+
+          - answers.each do |answer|
+            - if answer.answer == '1'
+              .move_to_left_20= answer.template_field.to_s.split(' /<spain/>').first
+
+      - elsif @index == 15
+        - if @children_number.present?
+          = render :partial => 'title_step'
+
+          .move_to_left_20= answers[0]
+
+      - elsif @index == 16
+        - if @children_number.present?
+          = render :partial => 'title_step'
+
+          - if answers[0].answer == 'No <child_count> support'
+            .move_to_left_20 No
+          - else
+            .move_to_left_20
+              = answers[0]
+              = answers[1]
+
+      - elsif @index == 17
+        - if @children_number.present?
+          = render :partial => 'title_step'
+          .move_to_left_20= answers[1]
+
+      - elsif @index == 18
+        - if @children_number.present?
+          = render :partial => 'title_step'
+
+          - if answers[2].answer == 'No'
+            .move_to_left_20= answers[2]
+          - else
+            .move_to_left_20= answers[2]
+            %strong.new_roman.move_to_left_20 Starting /
+            %strong.new_roman.spain Comenzando:
+            = answers[3]
             %br
 
-            %strong.new_roman Who keep? /
-            %strong.new_roman.spain ¿Quién mantendrá? :
+            %strong.new_roman.move_to_left_20 Paid /
+            %strong.new_roman.spain Pagado:
+            = answers[5]
 
-            = answers[pet_index]
-            - pet_index += 1
+      - elsif @index == 19
+        - if @children_number.present?
+          = render :partial => 'title_step'
+
+          - child_index = 0
+          - @children_number.answer.to_i.times do
+            %strong.new_roman.move_to_left_20= " #{ @children_names_array[child_index].join(' ') } tax returns. /"
+            %strong.new_roman.spain= "#{ @children_names_array[child_index].join(' ') } declaraciones de impuestos :"
+            = answers[(3 * (child_index + 1)) - 2]
             %br
+            - if answers[(3 * (child_index + 1)) - 1].answer.present?
+              %strong.new_roman.move_to_left_20 Start from /
+              %strong.new_roman.spain Empezar desde :
+              = answers[(3 * (child_index + 1)) - 1]
+              %br
+            - child_index += 1
 
-    - elsif @index == 22
-      = render :partial => 'title_step'
-      .move_to_left_20= answers[1]
-      - @property_present = answers[1].answer == 'Yes' rescue false
-
-    - elsif @index == 23
-      - if @property_present
-        = render :partial => 'title_step'
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'a' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Home #{ p_index } / "
-            %strong.new_roman.spain= "Casa #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'b' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Empty land #{ p_index } / "
-            %strong.new_roman.spain= "Lote-Tierra #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'c' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - tmp_array.shift 2
-          - loop_answer.times do
-            %strong.new_roman.move_to_left_20= "Business #{ p_index } / "
-            %strong.new_roman.spain= "Negocio #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = "#{ tmp_array.second.answer },"
-            = tmp_array.third.answer
-            - tmp_array.shift 3
-            %br
-            - p_index += 1
-
-    - elsif @index == 24
-      - if @property_present
+      - elsif @index == 20
         = render :partial => 'title_step'
         .move_to_left_20= answers[0]
-        - @property_vehicles = answers[0].answer == 'Yes' rescue false
 
-    - elsif @index == 25
-      - if @property_present && @property_vehicles
+        - if answers[0].answer == 'Yes'
+          - @pet_number = answers[1].answer.to_i
+
+      - elsif @index == 21
+        - if @pet_number.present?
+          = render :partial => 'title_step'
+
+          - pet_index = 0
+          - @pet_number.times do
+            .move_to_left_20
+              %strong.new_roman Name of your Pet /
+              %strong.new_roman.spain Nombre de su mascota:
+
+              = answers[pet_index]
+              - pet_index += 1
+              %br
+
+              %strong.new_roman Who keep? /
+              %strong.new_roman.spain ¿Quién mantendrá? :
+
+              = answers[pet_index]
+              - pet_index += 1
+              %br
+
+      - elsif @index == 22
         = render :partial => 'title_step'
+        .move_to_left_20= answers[1]
+        - @property_present = answers[1].answer == 'Yes' rescue false
 
-        - tmp_array = answers.select{ |item| item.sort_index == 'a' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Car #{ p_index } / "
-            %strong.new_roman.spain= "Carro #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
+      - elsif @index == 23
+        - if @property_present
+          = render :partial => 'title_step'
 
-        - tmp_array = answers.select{ |item| item.sort_index == 'b' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Motorcycle #{ p_index } / "
-            %strong.new_roman.spain= "Motocicleta #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'c' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "RV #{ p_index } / "
-            %strong.new_roman.spain= "RV #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'd' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Boat #{ p_index } / "
-            %strong.new_roman.spain= "Barco #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'e' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Trailer #{ p_index } / "
-            %strong.new_roman.spain= "Remolque #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'f' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Other #{ p_index } / "
-            %strong.new_roman.spain= "Otro #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-    - elsif @index == 26
-      - if @property_present
-        = render :partial => 'title_step'
-
-        .move_to_left_20= answers[0]
-        - @property_pension_benefit = answers[0].answer == 'Yes' rescue false
-
-        - if @property_pension_benefit
           - tmp_array = answers.select{ |item| item.sort_index == 'a' }
           - tmp_array.sort_by!{ |item| item.sort_number }
-          - if tmp_array.first.answer == 'Yes'
+          - if tmp_array.first.answer == '1'
             - p_index = 1
             - loop_answer = tmp_array.second.answer.to_i
             - loop_answer.times do
               - tmp_array.shift 2
-              %strong.new_roman.move_to_left_20= "Plan #{ p_index } / "
-              %strong.new_roman.spain= "Plan #{ p_index } :"
+              %strong.new_roman.move_to_left_20= "Home #{ p_index } / "
+              %strong.new_roman.spain= "Casa #{ p_index } :"
               = "#{ tmp_array.first.answer },"
               = tmp_array.second.answer
               %br
               - p_index += 1
 
-    - elsif @index == 27
-      - if @property_present
-        = render :partial => 'title_step'
-
-        .move_to_left_20= answers[0]
-        - @property_bank = answers[0].answer == 'Yes' rescue false
-
-        - if @property_bank
-          - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+          - tmp_array = answers.select{ |item| item.sort_index == 'b' }
           - tmp_array.sort_by!{ |item| item.sort_number }
-          - if tmp_array.first.answer == 'Yes'
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Empty land #{ p_index } / "
+              %strong.new_roman.spain= "Lote-Tierra #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'c' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
             - p_index = 1
             - loop_answer = tmp_array.second.answer.to_i
             - tmp_array.shift 2
             - loop_answer.times do
-              %strong.new_roman.move_to_left_20= "Account #{ p_index } / "
-              %strong.new_roman.spain= "Cuenta #{ p_index } :"
+              %strong.new_roman.move_to_left_20= "Business #{ p_index } / "
+              %strong.new_roman.spain= "Negocio #{ p_index } :"
               = "#{ tmp_array.first.answer },"
               = "#{ tmp_array.second.answer },"
-              = "#{ tmp_array.third.answer },"
-              = tmp_array.fourth.answer
-              - tmp_array.shift 4
+              = tmp_array.third.answer
+              - tmp_array.shift 3
               %br
               - p_index += 1
 
-    - elsif @index == 28
-      - if @property_present
+      - elsif @index == 24
+        - if @property_present
+          = render :partial => 'title_step'
+          .move_to_left_20= answers[0]
+          - @property_vehicles = answers[0].answer == 'Yes' rescue false
+
+      - elsif @index == 25
+        - if @property_present && @property_vehicles
+          = render :partial => 'title_step'
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Car #{ p_index } / "
+              %strong.new_roman.spain= "Carro #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'b' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Motorcycle #{ p_index } / "
+              %strong.new_roman.spain= "Motocicleta #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'c' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "RV #{ p_index } / "
+              %strong.new_roman.spain= "RV #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'd' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Boat #{ p_index } / "
+              %strong.new_roman.spain= "Barco #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'e' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Trailer #{ p_index } / "
+              %strong.new_roman.spain= "Remolque #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'f' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Other #{ p_index } / "
+              %strong.new_roman.spain= "Otro #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+      - elsif @index == 26
+        - if @property_present
+          = render :partial => 'title_step'
+
+          .move_to_left_20= answers[0]
+          - @property_pension_benefit = answers[0].answer == 'Yes' rescue false
+
+          - if @property_pension_benefit
+            - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+            - tmp_array.sort_by!{ |item| item.sort_number }
+            - if tmp_array.first.answer == 'Yes'
+              - p_index = 1
+              - loop_answer = tmp_array.second.answer.to_i
+              - loop_answer.times do
+                - tmp_array.shift 2
+                %strong.new_roman.move_to_left_20= "Plan #{ p_index } / "
+                %strong.new_roman.spain= "Plan #{ p_index } :"
+                = "#{ tmp_array.first.answer },"
+                = tmp_array.second.answer
+                %br
+                - p_index += 1
+
+      - elsif @index == 27
+        - if @property_present
+          = render :partial => 'title_step'
+
+          .move_to_left_20= answers[0]
+          - @property_bank = answers[0].answer == 'Yes' rescue false
+
+          - if @property_bank
+            - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+            - tmp_array.sort_by!{ |item| item.sort_number }
+            - if tmp_array.first.answer == 'Yes'
+              - p_index = 1
+              - loop_answer = tmp_array.second.answer.to_i
+              - tmp_array.shift 2
+              - loop_answer.times do
+                %strong.new_roman.move_to_left_20= "Account #{ p_index } / "
+                %strong.new_roman.spain= "Cuenta #{ p_index } :"
+                = "#{ tmp_array.first.answer },"
+                = "#{ tmp_array.second.answer },"
+                = "#{ tmp_array.third.answer },"
+                = tmp_array.fourth.answer
+                - tmp_array.shift 4
+                %br
+                - p_index += 1
+
+      - elsif @index == 28
+        - if @property_present
+          = render :partial => 'title_step'
+
+          .move_to_left_20= answers[0]
+          - @property_other = answers[0].answer == 'Yes' rescue false
+
+      - elsif @index == 29
+        - if @property_present && @property_other
+          = render :partial => 'title_step'
+
+          - answers.each do |answer|
+            - if answer.answer == '1'
+              .move_to_left_20= answer.template_field.to_s.split(' /<spain/>').first
+
+      - elsif @index == 30
+        = render :partial => 'title_step'
+        .move_to_left_20= answers[1]
+        - @debts = answers[1].answer == 'Yes' rescue false
+
+      - elsif @index == 31
+        - if @debts
+          = render :partial => 'title_step'
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - tmp_array.shift 2
+            - loop_answer.times do
+              %strong.new_roman.move_to_left_20= "Home #{ p_index } / "
+              %strong.new_roman.spain= "Casa #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = "#{ tmp_array.second.answer },"
+              = "#{ tmp_array.third.answer }"
+              - tmp_array.shift 3
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'b' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - tmp_array.shift 2
+            - loop_answer.times do
+              %strong.new_roman.move_to_left_20= "Empty land #{ p_index } / "
+              %strong.new_roman.spain= "Lote-Tierra #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = "#{ tmp_array.second.answer },"
+              = "#{ tmp_array.third.answer }"
+              - tmp_array.shift 3
+              %br
+              - p_index += 1
+
+      - elsif @index == 32
+        - if @debts
+          = render :partial => 'title_step'
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Credit Cards #{ p_index } / "
+              %strong.new_roman.spain= "Tarjetas de crédito #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'b' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Hospital bills #{ p_index } / "
+              %strong.new_roman.spain= "Las facturas del hospital #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'c' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Doctor bills #{ p_index } / "
+              %strong.new_roman.spain= "Facturas del médico #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+      - elsif @index == 33
+        - if @debts
+          = render :partial => 'title_step'
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Car #{ p_index } / "
+              %strong.new_roman.spain= "Carro #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'b' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "RV #{ p_index } / "
+              %strong.new_roman.spain= "RV #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'c' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Boat #{ p_index } / "
+              %strong.new_roman.spain= "Barco #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'd' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Motorcycle #{ p_index } / "
+              %strong.new_roman.spain= "Moto #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+      - elsif @index == 34
+        - if @debts
+          = render :partial => 'title_step'
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Student loan #{ p_index } / "
+              %strong.new_roman.spain= "Préstamo estudiantil #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'b' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "IRS #{ p_index } / "
+              %strong.new_roman.spain= "mpuestos #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'c' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Payday loan #{ p_index } / "
+              %strong.new_roman.spain= "Préstamo de Día de pago #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'd' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - loop_answer.times do
+              - tmp_array.shift 2
+              %strong.new_roman.move_to_left_20= "Other loan #{ p_index } / "
+              %strong.new_roman.spain= "Otro préstamo #{ p_index } :"
+              = "#{ tmp_array.first.answer },"
+              = tmp_array.second.answer
+              %br
+              - p_index += 1
+
+      - elsif @index == 35
+        - if @debts
+          = render :partial => 'title_step'
+
+          - tmp_array = answers.select{ |item| item.sort_index == 'a' }
+          - tmp_array.sort_by!{ |item| item.sort_number }
+          - if tmp_array.first.answer == '1'
+            - p_index = 1
+            - loop_answer = tmp_array.second.answer.to_i
+            - tmp_array.shift 2
+            - loop_answer.times do
+              %strong.new_roman.move_to_left_20= " Other Debt Division #{ p_index } / "
+              %strong.new_roman.spain= "Otra división de la deuda #{ p_index } :"
+              = tmp_array.first.answer
+              - tmp_array.shift
+              %br
+              - p_index += 1
+
+      - elsif @index == 36
         = render :partial => 'title_step'
 
         .move_to_left_20= answers[0]
-        - @property_other = answers[0].answer == 'Yes' rescue false
+        - @alimony = answers[0].answer == 'Yes' rescue false
 
-    - elsif @index == 29
-      - if @property_present && @property_other
-        = render :partial => 'title_step'
-
-        - answers.each do |answer|
-          - if answer.answer == '1'
-            .move_to_left_20= answer.template_field.to_s.split(' /<spain/>').first
-
-    - elsif @index == 30
-      = render :partial => 'title_step'
-      .move_to_left_20= answers[1]
-      - @debts = answers[1].answer == 'Yes' rescue false
-
-    - elsif @index == 31
-      - if @debts
-        = render :partial => 'title_step'
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'a' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - tmp_array.shift 2
-          - loop_answer.times do
-            %strong.new_roman.move_to_left_20= "Home #{ p_index } / "
-            %strong.new_roman.spain= "Casa #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = "#{ tmp_array.second.answer },"
-            = "#{ tmp_array.third.answer }"
-            - tmp_array.shift 3
+        - if @alimony
+          .move_to_left_20
+            = answers[1]
+            = answers[2]
             %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'b' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - tmp_array.shift 2
-          - loop_answer.times do
-            %strong.new_roman.move_to_left_20= "Empty land #{ p_index } / "
-            %strong.new_roman.spain= "Lote-Tierra #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = "#{ tmp_array.second.answer },"
-            = "#{ tmp_array.third.answer }"
-            - tmp_array.shift 3
-            %br
-            - p_index += 1
-
-    - elsif @index == 32
-      - if @debts
-        = render :partial => 'title_step'
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'a' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Credit Cards #{ p_index } / "
-            %strong.new_roman.spain= "Tarjetas de crédito #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'b' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Hospital bills #{ p_index } / "
-            %strong.new_roman.spain= "Las facturas del hospital #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'c' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Doctor bills #{ p_index } / "
-            %strong.new_roman.spain= "Facturas del médico #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-    - elsif @index == 33
-      - if @debts
-        = render :partial => 'title_step'
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'a' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Car #{ p_index } / "
-            %strong.new_roman.spain= "Carro #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'b' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "RV #{ p_index } / "
-            %strong.new_roman.spain= "RV #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'c' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Boat #{ p_index } / "
-            %strong.new_roman.spain= "Barco #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'd' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Motorcycle #{ p_index } / "
-            %strong.new_roman.spain= "Moto #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-    - elsif @index == 34
-      - if @debts
-        = render :partial => 'title_step'
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'a' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Student loan #{ p_index } / "
-            %strong.new_roman.spain= "Préstamo estudiantil #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'b' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "IRS #{ p_index } / "
-            %strong.new_roman.spain= "mpuestos #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'c' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Payday loan #{ p_index } / "
-            %strong.new_roman.spain= "Préstamo de Día de pago #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'd' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - loop_answer.times do
-            - tmp_array.shift 2
-            %strong.new_roman.move_to_left_20= "Other loan #{ p_index } / "
-            %strong.new_roman.spain= "Otro préstamo #{ p_index } :"
-            = "#{ tmp_array.first.answer },"
-            = tmp_array.second.answer
-            %br
-            - p_index += 1
-
-    - elsif @index == 35
-      - if @debts
-        = render :partial => 'title_step'
-
-        - tmp_array = answers.select{ |item| item.sort_index == 'a' }
-        - tmp_array.sort_by!{ |item| item.sort_number }
-        - if tmp_array.first.answer == '1'
-          - p_index = 1
-          - loop_answer = tmp_array.second.answer.to_i
-          - tmp_array.shift 2
-          - loop_answer.times do
-            %strong.new_roman.move_to_left_20= " Other Debt Division #{ p_index } / "
-            %strong.new_roman.spain= "Otra división de la deuda #{ p_index } :"
-            = tmp_array.first.answer
-            - tmp_array.shift
-            %br
-            - p_index += 1
-
-    - elsif @index == 36
-      = render :partial => 'title_step'
-
-      .move_to_left_20= answers[0]
-      - @alimony = answers[0].answer == 'Yes' rescue false
-
-      - if @alimony
-        .move_to_left_20
-          = answers[1]
-          = answers[2]
-          %br
-          = answers[3]
-          - if answers[4].answer == 'Year(s) (example 1 year)'
-            - if answers[3].answer.to_i > 1
-              Years
+            = answers[3]
+            - if answers[4].answer == 'Year(s) (example 1 year)'
+              - if answers[3].answer.to_i > 1
+                Years
+              - else
+                Year
             - else
-              Year
-          - else
-            - if answers[3].answer.to_i > 1
-              Months
-            - else
-              Month
+              - if answers[3].answer.to_i > 1
+                Months
+              - else
+                Month
 
-    - elsif @index == 37
-      = render :partial => 'title_step'
-
-      .move_to_left_20= answers[0]
-
-    - elsif @index == 38
-      = render :partial => 'title_step'
-      .move_to_left_20= answers[0]
-
-    - elsif @index == 39
-      = render :partial => 'title_step'
-      .move_to_left_20= answers[0]
-      - @family_court = answers[0].answer == 'Yes' rescue false
-
-    - elsif @index == 40
-      - if @family_court
+      - elsif @index == 37
         = render :partial => 'title_step'
-        - answers.sort_by!{ |item| item.template_field_id}
 
-        - family_court_index = 0
-        - 9.times do
-          - f_index = 0
-          - if answers[family_court_index].answer == '1'
-            .move_to_left_20
-              = answers[family_court_index].template_field.to_s.split(' /<spain/>').first
-              %br
-              = "#{ f_index += 1 }. #{ answers[family_court_index + 3] } #{ answers[family_court_index + 4] } #{ answers[family_court_index + 2] }"
-              %br
-              = "#{ f_index += 1 }. #{ answers[family_court_index + 7] } #{ answers[family_court_index + 8] } #{ answers[family_court_index + 6] }"
-              %br
+        .move_to_left_20= answers[0]
 
-              %strong.new_roman Case # /
-              %strong.new_roman.spain # De caso:
-              = "#{ answers[family_court_index + 9].answer }"
-              %br
+      - elsif @index == 38
+        = render :partial => 'title_step'
+        .move_to_left_20= answers[0]
 
-              %strong.new_roman Date of last Order /
-              %strong.new_roman.spain Día de la ultima orden:
-              = "#{ answers[family_court_index + 10].answer }"
-              %br
-              - family_court_index += 11
-              - if answers[family_court_index].answer != '1' && answers[family_court_index].answer != '0'
-                .move_to_left_20
-                  = "#{ answers[family_court_index + 2].answer } #{ answers[family_court_index + 3].answer } #{ answers[family_court_index + 4].answer }"
-                  %br
+      - elsif @index == 39
+        = render :partial => 'title_step'
+        .move_to_left_20= answers[0]
+        - @family_court = answers[0].answer == 'Yes' rescue false
 
-                  %strong.new_roman Date of Birth
-                  %strong.new_roman.spain Fecha de nacimiento:
-                  = "#{ answers[family_court_index + 5].answer }, #{ answers[family_court_index + 6].answer }"
-                  %br
-                  - if answers[family_court_index + 8].answer.present? || answers[family_court_index + 9].answer.present? || answers[family_court_index + 10].answer.present?
-                    = "#{ answers[family_court_index + 8].answer } #{ answers[family_court_index + 9].answer } #{ answers[family_court_index + 10].answer }"
+      - elsif @index == 40
+        - if @family_court
+          = render :partial => 'title_step'
+          - answers.sort_by!{ |item| item.template_field_id}
+
+          - family_court_index = 0
+          - 9.times do
+            - f_index = 0
+            - if answers[family_court_index].answer == '1'
+              .move_to_left_20
+                = answers[family_court_index].template_field.to_s.split(' /<spain/>').first
+                %br
+                = "#{ f_index += 1 }. #{ answers[family_court_index + 3] } #{ answers[family_court_index + 4] } #{ answers[family_court_index + 2] }"
+                %br
+                = "#{ f_index += 1 }. #{ answers[family_court_index + 7] } #{ answers[family_court_index + 8] } #{ answers[family_court_index + 6] }"
+                %br
+
+                %strong.new_roman Case # /
+                %strong.new_roman.spain # De caso:
+                = "#{ answers[family_court_index + 9].answer }"
+                %br
+
+                %strong.new_roman Date of last Order /
+                %strong.new_roman.spain Día de la ultima orden:
+                = "#{ answers[family_court_index + 10].answer }"
+                %br
+                - family_court_index += 11
+                - if answers[family_court_index].answer != '1' && answers[family_court_index].answer != '0'
+                  .move_to_left_20
+                    = "#{ answers[family_court_index + 2].answer } #{ answers[family_court_index + 3].answer } #{ answers[family_court_index + 4].answer }"
                     %br
 
                     %strong.new_roman Date of Birth
                     %strong.new_roman.spain Fecha de nacimiento:
-                    = "#{ answers[family_court_index + 11].answer }, #{ answers[family_court_index + 12].answer }"
+                    = "#{ answers[family_court_index + 5].answer }, #{ answers[family_court_index + 6].answer }"
                     %br
-                - family_court_index += 13
-          - elsif answers[family_court_index].answer == '0'
-            - family_court_index += 11
-          - else
-            - family_court_index += 13
+                    - if answers[family_court_index + 8].answer.present? || answers[family_court_index + 9].answer.present? || answers[family_court_index + 10].answer.present?
+                      = "#{ answers[family_court_index + 8].answer } #{ answers[family_court_index + 9].answer } #{ answers[family_court_index + 10].answer }"
+                      %br
 
-    - @index += 1
+                      %strong.new_roman Date of Birth
+                      %strong.new_roman.spain Fecha de nacimiento:
+                      = "#{ answers[family_court_index + 11].answer }, #{ answers[family_court_index + 12].answer }"
+                      %br
+                  - family_court_index += 13
+            - elsif answers[family_court_index].answer == '0'
+              - family_court_index += 11
+            - else
+              - family_court_index += 13
+
+      - @index += 1
+  - else
+    - 4.times do
+      - answers = @document.step_answers(@index)
+      - case @index
+      - when 1
+        = render :partial => 'title_step'
+        .move_to_left_20= answers.first.answer
+      - when 2, 3
+        = render :partial => 'title_step'
+
   .row
     .col-md-6
       = link_to 'Generate PDF', generate_pdf_path(@document.id), :class => 'btn btn-default navbar-right'
