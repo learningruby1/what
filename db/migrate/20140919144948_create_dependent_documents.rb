@@ -1,6 +1,6 @@
-class CreateUnderDocuments < ActiveRecord::Migration
+class CreateDependentDocuments < ActiveRecord::Migration
   def change
-    create_table :under_documents do |t|
+    create_table :dependent_documents do |t|
       t.integer :document_id
       t.integer :sub_document_id
 

@@ -933,13 +933,15 @@
 
       - @index += 1
   - else
-    - 2.times do
+    - 4.times do
       - answers = @document.step_answers(@index)
       - case @index
       - when 1
         = render :partial => 'title_step'
         .move_to_left_20= answers.first.answer
       - when 2
+        = render :partial => 'title_step'
+      - when 3
         = render :partial => 'title_step'
   .row
     .col-md-6

@@ -6,13 +6,10 @@ Rails.application.routes.draw do
   resources :paypal_payments, :only => [:new, :create]
 
   resources :templates, :only => [:index] do
-    resources :documents, :only => [:create] do
-      # post 'subdocument' => 'document#create_subdocument'
-    end
+    resources :documents, :only => [:create]
   end
 
   resources :documents, :only => [] do
-    post 'subdocument' => 'documents#create_subdocument', :as => :subdocument
     get 'step/:step/edit' => 'document_answers#edit', :as => :answer
     post 'step/:step' => 'document_answers#update', :as => :answer_update
     get 'step/:step/render_questions' => 'document_answers#render_questions', :as => :render_questions
