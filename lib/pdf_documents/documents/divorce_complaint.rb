@@ -48,8 +48,6 @@ module PdfDocument
         end
         tmp_text += " who #{ @number_of_children > 1 ? 'are' : 'is' } the issue of this marriage, and here are no other minor children adopted or otherwise."
 
-        # Why?
-        # if @children_adopted
         if @children_nevada_residency
           tmp_text += " That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months."
         else
