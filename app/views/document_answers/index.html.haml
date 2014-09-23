@@ -939,10 +939,9 @@
       - when 1
         = render :partial => 'title_step'
         .move_to_left_20= answers.first.answer
-      - when 2
+      - when 2, 3
         = render :partial => 'title_step'
-      - when 3
-        = render :partial => 'title_step'
+
   .row
     .col-md-6
       = link_to 'Generate PDF', generate_pdf_path(@document.id), :class => 'btn btn-default navbar-right'
