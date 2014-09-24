@@ -227,4 +227,8 @@ class Document < ActiveRecord::Base
     false
   end
 
+  def edit_answers_children_residency(_step)
+    step_answers(_step+2)[2].update :answer => 'No' if step_answers(_step).first.answer == 'No' && !step_answers(_step+2).empty?
+  end
+
 end
