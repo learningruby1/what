@@ -32,6 +32,8 @@ class DocumentAnswersController < ApplicationController
       else
         redirect_to document_answer_path(@document, params[:step].to_i)
       end
+      #Need to Refactoring
+      @document.edit_answers_children_residency(current_step) if current_step == 8
     end
   end
 
