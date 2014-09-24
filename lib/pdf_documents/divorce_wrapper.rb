@@ -149,7 +149,7 @@ module PdfDocument
         @number_of_children = answers.next.answer.to_i
 
         if !@children_residency
-          12.times do steps.next end
+          14.times do steps.next end
         else
 
           #Deleted Step 9   Number of children
@@ -193,7 +193,7 @@ module PdfDocument
             @children_continue = answers.next.answer == 'Yes' rescue false
           end
           if @children_continue
-            10.times do steps.next end
+            12.times do steps.next end
           else
 
             #Step 11   Legal Custody
@@ -382,12 +382,46 @@ module PdfDocument
             @child_suport_who = answers.next.answer
             @child_suport_amount = answers.next.answer
 
-            #Step 18  Wage withholding
+            #Step 18 (17_1) Additional Child Support
+            answers = step_answers_enum steps.next
+            answers.next
+            @employed_presence = answers.next.answer == 'Yes' rescue false
+            if @employed_presence
+              @employer_name = answers.next.answer
+              @business_address = answers.next.answer
+              @employer_city = answers.next.answer
+              @employer_zip = answers.next.answer
+              @employer_phone = answers.next.answer
+              @drivers_license = answers.next.answer
+            else
+              6.times do answers.next end
+            end
+            answers.next
+            @ethinicity = answers.next.answer
+
+            #Step 19 (17_2) Additional Child Support For Spouse
+            answers = step_answers_enum steps.next
+            answers.next
+            @employed_presence = answers.next.answer == 'Yes' rescue false
+            if @employed_presence
+              @employer_name = answers.next.answer
+              @business_address = answers.next.answer
+              @employer_city = answers.next.answer
+              @employer_zip = answers.next.answer
+              @employer_phone = answers.next.answer
+              @drivers_license = answers.next.answer
+            else
+              6.times do answers.next end
+            end
+            answers.next
+            @ethinicity = answers.next.answer
+
+            #Step 20  Wage withholding
             answers = step_answers_enum steps.next
             answers.next.answer
             @request_withhold = answers.next.answer == 'Yes' rescue false
 
-            #Step 19   Child  Support Arrears
+            #Step 21   Child  Support Arrears
             answers = step_answers_enum steps.next
             answers.next
             answers.next
@@ -396,7 +430,7 @@ module PdfDocument
             answers.next
             @request_amount_paid = answers.next.answer
 
-            #Step 20   Child Tax Exemption
+            #Step 22   Child Tax Exemption
             step = steps.next
             @child_tax_examption = Array.new
 
@@ -408,7 +442,7 @@ module PdfDocument
           end
         end
 
-        #Step 21   Pet
+        #Step 23   Pet
         answers = step_answers_enum steps.next
         @pet_presence = answers.next.answer == 'Yes' rescue false
         @pet_amount = answers.next.answer.to_i rescue 0
@@ -417,7 +451,7 @@ module PdfDocument
           steps.next
         else
 
-          #Step 22   Pet custody
+          #Step 24   Pet custody
           step = steps.next
 
           @pets = Array.new
@@ -433,7 +467,7 @@ module PdfDocument
           end
         end
 
-        #Step 23   Property
+        #Step 25   Property
         answers = step_answers_enum steps.next
         answers.next
         @property_presence = answers.next.answer
@@ -443,7 +477,7 @@ module PdfDocument
 
           @properties_more = Array.new
 
-          #Step 24   Property Division: Marital Home
+          #Step 26   Property Division: Marital Home
           answers = document.step_answers steps.next
 
           if @property_presence
@@ -480,11 +514,11 @@ module PdfDocument
             end
           end
 
-          #Step 25   Property Division: Vehicles
+          #Step 27   Property Division: Vehicles
           answers = step_answers_enum steps.next
           @vehicles_presence = answers.next.answer == 'Yes' rescue false
 
-          #Step 26   Property Division: Vehicles
+          #Step 28   Property Division: Vehicles
           answers = document.step_answers steps.next
           if @vehicles_presence
 
@@ -549,7 +583,7 @@ module PdfDocument
             end
           end
 
-          #Step 27   Property Division: Pension Benefit
+          #Step 29   Property Division: Pension Benefit
           @debts_accounts = Array.new
           answers = document.step_answers steps.next
 
@@ -563,7 +597,7 @@ module PdfDocument
             end
           end
 
-          #Step 28   Property Division: Bank and Investment Account
+          #Step 30   Property Division: Bank and Investment Account
           @bank_account = Array.new
           answers = document.step_answers steps.next
 
@@ -578,7 +612,7 @@ module PdfDocument
             end
           end
 
-          #Step 29   Property Division: Other
+          #Step 31   Property Division: Other
           answers = document.step_answers steps.next
           @other_properties = Array.new
           other_property = answers.select{ |item| item.sort_index == 'a' }
@@ -592,13 +626,13 @@ module PdfDocument
           end
         end
 
-        #Step 30   Debts
+        #Step 32   Debts
         answers = document.step_answers steps.next
         @community_debts = answers.last.answer
         @debt_devision = Array.new
 
         if @community_debts == 'Yes'
-          #Step 31 Debts Division
+          #Step 33 Debts Division
           answers = document.step_answers steps.next
 
           house = answers.select{ |item| item.sort_index == 'a' }
@@ -625,7 +659,7 @@ module PdfDocument
             end
           end
 
-          #Step 32
+          #Step 34
           answers = document.step_answers steps.next
 
           card = answers.select{ |item| item.sort_index == 'a' }
@@ -658,7 +692,7 @@ module PdfDocument
             end
           end
 
-          #Step 33
+          #Step 35
           answers = document.step_answers steps.next
 
           car = answers.select{ |item| item.sort_index == 'a' }
@@ -701,7 +735,7 @@ module PdfDocument
             end
           end
 
-          #Step 34
+          #Step 36
           answers = document.step_answers steps.next
 
           student = answers.select{ |item| item.sort_index == 'a' }
@@ -744,7 +778,7 @@ module PdfDocument
             end
           end
 
-          #Step 35
+          #Step 37
           answers = document.step_answers steps.next
 
           other_debt = answers.select{ |item| item.sort_index == 'a' }
@@ -760,7 +794,7 @@ module PdfDocument
           5.times do steps.next end
         end
 
-        #Step 36   Spousal support or Alimony
+        #Step 38   Spousal support or Alimony
         answers = step_answers_enum steps.next
         @alimony_presence = answers.next.answer == 'Yes' rescue false
         if @alimony_presence
@@ -786,21 +820,21 @@ module PdfDocument
           end
         end
 
-        #Step 37   Wife’s Name
+        #Step 39   Wife’s Name
         answers = step_answers_enum steps.next
 
         @wife_name_changing = answers.next.answer
         @wife_name = answers.next.answer
 
-        #Step 38   Reason divorce
+        #Step 40   Reason divorce
         answers = step_answers_enum steps.next
         @reason_divorce = answers.next.answer
 
-        #Step 39 Other cases in Family court
+        #Step 41 Other cases in Family court
         answers = step_answers_enum steps.next
         @family_court = answers.next.answer == 'Yes' rescue false
 
-        #Step 40 Other cases in Family court
+        #Step 42 Other cases in Family court
         if @family_court
           answers = document.step_answers steps.next
           @child_array = Array.new
