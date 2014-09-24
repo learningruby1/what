@@ -603,7 +603,8 @@ current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:
 current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir: *', :mandatory => { :value => /^\d+/, :hint => 'Enter correct # /<spain/>Escriba #' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
 
 current_step.fields.create :field_type => 'text', :name => 'Ethinicity /<spain/>Raza: *'
-current_step.fields.create :field_type => 'radio', :name => 'Hispanic /<spain/>Latino
+current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
+                                                             <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano
                                                              <option/>Asian or Pacific Islander /<spain/>Asiático o Islas del Pacifico
                                                              <option/>Native American or Alaskan Native /<spain/>Indígena Americano o Nativo de Alaska
@@ -614,7 +615,7 @@ toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes',#19 (17_2)
                                      :title => 'ADDITIONAL CHILD SUPPORT QUESTION FOR SPOUSE /<spain/>PREGUNTAS ADICIONES DE SU (INSERT ESPOSA O ESPOSO) SOBRE LA MANUTENCION DE MENORES'
-current_step.fields.create :field_type => 'text', :name => 'Is your spouse currently employed/self-employed? /<spain/>/¿Actualmente está su esposo o esposa trabajando? *'
+current_step.fields.create :field_type => 'text', :name => 'Is your spouse currently employed/self-employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
 current_step.fields.create :field_type => 'radio', :name => 'No
                                                              <option/>I don’t know /<spain/>No sé
                                                              <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -627,7 +628,8 @@ current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:
 current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir: *', :mandatory => { :value => /^\d+/, :hint => 'Enter correct # /<spain/>Escriba #' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
 
 current_step.fields.create :field_type => 'text', :name => 'Ethinicity /<spain/>Raza: *'
-current_step.fields.create :field_type => 'radio', :name => 'Hispanic /<spain/>Latino
+current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
+                                                             <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano
                                                              <option/>Asian or Pacific Islander /<spain/>Asiático o Islas del Pacifico
                                                              <option/>Native American or Alaskan Native /<spain/>Indígena Americano o Nativo de Alaska
