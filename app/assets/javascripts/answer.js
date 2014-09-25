@@ -277,11 +277,13 @@ $(function(){
         answer_id_question = $(this).parent().parent().parent().parent().prev().prev().find('strong').next().val();
       }
 
-      $.ajax({
-        type: "GET",
-        data: form + "&value=" + value + "&step=" + $('#step_id').val() + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val() + "&review=" + $('#review').val(),
-        url: "/documents/"+$('#document_id').val()+"/step/"+$('#step_id').val()+"/render_questions"
-      });
+      if(check_value(value, $(this))){
+        $.ajax({
+          type: "GET",
+          data: form + "&value=" + value + "&step=" + $('#step_id').val() + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val() + "&review=" + $('#review').val(),
+          url: "/documents/"+$('#document_id').val()+"/step/"+$('#step_id').val()+"/render_questions"
+        });
+      }
     });
   });
 
@@ -327,4 +329,13 @@ function hide_sub_toggles(_this, selected_value){
 
   if(selected_value!= undefined && selected_value.indexOf(_this.data('toggle-option')) != -1)
     _this.show();
+}
+
+function check_value(value, _this){
+  if(value < 1 || value > 10){
+    _this.after('<div id="error" style="width:240px; background:#FAACAC; padding: 3px; border-radius: 5px; color: red; margin-top: 3px;"><span>Only from 1 to 9</span>/<span class="spain">Sólo del 1 al 9</span></div>');
+    setTimeout(function(){ $('#error').remove(); }, 5000);
+    return false
+  }
+  return true
 }

@@ -31,13 +31,9 @@ class DocumentAnswersController < ApplicationController
     else
       @document.edit_answers_children_residency(current_step) if current_step == 8
 
-      if current_step == 10 && @document.check_answers_children_residency(current_step)
-        redirect_to templates_path
-      else
-        params[:step] = params[:step].to_i.next if current_step == 11 && !@document.check_child_prior_address(current_step)
+      params[:step] = params[:step].to_i.next if current_step == 11 && !@document.check_child_prior_address(current_step)
 
-        redirect_to document_answer_path(@document, params[:step].to_i)
-      end
+      redirect_to document_answer_path(@document, params[:step].to_i)
     end
   end
 
