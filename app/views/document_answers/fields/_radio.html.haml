@@ -1,10 +1,10 @@
-- answer.template_field.name.split('<option/>').each do |title|
+- answer.template_field.name.split('<option/>').each_with_index do |title, index|
   .container
     .col-md-12
       - title_array = title.split('<separate/>')
       %label.new_roman.radio{ :class => ('margin-left' if !answer.template_field.field_type.match('sub')) }
         = a.radio_button :answer, title_array.first.split(' /<spain/>').first, :class => "radio_#{ answer.template_field.template_step_id }"
-        = render :partial => 'render_text', :locals => { :answer => title_array.first }
+        = render :partial => 'render_text', :locals => { :answer => title_array.first, :real_answer => answer, :index_of_radio => index }
         %input{ :type => 'hidden', :value => answer.id }
 
 
