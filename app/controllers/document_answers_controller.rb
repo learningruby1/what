@@ -4,6 +4,7 @@ class DocumentAnswersController < ApplicationController
   def edit
     if @document.present?
       @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
+      #Its correct work without this, need to test?
       @answers = DocumentAnswer.sort @answers, params[:step]
       @review = params[:review]
 
@@ -27,11 +28,7 @@ class DocumentAnswersController < ApplicationController
     elsif params[:review].present?
       redirect_to document_review_path(@document)
     else
-      if current_step == 10 && @document.check_answers_children_residency(current_step)
-        redirect_to templates_path
-      else
-        redirect_to document_answer_path(@document, params[:step].to_i)
-      end
+      redirect_to document_answer_path(@document, params[:step].to_i)
       #Need to Refactoring
       @document.edit_answers_children_residency(current_step) if current_step == 8
     end
