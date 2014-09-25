@@ -221,12 +221,6 @@ class Document < ActiveRecord::Base
     save!
   end
 
-  def check_answers_children_residency(_step)
-    answers = step_answers(_step)
-    return true if answers.last.answer == "No" && answers[2].answer == "No"
-    false
-  end
-
   def edit_answers_children_residency(_step)
     step_answers(_step+2)[2].update :answer => 'No' if step_answers(_step).first.answer == 'No' && !step_answers(_step+2).empty?
   end

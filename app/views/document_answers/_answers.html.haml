@@ -19,8 +19,14 @@
       - when /date|time|only_year/
         = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
 
+      - when /text_radio/
+        = render :partial => 'document_answers/fields/text_radio', :locals => { :a => a, :answer => answer }
+
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
+
+      - when /redirect/
+        = render :partial => 'document_answers/fields/redirect', :locals => { :a => a, :answer => answer }
 
       - when /string/
         - @count_index = hash_index[answer.sort_index]
