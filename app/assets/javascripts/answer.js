@@ -201,16 +201,37 @@ $(function(){
       //Radio button event
       $('.' + $(this).prop('class') + ':first:has([type="radio"])').change(function(){
         var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
-        if(selected_value.indexOf('No') != -1)
+        if(selected_value == 'No')
           $('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').attr('checked', true);
 
+
         $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
-          if(selected_value.indexOf($(this).data('toggle-option')) != -1){
-            $(this).show();
-          }
+          hide_sub_toggles($(this), selected_value);
         });
       });
     }
+  });
+
+  //Toggler logic for sub-toggle
+  $('[data-sub-toggle]').each(function(){
+    var this_class = '.' + $(this).prop('class');
+    var result = parseInt($(this).prop('class').substr(7, $(this).prop('class').length - 7)) + 1;
+    var this_class_next = '.toggle_' + result;
+    var selected_value = $(this_class + ' [type="radio"]:checked:last').val();
+
+    $(this_class_next).hide().each(function(){
+      if(selected_value != undefined)
+        if(selected_value.indexOf($(this).data('toggle-option')) != -1)
+          $(this).show();
+    });
+
+    //Radio button event
+    $(this_class + '[data-sub-toggle="'+ $(this).data('sub-toggle')+'"]').change(function(){
+      var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked:last').val();
+      $(this_class_next).hide().each(function(){
+        hide_sub_toggles($(this), selected_value);
+      });
+    });
   });
 
   var counters = $('.counter');
@@ -252,12 +273,16 @@ $(function(){
       var value = $(this).parent().prev().find('p input').val();
       var answer_id_question = $(this).parent().parent().parent().parent().prev().prev().find('div label input:last-child').val();
 
+      if(answer_id_question == undefined){
+        answer_id_question = $(this).parent().parent().parent().parent().prev().prev().find('strong').next().val();
+      }
+
       $.ajax({
         type: "GET",
         data: form + "&value=" + value + "&step=" + $('#step_id').val() + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val() + "&review=" + $('#review').val(),
         url: "/documents/"+$('#document_id').val()+"/step/"+$('#step_id').val()+"/render_questions"
       });
-    })
+    });
   });
 
   //Fill fields for Mailing address auto if select option
@@ -286,3 +311,20 @@ $(function(){
     $('.radio_3:first').prop('checked', false)
   });
 });
+
+function hide_sub_toggles(_this, selected_value){
+  var result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) + 1;
+  var current_class = '.toggle_' + result;
+
+  if(_this.data('sub-toggle') != undefined){
+    if( _this.find('[type="radio"]:checked').length > 0 ){
+      _this.find('[type="radio"]:checked').prop('checked',false);
+    }
+    $(current_class).hide().each(function(){
+      hide_sub_toggles($(this));
+    });
+  }
+
+  if(selected_value!= undefined && selected_value.indexOf(_this.data('toggle-option')) != -1)
+    _this.show();
+}

@@ -3,3 +3,4 @@
   .jumbotron
     .container
       = render :partial => 'render_text', :locals => { :answer => answer }
+      %input{ :type => 'hidden', :value => answer.id }
