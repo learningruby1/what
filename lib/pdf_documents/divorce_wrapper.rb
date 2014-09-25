@@ -81,7 +81,7 @@ module PdfDocument
         @plaintiff_mailing_address_city = answers.next.answer
         @plaintiff_mailing_address_state = answers.next.answer
         @plaintiff_mailing_address_zip = answers.next.answer
-        answers.next
+        # answers.next
         #@plaintiff_zip = answers.next.answer
         @plaintiff_phone = answers.next.answer
         @plaintiff_email = answers.next.answer

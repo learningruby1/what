@@ -267,7 +267,7 @@ $(function(){
     var state = $('.container').eq(9).find('.col-md-2 select').val();
     var zip = $('.container').eq(10).find('div:eq(1) input').val();
 
-    $('.container').eq(11).find('div:eq(1) input').prop('value', address);
+    $('.container').eq(11).find('div:eq(2) input').prop('value', address);
     $('.container').eq(12).find('div:eq(1) input').prop('value', city);
     $('.container').eq(13).find('.col-md-2 select').prop('value', state);
     $('.container').eq(14).find('div:eq(1) input').prop('value', zip);
