@@ -174,7 +174,8 @@ current_step.fields.create :field_type => 'text', :name => 'The law requires tha
 current_step.fields.create :field_type => 'text', :name => 'Nevada Court does not have the legal right to set custody at this time, BUT you can still get a divorce without custody. However, you will need to address the children’s health insurance and child support issue.<br/><spain/>
                                                             No. La corte de Nevada no tiene el poder para establecer custodia en este momento, PERO usted todavía puede divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'No'
 current_step.fields.create :field_type => 'text', :name => 'Do you still want to continue? /<spain/>¿Quiere continuar?', :toggle_id => toggle_id, :toggle_option => 'No'
-current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :toggle_option => 'No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'redirect', :name => 'No<link=/templates>
+                                                                <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', #:amount_field_id => children_amount_field.id,#11
                                      :title => 'Legal Custody /<spain/>Custodia Legal',

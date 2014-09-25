@@ -67,4 +67,10 @@ module ApplicationHelper
       return answer.answer
     end
   end
+
+  def get_link_for_redirect(text, document_id)
+    text.sub! /:document_id/, document_id.to_s
+    path = /<link=(.*)>/.match(text).to_a.last
+     "window.location='#{path}';"
+  end
 end
