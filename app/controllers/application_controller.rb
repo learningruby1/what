@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(user)
     Document.where(:session_uniq_token => cookies[:session_uniq_token], :user_id => nil).update_all :session_uniq_token => nil, :user_id => current_user
     cookies[:session_uniq_token] = nil
-    user.documents.present? ? pdf_files_path : root_path
+    if user.sign_in_count == 1
+      user.documents.create :template_id => 1
+      document_answer_path :document_id => user.documents.last.id, :step => 1
+    else
+      root_path
+    end
   end
 end
