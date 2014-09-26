@@ -159,7 +159,7 @@ function check_value(value, _this){
   return true
 }
 
-function data_init(){
+function date_init(){
   var date = $('.date');
   var date_without_day = $('.date_without_day');
   var only_year = $('.only_year');
@@ -349,4 +349,4 @@ function checkbox_radio_toggler(){
       });
     });
   });
-}
+});
