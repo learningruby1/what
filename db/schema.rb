@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919144948) do
+ActiveRecord::Schema.define(version: 20140916094332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20140919144948) do
     t.integer "document_id"
     t.integer "template_field_id"
     t.integer "toggler_offset",    default: 0
-    t.text    "answer"
     t.string  "sort_index"
     t.integer "sort_number"
+    t.text    "answer"
   end
 
   create_table "documents", force: true do |t|
@@ -45,6 +45,16 @@ ActiveRecord::Schema.define(version: 20140919144948) do
   add_index "documents", ["template_id"], name: "index_documents_on_template_id", using: :btree
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
+  create_table "mail_reminders", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "document_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mail_reminders", ["document_id"], name: "index_mail_reminders_on_document_id", using: :btree
+  add_index "mail_reminders", ["user_id"], name: "index_mail_reminders_on_user_id", using: :btree
+
   create_table "template_fields", force: true do |t|
     t.text     "name"
     t.datetime "created_at"
@@ -58,8 +68,9 @@ ActiveRecord::Schema.define(version: 20140919144948) do
     t.string   "mandatory"
     t.integer  "amount_field_id"
     t.boolean  "raw_question",     default: true
-    t.string   "header_ids"
     t.string   "sort_index"
+    t.string   "header_ids"
+    t.integer  "sub_toggle_id"
   end
 
   add_index "template_fields", ["template_step_id"], name: "index_template_fields_on_template_step_id", using: :btree
