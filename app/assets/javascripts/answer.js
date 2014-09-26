@@ -1,6 +1,6 @@
 //$(function(){
 $( document ).ready(function() {
-  data_init();
+  date_init();
   var time = $('.time');
   if (time.length > 0){
 
@@ -349,4 +349,4 @@ function checkbox_radio_toggler(){
       });
     });
   });
-});
+}
