@@ -48,7 +48,7 @@ module PdfDocument
         end
         tmp_text += " who #{ @number_of_children > 1 ? 'are' : 'is' } the issue of this marriage, and here are no other minor children adopted or otherwise."
 
-        if @children_adopted
+        if @children_nevada_residency
           tmp_text += " That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months."
         else
           tmp_text += " That the minor #{ @number_of_children > 1 ? 'children are not' : 'child is not' } residents of the State of  Nevada and #{ @number_of_children > 1 ? 'have not' : 'has not' } lived in this state for at least the past six (6) months."
@@ -64,7 +64,7 @@ module PdfDocument
 
       push_text "That the wife in this case #{ @wife_pregnacy ? 'is' : 'is not' } currently pregnant.", @text_indent
 
-      if @children_residency
+      if @children_residency && !@children_continue
         move_to_left "#{ _counter += 1 }.  LEGAL CUSTODY"
 
         case @legal_custody_parent
@@ -171,6 +171,8 @@ module PdfDocument
         @child_tax_examption.each do |tax|
 
           case tax.first
+          when /^Should be/
+            push_text "The tax deduction for #{ @children_names[tax.second] } should be allocated per federal law.", @text_indent
           when /^Mom every|^Dad every/
             push_text "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_names[tax.second] }, as dependent for Federal Tax purposes every year.", @text_indent
           when /^Dad and Mom/
@@ -239,72 +241,47 @@ module PdfDocument
         end
 
         @debts_accounts.each do |property|
-          if @mom == 'plaintiff'
-            case property.last
-            when /^I will keep/
-              property.pop
-              mom_array.push property.join(', ') if property != '' || property != ','
-            when /^My spouse will keep/
-              property.pop
-              dad_array.push property.join(', ') if property != '' || property != ','
-            else
-              property[2] = 'Portion'
-              mom_array.push property.join(', ') if property != '' || property != ','
-              dad_array.push property.join(', ') if property != '' || property != ','
-            end
+          case property.last
+          when /^Wife will keep it/
+            property.pop
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep it/
+            property.pop
+            dad_array.push property.join(', ') if property != '' || property != ','
           else
-            case property.last
-            when /^I will keep/
-              property.pop
-              dad_array.push property.join(', ') if property != '' || property != ','
-            when /^My spouse will keep/
-              property.pop
-              mom_array.push property.join(', ') if property != '' || property != ','
-            else
-              property[2] = 'Portion'
-              mom_array.push property.join(', ') if property != '' || property != ','
-              dad_array.push property.join(', ') if property != '' || property != ','
-            end
+            property[2] = 'Divide'
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
 
         @bank_account.each do |property|
-          if @mom == 'plaintiff'
-            case property.last
-            when /^I will keep/
-              property.pop
-              mom_array.push property.join(', ') if property != '' || property != ','
-            when /^My spouse will keep/
-              property.pop
-              dad_array.push property.join(', ') if property != '' || property != ','
-            else
-              property[4] = 'Portion'
-              mom_array.push property.join(', ') if property != '' || property != ','
-              dad_array.push property.join(', ') if property != '' || property != ','
-            end
+          case property.last
+          when /^Wife will keep it/
+            property.pop
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep it/
+            property.pop
+            dad_array.push property.join(', ') if property != '' || property != ','
           else
-            case property.last
-            when /^I will keep/
-              property.pop
-              dad_array.push property.join(', ') if property != '' || property != ','
-            when /^My spouse will keep/
-              property.pop
-              mom_array.push property.join(', ') if property != '' || property != ','
-            else
-              property[4] = 'Portion'
-              dad_array.push property.join(', ') if property != '' || property != ','
-              mom_array.push property.join(', ') if property != '' || property != ','
-            end
+            property[4] = 'Divide'
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
 
-        if @other_property_presence
-          @other_properties.each do |other_property|
-            if @mom.capitalize == 'Plaintiff'
-              mom_array.push other_property
-            else
-              dad_array.push other_property
-            end
+        @other_properties.each do |property|
+          case property.last
+          when /^Wife will keep/
+            property.pop
+            mom_array.push property.join(', ') if property != '' || property != ','
+          when /^Husband will keep/
+            property.pop
+            dad_array.push property.join(', ') if property != '' || property != ','
+          else
+            property[2] = 'Divide'
+            mom_array.push property.join(', ') if property != '' || property != ','
+            dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
 
@@ -370,7 +347,7 @@ module PdfDocument
             property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
-            property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home'
+            property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
             mom_array.push property.join(', ') if property != '' || property != ','
             dad_array.push property.join(', ') if property != '' || property != ','
           end

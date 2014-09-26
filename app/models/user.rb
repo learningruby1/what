@@ -51,4 +51,9 @@ class User < ActiveRecord::Base
       self.errors.add :base, error
     end
   end
+
+  def bind_sub_document(document_id, sub_document)
+    documents.find(document_id).sub_documents << sub_document
+  end
+
 end

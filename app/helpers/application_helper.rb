@@ -32,7 +32,9 @@ module ApplicationHelper
   end
 
   def get_number_of_child(document)
-    answer = document.step_answers(8).last
+    if document.template.id == 1
+      answer = document.step_answers(8).last
+    end
 
     if answer.nil?
       return nil
@@ -41,14 +43,42 @@ module ApplicationHelper
     end
   end
 
+  def get_defendant_full_name(document)
+    divorce_document = case document.template.id
+      when 1
+        document
+      when 2
+        document.divorce_document
+      end
+    divorce_document.step_answers(4).map(&:answer)[0..2].join(' ').squeeze(' ')
+  end
+
+  def get_plaintiff_full_name(document)
+    divorce_document = case document.template.id
+      when 1
+        document
+      when 2
+        document.divorce_document
+      end
+    divorce_document.step_answers(3).map(&:answer)[0..2].join(' ').squeeze(' ')
+  end
+
   def get_self(document)
-    answers = document.step_answers(3)
-    answer = answers[answers.count - 2]
+    if document.template.id == 1
+      answers = document.step_answers(3)
+      answer = answers[answers.count - 2]
+    end
 
     if answer.nil?
       return nil
     else
       return answer.answer
     end
+  end
+
+  def get_link_for_redirect(text, document_id)
+    text.sub! /:document_id/, document_id.to_s
+    path = /<link=(.*)>/.match(text).to_a.last
+     "window.location='#{path}';"
   end
 end

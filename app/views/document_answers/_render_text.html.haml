@@ -1,6 +1,9 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - if text.match(/<insert>/)
+    - text = real_answer.template_field.to_text_radio(@document, @amount_index, index_of_radio)
+
   - unless get_self(@document).nil?
     - if text.match(/<spain_self>/)
       - if get_self(@document) == 'Wife'
@@ -68,6 +71,11 @@
         - when 9
           - text.gsub!('<child_percentage_sole_spain>', '9 niños 41%')
           - text.gsub!('<child_percentage_sole>', '9 children 41%')
+
+  - if text.match(/<defendant_full_name>/) || text.match(/<defendant_full_name_spain>/)
+    - defendant_name = get_defendant_full_name @document
+    - text.gsub!('<defendant_full_name>', defendant_name)
+    - text.gsub!('<defendant_full_name_spain>', defendant_name)
 
   - new_text = get_begin_text(text, @count_index)
   - unless new_text.nil?
