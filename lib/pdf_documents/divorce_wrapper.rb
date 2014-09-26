@@ -393,7 +393,10 @@ module PdfDocument
             #Step 22   Child Support
             answers = step_answers_enum steps.next
             @child_suport_who = answers.next.answer
-            @child_suport_amount = answers.next.answer
+            answers.next
+            @how_pay = answers.next.answer
+            answers.next
+            @pay_amount = answers.next.answer
 
             #Step 23 Additional Child Support
             answers = step_answers_enum steps.next
