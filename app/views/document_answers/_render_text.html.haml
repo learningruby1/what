@@ -1,6 +1,9 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - if text.match(/<insert>/)
+    - text = real_answer.template_field.to_text_radio(@document, @amount_index, index_of_radio)
+
   - unless get_self(@document).nil?
     - if text.match(/<spain_self>/)
       - if get_self(@document) == 'Wife'
