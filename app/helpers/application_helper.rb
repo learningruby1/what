@@ -23,6 +23,14 @@ module ApplicationHelper
     return hash_index
   end
 
+  def get_number_of_joint_child(document)
+    document.step_answers(12).map(&:answer).keep_if {|a| a == 'Both Parents'}.length
+  end
+
+  def get_number_of_primary_or_sole_child(document)
+    document.step_answers(8).last.answer.to_i - get_number_of_joint_child(document).to_i
+  end
+
   def get_number_of_child(document)
     if document.template.id == 1
       answer = document.step_answers(8).last
