@@ -15,7 +15,6 @@ class DocumentAnswer < ActiveRecord::Base
             ['Colorado', 'CO'],
             ['Connecticut', 'CT'],
             ['Delaware', 'DE'],
-            ['District of Columbia', 'DC'],
             ['Florida', 'FL'],
             ['Georgia', 'GA'],
             ['Hawaii', 'HI'],
@@ -46,7 +45,6 @@ class DocumentAnswer < ActiveRecord::Base
             ['Oklahoma', 'OK'],
             ['Oregon', 'OR'],
             ['Pennsylvania', 'PA'],
-            ['Puerto Rico', 'PR'],
             ['Rhode Island', 'RI'],
             ['South Carolina', 'SC'],
             ['South Dakota', 'SD'],
@@ -60,15 +58,29 @@ class DocumentAnswer < ActiveRecord::Base
             ['Wisconsin', 'WI'],
             ['Wyoming', 'WY']]
 
+  PERSON = [['', ''],
+            ['Grandma / Abuela', 'Grandma'],
+            ['Grandpa / Abuelo', 'Grandpa'],
+            ['Aunt / Tía', 'Aunt'],
+            ['Uncle / Tío', 'Uncle'],
+            ['Cousin / Primo', 'Cousin'],
+            ['Friend / Amigo', 'Friend'],
+            ['Godparent / Madrina/Padrino', 'Godparent'],
+            ['Stepfather / Padrastro', 'Stepfather'],
+            ['Stepmother / Madrastra', 'Stepmother'],
+            ['Sister / Hermana', 'Sister'],
+            ['Brother / Hermano', 'Brother'],
+            ['Other / Otro', 'Other']]
+
   def to_s
     answer
   end
 
   def self.sort _answers, step
-    if step == '40'
-      _answers.sort_by!{ |item| [item.sort_index, item.sort_number, item.template_field_id] } rescue nil
+    if step == '47'
+      _answers.sort_by!{ |item| [item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
     else
-      _answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+      _answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
     end
   end
 end

@@ -1,0 +1,11 @@
+- answer.template_field.name.split('<option/>').each do |title|
+  .container
+    .col-md-12
+      - title_array = title.split('<separate/>')
+      %label.new_roman.radio{ :class => ('margin-left' if !answer.template_field.field_type.match('sub')) }
+        - if title_array.first.split(' /<spain/>').first.include?('<link=')
+          = a.radio_button :answer, title_array.first.split(' /<spain/>').first, :class => "radio_#{ answer.template_field.template_step_id }", :checked => false, :onclick => get_link_for_redirect(title_array.first.split(' /<spain/>').first, @document.id)
+        - else
+          = a.radio_button :answer, title_array.first.split(' /<spain/>').first, :class => "radio_#{ answer.template_field.template_step_id }"
+        = render :partial => 'render_text', :locals => { :answer => title_array.first }
+        %input{ :type => 'hidden', :value => answer.id }

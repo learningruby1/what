@@ -4,8 +4,10 @@ class DocumentAnswersController < ApplicationController
   def edit
     if @document.present?
       @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
+      #Its correct work without this, need to test?
       @answers = DocumentAnswer.sort @answers, params[:step]
       @review = params[:review]
+
 
       if @review.present? && !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
@@ -27,11 +29,11 @@ class DocumentAnswersController < ApplicationController
     elsif params[:review].present?
       redirect_to document_review_path(@document)
     else
-      if current_step == 10 && @document.check_answers_children_residency(current_step)
-        redirect_to templates_path
-      else
-        redirect_to document_answer_path(@document, params[:step].to_i)
-      end
+      @document.edit_answers_children_residency(current_step) if current_step == 8
+
+      params[:step] = params[:step].to_i.next if current_step == 11 && !@document.check_child_prior_address(current_step)
+
+      redirect_to document_answer_path(@document, params[:step].to_i)
     end
   end
 
@@ -42,10 +44,10 @@ class DocumentAnswersController < ApplicationController
     tmp_value = answer2.answer.to_i
 
     @document.update_answers!(answers_params, params[:step].to_i)
-    @document.create_or_delete_answer params[:value].to_i, answer2, params[:step], tmp_value
+    @document.create_or_delete_answer params[:value].to_i, answer2, params[:step], tmp_value, answer2.toggler_offset
 
     @answers = @document.prepare_answers! params[:step], true
-    @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+    @answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }
     @review = params[:review]
 
     if @review.present? && !@answers.blank?

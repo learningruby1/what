@@ -2,20 +2,23 @@ module PdfDocument
   class Pdf
     require 'pdf_documents/wrapper'
     require 'pdf_documents/divorce_wrapper'
+    # require 'pdf_documents/filed_case_wrapper'
     require 'pdf_documents/documents/divorce_complaint'
     require 'pdf_documents/documents/divorce_summons'
     require 'pdf_documents/documents/divorce_injunction'
     require 'pdf_documents/documents/divorce_cover'
+    require 'pdf_documents/documents/affidative_or_acceptance_of_service'
     require 'prawn'
 
     def generate(document)
       case document.template.to_s
       when /^Complaint for Divorce/
-
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
         generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
+      when /^Filed Case/
+        generate_document PdfDocument::AffidativeOrAcceptanceOfService.new(document).generate,      "AffidativeAcceptance_of_service_#{ document.id }"
       end
     end
 

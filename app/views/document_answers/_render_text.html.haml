@@ -1,6 +1,9 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - if text.match(/<insert>/)
+    - text = real_answer.template_field.to_text_radio(@document, @amount_index, index_of_radio)
+
   - unless get_self(@document).nil?
     - if text.match(/<spain_self>/)
       - if get_self(@document) == 'Wife'
@@ -9,8 +12,10 @@
         - text.gsub!('<spain_self>', 'esposa')
 
   - unless get_number_of_child(@document).nil?
+    - count = get_number_of_child(@document).to_i
+    - sole_count = get_number_of_primary_or_sole_child(@document)
     - if text.match(/<child_count>/) || text.match(/<child_count_spain>/)
-      - if get_number_of_child(@document).to_i == 1
+      - if count == 1
         - text.gsub!('<child_count>', 'the child')
         - text.gsub!('<child_count_spain>', 'el menor ')
         - if text[0] == 't'
@@ -20,6 +25,57 @@
         - text.gsub!('<child_count_spain>', 'los menores')
         - if text[0] == 'c'
           - text[0] = 'C'
+
+    - if text.match(/<child_number_count>/) || text.match(/<child_number_count_spain>/)
+      - if count == 1
+        - text.gsub!('<child_count>', '1 child')
+        - text.gsub!('<child_count_spain>', '1 menor ')
+      - else
+        - text.gsub!('<child_count>', "#{count} children")
+        - text.gsub!('<child_count_spain>', "#{count} menores")
+
+    - if text.match(/<child_sole_count>/) || text.match(/<child_sole_count_spain>/)
+      - if sole_count == 1
+        - text.gsub!('<child_sole_count>', '1 child')
+        - text.gsub!('<child_sole_count_spain>', '1 menor ')
+      - else
+        - text.gsub!('<child_sole_count>', "#{sole_count} children")
+        - text.gsub!('<child_sole_count_spain>', "#{sole_count} menores")
+
+    - if text.match(/<child_percentage_sole>/) || text.match(/<child_percentage_sole_spain>/)
+      - case sole_count
+        - when 1
+          - text.gsub!('<child_percentage_sole_spain>', '1 niño 18%')
+          - text.gsub!('<child_percentage_sole>', '1 child 18%')
+        - when 2
+          - text.gsub!('<child_percentage_sole_spain>', '2 niños 25%')
+          - text.gsub!('<child_percentage_sole>', '2 children 25%')
+        - when 3
+          - text.gsub!('<child_percentage_sole_spain>', '3 niños 29%')
+          - text.gsub!('<child_percentage_sole>', '3 children 29%')
+        - when 4
+          - text.gsub!('<child_percentage_sole_spain>', '4 niños 31%')
+          - text.gsub!('<child_percentage_sole>', '4 children 31%')
+        - when 5
+          - text.gsub!('<child_percentage_sole_spain>', '5 niños 33%')
+          - text.gsub!('<child_percentage_sole>', '5 children 33%')
+        - when 6
+          - text.gsub!('<child_percentage_sole_spain>', '6 niños 35%')
+          - text.gsub!('<child_percentage_sole>', '6 children 35%')
+        - when 7
+          - text.gsub!('<child_percentage_sole_spain>', '7 niños 37%')
+          - text.gsub!('<child_percentage_sole>', '7 children 37%')
+        - when 8
+          - text.gsub!('<child_percentage_sole_spain>', '8 niños 39%')
+          - text.gsub!('<child_percentage_sole>', '8 children 39%')
+        - when 9
+          - text.gsub!('<child_percentage_sole_spain>', '9 niños 41%')
+          - text.gsub!('<child_percentage_sole>', '9 children 41%')
+
+  - if text.match(/<defendant_full_name>/) || text.match(/<defendant_full_name_spain>/)
+    - defendant_name = get_defendant_full_name @document
+    - text.gsub!('<defendant_full_name>', defendant_name)
+    - text.gsub!('<defendant_full_name_spain>', defendant_name)
 
   - new_text = get_begin_text(text, @count_index)
   - unless new_text.nil?
