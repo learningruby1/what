@@ -24,8 +24,8 @@ module PdfDocument
           @case = answers.next.answer
           @dept = answers.next.answer
           answers.next.answer
-          @summons_and_complaint_date_present = answers.next.answer == '1' rescue false
-          @summons_and_complaint_date_present ? @summons_and_complaint_date = answers.next.answer : answers.next.answer
+          answers.next.answer
+          @summons_and_complaint_date = answers.next.answer
           @preliminary_injunction_date_present = answers.next.answer == '1' rescue false
           @preliminary_injunction_date = answers.next.answer if @preliminary_injunction_date_present
 
@@ -44,9 +44,11 @@ module PdfDocument
               @friend_first_name = answers.next.answer
               @friend_middle_name = answers.next.answer
               @friend_last_name = answers.next.answer
+              @friend_radio_address = answers.next.answer.split[0].downcase
               @friend_home_address = answers.next.answer
               @friend_home_address_city = answers.next.answer
               @friend_home_address_zip = answers.next.answer
+              @friend_phone = answers.next.answer
             end
           end
         end
