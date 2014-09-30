@@ -25,6 +25,9 @@
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 
+      - when /sub_amount/
+        = render :partial => 'document_answers/fields/sub_amount', :locals => { :a => a, :answer => answer }
+
       - when /amount/
         = render :partial => 'document_answers/fields/amount', :locals => { :a => a, :answer => answer }
 
@@ -37,8 +40,6 @@
         - if answer.template_field.to_text(@document, @amount_index).match(/<beginText\/>/)
           - hash_index[answer.sort_index] += 1 rescue nil
 
-      - when /sub_amount/
-        = render :partial => 'document_answers/fields/sub_amount', :locals => { :a => a, :answer => answer }
 
       - else
         = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }
