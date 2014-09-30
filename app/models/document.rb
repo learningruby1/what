@@ -50,10 +50,12 @@ class Document < ActiveRecord::Base
       _answer = answers.find(answer.first)
       # save answer
       answer.last["answer"] = nil if answer.last["answer"].nil?
+
       _answer.update answer.last.permit(:answer)
-      # upcase
-      _answer.update :answer => _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
-      _answer.update :answer => _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
+      _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
+      _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
+      _answer.save
+
       looper = add_mandatory_error unless check_mandatory(_answer, _step)
     end
     looper
