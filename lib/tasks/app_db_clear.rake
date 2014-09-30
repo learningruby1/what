@@ -16,7 +16,7 @@ namespace :app do
     task :clear do
       CLEAR_ALL = ENV.fetch 'clear_all', false
 
-      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.strategy = :truncation, { :except => CLEAR_ALL ? [] : %w[users] }
       DatabaseCleaner.clean
     end
   end
