@@ -1248,7 +1248,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
@@ -1257,7 +1257,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 
 
 toggle_id += 1
@@ -1283,7 +1283,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
@@ -1292,7 +1292,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 
 
 toggle_id += 1
@@ -1318,7 +1318,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
@@ -1327,7 +1327,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 
 
 toggle_id += 1
@@ -1367,7 +1367,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
@@ -1376,7 +1376,7 @@ current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spai
 current_step.fields.create :name => 'Son /<spain/>Hijo
                               <option/>Daughter /<spain/>Hija
                               <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left', :name => '', :toggle_id => toggle_id
 
 
 
