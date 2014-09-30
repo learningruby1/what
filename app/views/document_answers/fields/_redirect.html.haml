@@ -6,6 +6,6 @@
         - if title_array.first.split(' /<spain/>').first.include?('<link=')
           = a.radio_button :answer, title_array.first.split(' /<spain/>').first, :class => "radio_#{ answer.template_field.template_step_id }", :checked => false, :onclick => get_link_for_redirect(title_array.first.split(' /<spain/>').first, @document.id)
         - else
-          = a.radio_button :answer, title_array.first.split(' /<spain/>').first, :class => "radio_#{ answer.template_field.template_step_id }"
+          = a.radio_button :answer, title_array.first.split(' /<spain/>').first, :class => "radio_#{ answer.template_field.template_step_id }", :onclick => "this.form.submit();"
         = render :partial => 'render_text', :locals => { :answer => title_array.first }
         %input{ :type => 'hidden', :value => answer.id }

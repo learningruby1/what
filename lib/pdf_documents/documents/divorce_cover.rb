@@ -283,9 +283,9 @@ module PdfDocument
         array_index = 0
         (@child_array.count / 5).times do
           if @child_array[array_index].present? || @child_array[array_index+1].present? || @child_array[array_index+2].present? || @child_array[array_index+3].present? || @child_array[array_index+4].present?
-            table_row [ "#{ print_index += 1 }. #{ @child_array[array_index] }", "#{ @child_array[array_index+1] }", "#{ @child_array[array_index+2] }", "#{ @child_array[array_index+3] }", "#{ @child_array[array_index+4] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @child_array[array_index] }", "#{ @child_array[array_index+2] }", "#{ @child_array[array_index+1] }", "#{ @child_array[array_index+3] }", "#{ @child_array[array_index+4] == 'Another' ? @child_array[array_index+5] : @child_array[array_index+4] }" ]
           end
-          array_index += 5
+          array_index += 6
         end
         if print_index < 8
           (8 - print_index).times do

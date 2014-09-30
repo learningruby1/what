@@ -5,19 +5,21 @@ class Document < ActiveRecord::Base
   has_many :answers, :class_name => 'DocumentAnswer'
   has_many :dependent_documents
   has_many :sub_documents, :through => :dependent_documents, :class_name => 'Document', :foreign_key => 'sub_document_id'
+
   has_one :dependant_document, :class_name => 'DependentDocument', :foreign_key => 'sub_document_id'
   has_one :divorce_document, :through => :dependant_document, :class_name => 'Document', :source => :document
+
   belongs_to :template
   accepts_nested_attributes_for :answers
 
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
   STEP_12 = "CHILDREN’S PRIOR ADDRESS"
+
   #Controller answers Action edit
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
     step = TemplateStep.find next_step rescue nil
-
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
     # NOTICE amount_if_answer => amount_answer_if.answer
@@ -30,7 +32,6 @@ class Document < ActiveRecord::Base
     end
 
     _answers = create_next_step_answers!(next_step) if _answers.blank?
-
     if !_answers.blank? && !_answers.last.answer.nil? &&
        !_answers.last.template_field.looper_option.nil? &&
         _answers.last.template_field.looper_option  == _answers.last.answer
@@ -39,7 +40,6 @@ class Document < ActiveRecord::Base
       _answers = step_answers(next_step)
       _answers += create_next_step_answers!(next_step, _answers.first.toggler_offset + _answers.length)
     end
-
     _answers
   end
 
@@ -47,14 +47,14 @@ class Document < ActiveRecord::Base
   def update_answers!(answers_params, _step)
     looper = false
     answers_params[:answers].each do |answer|
-
       _answer = answers.find(answer.first)
       # save answer
       answer.last["answer"] = nil if answer.last["answer"].nil?
-      _answer.update answer.last.permit(:answer)
-      # upcase
-      _answer.update :answer => _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
-      _answer.update :answer => _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
+
+      _answer.answer = answer.last[:answer]
+      _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
+      _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
+      _answer.save
 
       looper = add_mandatory_error unless check_mandatory(_answer, _step)
     end
@@ -123,11 +123,11 @@ class Document < ActiveRecord::Base
           if field.raw_question == true
             if field.sort_index.nil?
               if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + i * template.steps.count)
+                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count)
               end
             else
               if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + i * template.steps.count, :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i)
+                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count, :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i)
               end
             end
           end
@@ -228,7 +228,7 @@ class Document < ActiveRecord::Base
   end
 
   def step_answers(step)
-    template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten.sort_by(&:id) rescue nil
+    answers.where(:template_step_id => step).order(:id).to_a rescue nil
   end
 
   def loop_amount(step)
