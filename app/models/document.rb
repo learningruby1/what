@@ -51,7 +51,7 @@ class Document < ActiveRecord::Base
       # save answer
       answer.last["answer"] = nil if answer.last["answer"].nil?
 
-      _answer.update answer.last.permit(:answer)
+      _answer.answer = answer.last.permit(:answer)
       _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
       _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
       _answer.save
