@@ -44,7 +44,7 @@ current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono: <spain/>e.g. (xxx) xxx-xxxx', :mandatory => { :value => /^([A-Za-z0-9\- ()]{2,20})?$/, :hint => 'Please enter a valid Phone Number /<spain/>Por favor, ponga un número de teléfono válido' }
+current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono: * <spain/>e.g. (xxx) xxx-xxxx', :mandatory => { :value => /^[A-Za-z0-9\- ()]{2,20}$/, :hint => 'Please enter a valid Phone Number /<spain/>Por favor, ponga un número de teléfono válido' }
 current_step.fields.create :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email /<spain/>Por favor, ponga un correo electrónico válido' }
 current_step.fields.create :name => 'I am /<spain/>Yo soy:', :field_type => 'label'
 current_step.fields.create :name => 'Wife /<spain/>Esposa
@@ -1208,7 +1208,7 @@ current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id =>
 current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la última orden:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Approximate Date of last Order: /<spain/>Fecha aproximada de la última orden:', :toggle_id => toggle_id
 
 
 toggle_id += 1
@@ -1222,7 +1222,7 @@ current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id =>
 current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la última orden:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Approximate Date of last Order: /<spain/>Fecha aproximada de la última orden:', :toggle_id => toggle_id
 
 
 toggle_id += 1
@@ -1236,7 +1236,7 @@ current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id =>
 current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la última orden:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Approximate Date of last Order: /<spain/>Fecha aproximada de la última orden:', :toggle_id => toggle_id
 
 current_step.fields.create :field_type => 'text', :name => 'Complete only if other children were involved - not the ones already mentioned <br/><spain/>Completar sólo si otros niños estuvieron involucrados - no a los ya mencionan.', :toggle_id => toggle_id
 
@@ -1245,14 +1245,20 @@ current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'str
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
-
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Paternity /<spain/>Paternidad', :toggle_id => toggle_id
@@ -1265,7 +1271,7 @@ current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id =>
 current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la última orden:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Approximate Date of last Order: /<spain/>Fecha aproximada de la última orden:', :toggle_id => toggle_id
 
 current_step.fields.create :field_type => 'text', :name => 'Complete only if other children were involved - not the ones already mentioned <br/><spain/>Completar sólo si otros niños estuvieron involucrados - no a los ya mencionan.', :toggle_id => toggle_id
 
@@ -1274,14 +1280,20 @@ current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'str
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
-
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Juvenile Court or abuse and neglect /<spain/>Corte juvenil o abuso y negligencia', :toggle_id => toggle_id
@@ -1294,7 +1306,7 @@ current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id =>
 current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la última orden:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Approximate Date of last Order: /<spain/>Fecha aproximada de la última orden:', :toggle_id => toggle_id
 
 current_step.fields.create :field_type => 'text', :name => 'Complete only if other children were involved - not the ones already mentioned <br/><spain/>Completar sólo si otros niños estuvieron involucrados - no a los ya mencionan.', :toggle_id => toggle_id
 
@@ -1303,15 +1315,19 @@ current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'str
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
-
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
-
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
 
 
 toggle_id += 1
@@ -1325,7 +1341,8 @@ current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id =>
 current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la última orden:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Approximate Date of last Order: /<spain/>Fecha aproximada de la última orden:', :toggle_id => toggle_id
+
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Termination of Parental Rights /<spain/>Terminación de la patria potestad', :toggle_id => toggle_id
@@ -1338,7 +1355,7 @@ current_step.fields.create :name => 'Last name /<spain/>Apellido', :toggle_id =>
 current_step.fields.create :name => 'First name /<spain/>Nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Middle name /<spain/>Segundo nombre', :toggle_id => toggle_id, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'amount', :name => 'Case # /<spain/># de caso:', :toggle_id => toggle_id
-current_step.fields.create :field_type => 'date', :name => 'Date of last Order: /<spain/>Día de la última orden:', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'date', :name => 'Approximate Date of last Order: /<spain/>Fecha aproximada de la última orden:', :toggle_id => toggle_id
 
 current_step.fields.create :field_type => 'text', :name => 'Complete only if other children were involved - not the ones already mentioned <br/><spain/>Completar sólo si otros niños estuvieron involucrados - no a los ya mencionan.', :toggle_id => toggle_id
 
@@ -1347,14 +1364,20 @@ current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'str
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
-
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'text', :name => 'Other child involved: /<spain/>El otro menor involucrado:', :toggle_id => toggle_id
 current_step.fields.create :name => 'Name /<spain/>Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :name => 'Last Name /<spain/>Apellido:', :field_type => 'string-upcase', :toggle_id => toggle_id
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento:', :field_type => 'date', :toggle_id => toggle_id
-current_step.fields.create :name => 'Son /<spain/>Hijo<option/>Daughter /<spain/>Hija', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :name => 'Son /<spain/>Hijo
+                              <option/>Daughter /<spain/>Hija
+                              <option/>Another /<spain/>Otro', :field_type => 'radio', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount', :name => '', :toggle_id => toggle_id
+
 
 
 #

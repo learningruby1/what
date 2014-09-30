@@ -5,8 +5,7 @@
         Sign in /
         %span.spain Iniciar sesión &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         - if devise_mapping.registerable? && controller_name != 'registrations'
-          = link_to "Sign up / ", new_registration_path(resource_name)
-          = link_to "Contratar", new_registration_path(resource_name), :class => 'spain'
+          = link_to '<span class="prefix-style">Sign up </span><span class="spain">/ Contratar</span>'.html_safe, new_registration_path(resource_name)
           %br
 
       -#= render :partial => 'layouts/messages'

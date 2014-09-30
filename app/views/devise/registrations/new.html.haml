@@ -6,8 +6,7 @@
           Sign up
           %span.spain Contratar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           - if controller_name != 'sessions'
-            = link_to "Sign in /", new_session_path(resource_name)
-            = link_to " Iniciar sesión", new_session_path(resource_name), :class => 'spain'
+            = link_to '<span class="prefix-style">Sign in </span><span class="spain">/ Iniciar sesión</span>'.html_safe, new_session_path(resource_name)
             %br
 
         = devise_error_messages!

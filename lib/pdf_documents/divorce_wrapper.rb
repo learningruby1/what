@@ -898,15 +898,15 @@ module PdfDocument
               @custody_support_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @paternity = answers[array_index += 1].answer == '1' rescue false
@@ -921,15 +921,15 @@ module PdfDocument
               @paternity_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @juvenile_court = answers[array_index += 1].answer == '1' rescue false
@@ -944,15 +944,15 @@ module PdfDocument
               @juvenile_court_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @guardianship = answers[array_index += 1].answer == '1' rescue false
@@ -982,15 +982,15 @@ module PdfDocument
               @termination_parental_right_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
         end
     end
