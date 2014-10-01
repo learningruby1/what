@@ -215,11 +215,17 @@ class Document < ActiveRecord::Base
     if template.steps.where(:step_number => next_step).exists?
       if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
         begin
-          while !template.steps.where(:step_number => next_step).first.render_if_field_value.nil? &&
-                 template.steps.where(:step_number => next_step).first.render_if_field_value !=
-                (template.steps.where(:step_number => next_step).first.render_fields.where(:document_id => id).first.try(:answer) || '') do
+          current_dependant_step = template.steps.where(:step_number => next_step).first
+          previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
+
+          while !current_dependant_step.render_if_field_value.nil? &&
+                (current_dependant_step.render_if_field_value != (current_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ||
+                !previous_dependant_step.render_if_field_value.nil? && previous_dependant_step.render_if_field_value != (previous_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ) do
 
             next_step = direction == 'forward' ? next_step.next : next_step.pred
+
+            current_dependant_step = template.steps.where(:step_number => next_step).first
+            previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
           end
         end rescue nil #rescue needs cause answer can be not created at the moment
       end

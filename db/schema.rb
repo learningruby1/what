@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20140930062231) do
     t.string   "mandatory"
     t.integer  "amount_field_id"
     t.boolean  "raw_question",     default: true
+    t.string   "header_ids"
     t.string   "sort_index"
     t.string   "header_ids"
     t.integer  "sub_toggle_id"
