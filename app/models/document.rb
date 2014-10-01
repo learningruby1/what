@@ -19,10 +19,12 @@ class Document < ActiveRecord::Base
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
-    step = TemplateStep.find next_step rescue nil
+
+    step = TemplateStep.find next_step + template.steps.first.id - 1 rescue nil
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
     # NOTICE amount_if_answer => amount_answer_if.answer
+
     if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
       (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
       _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
@@ -32,6 +34,7 @@ class Document < ActiveRecord::Base
     end
 
     _answers = create_next_step_answers!(next_step) if _answers.blank?
+
     if !_answers.blank? && !_answers.last.answer.nil? &&
        !_answers.last.template_field.looper_option.nil? &&
         _answers.last.template_field.looper_option  == _answers.last.answer
@@ -84,11 +87,14 @@ class Document < ActiveRecord::Base
     end
 
     if _answer.sort_number == 2 && _answer.answer != ''
+
       parent_template = template.steps.where(:step_number => _step).first.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       prev_answer = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first.answer
       if prev_answer == '1' || prev_answer == 'Yes'
-        fields_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.where(:toggle_id => _answer.template_field.toggle_id).count
-        answers_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index) }.flatten.count rescue nil
+
+        fields_count = template.steps.where(:id => _answer.template_field.template_step_id).first.fields.where(:toggle_id => _answer.template_field.toggle_id).count
+        answers_count = template.steps.where(:id => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index, :toggler_offset => _answer.toggler_offset) }.flatten.count rescue nil
+
         return false unless answers_count - 2 == (fields_count - 2) * _answer.answer.to_i
       end
     end
@@ -116,20 +122,13 @@ class Document < ActiveRecord::Base
 
     if template.steps.where(:step_number => next_step).exists?
       loop_amount(next_step).times do |i|
-
         current_step = template.steps.where(:step_number => next_step).first
-        current_step.fields.reverse_each do |field|
 
-          if field.raw_question == true
-            if field.sort_index.nil?
-              if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count)
-              end
-            else
-              if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count, :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i)
-              end
-            end
+        current_step.fields.reverse_each do |field|
+          if field.raw_question == true && (i == 0 || field.dont_repeat == false)
+            params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * template.steps.count) }
+            params.merge!({ :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i }) if !field.sort_index.nil?
+            document_answers.push answers.create(params)
           end
         end
         break if current_step.amount_field_id.present? && current_step.amount_field_if.present? &&
@@ -150,12 +149,12 @@ class Document < ActiveRecord::Base
       counter = return_value_for_counter answer
 
       loop_amount.times do |i|
-        template.steps.where(:step_number => next_step).first.fields.where(:amount_field_id => answer.template_field_id).reverse_each do |field|
+        template.steps.where(:id => next_step + template.steps.first.id - 1).first.fields.where(:amount_field_id => answer.template_field_id).reverse_each do |field|
           index += 1
-          if template.steps.where(:step_number => next_step).first.title.split(' /<spain/>').first == STEP_12
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + (counter + i + 1) * 2, :sort_index => last_answer.sort_index, :sort_number => index )
+          if template.steps.where(:id => next_step + template.steps.first.id - 1).first.title.split(' /<spain/>').first == STEP_12
+            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + (counter + i + 1) * 2, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => next_step + template.steps.first.id - 1 )
           else
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index )
+            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => next_step + template.steps.first.id - 1 )
           end
         end
       end
@@ -168,7 +167,7 @@ class Document < ActiveRecord::Base
       answers = []
       tmp_answers.each do |item|
         unless item.sort_index.nil?
-          if template.steps.where(:step_number => next_step).first.title.split(' /<spain/>').first == STEP_12
+          if template.steps.where(:id => next_step + template.steps.first.id - 1).first.title.split(' /<spain/>').first == STEP_12
             answers << item if item.sort_index.include?(answer.sort_index) && item.toggler_offset >= answer.toggler_offset && item.toggler_offset <= (answer.answer.to_i + answer.toggler_offset)*2
           else
             answers << item if item.sort_index.include?(answer.sort_index) && item.toggler_offset == answer.toggler_offset
@@ -207,10 +206,6 @@ class Document < ActiveRecord::Base
     end
   end
 
-  def step_answers(step)
-    template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten rescue nil
-  end
-
   def skip_steps(next_step, direction='forward')
     if template.steps.where(:step_number => next_step).exists?
       if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
@@ -234,7 +229,7 @@ class Document < ActiveRecord::Base
   end
 
   def step_answers(step)
-    answers.where(:template_step_id => step).order(:id).to_a rescue nil
+    answers.where(:template_step_id => step + template.steps.first.id - 1).order(:id).to_a rescue nil
   end
 
   def loop_amount(step)

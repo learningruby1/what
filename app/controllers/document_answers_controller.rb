@@ -3,7 +3,7 @@ class DocumentAnswersController < ApplicationController
 
   def edit
     if @document.present?
-      @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
+      @answers = @document.prepare_answers! params[:step].to_i, params[:direction].presence || 'forward'
       #Its correct work without this, need to test?
       @answers = DocumentAnswer.sort @answers, params[:step]
       @review = params[:review]
@@ -42,9 +42,9 @@ class DocumentAnswersController < ApplicationController
     tmp_value = answer2.answer.to_i
 
     @document.update_answers!(answers_params, params[:step].to_i)
-    @document.create_or_delete_answer params[:value].to_i, answer2, params[:step], tmp_value, answer2.toggler_offset
+    @document.create_or_delete_answer params[:value].to_i, answer2, params[:step].to_i, tmp_value, answer2.toggler_offset
 
-    @answers = @document.prepare_answers! params[:step], true
+    @answers = @document.prepare_answers! params[:step].to_i, true
     @answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }
     @review = params[:review]
 
