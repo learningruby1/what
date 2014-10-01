@@ -3,7 +3,7 @@ class DocumentAnswersController < ApplicationController
 
   def edit
     if @document.present?
-      @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
+      @answers = @document.prepare_answers! params[:step].to_i, params[:direction].presence || 'forward'
       #Its correct work without this, need to test?
       @answers = DocumentAnswer.sort @answers, params[:step]
       @review = params[:review]

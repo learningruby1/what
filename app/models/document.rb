@@ -19,7 +19,7 @@ class Document < ActiveRecord::Base
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
-    step = TemplateStep.find next_step rescue nil
+    step = TemplateStep.find next_step + template.steps.first.id - 1 rescue nil
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
     # NOTICE amount_if_answer => amount_answer_if.answer
@@ -62,6 +62,7 @@ class Document < ActiveRecord::Base
   end
 
   def check_mandatory(_answer, _step)
+    return true
     if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
       parent_template = template.steps.where(:step_number => _step).first.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       parent_toggler = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first
@@ -116,20 +117,13 @@ class Document < ActiveRecord::Base
 
     if template.steps.where(:step_number => next_step).exists?
       loop_amount(next_step).times do |i|
-
         current_step = template.steps.where(:step_number => next_step).first
-        current_step.fields.reverse_each do |field|
 
-          if field.raw_question == true
-            if field.sort_index.nil?
-              if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count)
-              end
-            else
-              if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count, :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i)
-              end
-            end
+        current_step.fields.reverse_each do |field|
+          if field.raw_question == true && (i == 0 || field.dont_repeat == false)
+            params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * template.steps.count) }
+            params.merge!({ :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i }) if !field.sort_index.nil?
+            document_answers.push answers.create(params)
           end
         end
         break if current_step.amount_field_id.present? && current_step.amount_field_if.present? &&
@@ -228,7 +222,7 @@ class Document < ActiveRecord::Base
   end
 
   def step_answers(step)
-    answers.where(:template_step_id => step).order(:id).to_a rescue nil
+    answers.where(:template_step_id => step + template.steps.first.id - 1).order(:id).to_a rescue nil
   end
 
   def loop_amount(step)
