@@ -256,10 +256,6 @@ class Document < ActiveRecord::Base
     save!
   end
 
-  def edit_answers_children_residency(_step)
-    step_answers(_step+2)[2].update :answer => 'No' if step_answers(_step).first.answer == 'No' && !step_answers(_step+2).empty?
-  end
-
   def check_child_prior_address(_step)
     answers = step_answers(_step)
     counter = answers.count / template.steps.where(:step_number => _step).first.fields.count
