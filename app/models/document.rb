@@ -23,6 +23,7 @@ class Document < ActiveRecord::Base
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
     # NOTICE amount_if_answer => amount_answer_if.answer
+
     if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
       (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
       _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
@@ -84,11 +85,13 @@ class Document < ActiveRecord::Base
     end
 
     if _answer.sort_number == 2 && _answer.answer != ''
+
       parent_template = template.steps.where(:step_number => _step).first.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       prev_answer = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first.answer
       if prev_answer == '1' || prev_answer == 'Yes'
         fields_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.where(:toggle_id => _answer.template_field.toggle_id).count
-        answers_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index) }.flatten.count rescue nil
+        answers_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index, :toggler_offset => _answer.toggler_offset) }.flatten.count rescue nil
+
         return false unless answers_count - 2 == (fields_count - 2) * _answer.answer.to_i
       end
     end
@@ -153,9 +156,9 @@ class Document < ActiveRecord::Base
         template.steps.where(:step_number => next_step).first.fields.where(:amount_field_id => answer.template_field_id).reverse_each do |field|
           index += 1
           if template.steps.where(:step_number => next_step).first.title.split(' /<spain/>').first == STEP_12
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + (counter + i + 1) * 2, :sort_index => last_answer.sort_index, :sort_number => index )
+            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + (counter + i + 1) * 2, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => next_step )
           else
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index )
+            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => next_step )
           end
         end
       end
