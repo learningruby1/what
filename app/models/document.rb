@@ -62,7 +62,6 @@ class Document < ActiveRecord::Base
   end
 
   def check_mandatory(_answer, _step)
-    return true
     if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
       parent_template = template.steps.where(:step_number => _step).first.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       parent_toggler = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first
