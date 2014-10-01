@@ -124,7 +124,6 @@ current_step = template.steps.create :step_number => step_number += 1,#8
 toggle_id = 0
 toggle_id += 1
 children_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
 current_step.fields.create :field_type => 'text', :name => 'How many minor children were born or legally adopted during this marriage?
                                                             <br/><spain/>¿Cuántos  menores nacieron o fueron adoptados legalmente durante este matrimonio?', :toggle_id => toggle_id, :toggle_option => 'Yes'
 children_amount_field = current_step.fields.create :field_type => 'amount', :mandatory => { :value => /^[1-9]{1}$/, :hint => 'Please enter correct value /<spain/>Por favor, introduzca el valor correcto' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
@@ -174,7 +173,6 @@ current_step.fields.create :field_type => 'text', :name => 'Nevada Court does no
 current_step.fields.create :field_type => 'text', :name => 'Do you still want to continue? /<spain/>¿Quiere continuar?', :toggle_id => toggle_id, :toggle_option => 'No'
 current_step.fields.create :field_type => 'redirect', :name => 'No<link=/templates>
                                                                 <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #11
                                      :title => 'CHILDREN’S CURRENT ADDRESS /<spain/>DIRECCIÓN DE ACTUAL DE LOS MENORES'

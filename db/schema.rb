@@ -49,19 +49,19 @@ ActiveRecord::Schema.define(version: 20140930062231) do
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "template_fields", force: true do |t|
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "field_type",       default: "string"
     t.integer  "template_step_id"
-    t.text     "name"
     t.integer  "toggle_id"
     t.string   "toggle_option"
     t.string   "looper_option"
     t.boolean  "dont_repeat",      default: false
     t.string   "mandatory"
-    t.string   "header_ids"
     t.integer  "amount_field_id"
     t.boolean  "raw_question",     default: true
+    t.string   "header_ids"
     t.string   "sort_index"
     t.integer  "sub_toggle_id"
   end
