@@ -16,7 +16,8 @@
 
       -#NOTICE: fields can contain toggle_x class, if so, they can't contain any other classes!!1
       - case answer.template_field.field_type
-      - when /date|time|only_year|day_of_week/
+
+      - when /date|time|only_year_born|only_year|day_of_week/
         = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
 
       - when /text_radio/
@@ -24,6 +25,12 @@
 
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
+
+      - when /sub_amount/
+        = render :partial => 'document_answers/fields/sub_amount', :locals => { :a => a, :answer => answer }
+
+      - when /amount/
+        = render :partial => 'document_answers/fields/amount', :locals => { :a => a, :answer => answer }
 
       - when /redirect/
         = render :partial => 'document_answers/fields/redirect', :locals => { :a => a, :answer => answer }
@@ -34,8 +41,6 @@
         - if answer.template_field.to_text(@document, @amount_index).match(/<beginText\/>/)
           - hash_index[answer.sort_index] += 1 rescue nil
 
-      - when /sub_amount/
-        = render :partial => 'document_answers/fields/sub_amount', :locals => { :a => a, :answer => answer }
 
       - else
         = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }

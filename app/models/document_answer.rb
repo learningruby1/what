@@ -2,6 +2,7 @@ class DocumentAnswer < ActiveRecord::Base
 
   belongs_to :template_field, -> { includes(:template_step) }
   belongs_to :document
+  belongs_to :template_step
 
   scope :this_document, -> (document){ where(:document_id => document.id) }
 
@@ -15,7 +16,6 @@ class DocumentAnswer < ActiveRecord::Base
             ['Colorado', 'CO'],
             ['Connecticut', 'CT'],
             ['Delaware', 'DE'],
-            ['District of Columbia', 'DC'],
             ['Florida', 'FL'],
             ['Georgia', 'GA'],
             ['Hawaii', 'HI'],
@@ -46,7 +46,6 @@ class DocumentAnswer < ActiveRecord::Base
             ['Oklahoma', 'OK'],
             ['Oregon', 'OR'],
             ['Pennsylvania', 'PA'],
-            ['Puerto Rico', 'PR'],
             ['Rhode Island', 'RI'],
             ['South Carolina', 'SC'],
             ['South Dakota', 'SD'],

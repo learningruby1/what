@@ -100,7 +100,7 @@ $( document ).ready(function() {
       if(check_value(value, $(this))){
         $.ajax({
           type: "GET",
-          data: form + "&value=" + value + "&step=" + $('#step_id').val() + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val() + "&review=" + $('#review').val(),
+          data: form + "&value=" + value + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val() + "&review=" + $('#review').val(),
           url: "/documents/"+$('#document_id').val()+"/step/"+$('#step_id').val()+"/render_questions"
         });
       }
@@ -154,9 +154,9 @@ function check_value(value, _this){
 function date_init(){
   var date = $('.date');
   var date_without_day = $('.date_without_day');
-  var only_year = $('.only_year');
-
-  if (date.length > 0 || date_without_day.length > 0 || only_year.length > 0){
+  var only_year = $('.only_year')
+  var only_year_born = $('.only_year_born')
+  if (date.length > 0 || date_without_day.length > 0 || only_year.length > 0 || only_year_born.length > 0){
 
     var months = '<option value="1">January / Enero</option>' +
                  '<option value="2">February / Febrero</option>' +
@@ -175,6 +175,7 @@ function date_init(){
     var years = '';
     var years_without_day = '';
     var only_years = '';
+    var only_years_born = '';
     var start_year = 1900;
     var start_year_without_day = 2009;
     var start_only_year = 2013;
@@ -182,7 +183,7 @@ function date_init(){
     for( i = 1; i <= 31; ++i )
       days += '<option>' + i + '</option>';
 
-    for( i = new Date().getFullYear(); i >= start_year; --i )
+    for( i = new Date().getFullYear() + 1; i >= start_year; --i )
       years += '<option>' + i + '</option>';
 
     for( i = new Date().getFullYear(); i >= start_year_without_day; --i )
@@ -190,6 +191,14 @@ function date_init(){
 
     for( i = new Date().getFullYear(); i >= start_only_year; --i )
       only_years += '<option>' + i + '</option>';
+
+    for( i = new Date().getFullYear() + 1; i >= new Date().getFullYear(); --i )
+      only_years_born += '<option>' + i + '</option>';
+
+    only_year_born.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
+                '<div class="col-md-2 margin-left"><select class="day form-control">'  + '<option disabled="disabled" selected="selected">Day / Día</option>' + days + '</select></div>' +
+                '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + only_years_born + '</select></div>');
+
 
     only_year.append('<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + only_years + '</select></div>');
 
@@ -199,6 +208,32 @@ function date_init(){
     date.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
                 '<div class="col-md-2 margin-left"><select class="day form-control">'  + '<option disabled="disabled" selected="selected">Day / Día</option>' + days + '</select></div>' +
                 '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + years + '</select></div>');
+
+    $('.only_year_born select').each(function(){
+      $(this).change(function(){
+
+        var _this = $(this);
+        only_year_born = _this.parent().parent().find('[type="hidden"]');
+        only_year_born.val('');
+
+        _this.parent().parent().find('.form-control').each(function(){
+          if (only_year_born.val().length > 0)
+            only_year_born.val(only_year_born.val() + '/');
+          only_year_born.val(only_year_born.val() + $(this).val());
+        });
+      });
+    });
+
+    only_year_born.find('[type="hidden"]').each(function(){
+
+      var _this = $(this);
+      if(_this.val().length > 0){
+        selects = _this.parent().find('.form-control');
+        selects.first().val(_this.val().split('/')[0]);
+        selects.first().parent().next().children().val(_this.val().split('/')[1]);
+        selects.last().val(_this.val().split('/')[2]);
+      }
+    });
 
     $('.date select').each(function(){
       var str = '.' + $(this).prop('class');

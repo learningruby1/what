@@ -24,8 +24,8 @@ module PdfDocument
           @case = answers.next.answer
           @dept = answers.next.answer
           answers.next.answer
-          @summons_and_complaint_date_present = answers.next.answer == '1' rescue false
-          @summons_and_complaint_date_present ? @summons_and_complaint_date = answers.next.answer : answers.next.answer
+          answers.next.answer
+          @summons_and_complaint_date = answers.next.answer
           @preliminary_injunction_date_present = answers.next.answer == '1' rescue false
           @preliminary_injunction_date = answers.next.answer if @preliminary_injunction_date_present
 
@@ -44,9 +44,11 @@ module PdfDocument
               @friend_first_name = answers.next.answer
               @friend_middle_name = answers.next.answer
               @friend_last_name = answers.next.answer
+              @friend_radio_address = answers.next.answer.split[0].downcase
               @friend_home_address = answers.next.answer
               @friend_home_address_city = answers.next.answer
               @friend_home_address_zip = answers.next.answer
+              @friend_phone = answers.next.answer
             end
           end
         end
@@ -896,15 +898,15 @@ module PdfDocument
               @custody_support_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @paternity = answers[array_index += 1].answer == '1' rescue false
@@ -919,15 +921,15 @@ module PdfDocument
               @paternity_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @juvenile_court = answers[array_index += 1].answer == '1' rescue false
@@ -942,15 +944,15 @@ module PdfDocument
               @juvenile_court_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @guardianship = answers[array_index += 1].answer == '1' rescue false
@@ -980,15 +982,15 @@ module PdfDocument
               @termination_parental_right_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
         end
     end
