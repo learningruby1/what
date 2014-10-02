@@ -188,10 +188,12 @@ class Document < ActiveRecord::Base
   def get_last_sort_answer(step, sort_char, answer)
     tmp_answers = step_answers(step)
     answers = []
+
     tmp_answers.each do |item|
       unless item.sort_index.nil?
         if answer.template_step.title.split(' /<spain/>').first == STEP_12
-          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == (answer.toggler_offset + 2) * answer.answer.to_i
+
+          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset + (answer.answer.to_i * 2)
         else
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
         end
