@@ -91,7 +91,7 @@
       %strong.new_roman.spain= value.strip.html_safe
 
 - if answer.kind_of?(DocumentAnswer) && flash.any?
-  - unless @document.check_mandatory answer, answer.template_field.template_step.to_i
+  - unless @document.check_mandatory answer
     %br
     %span.alert-danger.mandatory-box
       = answer.template_field.mandatory[:hint].split('<spain/>').first
