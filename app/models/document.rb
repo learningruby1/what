@@ -66,7 +66,7 @@ class Document < ActiveRecord::Base
 
   def check_mandatory(_answer)
     if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
-      step = TemplateStep.find(_answer.template_field.template_step_id)
+      step = _answer.template_step
       parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       parent_toggler = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first
       parent_toggler = answers.where(:template_field_id => parent_template.id).first if parent_toggler.nil?
@@ -88,7 +88,7 @@ class Document < ActiveRecord::Base
     end
 
     if _answer.sort_number == 2 && _answer.answer != ''
-      step = TemplateStep.find(_answer.template_step_id)
+      step = _answer.template_step
       parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       prev_answer = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first.answer
       if prev_answer == '1' || prev_answer == 'Yes'
@@ -145,7 +145,7 @@ class Document < ActiveRecord::Base
   end
 
   def create_hidden_answers!(answer, loop_amount, last_answer, toggler_offset=0)
-    step = TemplateStep.find(answer.template_step_id)
+    step = answer.template_step
     if step.present?
       index = last_answer.sort_number
       counter = return_value_for_counter answer
@@ -164,7 +164,7 @@ class Document < ActiveRecord::Base
   end
 
   def delete_hidden_answers!(next_step, answer, loop_amount, amount_field_id)
-    step = TemplateStep.find(answer.template_step_id)
+    step = answer.template_step
     if step.present?
       tmp_answers = step_answers(next_step)
       answers = []
@@ -191,7 +191,7 @@ class Document < ActiveRecord::Base
     answers = []
     tmp_answers.each do |item|
       unless item.sort_index.nil?
-        if TemplateStep.find(answer.template_step_id).title.split(' /<spain/>').first == STEP_12
+        if answer.template_step.title.split(' /<spain/>').first == STEP_12
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == (answer.toggler_offset + 2) * answer.answer.to_i
         else
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
