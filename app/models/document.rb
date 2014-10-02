@@ -72,8 +72,7 @@ class Document < ActiveRecord::Base
 
       return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
-                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : '0')
-
+                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
 
       if _answer.template_field.mandatory[:template_field].present?
         parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first.answer

@@ -12,11 +12,11 @@
               = DocumentAnswer::NUMBER_NAME[@amount_index]
             %span{ :class => 'second_dependant_field' }
       - @amount_index += 1
-    %div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }", :sub_toggle => ("#{ answer.template_field.sub_toggle_id }" if answer.template_field.sub_toggle_id.present?), :mandatory_field => ("#{ answer.template_field.mandatory[:template_field] } " if answer.template_field.mandatory.present? && answer.template_field.mandatory[:template_field].present?) } }
+    %div{ :class => ("toggle_#{ answer.template_field.toggle_id + answer.toggler_offset }" if !answer.template_field.toggle_id.nil?), :data => { :toggle_option => "#{ answer.template_field.toggle_option }", :sub_toggle => ("#{ answer.template_field.sub_toggle_id }" if answer.template_field.sub_toggle_id.present?), :mandatory_field => ("#{ answer.template_field.mandatory[:template_field] } " if answer.template_field.mandatory.present? && answer.template_field.mandatory[:template_field].present?), :insert_place => ("#{ answer.template_field.insert_place.to_i + answer.toggler_offset }" if answer.template_field.insert_place.present?) } }
 
       -#NOTICE: fields can contain toggle_x class, if so, they can't contain any other classes!!1
       - case answer.template_field.field_type
-      - when /date|time|only_year/
+      - when /date|time|only_year|day_of_week/
         = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
 
       - when /text_radio/
