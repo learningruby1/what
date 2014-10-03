@@ -1,6 +1,7 @@
 //$(function(){
 $( document ).ready(function() {
   date_init();
+  day_of_week_init();
   var time = $('.time');
   if (time.length > 0){
 
@@ -131,24 +132,15 @@ $( document ).ready(function() {
   $('.container').eq(13).find('.col-md-2 select').on('change', function(){
     $('.radio_3:first').prop('checked', false)
   });
+
+  //Script for insert html blok to other place
+  $('[data-insert-place]').each(function(){
+    var this_class = '.place_for_insert_' + $(this).data('insert-place');
+    var div = $(this).detach();
+    $(this_class).append(div);
+    div = null;
+  });
 });
-
-function hide_sub_toggles(_this, selected_value){
-  var result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) + 1;
-  var current_class = '.toggle_' + result;
-
-  if(_this.data('sub-toggle') != undefined){
-    if( _this.find('[type="radio"]:checked').length > 0 ){
-      _this.find('[type="radio"]:checked').prop('checked',false);
-    }
-    $(current_class).hide().each(function(){
-      hide_sub_toggles($(this));
-    });
-  }
-
-  if(selected_value!= undefined && selected_value.indexOf(_this.data('toggle-option')) != -1)
-    _this.show();
-}
 
 function check_value(value, _this){
   if(value < 1 || value > 10){
@@ -323,6 +315,45 @@ function date_init(){
   }
 }
 
+function day_of_week_init(){
+  var day_of_week = $('.day_of_week');
+  if (day_of_week.length > 0){
+    var days_of_week = '<option value="1">Monday / Lunes</option>' +
+                 '<option value="2">Tuesday / Martes</option>' +
+                 '<option value="3">Wednesday / Miércoles</option>' +
+                 '<option value="4">Thursday / Jueves</option>' +
+                 '<option value="5">Friday / Viernes</option>' +
+                 '<option value="6">Saturday / Sábado</option>' +
+                 '<option value="7">Sunday / Domingo</option>';
+
+    day_of_week.append('<div class="col-md-3 margin-left"><select class="day_of_week form-control">' + '<option disabled="disabled" selected="selected">Day of week / Día de la semana</option>' + days_of_week + '</select></div>');
+
+    $('.day_of_week select').each(function(){
+      $(this).change(function(){
+        var _this = $(this);
+        day_of_week = _this.parent().parent().find('[type="hidden"]');
+        day_of_week.val('');
+
+        _this.parent().parent().find('.form-control').each(function(){
+          if (day_of_week.val().length > 0)
+            day_of_week.val(day_of_week.val() + '/');
+            //console.log(day_of_week.val());
+          day_of_week.val(day_of_week.val() + $(this).val());
+        });
+      });
+    });
+
+    day_of_week.find('[type="hidden"]').each(function(){
+
+      var _this = $(this);
+      if(_this.val().length > 0){
+        selects = _this.parent().find('.form-control');
+        selects.first().val(_this.val().split('/')[0]);
+      }
+    });
+  }
+}
+
 function checkbox_radio_toggler(){
   //Toggler logic
   $('[class^="toggle_"]').each(function(){
@@ -350,15 +381,19 @@ function checkbox_radio_toggler(){
       });
 
       //Radio button event
-      $('.' + $(this).prop('class') + ':first:has([type="radio"])').change(function(){
-        var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
+      $('.' + $(this).prop('class') + ' [type="radio"]').change(function(){
+        var selected_value = $(this).next().text();
+        var parent_class = '.' + $(this).parent().parent().parent().parent().prop('class');
         if(selected_value == 'No')
-          $('.' + $(this).prop('class') + ':not(:first) [type="radio"]:last').attr('checked', true);
+          $(parent_class + ':not(:first) [type="radio"]:last').attr('checked', true);
 
+        hide_checkboxes($(parent_class));
 
-        $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
-          hide_sub_toggles($(this), selected_value);
-        });
+        if($(this).parent().parent().parent().parent().data('sub-toggle') == undefined){
+          $(parent_class + ':not(:first)').hide().each(function(){
+            hide_sub_toggles($(this), selected_value);
+          });
+        }
       });
     }
   });
@@ -370,18 +405,66 @@ function checkbox_radio_toggler(){
     var this_class_next = '.toggle_' + result;
     var selected_value = $(this_class + ' [type="radio"]:checked:last').val();
 
-    $(this_class_next).hide().each(function(){
-      if(selected_value != undefined)
-        if(selected_value.indexOf($(this).data('toggle-option')) != -1)
-          $(this).show();
-    });
+    if(!$('.' + $(this).prop('class') + ' [type="checkbox"]').length > 0 ){
+      $(this_class_next).hide().each(function(){
+        if(selected_value != undefined)
+          if(selected_value.indexOf($(this).data('toggle-option')) != -1)
+            $(this).show();
+      });
+    }
+
+    checkbox_button_event($(this));
 
     //Radio button event
     $(this_class + '[data-sub-toggle="'+ $(this).data('sub-toggle')+'"]').change(function(){
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked:last').val();
-      $(this_class_next).hide().each(function(){
-        hide_sub_toggles($(this), selected_value);
-      });
+      if(!$('.' + $(this).prop('class') + ' [type="checkbox"]').length > 0 ){
+        $(this_class_next).hide().each(function(){
+          hide_sub_toggles($(this), selected_value);
+        });
+      }
+
+      //Checkbox button event
+      checkbox_button_event($(this));
     });
   });
+}
+
+function hide_sub_toggles(_this, selected_value){
+  var result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) + 1;
+  var current_class = '.toggle_' + result;
+
+  if(_this.data('sub-toggle') != undefined){
+    if( _this.find('[type="radio"]:checked').length > 0 ){
+      _this.find('[type="radio"]:checked').prop('checked',false);
+    }
+    $(current_class).hide().each(function(){
+      hide_sub_toggles($(this));
+    });
+  }
+
+  if(selected_value!= undefined && selected_value.indexOf(_this.data('toggle-option')) != -1)
+    _this.show();
+}
+
+function checkbox_button_event(_this){
+  if($('.' + _this.prop('class') + ' [type="checkbox"]').length > 0 ){
+    var radio_result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) - 1;
+    var this_class = '.toggle_' + (parseInt(_this.data('sub-toggle')) + radio_result);
+
+    if($('.' + _this.prop('class') + '[data-sub-toggle="'+ _this.data('sub-toggle')+'"]' + '[data-toggle-option="'+ _this.data('toggle-option')+'"]' + ' [type="checkbox"]').is(':checked'))
+      $(this_class + '[data-toggle-option="'+ _this.data('toggle-option')+'"]').show();
+    else
+      $(this_class + '[data-toggle-option="'+ _this.data('toggle-option')+'"]').hide();
+  }
+}
+
+function hide_checkboxes(_this){
+  if($('.' + _this.prop('class') + ' [type="checkbox"]').length > 0 ){
+    $('.' + _this.prop('class') + ' [type="checkbox"]:checked').prop('checked',false);
+    $('.' + _this.prop('class') + '[data-sub-toggle]').each(function(){
+      var radio_result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) - 1;
+      $('.toggle_' + (parseInt($(this).data('sub-toggle')) + radio_result)).hide();
+    });
+  }
 }

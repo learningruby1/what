@@ -76,8 +76,7 @@ class Document < ActiveRecord::Base
 
       return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
-                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : '0')
-
+                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
 
       if _answer.template_field.mandatory[:template_field].present?
         parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first.answer
@@ -189,10 +188,12 @@ class Document < ActiveRecord::Base
   def get_last_sort_answer(step, sort_char, answer)
     tmp_answers = step_answers(step)
     answers = []
+
     tmp_answers.each do |item|
       unless item.sort_index.nil?
         if answer.template_step.title.split(' /<spain/>').first == STEP_12
-          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == (answer.toggler_offset + 2) * answer.answer.to_i
+
+          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset + (answer.answer.to_i * 2)
         else
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
         end
