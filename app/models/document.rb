@@ -27,7 +27,7 @@ class Document < ActiveRecord::Base
 
     if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
       (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
-      _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
+      _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option) && _answers.select{ |item| item.template_field.raw_question == false }.count == 0
 
       _answers.each(&:destroy)
       _answers = nil
@@ -75,14 +75,14 @@ class Document < ActiveRecord::Base
       return false if (_answer.template_field.toggle_id.nil? || parent_toggler == _answer) && step.fields.where(:sub_toggle_id => _answer.template_field.toggle_id).where.not(:sub_toggle_id => nil).count == 0
 
       return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
-                      toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
-                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
+                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
+                       toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
 
       if _answer.template_field.mandatory[:template_field].present?
         parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first.answer
 
         return false if _answer.answer.nil? && parent_answer == _answer.template_field.mandatory[:toggle_option] ||
-                      _answer.answer == '' && parent_answer == _answer.template_field.mandatory[:toggle_option]
+                       _answer.answer == '' && parent_answer == _answer.template_field.mandatory[:toggle_option]
       end
     end
 
@@ -239,6 +239,7 @@ class Document < ActiveRecord::Base
   end
 
   def step_answers(step)
+    step = step.id if step.kind_of?(TemplateStep)
     answers.where(:template_step_id => step + template.steps.first.id - 1).order(:id).to_a rescue nil
   end
 

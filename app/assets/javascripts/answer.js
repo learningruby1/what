@@ -337,7 +337,6 @@ function day_of_week_init(){
         _this.parent().parent().find('.form-control').each(function(){
           if (day_of_week.val().length > 0)
             day_of_week.val(day_of_week.val() + '/');
-            //console.log(day_of_week.val());
           day_of_week.val(day_of_week.val() + $(this).val());
         });
       });
