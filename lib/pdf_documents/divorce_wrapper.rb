@@ -227,8 +227,46 @@ module PdfDocument
               physical_custody[:number] = i
               physical_custody[:child] = get_headed_info answers.next, i
               answers.next
+              answers.next
               physical_custody[:custody] = answers.next.answer
 
+              if physical_custody[:custody] == 'With mom and visits with dad' || physical_custody[:custody] == 'With dad and visit with mom'
+                answers.next
+                33.times do answers.next end if physical_custody[:custody] == 'With dad and visit with mom'
+                selected_answers = Array.new
+                4.times do
+                  answer = answers.next
+                  selected_answers.push answer.template_field.name.split(' /<spain/>').first if answer.answer == '1'
+                end
+                7.times do
+                  answer = answers.next
+                  if answer.answer == '1'
+                    selected_answers.push answer.template_field.name.split(' /<spain/>').first
+                    3.times do selected_answers.push answers.next.answer end
+                  else
+                    3.times do answers.next end
+                  end
+                end
+              elsif physical_custody[:custody] == 'Both Parents'
+                66.times do answers.next end
+                selected_answers = Array.new
+
+                2.times do
+                  answer = answers.next
+                  selected_answers.push answer.template_field.name.split(' /<spain/>').first if answer.answer == '1'
+                end
+                7.times do
+                  answer = answers.next
+                  if answer.answer == '1'
+                    selected_answers.push answer.template_field.name.split(' /<spain/>').first
+                    4.times do selected_answers.push answers.next.answer end
+                  else
+                    4.times do answers.next end
+                  end
+                end
+              end
+
+              physical_custody[:answers] = selected_answers unless selected_answers.blank?
               @physical_custody_parent.push physical_custody
             end
 
