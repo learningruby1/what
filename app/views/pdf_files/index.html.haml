@@ -26,6 +26,11 @@
               = document.to_s.split('<spain/>').first
               %span.spain= document.to_s.split('<spain/>').last
           %td
+            = link_to document_review_path(document), :class => 'btn btn-default' do
+              .glyphicon.glyphicon-list-alt
+              Review /
+              %span.spain Opinión
+          %td
             = link_to document_answer_path(document, 1), :class => 'btn btn-default' do
               .glyphicon.glyphicon-edit
               Edit /
@@ -66,10 +71,3 @@
                       %span.spain Editar
                     - if sub_document.is_generated?
                       = link_to 'Affidative/Acceptance', download_pdf_path("AffidativeAcceptance_of_service_#{ sub_document.id }"), :class => 'btn btn-primary'
-
-
-            /%td
-            /= link_to document_review_path(document), :class => 'btn btn-default' do
-            /  .glyphicon.glyphicon-list-alt
-            /  Review /
-            /  %span.spain Opinión
