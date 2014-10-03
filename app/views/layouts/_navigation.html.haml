@@ -6,9 +6,9 @@
 
     .navbar-header
       %ul.nav.navbar-nav.navbar-right
-        %li= link_to 'Forms Mama', root_path, :class => 'navbar-brand'
+        %li= link_to 'Forms Mama', root_path
         %li
-          %a{ :href => 'formsmama.com:81' } About
+          %a{ :href => 'http://qa.formsmama.com:81' } About
 
     - if user_signed_in?
       .collapse.navbar-collapse
