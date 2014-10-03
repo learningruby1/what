@@ -7,8 +7,9 @@
         = render :partial => 'render_text', :locals => { :answer => title_array.first, :real_answer => answer, :index_of_radio => index }
         %input{ :type => 'hidden', :value => answer.id }
 
-
   - if title_array.length > 1
+    - if title_array.first.include?('<place_for_insert>')
+      %div{ :class => ("place_for_insert_#{ answer.template_field.toggle_id + answer.toggler_offset + index }" if !answer.template_field.toggle_id.nil?) }
     .container.marin-top-50
       = render :partial => 'render_text', :locals => { :answer => title_array.last }
 

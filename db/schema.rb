@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930062231) do
+ActiveRecord::Schema.define(version: 20141001091411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 20140930062231) do
     t.integer  "template_step_id"
     t.integer  "toggle_id"
     t.string   "toggle_option"
-    t.string   "looper_option"
     t.boolean  "dont_repeat",      default: false
     t.string   "mandatory"
     t.integer  "amount_field_id"
@@ -75,6 +74,8 @@ ActiveRecord::Schema.define(version: 20140930062231) do
     t.string   "sort_index"
     t.string   "header_ids"
     t.integer  "sub_toggle_id"
+    t.string   "looper_option"
+    t.string   "insert_place"
   end
 
   add_index "template_fields", ["template_step_id"], name: "index_template_fields_on_template_step_id", using: :btree
