@@ -81,4 +81,14 @@ module ApplicationHelper
     path = /<link=(.*)>/.match(text).to_a.last
      "window.location='#{path}';"
   end
+
+  def return_row_class(text)
+    tmp_array = text.split('<spain/>')
+    selected_number = (tmp_array.first.length + tmp_array.last.length) / 10
+    if selected_number > 10
+      return "col-md-12"
+    else
+      return "col-md-" + (selected_number + 2).to_s
+    end
+  end
 end
