@@ -85,14 +85,13 @@ module PdfDocument
             case physical_custody[:custody]
 
             when /^With mom/
-              push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation.", @text_indent
+              push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor child with #{ @dad.capitalize } having visitation: #{ physical_custody[:answers].join('; ') }", @text_indent
             when /^With dad/
-              push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation.", @text_indent
+              push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor child with #{ @mom.capitalize } having visitation: #{ physical_custody[:answers].join('; ') }", @text_indent
             end
 
           when /^Both/
-            push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
-
+            push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor child: #{ physical_custody[:answers].join('; ') }", @text_indent
 
           when /^Only/
             case physical_custody[:custody]
