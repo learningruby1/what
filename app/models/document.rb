@@ -250,7 +250,7 @@ class Document < ActiveRecord::Base
 
   def looped_amount(step, _answers)
     selected_array = _answers.select{ |item| item.template_field.raw_question == true }
-    selected_array.count / template.steps.where(:step_number => step).first.fields.not_raw.count rescue 0
+    selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question_true.count rescue 0
   end
 
 
