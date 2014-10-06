@@ -4,6 +4,7 @@ class TemplateField < ActiveRecord::Base
   has_many :document_answers
   serialize :mandatory
 
+  scope :not_raw, -> { where(:raw_question => true) }
   def to_s
     name
   end
