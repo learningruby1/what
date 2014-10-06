@@ -1,6 +1,11 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - if check_physical_custody(@answers)
+    - if get_physical_custody == 'Yes'
+      - text.gsub!('the child lives', 'the children live')
+      - text.gsub!('el menor vive', 'los menores viven')
+
   - if text.match(/<insert>/)
     - text = real_answer.template_field.to_text_radio(@document, @amount_index, index_of_radio)
 
@@ -25,6 +30,15 @@
         - text.gsub!('<child_count_spain>', 'los menores')
         - if text[0] == 'c'
           - text[0] = 'C'
+    - if text.match(/<uppercase_child>/) || text.match(/<uppercase_child_spain>/)
+      - if count == 1
+        - text.gsub!('<uppercase_child>', 'CHILD')
+        - text.gsub!('<uppercase_child_spain>', 'DEL MENOR')
+      - else
+        - text.gsub!('<uppercase_child>', 'CHILDREN')
+        - text.gsub!('<uppercase_child_spain>', 'DE LOS MENORES')
+
+
 
     - if text.match(/<child_number_count>/) || text.match(/<child_number_count_spain>/)
       - if count == 1

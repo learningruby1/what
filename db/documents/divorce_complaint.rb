@@ -175,7 +175,7 @@ current_step.fields.create :field_type => 'redirect', :name => 'No<link=/templat
                                                                 <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #11
-                                     :title => 'CHILDREN’S CURRENT ADDRESS /<spain/>DIRECCIÓN DE ACTUAL DE LOS MENORES'
+                                     :title => '<uppercase_child>’S CURRENT ADDRESS /<spain/>DIRECCIÓN DE ACTUAL <uppercase_child_spain>'
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'text', :name => '<insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
@@ -201,7 +201,7 @@ current_step.fields.create :field_type => 'text', :name => 'Has the child lived 
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id - 1, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory.id, :toggle_option => 'Yes' }
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #12
-                                     :title => 'CHILDREN’S PRIOR ADDRESS /<spain/>DIRECCION ANTERIO DE LOS MENORES'
+                                     :title => '<uppercase_child>’S PRIOR ADDRESS /<spain/>DIRECCION ANTERIO <uppercase_child_spain>'
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'text', :name => '<insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sort_index => 'a1'
@@ -226,35 +226,37 @@ current_step.fields.create :name => 'Name of person /<spain/>Nombre de la person
 current_step.fields.create :field_type => 'select_person', :name => 'Relationship to child /<spain/>Parentesco con el menor: *', :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona', :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' }, :toggle_id => toggle_id, :toggle_option => 'Other', :amount_field_id => address_count.id, :raw_question => false
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #13
-                                     :title => 'CHILDREN’S QUESTION 1 /<spain/>MENORES PREGUNTA 1'
+                                     :title => '<uppercase_child>’S QUESTION 1 /<spain/><uppercase_child_spain> PREGUNTA 1'
 current_step.fields.create :field_type => 'text', :name => 'Have YOU PARTICIPATED as a party, witness or any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of <insert>?<br/><spain/>¿HA PARTICIPADO USTED como demandado, demandante,  testigo o de cualquier otro modo en cualquier otro caso de custodia con <insert> en este u otro estado ?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
 participated = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
 current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
-current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra<field>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes', :sub_toggle_id => toggle_id + 1
+current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes', :sub_toggle_id => toggle_id + 1
+current_step.fields.create :name => '', :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Date of court order or Judgment: */<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #14
-                                     :title => 'CHILDREN’S QUESTION 2 /<spain/>MENORES PREGUNTA 2'
+                                     :title => '<uppercase_child>’S QUESTION 2 /<spain/><uppercase_child_spain> PREGUNTA 2'
 current_step.fields.create :field_type => 'text', :name => 'IS THERE ANY proceeding at this time including cases of domestic violence, protective orders, termination of parental rights or adoption in this state or another regarding <insert>?<br/><spain/>¿HAY ALGÚN procedimiento en este momento, incluyendo caso de violencia doméstica, órdenes de protección, patria potestad o adopción en este estado o en otro con respecto a <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
 question_second = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
 current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
-current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra<field>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes', :sub_toggle_id => toggle_id + 1
+current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes', :sub_toggle_id => toggle_id + 1
+current_step.fields.create :name => '', :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Date of court order or Judgment: */<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #15
-                                     :title => 'CHILDREN’S QUESTION 3 /<spain/>MENORES PREGUNTA 3'
+                                     :title => '<uppercase_child>’S QUESTION 3 /<spain/><uppercase_child_spain> PREGUNTA 3'
 
 current_step.fields.create :field_type => 'text', :name => 'DO YOU KNOW of anyone, besides you and the other parent of <insert>, that has physical custody or came of custody or visitation rights over <insert>?<br/><spain/>¿CONOCE de alguien, que no sea usted y el otro padre de <insert>, que tiene la custodia física o derecho de custodia o visitas de <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
@@ -276,23 +278,30 @@ current_step.fields.create :field_type => 'radio', :name => 'BOTH Parents /<spai
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
                                                              <option/>Only DAD /<spain/>Solo PAPÁ', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes',#16.5
+                                     :title => 'Physical Custody /<spain/>Custodia Física',
+                                     :description => 'Do you want all the children to have the same physical custody?
+                                                      <br/><spain/>¿Quiere que todos los menores tengan la misma custodia física?'
+toggle_id = 0
+toggle_id += 1
+same_schedule_physical_custody = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#17
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule_physical_custody.id, :amount_field_if_option => 'No',#17
                                      :title => 'Physical Custody /<spain/>Custodia Física',
                                      :description => 'Select  the type of custody you would like to have:
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
 current_step.fields.create :field_type => 'text', :name => 'Physical custody of <insert>.<spain/>Custodia física de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA'
-current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child live with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : cuando el menor vive con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
+current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child lives with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : cuando el menor vive con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
 
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
                                                                  <option/>With dad and visit with mom /<spain/>Con papá y visitas con mamá.<spain/><place_for_insert>
-                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
+                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child lives with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/><place_for_insert>
-                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child live with one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA: cuando el menor vive solamente con uno de los padres.
+                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child lives with one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA: cuando el menor vive solamente con uno de los padres.
                                                                  <option/>Only with the mom /<spain/>Solo con mamá
                                                                  <option/>Only with the dad /<spain/>Solo con papá', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id
 
@@ -1293,13 +1302,13 @@ toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $ por mes.
-                                                             <option/>Husband WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $ por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>Husband WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $ por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9,]+$/, :hint => 'Please enter a number /<spain/>Por favor, introduzca un número' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
-                                                             <option/>Year(s) (example 1 year) /<spain/>Año(s)  (ejemplo 1 año)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>Year(s) (example 1 year) /<spain/>Año(s)  (ejemplo 1 año)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 
 current_step = template.steps.create :step_number => step_number += 1,#44

@@ -91,4 +91,12 @@ module ApplicationHelper
       return "col-md-" + (selected_number + 2).to_s
     end
   end
+
+  def get_physical_custody
+    answers = TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').first.document_answers.first.answer
+  end
+
+  def check_physical_custody(_answers)
+    _answers.first.template_step_id == TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').second.id
+  end
 end
