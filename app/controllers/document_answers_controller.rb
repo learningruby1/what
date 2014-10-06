@@ -29,7 +29,7 @@ class DocumentAnswersController < ApplicationController
     elsif params[:review].present?
       redirect_to document_review_path(@document)
     else
-      params[:step] = params[:step].to_i.next if current_step == 11 && !@document.check_child_prior_address(current_step)
+      # params[:step] = params[:step].to_i.next if current_step == 11 && !@document.check_child_prior_address(current_step)
 
       redirect_to document_answer_path(@document, params[:step].to_i)
     end

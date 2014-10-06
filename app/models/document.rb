@@ -216,22 +216,35 @@ class Document < ActiveRecord::Base
       if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
         begin
           current_dependant_step = template.steps.where(:step_number => next_step).first
-          previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
+          dependant_stages = get_dependent_steps next_step
 
-          while !current_dependant_step.render_if_field_value.nil? &&
-                (current_dependant_step.render_if_field_value != (current_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ||
-                !previous_dependant_step.render_if_field_value.nil? && previous_dependant_step.render_if_field_value != (previous_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ) do
-
+          while dependant_stages.include? true
             next_step = direction == 'forward' ? next_step.next : next_step.pred
-
-            current_dependant_step = template.steps.where(:step_number => next_step).first
-            previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
+            dependant_stages = get_dependent_steps next_step
           end
         end rescue nil #rescue needs cause answer can be not created at the moment
       end
     end
     next_step
   end
+
+
+  def get_dependent_steps(step)
+    current_step = template.steps.where(:step_number => step).first
+    dependant_stages = []
+    dependant_stages << (!current_step.render_if_field_value.nil? && current_step.render_if_field_value != (current_step.render_fields.where(:document_id => id).first.try(:answer) || ''))
+    while template.steps.where(:step_number => step).exists? && template.steps.where(:step_number => step).first.render_if_field_id.present? && !template.steps.where(:step_number => step).first.render_fields.where(:document_id => id).empty?
+      current_step = template.steps.where(:step_number => step).first
+      unless current_step.render_fields.where(:document_id => id).empty?
+        previous_step = current_step.render_fields.where(:document_id => id).first.template_field.template_step
+        step = previous_step.step_number
+        dependant_stages << (!previous_step.render_if_field_value.nil? && previous_step.render_if_field_value != (previous_step.render_fields.where(:document_id => id).first.try(:answer) || ''))
+      end
+    end
+    dependant_stages
+  end
+
+
 
   def step_answers(step)
     answers.where(:template_step_id => step).order(:id).to_a rescue nil
