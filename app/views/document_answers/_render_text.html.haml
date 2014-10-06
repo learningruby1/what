@@ -1,6 +1,11 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
 
+  - if check_physical_custody(@answers)
+    - if get_physical_custody == 'Yes'
+      - text.gsub!('the child lives', 'the children live')
+      - text.gsub!('el menor vive', 'los menores viven')
+
   - if text.match(/<insert>/)
     - text = real_answer.template_field.to_text_radio(@document, @amount_index, index_of_radio)
 
