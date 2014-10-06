@@ -12,8 +12,9 @@
           %strong.new_roman= "#{ text_new }"
           %strong.new_roman.spain= "#{step_array.last}:"
         - elsif step_array.first.match(/<child_count>/) || step_array.first.match(/<child_count_spain>/)
-          - unless get_number_of_child(@document).nil?
-            - if get_number_of_child(@document) == '1'
+          - count_children = get_number_of_child(@document).to_i
+          - unless count_children.nil?
+            - if count_children == 1
               - text_first = step_array.first.gsub('<child_count>', 'the child')
               - text_first[0] = 'T' if text_first[0] == 't'
               - text_second = step_array.last.gsub('<child_count_spain>', 'el menor ')
@@ -21,6 +22,13 @@
               - text_first = step_array.first.gsub('<child_count>', 'children')
               - text_first[0] = 'C' if text_first[0] == 'c'
               - text_second = step_array.last.gsub('<child_count_spain>', 'los menores')
+            - if text.match(/<uppercase_child>/) || text.match(/<uppercase_child_spain>/)
+              - if count_children == 1
+                - text.gsub!('<uppercase_child>', 'CHILD')
+                - text.gsub!('<uppercase_child_spain>', 'DEL MENOR')
+              - else
+                - text.gsub!('<uppercase_child>', 'CHILDREN')
+                - text.gsub!('<uppercase_child_spain>', 'DE LOS MENORES')
             %strong.new_roman= "#{text_first}"
             %strong.new_roman.spain= "#{text_second}:"
         - else
