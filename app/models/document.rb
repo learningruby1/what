@@ -12,6 +12,7 @@ class Document < ActiveRecord::Base
   belongs_to :template
   accepts_nested_attributes_for :answers
 
+
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
   STEP_12 = "CHILDREN’S PRIOR ADDRESS"
 
@@ -27,7 +28,7 @@ class Document < ActiveRecord::Base
 
     if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
       (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
-      _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option) && _answers.select{ |item| item.template_field.raw_question == false }.count == 0
+      _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
 
       _answers.each(&:destroy)
       _answers = nil
@@ -75,8 +76,8 @@ class Document < ActiveRecord::Base
       return false if (_answer.template_field.toggle_id.nil? || parent_toggler == _answer) && step.fields.where(:sub_toggle_id => _answer.template_field.toggle_id).where.not(:sub_toggle_id => nil).count == 0
 
       return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
-                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
-                       toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
+                      toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
+                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
 
       if _answer.template_field.mandatory[:template_field].present?
         parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first.answer
@@ -248,7 +249,8 @@ class Document < ActiveRecord::Base
   end
 
   def looped_amount(step, _answers)
-    _answers.count / template.steps.where(:step_number => step).first.fields.count rescue 0
+    selected_array = _answers.select{ |item| item.template_field.raw_question == true }
+    selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question_true.count rescue 0
   end
 
 

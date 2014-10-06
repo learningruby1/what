@@ -6,9 +6,6 @@
         = a.radio_button :answer, title_array.first.split(' /<spain/>').first, :class => "radio_#{ answer.template_field.template_step_id }"
         = render :partial => 'render_text', :locals => { :answer => title_array.first, :real_answer => answer, :index_of_radio => index }
         %input{ :type => 'hidden', :value => answer.id }
-    - if title.include?('<field>')
-      .col-md-3
-        = a.text_field :answer, :class => 'form-control'
 
 
   - if title_array.length > 1
