@@ -902,7 +902,7 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting w
                                                             <br/><spain/>¿Está pidiendo retención de salario para cobrar la manutención de <child_count_spain>?'
 
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                             <option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>No<option/>No, child support is already being collected by the DA /<spain/>No, la oficina de manutención ya lo está haciendo', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
