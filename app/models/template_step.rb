@@ -1,7 +1,6 @@
 class TemplateStep < ActiveRecord::Base
 
   has_many :fields, :class_name => 'TemplateField'
-  has_many :document_answers
   has_many :amount_fields,    :class_name => 'DocumentAnswer', :primary_key => 'amount_field_id', :foreign_key => 'template_field_id'
   has_many :amount_answer_if, :class_name => 'DocumentAnswer', :primary_key => 'amount_field_if', :foreign_key => 'template_field_id'
   has_many :document_answers
