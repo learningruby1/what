@@ -24,8 +24,8 @@ module PdfDocument
           @case = answers.next.answer
           @dept = answers.next.answer
           answers.next.answer
-          @summons_and_complaint_date_present = answers.next.answer == '1' rescue false
-          @summons_and_complaint_date_present ? @summons_and_complaint_date = answers.next.answer : answers.next.answer
+          answers.next.answer
+          @summons_and_complaint_date = answers.next.answer
           @preliminary_injunction_date_present = answers.next.answer == '1' rescue false
           @preliminary_injunction_date = answers.next.answer if @preliminary_injunction_date_present
 
@@ -44,9 +44,11 @@ module PdfDocument
               @friend_first_name = answers.next.answer
               @friend_middle_name = answers.next.answer
               @friend_last_name = answers.next.answer
+              @friend_radio_address = answers.next.answer.split[0].downcase
               @friend_home_address = answers.next.answer
               @friend_home_address_city = answers.next.answer
               @friend_home_address_zip = answers.next.answer
+              @friend_phone = answers.next.answer
             end
           end
         end
@@ -149,7 +151,7 @@ module PdfDocument
         @number_of_children = answers.next.answer.to_i
 
         if !@children_residency
-          19.times do steps.next end
+          21.times do steps.next end
         else
 
           #Step 9   Child(ren)'s Information
@@ -191,7 +193,7 @@ module PdfDocument
             @children_continue = answers.next.answer == 'Yes' rescue false
           end
           if @children_continue
-            17.times do steps.next end
+            19.times do steps.next end
           else
 
             #Step 11   CHILDREN’S CURRENT ADDRESS
@@ -209,24 +211,80 @@ module PdfDocument
             #Step 15   CHILDREN’S QUESTION 3
             answers = step_answers_enum steps.next
 
-            #Step 16   Legal Custody
+            #Step 15.5   Legal Custody
             answers = step_answers_enum steps.next
-            @legal_custody_parent = answers.next.answer
+            @same_legal_custody = answers.next.answer == 'Yes' rescue false
+
+            #Step 16   Legal Custody
+            step = steps.next
+            @legal_custody_parent = Array.new
+            legal_custody_amount = @same_legal_custody ? 1 : @number_of_children
+
+            legal_custody_amount.times do |i|
+              answers = step_answers_enum step, i
+              @legal_custody_parent.push answers.next.answer
+            end
+
+            #Step 16.5   Legal Custody
+            answers = step_answers_enum steps.next
+            @same_physical_custody = answers.next.answer == 'Yes' rescue false
 
             #Step 17   Physical Custody
             step = steps.next
+
             @physical_custody_parent = Array.new
+            days_of_week = %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)
+            physical_custody_amount = @same_physical_custody ? 1 : @number_of_children
 
-            @number_of_children.times do |i|
+            physical_custody_amount.times do |i|
               answers = step_answers_enum step, i
-
               physical_custody = Hash.new
 
               physical_custody[:number] = i
               physical_custody[:child] = get_headed_info answers.next, i
               answers.next
+              answers.next
               physical_custody[:custody] = answers.next.answer
 
+              if physical_custody[:custody] == 'With mom and visits with dad' || physical_custody[:custody] == 'With dad and visit with mom'
+                answers.next
+                33.times do answers.next end if physical_custody[:custody] == 'With dad and visit with mom'
+                selected_answers = Array.new
+                4.times do
+                  answer = answers.next
+                  selected_answers.push answer.template_field.name.split(' /<spain/>').first if answer.answer == '1'
+                end
+                7.times do
+                  answer = answers.next
+                  if answer.answer == '1'
+                    tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' ' + answers.next.answer
+                    tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
+                    selected_answers.push tmp_string
+                  else
+                    3.times do answers.next end
+                  end
+                end
+              elsif physical_custody[:custody] == 'Both Parents'
+                66.times do answers.next end
+                selected_answers = Array.new
+
+                2.times do
+                  answer = answers.next
+                  selected_answers.push answer.template_field.name.split(' /<spain/>').first if answer.answer == '1'
+                end
+                7.times do
+                  answer = answers.next
+                  if answer.answer == '1'
+                    tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' with ' + answers.next.answer + ' ' + answers.next.answer
+                    tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
+                    selected_answers.push tmp_string
+                  else
+                    4.times do answers.next end
+                  end
+                end
+              end
+
+              physical_custody[:answers] = selected_answers unless selected_answers.blank?
               @physical_custody_parent.push physical_custody
             end
 
@@ -899,15 +957,15 @@ module PdfDocument
               @custody_support_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @paternity = answers[array_index += 1].answer == '1' rescue false
@@ -922,15 +980,15 @@ module PdfDocument
               @paternity_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @juvenile_court = answers[array_index += 1].answer == '1' rescue false
@@ -945,15 +1003,15 @@ module PdfDocument
               @juvenile_court_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
 
           @guardianship = answers[array_index += 1].answer == '1' rescue false
@@ -983,15 +1041,15 @@ module PdfDocument
               @termination_parental_right_array.push answers[array_index += 1].answer
             end
             array_index += 2
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
             array_index += 1
-            5.times do
+            6.times do
               @child_array.push answers[array_index += 1].answer
             end
           else
-            array_index += 23
+            array_index += 25
           end
         end
     end

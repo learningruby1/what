@@ -5,7 +5,11 @@
       %span.spain Un sitio único y multilingüe de solicitudes
 
     .navbar-header
-      = link_to 'Forms Mama', root_path, :class => 'navbar-brand'
+      %ul.nav.navbar-nav.navbar-right
+        %li= link_to 'Forms Mama', root_path
+        %li
+          %a{ :href => 'http://formsmama.com:81' } About
+
     - if user_signed_in?
       .collapse.navbar-collapse
         %ul.nav.navbar-nav.navbar-right
