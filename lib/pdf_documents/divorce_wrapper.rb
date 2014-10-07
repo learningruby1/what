@@ -211,9 +211,19 @@ module PdfDocument
             #Step 15   CHILDREN’S QUESTION 3
             answers = step_answers_enum steps.next
 
-            #Step 16   Legal Custody
+            #Step 15.5   Legal Custody
             answers = step_answers_enum steps.next
-            @legal_custody_parent = answers.next.answer
+            @same_legal_custody = answers.next.answer == 'Yes' rescue false
+
+            #Step 16   Legal Custody
+            step = steps.next
+            @legal_custody_parent = Array.new
+            legal_custody_amount = @same_legal_custody ? 1 : @number_of_children
+
+            legal_custody_amount.times do |i|
+              answers = step_answers_enum step, i
+              @legal_custody_parent.push answers.next.answer
+            end
 
             #Step 16.5   Legal Custody
             answers = step_answers_enum steps.next
@@ -276,8 +286,6 @@ module PdfDocument
 
               physical_custody[:answers] = selected_answers unless selected_answers.blank?
               @physical_custody_parent.push physical_custody
-              p 'f'*3000
-              p @physical_custody_parent
             end
 
             #Step 18   Holiday
