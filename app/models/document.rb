@@ -275,4 +275,20 @@ class Document < ActiveRecord::Base
     save!
   end
 
+  def skip_step_if_one_child(_step)
+    child_count = TemplateStep.where(:title => 'Children /<spain/>Menores').first.document_answers.last
+    return _step if child_count.nil?
+
+    next_step = TemplateStep.find(_step + template.steps.first.id)
+
+    if (next_step.title.split(' /<spain/>').first == 'Legal Custody' || next_step.title.split(' /<spain/>').first == 'Physical Custody') && child_count.answer.to_i == 1
+      if answers.where(:template_step_id => _step + template.steps.first.id).blank?
+        answers.create(:template_field_id => next_step.fields.first.id, :template_step_id => _step + template.steps.first.id, :toggler_offset => 0, :answer => 'Yes')
+      else
+        answers.where(:template_step_id => _step + template.steps.first.id).first.update(:answer => 'Yes')
+      end
+      return _step + template.steps.first.id
+    end
+    _step
+  end
 end
