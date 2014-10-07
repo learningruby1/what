@@ -66,13 +66,15 @@ module PdfDocument
       if @children_residency && !@children_continue
         move_to_left "#{ _counter += 1 }.  LEGAL CUSTODY"
 
-        case @legal_custody_parent
-        when 'BOTH Parents'
-          push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the #{ @children_names.join(', ') }.", @text_indent
-        when 'Only MOM'
-          push_text "#{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
-        when 'Only DAD'
-          push_text "#{ @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }", @text_indent
+        @legal_custody_parent.each do |legal_custody|
+          case legal_custody
+          when 'BOTH Parents'
+            push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the #{ @children_names.join(', ') }.", @text_indent
+          when 'Only MOM'
+            push_text "#{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          when 'Only DAD'
+            push_text "#{ @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          end
         end
 
         move_to_left "#{ _counter += 1 }.  PHYSICAL CUSTODY"
@@ -345,7 +347,7 @@ module PdfDocument
             property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
-            property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
+            property[property.count - 1] = 'Divide' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
             mom_array.push property.join(', ') if property != '' || property != ','
             dad_array.push property.join(', ') if property != '' || property != ','
           end

@@ -221,22 +221,33 @@ class Document < ActiveRecord::Base
     if template.steps.where(:step_number => next_step).exists?
       if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
         begin
-          current_dependant_step = template.steps.where(:step_number => next_step).first
-          previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
-
-          while !current_dependant_step.render_if_field_value.nil? &&
-                (current_dependant_step.render_if_field_value != (current_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ||
-                !previous_dependant_step.render_if_field_value.nil? && previous_dependant_step.render_if_field_value != (previous_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ) do
-
+          while (go_forward?(template.steps.where(:step_number => next_step).first))
             next_step = direction == 'forward' ? next_step.next : next_step.pred
-
-            current_dependant_step = template.steps.where(:step_number => next_step).first
-            previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
           end
         end rescue nil #rescue needs cause answer can be not created at the moment
       end
     end
     next_step
+  end
+
+  def can_render?(step)
+    result = []
+    step.render_if_field_id.split('/').each_with_index do |e, i|
+      result << (step.render_if_field_value.split('/')[i] != (TemplateField.find(e.to_i).document_answers.where(:document_id => id).first.try(:answer) || ''))
+    end
+    result.include?(false)
+  end
+
+  def go_forward?(step)
+    dependant_stages_status = []
+    if step.render_if_field_id.present?
+      step.render_if_field_id.split('/').each_with_index do |e, i|
+        dependant_stages_status << go_forward?(TemplateField.find(e.to_i).template_step)
+      end
+       !(can_render?(step) && dependant_stages_status.include?(false))
+    else
+      false
+    end
   end
 
   def step_answers(step)
@@ -250,7 +261,7 @@ class Document < ActiveRecord::Base
 
   def looped_amount(step, _answers)
     selected_array = _answers.select{ |item| item.template_field.raw_question == true }
-    selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question_true.count rescue 0
+    selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question.count rescue 0
   end
 
 
@@ -264,19 +275,20 @@ class Document < ActiveRecord::Base
     save!
   end
 
-  def edit_answers_children_residency(_step)
-    step_answers(_step+2)[2].update :answer => 'No' if step_answers(_step).first.answer == 'No' && !step_answers(_step+2).empty?
-  end
+  def skip_step_if_one_child(_step)
+    child_count = TemplateStep.where(:title => 'Children /<spain/>Menores').first.document_answers.last
+    return _step if child_count.nil?
 
-  def check_child_prior_address(_step)
-    answers = step_answers(_step)
-    counter = answers.count / template.steps.where(:step_number => _step).first.fields.count
+    next_step = TemplateStep.find(_step + template.steps.first.id)
 
-    counter.times do |i|
-      return true if answers[i * 17 + 6].answer == 'Yes'
-      return true if answers[i * 17 + 16].answer == 'Yes'
+    if (next_step.title.split(' /<spain/>').first == 'Legal Custody' || next_step.title.split(' /<spain/>').first == 'Physical Custody') && child_count.answer.to_i == 1
+      if answers.where(:template_step_id => _step + template.steps.first.id).blank?
+        answers.create(:template_field_id => next_step.fields.first.id, :template_step_id => _step + template.steps.first.id, :toggler_offset => 0, :answer => 'Yes')
+      else
+        answers.where(:template_step_id => _step + template.steps.first.id).first.update(:answer => 'Yes')
+      end
+      return _step + template.steps.first.id
     end
-
-    false
+    _step
   end
 end

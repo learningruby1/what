@@ -2,7 +2,7 @@
 - if text.present?
 
   - if check_physical_custody(@answers)
-    - if get_physical_custody == 'Yes'
+    - if get_physical_custody == 'Yes' && get_number_of_child(@document) != '1'
       - text.gsub!('the child lives', 'the children live')
       - text.gsub!('el menor vive', 'los menores viven')
 
@@ -22,12 +22,14 @@
     - if text.match(/<child_count>/) || text.match(/<child_count_spain>/)
       - if count == 1
         - text.gsub!('<child_count>', 'the child')
-        - text.gsub!('<child_count_spain>', 'el menor ')
+        - text.gsub!('<child_count_spain>', 'del menor')
+        - text.gsub!('<el_ellos>', 'él')
         - if text[0] == 't'
           - text[0] = 'T'
       - else
         - text.gsub!('<child_count>', 'children')
-        - text.gsub!('<child_count_spain>', 'los menores')
+        - text.gsub!('<child_count_spain>', 'de los menores')
+        - text.gsub!('<el_ellos>', 'ellos')
         - if text[0] == 'c'
           - text[0] = 'C'
     - if text.match(/<uppercase_child>/) || text.match(/<uppercase_child_spain>/)

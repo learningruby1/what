@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001091411) do
+ActiveRecord::Schema.define(version: 20141006134709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20141001091411) do
     t.integer "document_id"
     t.integer "template_field_id"
     t.integer "toggler_offset",    default: 0
-    t.text    "answer"
     t.string  "sort_index"
     t.integer "sort_number"
+    t.text    "answer"
     t.integer "template_step_id"
   end
 
@@ -48,22 +48,33 @@ ActiveRecord::Schema.define(version: 20141001091411) do
   add_index "documents", ["template_id"], name: "index_documents_on_template_id", using: :btree
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
+  create_table "mail_reminders", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "document_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mail_reminders", ["document_id"], name: "index_mail_reminders_on_document_id", using: :btree
+  add_index "mail_reminders", ["user_id"], name: "index_mail_reminders_on_user_id", using: :btree
+
   create_table "template_fields", force: true do |t|
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "field_type",       default: "string"
     t.integer  "template_step_id"
-    t.text     "name"
     t.integer  "toggle_id"
     t.string   "toggle_option"
-    t.string   "looper_option"
     t.boolean  "dont_repeat",      default: false
     t.string   "mandatory"
-    t.string   "header_ids"
     t.integer  "amount_field_id"
     t.boolean  "raw_question",     default: true
+    t.string   "header_ids"
     t.string   "sort_index"
+    t.string   "header_ids"
     t.integer  "sub_toggle_id"
+    t.string   "looper_option"
     t.string   "insert_place"
   end
 
@@ -74,7 +85,7 @@ ActiveRecord::Schema.define(version: 20141001091411) do
     t.integer "step_number"
     t.string  "title"
     t.text    "description"
-    t.integer "render_if_field_id"
+    t.string  "render_if_field_id"
     t.string  "render_if_field_value"
     t.integer "amount_field_id"
     t.integer "amount_field_if"
