@@ -157,7 +157,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Children’s Residency /<spain/>Residencia de los Menores'
 
 current_step.fields.create :field_type => 'text', :name => '<child_count> must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
-                                                            <spain/><child_count_spain> deben haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre ellos.'
+                                                            <spain/><child_count_spain> deben haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre <el_ellos>.'
 current_step.fields.create :field_type => 'text', :name => 'Have <child_count> lived in Nevada for over 6 months? /<spain/>¿Han vivido <child_count_spain> en Nevada por más de 6 meses?'
 
 toggle_id = 0
