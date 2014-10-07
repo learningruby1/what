@@ -12,6 +12,7 @@ class Document < ActiveRecord::Base
   belongs_to :template
   accepts_nested_attributes_for :answers
 
+
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
   STEP_12 = "CHILDREN’S PRIOR ADDRESS"
 
@@ -19,10 +20,12 @@ class Document < ActiveRecord::Base
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
-    step = TemplateStep.find next_step rescue nil
+
+    step = TemplateStep.find next_step + template.steps.first.id - 1 rescue nil
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
     # NOTICE amount_if_answer => amount_answer_if.answer
+
     if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
       (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
       _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
@@ -32,6 +35,7 @@ class Document < ActiveRecord::Base
     end
 
     _answers = create_next_step_answers!(next_step) if _answers.blank?
+
     if !_answers.blank? && !_answers.last.answer.nil? &&
        !_answers.last.template_field.looper_option.nil? &&
         _answers.last.template_field.looper_option  == _answers.last.answer
@@ -44,7 +48,7 @@ class Document < ActiveRecord::Base
   end
 
   #Controller answers Action update
-  def update_answers!(answers_params, _step)
+  def update_answers!(answers_params)
     looper = false
     answers_params[:answers].each do |answer|
       _answer = answers.find(answer.first)
@@ -56,39 +60,42 @@ class Document < ActiveRecord::Base
       _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
       _answer.save
 
-      looper = add_mandatory_error unless check_mandatory(_answer, _step)
+      looper = add_mandatory_error unless check_mandatory(_answer)
     end
     looper
   end
 
-  def check_mandatory(_answer, _step)
+  def check_mandatory(_answer)
     if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
-      parent_template = template.steps.where(:step_number => _step).first.fields.where(:toggle_id => _answer.template_field.toggle_id).first
+      step = _answer.template_step
+      parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       parent_toggler = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first
       parent_toggler = answers.where(:template_field_id => parent_template.id).first if parent_toggler.nil?
       toggle_option = _answer.template_field.toggle_option
 
-      return false if (_answer.template_field.toggle_id.nil? || parent_toggler == _answer) && template.steps.where(:step_number => _step).first.fields.where(:sub_toggle_id => _answer.template_field.toggle_id).where.not(:sub_toggle_id => nil).count == 0
+      return false if (_answer.template_field.toggle_id.nil? || parent_toggler == _answer) && step.fields.where(:sub_toggle_id => _answer.template_field.toggle_id).where.not(:sub_toggle_id => nil).count == 0
 
       return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
-                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : '0')
-
+                      toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
 
       if _answer.template_field.mandatory[:template_field].present?
         parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first.answer
 
         return false if _answer.answer.nil? && parent_answer == _answer.template_field.mandatory[:toggle_option] ||
-                      _answer.answer == '' && parent_answer == _answer.template_field.mandatory[:toggle_option]
+                       _answer.answer == '' && parent_answer == _answer.template_field.mandatory[:toggle_option]
       end
     end
 
     if _answer.sort_number == 2 && _answer.answer != ''
-      parent_template = template.steps.where(:step_number => _step).first.fields.where(:toggle_id => _answer.template_field.toggle_id).first
+      step = _answer.template_step
+      parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       prev_answer = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first.answer
       if prev_answer == '1' || prev_answer == 'Yes'
-        fields_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.where(:toggle_id => _answer.template_field.toggle_id).count
-        answers_count = template.steps.where(:step_number => _answer.template_field.template_step_id).first.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index) }.flatten.count rescue nil
+
+        fields_count = step.fields.where(:toggle_id => _answer.template_field.toggle_id).count
+        answers_count = step.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index, :toggler_offset => _answer.toggler_offset) }.flatten.count rescue nil
+
         return false unless answers_count - 2 == (fields_count - 2) * _answer.answer.to_i
       end
     end
@@ -116,20 +123,13 @@ class Document < ActiveRecord::Base
 
     if template.steps.where(:step_number => next_step).exists?
       loop_amount(next_step).times do |i|
-
         current_step = template.steps.where(:step_number => next_step).first
-        current_step.fields.reverse_each do |field|
 
-          if field.raw_question == true
-            if field.sort_index.nil?
-              if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count)
-              end
-            else
-              if i == 0 || field.dont_repeat == false
-                document_answers.push answers.create(:template_field_id => field.id, :template_step_id => next_step, :toggler_offset => toggler_offset + i * template.steps.count, :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i)
-              end
-            end
+        current_step.fields.reverse_each do |field|
+          if field.raw_question == true && (i == 0 || field.dont_repeat == false)
+            params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * template.steps.count) }
+            params.merge!({ :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i }) if !field.sort_index.nil?
+            document_answers.push answers.create(params)
           end
         end
         break if current_step.amount_field_id.present? && current_step.amount_field_if.present? &&
@@ -144,18 +144,19 @@ class Document < ActiveRecord::Base
     return answer.answer.to_i
   end
 
-  def create_hidden_answers!(next_step, answer, loop_amount, last_answer, toggler_offset=0)
-    if template.steps.where(:step_number => next_step).exists?
+  def create_hidden_answers!(answer, loop_amount, last_answer, toggler_offset=0)
+    step = answer.template_step
+    if step.present?
       index = last_answer.sort_number
       counter = return_value_for_counter answer
 
       loop_amount.times do |i|
-        template.steps.where(:step_number => next_step).first.fields.where(:amount_field_id => answer.template_field_id).reverse_each do |field|
+        step.fields.where(:amount_field_id => answer.template_field_id).reverse_each do |field|
           index += 1
-          if template.steps.where(:step_number => next_step).first.title.split(' /<spain/>').first == STEP_12
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + (counter + i + 1) * 2, :sort_index => last_answer.sort_index, :sort_number => index )
+          if step.title.split(' /<spain/>').first == STEP_12
+            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + (counter + i + 1) * 2, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => answer.template_step_id )
           else
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index )
+            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => answer.template_step_id )
           end
         end
       end
@@ -163,12 +164,13 @@ class Document < ActiveRecord::Base
   end
 
   def delete_hidden_answers!(next_step, answer, loop_amount, amount_field_id)
-    if template.steps.where(:step_number => next_step).exists?
+    step = answer.template_step
+    if step.present?
       tmp_answers = step_answers(next_step)
       answers = []
       tmp_answers.each do |item|
         unless item.sort_index.nil?
-          if template.steps.where(:step_number => next_step).first.title.split(' /<spain/>').first == STEP_12
+          if step.title.split(' /<spain/>').first == STEP_12
             answers << item if item.sort_index.include?(answer.sort_index) && item.toggler_offset >= answer.toggler_offset && item.toggler_offset <= (answer.answer.to_i + answer.toggler_offset)*2
           else
             answers << item if item.sort_index.include?(answer.sort_index) && item.toggler_offset == answer.toggler_offset
@@ -176,7 +178,7 @@ class Document < ActiveRecord::Base
         end
       end
       answers.sort!{ |a, b| b[:sort_number] <=> a[:sort_number] }
-      loop_amount *= template.steps.where(:step_number => next_step).first.fields.where(:amount_field_id => amount_field_id).count
+      loop_amount *= step.fields.where(:amount_field_id => amount_field_id).count
       loop_amount.times do
         answers.first.delete
         answers.shift
@@ -187,40 +189,40 @@ class Document < ActiveRecord::Base
   def get_last_sort_answer(step, sort_char, answer)
     tmp_answers = step_answers(step)
     answers = []
+
     tmp_answers.each do |item|
       unless item.sort_index.nil?
-        answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
+        if answer.template_step.title.split(' /<spain/>').first == STEP_12
+
+          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset + (answer.answer.to_i * 2)
+        else
+          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
+        end
       end
     end
     answers.sort_by!{ |item| [item.sort_index, item.sort_number] }
     answers.last
   end
 
-  def create_or_delete_answer(value, answer, step, tmp_value, toggler_offset)
+  def create_or_delete_answer(value, answer, tmp_value)
+    toggler_offset = answer.toggler_offset
+    step = answer.template_step_id
     if answer.answer.nil?
-      create_hidden_answers! step, answer, value, get_last_sort_answer(step, answer.sort_index, answer), toggler_offset
+      create_hidden_answers! answer, value, get_last_sort_answer(step, answer.sort_index, answer), toggler_offset
       answer.update :answer => value
     else
-      create_hidden_answers! step, answer, value - answer.answer.to_i, get_last_sort_answer(step, answer.sort_index, answer), toggler_offset if tmp_value < value
+      create_hidden_answers! answer, value - answer.answer.to_i, get_last_sort_answer(step, answer.sort_index, answer), toggler_offset if tmp_value < value
       delete_hidden_answers! step, answer, answer.answer.to_i - value, answer.template_field_id if tmp_value > value
       answer.update :answer => value
     end
-  end
-
-  def step_answers(step)
-    template.steps.where(:step_number => step).first.fields.map{ |f| f.document_answers.where(:document_id => id) }.flatten rescue nil
   end
 
   def skip_steps(next_step, direction='forward')
     if template.steps.where(:step_number => next_step).exists?
       if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
         begin
-          current_dependant_step = template.steps.where(:step_number => next_step).first
-          dependant_stages = get_dependent_steps next_step
-
-          while dependant_stages.include? true
+          while (go_forward?(template.steps.where(:step_number => next_step).first))
             next_step = direction == 'forward' ? next_step.next : next_step.pred
-            dependant_stages = get_dependent_steps next_step
           end
         end rescue nil #rescue needs cause answer can be not created at the moment
       end
@@ -228,26 +230,29 @@ class Document < ActiveRecord::Base
     next_step
   end
 
-
-  def get_dependent_steps(step)
-    current_step = template.steps.where(:step_number => step).first
-    dependant_stages = []
-    dependant_stages << (!current_step.render_if_field_value.nil? && current_step.render_if_field_value != (current_step.render_fields.where(:document_id => id).first.try(:answer) || ''))
-    while template.steps.where(:step_number => step).exists? && template.steps.where(:step_number => step).first.render_if_field_id.present? && !template.steps.where(:step_number => step).first.render_fields.where(:document_id => id).empty?
-      current_step = template.steps.where(:step_number => step).first
-      unless current_step.render_fields.where(:document_id => id).empty?
-        previous_step = current_step.render_fields.where(:document_id => id).first.template_field.template_step
-        step = previous_step.step_number
-        dependant_stages << (!previous_step.render_if_field_value.nil? && previous_step.render_if_field_value != (previous_step.render_fields.where(:document_id => id).first.try(:answer) || ''))
-      end
+  def can_render?(step)
+    result = []
+    step.render_if_field_id.split('/').each_with_index do |e, i|
+      result << (step.render_if_field_value.split('/')[i] != (TemplateField.find(e.to_i).document_answers.where(:document_id => id).first.try(:answer) || ''))
     end
-    dependant_stages
+    result.include?(false)
   end
 
-
+  def go_forward?(step)
+    dependant_stages_status = []
+    if step.render_if_field_id.present?
+      step.render_if_field_id.split('/').each_with_index do |e, i|
+        dependant_stages_status << go_forward?(TemplateField.find(e.to_i).template_step)
+      end
+       !(can_render?(step) && dependant_stages_status.include?(false))
+    else
+      false
+    end
+  end
 
   def step_answers(step)
-    answers.where(:template_step_id => step).order(:id).to_a rescue nil
+    step = step.id if step.kind_of?(TemplateStep)
+    answers.where(:template_step_id => step + template.steps.first.id - 1).order(:id).to_a rescue nil
   end
 
   def loop_amount(step)
@@ -255,7 +260,8 @@ class Document < ActiveRecord::Base
   end
 
   def looped_amount(step, _answers)
-    _answers.count / template.steps.where(:step_number => step).first.fields.count rescue 0
+    selected_array = _answers.select{ |item| item.template_field.raw_question == true }
+    selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question_true.count rescue 0
   end
 
 
@@ -269,15 +275,4 @@ class Document < ActiveRecord::Base
     save!
   end
 
-  def check_child_prior_address(_step)
-    answers = step_answers(_step)
-    counter = answers.count / template.steps.where(:step_number => _step).first.fields.count
-
-    counter.times do |i|
-      return true if answers[i * 17 + 6].answer == 'Yes'
-      return true if answers[i * 17 + 16].answer == 'Yes'
-    end
-
-    false
-  end
 end
