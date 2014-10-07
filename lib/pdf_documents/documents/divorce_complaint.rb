@@ -347,7 +347,7 @@ module PdfDocument
             property.pop
             dad_array.push property.join(', ') if property != '' || property != ','
           else
-            property[property.count - 1] = 'Sell' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
+            property[property.count - 1] = 'Divide' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
             mom_array.push property.join(', ') if property != '' || property != ','
             dad_array.push property.join(', ') if property != '' || property != ','
           end
