@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001091411) do
+ActiveRecord::Schema.define(version: 20141006134709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20141001091411) do
     t.string   "mandatory"
     t.integer  "amount_field_id"
     t.boolean  "raw_question",     default: true
+    t.string   "header_ids"
     t.string   "sort_index"
     t.string   "header_ids"
     t.integer  "sub_toggle_id"
@@ -84,7 +85,7 @@ ActiveRecord::Schema.define(version: 20141001091411) do
     t.integer "step_number"
     t.string  "title"
     t.text    "description"
-    t.integer "render_if_field_id"
+    t.string  "render_if_field_id"
     t.string  "render_if_field_value"
     t.integer "amount_field_id"
     t.integer "amount_field_if"

@@ -151,7 +151,7 @@ module PdfDocument
         @number_of_children = answers.next.answer.to_i
 
         if !@children_residency
-          19.times do steps.next end
+          21.times do steps.next end
         else
 
           #Step 9   Child(ren)'s Information
@@ -193,7 +193,7 @@ module PdfDocument
             @children_continue = answers.next.answer == 'Yes' rescue false
           end
           if @children_continue
-            17.times do steps.next end
+            19.times do steps.next end
           else
 
             #Step 11   CHILDREN’S CURRENT ADDRESS

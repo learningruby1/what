@@ -221,22 +221,33 @@ class Document < ActiveRecord::Base
     if template.steps.where(:step_number => next_step).exists?
       if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
         begin
-          current_dependant_step = template.steps.where(:step_number => next_step).first
-          previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
-
-          while !current_dependant_step.render_if_field_value.nil? &&
-                (current_dependant_step.render_if_field_value != (current_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ||
-                !previous_dependant_step.render_if_field_value.nil? && previous_dependant_step.render_if_field_value != (previous_dependant_step.render_fields.where(:document_id => id).first.try(:answer) || '') ) do
-
+          while (go_forward?(template.steps.where(:step_number => next_step).first))
             next_step = direction == 'forward' ? next_step.next : next_step.pred
-
-            current_dependant_step = template.steps.where(:step_number => next_step).first
-            previous_dependant_step = current_dependant_step.render_fields.where(:document_id => id).empty? ? current_dependant_step : current_dependant_step.render_fields.where(:document_id => id).first.template_field.template_step
           end
         end rescue nil #rescue needs cause answer can be not created at the moment
       end
     end
     next_step
+  end
+
+  def can_render?(step)
+    result = []
+    step.render_if_field_id.split('/').each_with_index do |e, i|
+      result << (step.render_if_field_value.split('/')[i] != (TemplateField.find(e.to_i).document_answers.where(:document_id => id).first.try(:answer) || ''))
+    end
+    result.include?(false)
+  end
+
+  def go_forward?(step)
+    dependant_stages_status = []
+    if step.render_if_field_id.present?
+      step.render_if_field_id.split('/').each_with_index do |e, i|
+        dependant_stages_status << go_forward?(TemplateField.find(e.to_i).template_step)
+      end
+       !(can_render?(step) && dependant_stages_status.include?(false))
+    else
+      false
+    end
   end
 
   def step_answers(step)
@@ -262,22 +273,6 @@ class Document < ActiveRecord::Base
       self.session_uniq_token  = cookies[:session_uniq_token]
     end
     save!
-  end
-
-  def edit_answers_children_residency(_step)
-    step_answers(_step+2)[2].update :answer => 'No' if step_answers(_step).first.answer == 'No' && !step_answers(_step+2).empty?
-  end
-
-  def check_child_prior_address(_step)
-    answers = step_answers(_step)
-    counter = answers.count / template.steps.where(:step_number => _step).first.fields.count
-
-    counter.times do |i|
-      return true if answers[i * 17 + 6].answer == 'Yes'
-      return true if answers[i * 17 + 16].answer == 'Yes'
-    end
-
-    false
   end
 
   def skip_step_if_one_child(_step)
