@@ -23,7 +23,7 @@ current_step.fields.create :field_type => 'text', :name => 'You and your spouse 
 current_step.fields.create :field_type => 'text', :name => 'You and your spouse DO NOT agree to the terms of the divorce OR you have not seen your spouse for a long time. <br/><spain/>Usted y su cónyuge NO ESTÁN de acuerdo en los temas asociados con el  divorcio O no sabe dónde está su cónyuge.', :toggle_id => toggle_id, :toggle_option => 'Divorce Complaint'
 
 current_step = template.steps.create :step_number => step_number += 1,#2
-                                     :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su formulario?'
+                                     :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?'
 
 clark_nye = current_step.fields.create :name => 'Nye<option/>Esmeralda<option/>Mineral', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
