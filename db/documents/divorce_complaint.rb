@@ -267,13 +267,19 @@ current_step.fields.create :name => 'Name of person: * /<spain/>Nombre de la per
 current_step.fields.create :name => 'Address: * /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :amount_field_id => question_third.id, :raw_question => false
 current_step.fields.create :field_type => 'radio-last', :name => 'Person(s) has PHYSICAL custody <insert> /<spain/>Persona (s) tiene la custodia FÍSICA <insert><option/>Person(s) claims CUSTODY rights <insert> /<spain/>Persona (s) reclama los derechos de CUSTODIA <insert><option/>Person(s) claim VISITATION rights <insert> /<spain/>Persona (s) reclamar derechos de VISITAS <insert>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_option => 'Yes', :amount_field_id => question_third.id, :raw_question => false, :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sub_toggle_id => toggle_id + 1
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', #:amount_field_id => children_amount_field.id,#16
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes',#15.5
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Legal Custody: the right of the parents to make legal decision for <child_count> regarding education, health care, religion, etc. for the welfare of <child_count>.
-                                                      Who will have legal custody of <child_count>?
-                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca de <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
-                                                      ¿Quién tendrá la custodia legal de <child_count_spain>?'
+                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar <child_count_spain>.'
+toggle_id = 0
+toggle_id += 1
+same_schedule_legal_custody = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule_legal_custody.id, :amount_field_if_option => 'No',#16
+                                     :title => 'Legal Custody /<spain/>Custodia Legal',
+                                     :description => 'Who will have legal custody of <child_count>? /<spain/>¿Quién tendrá la custodia legal <child_count_spain>?'
+
+current_step.fields.create :field_type => 'text', :name => 'Legal custody of <insert>.<spain/>Custodia legal de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'BOTH Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
                                                              <option/>Only DAD /<spain/>Solo PAPÁ', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
