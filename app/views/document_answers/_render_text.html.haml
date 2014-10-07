@@ -10,11 +10,13 @@
     - text = real_answer.template_field.to_text_radio(@document, @amount_index, index_of_radio)
 
   - unless get_self(@document).nil?
-    - if text.match(/<spain_self>/)
+    - if text.match(/<spain_self>/) || text.match(/<uppercase_spain_self>/)
       - if get_self(@document) == 'Wife'
         - text.gsub!('<spain_self>', 'esposo')
+        - text.gsub!('<uppercase_spain_self>', 'ESPOSO')
       - else
         - text.gsub!('<spain_self>', 'esposa')
+        - text.gsub!('<uppercase_spain_self>', 'ESPOSA')
 
   - unless get_number_of_child(@document).nil?
     - count = get_number_of_child(@document).to_i
