@@ -23,11 +23,13 @@
       - if count == 1
         - text.gsub!('<child_count>', 'the child')
         - text.gsub!('<child_count_spain>', 'del menor')
+        - text.gsub!('<el_ellos>', 'él')
         - if text[0] == 't'
           - text[0] = 'T'
       - else
         - text.gsub!('<child_count>', 'children')
         - text.gsub!('<child_count_spain>', 'de los menores')
+        - text.gsub!('<el_ellos>', 'ellos')
         - if text[0] == 'c'
           - text[0] = 'C'
     - if text.match(/<uppercase_child>/) || text.match(/<uppercase_child_spain>/)
