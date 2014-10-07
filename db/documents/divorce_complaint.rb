@@ -23,7 +23,7 @@ current_step.fields.create :field_type => 'text', :name => 'You and your spouse 
 current_step.fields.create :field_type => 'text', :name => 'You and your spouse DO NOT agree to the terms of the divorce OR you have not seen your spouse for a long time. <br/><spain/>Usted y su cónyuge NO ESTÁN de acuerdo en los temas asociados con el  divorcio O no sabe dónde está su cónyuge.', :toggle_id => toggle_id, :toggle_option => 'Divorce Complaint'
 
 current_step = template.steps.create :step_number => step_number += 1,#2
-                                     :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su formulario?'
+                                     :title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?'
 
 clark_nye = current_step.fields.create :name => 'Nye<option/>Esmeralda<option/>Mineral', :field_type => 'radio', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
@@ -40,7 +40,7 @@ current_step.fields.create :name => 'Home Address /<spain/>Dirección de casa: *
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
-current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de casa o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :field_type => 'text_radio'
+current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de correo o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :field_type => 'text_radio'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
@@ -198,7 +198,7 @@ toggle_id += 1
 current_step.fields.create :name => 'Name of person /<spain/>Nombre de la persona: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido', :template_field => field_for_mandatory_second.id, :toggle_option => 'Other' }, :toggle_id => toggle_id, :toggle_option => 'Other'
 current_step.fields.create :field_type => 'select_person', :name => 'Relationship to child /<spain/>Parentesco con el menor: *', :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona', :template_field => field_for_mandatory_second.id, :toggle_option => 'Other' }, :toggle_id => toggle_id, :toggle_option => 'Other'
 current_step.fields.create :field_type => 'text', :name => 'Has the child lived in another address? /<spain/>¿Ha vivido el menor en otra dirección?', :toggle_id => toggle_id - 1, :toggle_option => 'Yes'
-field_for_render_second = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id - 1, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory.id, :toggle_option => 'Yes' }
+current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id - 1, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory.id, :toggle_option => 'Yes' }
 
   current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => field_for_render_1.id.to_s + '/' + field_for_mandatory.id.to_s, :render_if_field_value => 'Yes/Yes', :amount_field_id => children_amount_field.id, #12
                                        :title => '<uppercase_child>’S PRIOR ADDRESS /<spain/>DIRECCION ANTERIO <uppercase_child_spain>'
@@ -231,7 +231,7 @@ current_step.fields.create :field_type => 'text', :name => 'Have YOU PARTICIPATE
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-participated = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+participated = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes', :sub_toggle_id => toggle_id + 1
 current_step.fields.create :name => '', :toggle_id => toggle_id, :amount_field_id => participated.id, :raw_question => false, :toggle_option => 'Yes'
@@ -246,7 +246,7 @@ current_step.fields.create :field_type => 'text', :name => 'IS THERE ANY proceed
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-question_second = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+question_second = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes', :sub_toggle_id => toggle_id + 1
 current_step.fields.create :name => '', :toggle_id => toggle_id, :amount_field_id => question_second.id, :raw_question => false, :toggle_option => 'Yes'
@@ -262,39 +262,52 @@ current_step.fields.create :field_type => 'text', :name => 'DO YOU KNOW of anyon
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-question_third = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+question_third = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Name of person: * /<spain/>Nombre de la persona: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :amount_field_id => question_third.id, :raw_question => false
 current_step.fields.create :name => 'Address: * /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :amount_field_id => question_third.id, :raw_question => false
 current_step.fields.create :field_type => 'radio-last', :name => 'Person(s) has PHYSICAL custody <insert> /<spain/>Persona (s) tiene la custodia FÍSICA <insert><option/>Person(s) claims CUSTODY rights <insert> /<spain/>Persona (s) reclama los derechos de CUSTODIA <insert><option/>Person(s) claim VISITATION rights <insert> /<spain/>Persona (s) reclamar derechos de VISITAS <insert>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_option => 'Yes', :amount_field_id => question_third.id, :raw_question => false, :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sub_toggle_id => toggle_id + 1
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', #:amount_field_id => children_amount_field.id,#16
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#15.5
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Legal Custody: the right of the parents to make legal decision for <child_count> regarding education, health care, religion, etc. for the welfare of <child_count>.
-                                                      Who will have legal custody of <child_count>?
-                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca de <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar del <child_count_spain>.<br/>
-                                                      ¿Quién tendrá la custodia legal de <child_count_spain>?'
+                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar <child_count_spain>.'
+toggle_id = 0
+toggle_id += 1
+same_schedule_legal_custody = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule_legal_custody.id, :amount_field_if_option => 'No',#16
+                                     :title => 'Legal Custody /<spain/>Custodia Legal',
+                                     :description => 'Who will have legal custody of <child_count>? /<spain/>¿Quién tendrá la custodia legal <child_count_spain>?'
+
+current_step.fields.create :field_type => 'text', :name => 'Legal custody of <insert>.<spain/>Custodia legal de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'BOTH Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
                                                              <option/>Only DAD /<spain/>Solo PAPÁ', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes',#16.5
+                                     :title => 'Physical Custody /<spain/>Custodia Física',
+                                     :description => 'Do you want all the children to have the same physical custody?
+                                                      <br/><spain/>¿Quiere que todos los menores tengan la misma custodia física?'
+toggle_id = 0
+toggle_id += 1
+same_schedule_physical_custody = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#17
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule_physical_custody.id, :amount_field_if_option => 'No',#17
                                      :title => 'Physical Custody /<spain/>Custodia Física',
                                      :description => 'Select  the type of custody you would like to have:
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
 current_step.fields.create :field_type => 'text', :name => 'Physical custody of <insert>.<spain/>Custodia física de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA'
-current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child live with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : cuando el menor vive con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
+current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child lives with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : cuando el menor vive con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
 
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
                                                                  <option/>With dad and visit with mom /<spain/>Con papá y visitas con mamá.<spain/><place_for_insert>
-                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child live with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
+                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child lives with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/><place_for_insert>
-                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child live with one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA: cuando el menor vive solamente con uno de los padres.
+                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child lives with one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA: cuando el menor vive solamente con uno de los padres.
                                                                  <option/>Only with the mom /<spain/>Solo con mamá
                                                                  <option/>Only with the dad /<spain/>Solo con papá', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id
 
@@ -970,21 +983,21 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Qué compraron durante el matrimonio se tiene que dividir?'
 
 current_step.fields.create :field_type => 'checkbox', :name => 'House - Mobile Home /<spain/>Casa - Traila', :toggle_id => toggle_id, :sort_index => 'a1'
-house_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+house_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'House - Mobile Home/Casa - Traila<beginText/>Address /<spain/>Dirección:', :amount_field_id => house_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio-last', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :amount_field_id => house_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra', :toggle_id => toggle_id, :sort_index => 'b1'
-land_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+land_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Empty land/Lote-Tierra<beginText/>Address /<spain/>Dirección:', :amount_field_id => land_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio-last', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :amount_field_id => land_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Business /<spain/>Negocio', :toggle_id => toggle_id, :sort_index => 'c1'
-business_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+business_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Business/Negocio<beginText/>Name of the business /<spain/>Nombre del negocio:', :amount_field_id => business_number_field.id, :raw_question => false, :toggle_id => toggle_id
 current_step.fields.create :name => 'Address /<spain/>Dirección:', :amount_field_id => business_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :field_type => 'radio-last', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
@@ -1018,35 +1031,35 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con el', :toggle_id => toggle_id, :amount_field_id => car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Motorcycle /<spain/>Motocicleta', :toggle_id => toggle_id, :sort_index => 'b1'
-motorcycle_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+motorcycle_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Motorcycle/Motocicleta<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :amount_field_id => motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'RV', :toggle_id => toggle_id, :sort_index => 'c1'
-rv_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+rv_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'RV/RV<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :amount_field_id => rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Boat /<spain/>Barco', :toggle_id => toggle_id, :sort_index => 'd1'
-boat_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+boat_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Boat/Barco<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con el
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con el', :toggle_id => toggle_id, :amount_field_id => boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Trailer /<spain/>Remolque', :toggle_id => toggle_id, :sort_index => 'e1'
-trailer_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'e2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+trailer_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'e2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Trailer/Remolque<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => trailer_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con el
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con el', :toggle_id => toggle_id, :amount_field_id => trailer_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other /<spain/>Otro', :toggle_id => toggle_id, :sort_index => 'f1'
-other_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'f2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+other_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'f2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Other/Otro<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => other_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
@@ -1065,7 +1078,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-plan_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+plan_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Retirement plan /Plan de Retiro<beginText/>Name of the plan: /<spain/>Nombre del plan de beneficios:', :toggle_id => toggle_id, :amount_field_id => plan_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter name of the plan /<spain/>Por favor ingrese el nombre del plan' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con el
                                                              <option/>Divide /<spain/>Dividir
@@ -1080,7 +1093,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-bank_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+bank_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Account/Cuenta<beginText/>Name of the account /<spain/>Nombre de la cuenta', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter name of the account /<spain/>Por favor introduce el nombre de la cuenta' }
 current_step.fields.create :name => 'approximate amount in it /<spain/>la cantidad aproximada', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter approximate amount in it /<spain/>Por favor, ingrese el monto aproximado en ella' }
 current_step.fields.create :name => 'last 4# (if possible) /<spain/>los últimos 4# (si es posible):', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter last 4# /<spain/>Por favor introduce el pasado 4 #' }
@@ -1095,7 +1108,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Compro algo más durante el matrimonio que desea quedarse?'
 
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Property Division /<spain/>Otra división de Bienes', :sort_index => 'a1', :toggle_id => toggle_id
-other_property_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+other_property_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Description /Descripción<beginText/>', :toggle_id => toggle_id, :amount_field_id => other_property_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter value /<spain/>Por favor introduce el valor' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa se quedara con ella
                                                              <option/>Divide /<spain/>Dividir
@@ -1134,7 +1147,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'House - Mobile Home /<spain/>Casa - Traila', :toggle_id => toggle_id, :sort_index => 'a1'
-debt_house_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+debt_house_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'House - Mobile Home /Casa- Traila <beginText/>Address /<spain/>Dirección:', :amount_field_id => debt_house_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :name => 'Bank and amount owe /<spain/>Banco y cantidad que se debe:', :toggle_id => toggle_id, :amount_field_id => debt_house_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter bank and amount owe /<spain/>Por favor, introduzca banco y la cantidad deben' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
@@ -1142,7 +1155,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
                                                                                     <option/>Pay with sell of home /<spain/>Pagar con venta de casa', :toggle_id => toggle_id, :amount_field_id => debt_house_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Empty land /<spain/>Lote-Tierra', :toggle_id => toggle_id, :sort_index => 'b1'
-debt_land_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+debt_land_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Empty land/Lote-Tierra<beginText/>Address /<spain/>Dirección:', :amount_field_id => debt_land_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please enter address /<spain/>Por favor, ponga una dirección' }
 current_step.fields.create :name => 'Bank and amount owe /<spain/>Banco y cantidad que se debe:', :toggle_id => toggle_id, :amount_field_id => debt_land_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter bank and amount owe /<spain/>Por favor, introduzca banco y la cantidad deben' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
@@ -1158,7 +1171,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Credit Cards /<spain/>Tarjetas de crédito', :sort_index => 'a1', :toggle_id => toggle_id
-credits_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+credits_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Credit Cards/Tarjetas de crédito<beginText/>Card, amount, last 4# (if possible): (example Visa, $1000, #1234) /<spain/>Tarjeta, cantidad, últimos 4#: (ejemplo Visa, $ 1000, #1234)', :toggle_id => toggle_id, :amount_field_id => credits_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Card, amount, last 4# /<spain/>Por favor introduce la tarjeta, la cantidad, el pasado 4 #' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
@@ -1166,7 +1179,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => credits_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Hospital bills /<spain/>Las facturas del hospital', :toggle_id => toggle_id, :sort_index => 'b1'
-hospital_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+hospital_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Hospital bills/Las facturas del hospital<beginText/>Hospital bill $ (enter amount) /<spain/>Cuenta de hospital', :toggle_id => toggle_id, :amount_field_id => hospital_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Hospital bill /<spain/>Por favor introduce factura del hospital' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
@@ -1174,7 +1187,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
                                                             <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => hospital_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Doctor bills /<spain/>Facturas del médico', :toggle_id => toggle_id, :sort_index => 'c1'
-doctor_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+doctor_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Doctor bills/Facturas del médico<beginText/>Doctor bill $ (enter amount) /<spain/>Cuenta de doctor', :toggle_id => toggle_id, :amount_field_id => doctor_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Doctor bill /<spain/>Por favor introduce proyecto de ley médico' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
@@ -1190,28 +1203,28 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Car /<spain/>Carro', :sort_index => 'a1', :toggle_id => toggle_id
-debt_car_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+debt_car_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Car/Carro<beginText/>Car Amount owe: (example Ford about $10,000) /<spain/>Carro y cantidad que se debe: (ejemplo Ford $10,000)', :toggle_id => toggle_id, :amount_field_id => debt_car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter car amount owe /<spain/>Por favor, ingrese el monto coche debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
                                                              <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => debt_car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'RV', :sort_index => 'b1', :toggle_id => toggle_id
-debt_rv_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+debt_rv_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'RV/RV<beginText/>RV Amount owe: (example about $10,000) /<spain/>RV y cantidad que se debe: (ejemplo  $10,000)', :toggle_id => toggle_id, :amount_field_id => debt_rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter rv amount owe /<spain/>Por favor, ingrese el monto rv debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
                                                              <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => debt_rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Boat /<spain/>Barco', :sort_index => 'c1', :toggle_id => toggle_id
-debt_boat_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+debt_boat_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Boat/Barco<beginText/>Boat Amount owe: (example about $10,000) /<spain/>Barco cantidad que se debe: (ejemplo 10,000)', :toggle_id => toggle_id, :amount_field_id => debt_boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter boat amount owe /<spain/>Por favor, ingrese el monto barco debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
                                                              <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => debt_boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Motorcycle /<spain/>Moto', :sort_index => 'd1', :toggle_id => toggle_id
-debt_motorcycle_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+debt_motorcycle_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Motorcycle/Moto<beginText/>Motorcycle Amount owe: (example Honda about $10,000) /<spain/>Moto y cantidad que se debe: (ejemplo Honda $10,000)', :toggle_id => toggle_id, :amount_field_id => debt_motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter motorcycle amount owe /<spain/>Por favor, ingrese el monto de la motocicleta le debe' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
@@ -1226,28 +1239,28 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Student loan /<spain/>Préstamo estudiantil', :sort_index => 'a1', :toggle_id => toggle_id
-student_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+student_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Student loan/Préstamo estudiantil<beginText/>Student loan, amount owe: (example $10,000) /<spain/>Préstamo estudiantil  deuda: (ejemplo $10,000)', :toggle_id => toggle_id, :amount_field_id => student_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter student loan, amount owe /<spain/>Por favor introduce préstamo estudiantil, cantidad debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
                                                              <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => student_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'IRS /<spain/>Impuestos', :sort_index => 'b1', :toggle_id => toggle_id
-irs_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+irs_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'IRS/Impuestos<beginText/>IRS amount owe: (example $10,000) /<spain/>Impuestos deuda: (ejemplo $10,000)', :toggle_id => toggle_id, :amount_field_id => irs_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter IRS amount owe /<spain/>Por favor, ingrese el monto Impuestos le debe' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
                                                              <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => irs_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Payday loan /<spain/>Préstamo de Día de pago', :sort_index => 'c1', :toggle_id => toggle_id
-payday_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+payday_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Payday loan/Préstamo de Día de pago<beginText/>Payday loan, amount owe: (example $1,000) /<spain/>Préstamo de Día de pago deuda: (ejemplo $1,000)', :toggle_id => toggle_id, :amount_field_id => payday_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter payday loan, amount owe /<spain/>Por favor introduce préstamo de día de pago, cantidad debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
                                                              <option/>Husband will keep /<spain/>Esposo va a pagar', :toggle_id => toggle_id, :amount_field_id => payday_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other loan /<spain/>Otro préstamo', :sort_index => 'd1', :toggle_id => toggle_id
-other_loan_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+other_loan_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Other loan/Otro préstamo<beginText/>Loan amount owe: (example $2,000) /<spain/>Préstamo deuda: (ejemplo $2,000)', :toggle_id => toggle_id, :amount_field_id => other_loan_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter Loan amount owe /<spain/>Por favor, ingrese el monto del préstamo debo' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
@@ -1264,7 +1277,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other Debt Division /<spain/>Otra división de la deuda', :sort_index => 'a1', :toggle_id => toggle_id
-other_debt_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
+other_debt_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Description /Descripción<beginText/>(example: Parents $ 300) /<spain/>(ejemplo: Los padres $ 300)', :toggle_id => toggle_id, :amount_field_id => other_debt_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter value /<spain/>Por favor introduce el valor' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<spain/>Esposa va a pagar
                                                              <option/>Divide /<spain/>Dividir
@@ -1295,13 +1308,13 @@ toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support $ /<spain/>Esposa PAGARA manutención en la cantidad de $ por mes.
-                                                             <option/>Husband WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $ por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>Husband WILL PAY spousal support $ /<spain/>Esposo PAGARA manutención en la cantidad de $ por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9,]+$/, :hint => 'Please enter a number /<spain/>Por favor, introduzca un número' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
-                                                             <option/>Year(s) (example 1 year) /<spain/>Año(s)  (ejemplo 1 año)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>Year(s) (example 1 year) /<spain/>Año(s)  (ejemplo 1 año)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 
 current_step = template.steps.create :step_number => step_number += 1,#44

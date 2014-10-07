@@ -22,7 +22,7 @@ class DocumentAnswersController < ApplicationController
 
   def update
     current_step = params[:step].to_i
-    params[:step] = params[:step].to_i.next if !@document.update_answers!(answers_params)
+    params[:step] = @document.skip_step_if_one_child(params[:step].to_i).next if !@document.update_answers!(answers_params)
 
     if @document.errors.any?
       redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
