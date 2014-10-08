@@ -27,7 +27,7 @@ class Document < ActiveRecord::Base
     _looped_amount = looped_amount(next_step, _answers)
     # NOTICE amount_if_answer => amount_answer_if.answer
 
-    if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
+    if direction == 'forward' && _answers.present? && (step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
       (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
       _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
 
@@ -130,10 +130,15 @@ class Document < ActiveRecord::Base
           if field.raw_question == true && (i == 0 || field.dont_repeat == false)
             params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * template.steps.count) }
             params.merge!({ :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i }) if !field.sort_index.nil?
-            document_answers.push answers.create(params)
+
+            template_field = TemplateField.find(params[:template_field_id])
+            depend_answer = TemplateField.find(template_field.render_if_id).document_answers.where(:document_id => id).first if template_field.render_if_id.present?
+
+            document_answers.push(answers.create(params)) if template_field.render_if_id.nil? || depend_answer.answer.match(template_field.render_if_value)
           end
         end
         break if current_step.amount_field_id.present? && current_step.amount_field_if.present? &&
+                 answers.where(:template_field_id => current_step.amount_field_if).exist? &&
                  !answers.where(:template_field_id => current_step.amount_field_if).first.answer.match(current_step.amount_field_if_option)
       end
     end
@@ -266,13 +271,12 @@ class Document < ActiveRecord::Base
     selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question.count rescue 0
   end
 
-
   def assign_owner_save!(cookies, user=nil)
     if !user.nil?
       self.user_id = user.id
     else
       cookies[:session_uniq_token] = generate_session_uniq_token if !cookies[:session_uniq_token].present?
-      self.session_uniq_token  = cookies[:session_uniq_token]
+      self.session_uniq_token = cookies[:session_uniq_token]
     end
     save!
   end
