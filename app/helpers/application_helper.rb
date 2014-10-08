@@ -24,11 +24,22 @@ module ApplicationHelper
   end
 
   def get_number_of_joint_child(document)
-    document.step_answers(12).map(&:answer).keep_if {|a| a == 'Both Parents'}.length
+    document.step_answers(19).map(&:answer).keep_if {|a| a.to_s.downcase == 'both parents'}.length
   end
 
   def get_number_of_primary_or_sole_child(document)
     document.step_answers(8).last.answer.to_i - get_number_of_joint_child(document).to_i
+  end
+
+  def get_percentage_for_children(count)
+    case count
+    when 1
+      18
+    when 2
+      25
+    else
+      29 + (count-3)*2
+    end
   end
 
   def get_number_of_child(document)

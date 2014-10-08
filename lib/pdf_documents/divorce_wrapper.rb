@@ -151,7 +151,7 @@ module PdfDocument
         @number_of_children = answers.next.answer.to_i
 
         if !@children_residency
-          21.times do steps.next end
+          22.times do steps.next end
         else
 
           #Step 9   Child(ren)'s Information
@@ -193,7 +193,7 @@ module PdfDocument
             @children_continue = answers.next.answer == 'Yes' rescue false
           end
           if @children_continue
-            19.times do steps.next end
+            20.times do steps.next end
           else
 
             #Step 11   CHILDREN’S CURRENT ADDRESS
@@ -455,6 +455,13 @@ module PdfDocument
             @how_pay = answers.next.answer
             answers.next
             @pay_amount = answers.next.answer
+
+            #Step 22_1   Child Support
+            answers = step_answers_enum steps.next
+            answers.next
+            answers.next
+            @mom_month_amount = answers.next.answer
+            @dad_month_amount = answers.next.answer
 
             #Step 23 Additional Child Support
             answers = step_answers_enum steps.next

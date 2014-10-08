@@ -23,6 +23,9 @@
       - when /text_radio/
         = render :partial => 'document_answers/fields/text_radio', :locals => { :a => a, :answer => answer }
 
+      - when /text_javascript/
+        = render :partial => 'document_answers/fields/text_javascript', :locals => { :a => a, :answer => answer }
+
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 

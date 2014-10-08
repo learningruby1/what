@@ -233,7 +233,7 @@ class Document < ActiveRecord::Base
   def can_render?(step)
     result = []
     step.render_if_field_id.split('/').each_with_index do |e, i|
-      result << (step.render_if_field_value.split('/')[i] != (TemplateField.find(e.to_i).document_answers.where(:document_id => id).first.try(:answer) || ''))
+      result << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?#((TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).exclude? step.render_if_field_value.split('/')[i])
     end
     result.include?(false)
   end
