@@ -21,16 +21,20 @@
   - unless get_number_of_child(@document).nil?
     - count = get_number_of_child(@document).to_i
     - sole_count = get_number_of_primary_or_sole_child(@document)
-    - if text.match(/<child_count>/) || text.match(/<child_count_spain>/)
+    - if text.match(/<child_count>/) || text.match(/<child_count_spain>/) || text.match(/<residency_child>/) || text.match(/<residency_child_second>/)
       - if count == 1
         - text.gsub!('<child_count>', 'the child')
         - text.gsub!('<child_count_spain>', 'del menor')
+        - text.gsub!('<residency_child>', 'El menor debe')
+        - text.gsub!('<residency_child_second>', 'Ha vivido el menor')
         - text.gsub!('<el_ellos>', 'él')
         - if text[0] == 't'
           - text[0] = 'T'
       - else
         - text.gsub!('<child_count>', 'children')
         - text.gsub!('<child_count_spain>', 'de los menores')
+        - text.gsub!('<residency_child>', 'Los menores deben')
+        - text.gsub!('<residency_child_second>', 'Han vivido los menores')
         - text.gsub!('<el_ellos>', 'ellos')
         - if text[0] == 'c'
           - text[0] = 'C'
