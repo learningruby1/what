@@ -1340,7 +1340,7 @@ current_step.fields.create :field_type => 'radio', :name => 'I no longer want to
 
 
 
-current_step = template.steps.create :step_number => step_number += 1,#46
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => clark_nye.id.to_s, :render_if_field_value => 'Clark',#46
                                      :title => 'Other cases in Family court /<spain/>Otros casos en la corte de Familia',
                                      :description => "Do you or other party in this case (including any minor child) have any other current case(s) or past case(s) in the Family Court or Juvenile Court in <insert id=#{ clark_nye.id }/> County?
                                                       <br/><spain/>¿Ha tenido o tiene usted u la otra persona en este caso (incluyendo cualquier de sus menores) otros casos en la corte de familia en el Condado de <insert id=#{ clark_nye.id }/>?"

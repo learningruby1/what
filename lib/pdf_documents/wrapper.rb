@@ -60,6 +60,10 @@ module PdfDocument
       @data_array.push ["small_checked_rectangle #{x_position} #{y_position}"]
     end
 
+    def create_line(x_position, width, y_position)
+      @data_array.push ["create_line #{x_position} #{ width } #{y_position}"]
+    end
+
     def create_table
     end
 
