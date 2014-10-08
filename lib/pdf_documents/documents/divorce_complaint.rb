@@ -63,7 +63,7 @@ module PdfDocument
 
       push_text "That the wife in this case #{ @wife_pregnacy ? 'is' : 'is not' } currently pregnant.", @text_indent
 
-      if @children_residency && !@children_continue
+      if @children_residency && @children_nevada_residency
         move_to_left "#{ _counter += 1 }.  LEGAL CUSTODY"
 
         @legal_custody_parent.each do |legal_custody|
@@ -153,10 +153,13 @@ module PdfDocument
 
         move_to_left "#{ _counter += 1 }. WAGE WITHHOLDING"
 
-        if @request_withhold
+        case @request_withhold
+        when 'Yes'
           push_text 'That a wage withholding order be issued against the obligor parent to secure payment of child support and spousal support, if any.', @text_indent
-        else
+        when 'No'
           push_text 'That Plaintiff is not asking for wage withholding.', @text_indent
+        else
+          push_text 'The child support is already being collected by the DA.', @text_indent
         end
 
         move_to_left "#{ _counter += 1 }.  CHILD SUPPORT ARREARS"
