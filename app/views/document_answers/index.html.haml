@@ -31,7 +31,7 @@
                   %hr
 
             - next if answer.template_field.insert_place.present?
-            - next if answer.answer.nil? && field_type_to_show.exclude?(answer.template_field.field_type)
+            - next if answer.answer.nil? && !field_type_to_show.include?(answer.template_field.field_type)
             - if answer.template_field.toggle_id.present?
 
               - if last_toggle != answer.template_field.toggle_id
