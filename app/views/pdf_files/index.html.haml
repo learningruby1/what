@@ -29,13 +29,13 @@
             = link_to document_review_path(document), :class => 'btn btn-default' do
               .glyphicon.glyphicon-list-alt
               Review /
-              %span.spain Opinión
+              %span.spain Revisar
           %td
-            = link_to document_answer_path(document, 1), :class => 'btn btn-default' do
-              .glyphicon.glyphicon-edit
-              Edit /
-              %span.spain Editar
-            = link_to 'Create Filed Case', template_documents_path(:document_id => document.id, :template_id => 2), :method => :post, :class => 'btn btn-default'
+            / = link_to document_answer_path(document, 1), :class => 'btn btn-default' do
+            /   .glyphicon.glyphicon-edit
+            /   Edit /
+            /   %span.spain Editar
+            / = link_to 'Create Filed Case', template_documents_path(:document_id => document.id, :template_id => 2), :method => :post, :class => 'btn btn-default'
             - if document.is_generated?
               - if current_user
                 - if current_user.paypal_payment_id.present?
