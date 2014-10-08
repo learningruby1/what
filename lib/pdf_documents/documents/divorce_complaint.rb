@@ -433,8 +433,9 @@ module PdfDocument
       push_text 'Submitted by: __________________', 130
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }   Signature", 200
 
-      move_down @header_margin_top
-      default_leading 8
+      # move_down @header_margin_top
+      # default_leading 8
+      start_new_page
       push_header 'VERIFICATION'
       move_down
 
