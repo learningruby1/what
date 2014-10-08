@@ -9,7 +9,7 @@
 
 #NOTICE: name used in link_to_documents tempate AND in lib/pdf_documents/documents/pdf.rb
 Template.where( :name => 'Complaint for Divorce /<spain/>Demanda de Divorcio').first.try :destroy
-template = Template.create :name => 'Complaint for Divorce /<spain/>Demanda de Divorcio', :description => 'No description /<spain/>No hay descripción' if !template.present?
+template = Template.create :name => Document::DIVORCE_COMPLAINT, :description => 'No description /<spain/>No hay descripción' if !template.present?
 
 step_number = 0
 

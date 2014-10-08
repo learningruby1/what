@@ -27,6 +27,7 @@ class DocumentAnswersController < ApplicationController
     if @document.errors.any?
       redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
     elsif params[:review].present?
+      flash[:scroll] = DocumentAnswer.find(answers_params.first.last.first[0]).template_step.id
       redirect_to document_review_path(@document)
     else
       redirect_to document_answer_path(@document, params[:step].to_i)

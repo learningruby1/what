@@ -77,6 +77,11 @@ class DocumentAnswer < ActiveRecord::Base
     answer
   end
 
+  def to_html_array
+    [(template_field.to_s.gsub(/<option\/>/, '<br/>') rescue ''),
+     to_s]
+  end
+
   def self.sort _answers, step
     if step == '47'
       _answers.sort_by!{ |item| [item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
