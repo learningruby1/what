@@ -9,11 +9,11 @@
         - if user_signed_in?
           Welcome Back /
           %span.spain Gracias por volver
-      - @documents.each do |document|
-        = link_to document_answer_path(document, 1) do
-          = document.to_s.split('<spain/>').first
-          %span.spain= document.to_s.split('<spain/>').last
-        %br
+      - document = @documents.sort(&:updated_at).first
+      = link_to document_answer_path(document, 1) do
+        = document.to_s.split('<spain/>').first
+        %span.spain= document.to_s.split('<spain/>').last
+      %br
     - else
       %hr
       You have no documents filed recently
