@@ -7,16 +7,23 @@ module PdfDocument
     require 'pdf_documents/documents/divorce_summons'
     require 'pdf_documents/documents/divorce_injunction'
     require 'pdf_documents/documents/divorce_cover'
+    require 'pdf_documents/documents/divorce_coversheet'
     require 'pdf_documents/documents/affidative_or_acceptance_of_service'
     require 'prawn'
 
     def generate(document)
+      answer_county = TemplateStep.where(:title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?').first.document_answers.first
+
       case document.template.to_s
       when /^Complaint for Divorce/
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
-        generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
+        if answer_county == 'Clark'
+          generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
+        else
+          generate_document PdfDocument::DivorceCoversheet.new(document).generate, "Divorce_coversheet_#{ document.id }"
+        end
       when /^Filed Case/
         generate_document PdfDocument::AffidativeOrAcceptanceOfService.new(document).generate,      "AffidativeAcceptance_of_service_#{ document.id }"
       end
@@ -153,6 +160,11 @@ module PdfDocument
               stroke_line [array_tmp.second.to_i + 4, array_tmp.last.to_i - 8], [array_tmp.second.to_i + 8, array_tmp.last.to_i]
             when /^move_to_left/
               font_size(command_number){ text next_line, :indent_paragraphs => 200, :inline_format => true }
+            when /^create_line/
+              array_tmp = command.split(' ')
+              stroke do
+                horizontal_line array_tmp.second.to_i, array_tmp.third.to_i, :at => array_tmp.fourth.to_i
+              end
             when /\d/
               move_down next_line.to_i
             end
