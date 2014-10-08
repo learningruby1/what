@@ -1,10 +1,7 @@
 .container
   .row.new_roman.col-md-3
-    - if answer.template_field.field_type.match /left\z/
-      .move_to_left_20
-        %p= a.text_field :answer, :class => 'form-control'
-    - else
-      %p= a.text_field :answer, :class => 'form-control'
+    %p{ :class => ('move_to_left_20' if answer.template_field.field_type.match(/left\z/)) }= a.text_field :answer, :class => 'form-control'
+
   .row.new_roman.col-md-9
     &nbsp
     = render :partial => 'render_text', :locals => { :answer => answer }
