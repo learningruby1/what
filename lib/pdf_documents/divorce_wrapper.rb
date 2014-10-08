@@ -222,6 +222,7 @@ module PdfDocument
 
             legal_custody_amount.times do |i|
               answers = step_answers_enum step, i
+              answers.next
               @legal_custody_parent.push answers.next.answer
             end
 
@@ -490,7 +491,7 @@ module PdfDocument
             #Step 25  Wage withholding
             answers = step_answers_enum steps.next
             answers.next.answer
-            @request_withhold = answers.next.answer == 'Yes' rescue false
+            @request_withhold = answers.next.answer
 
             #Step 26   Child  Support Arrears
             answers = step_answers_enum steps.next
