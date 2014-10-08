@@ -466,10 +466,10 @@ children_holidays_now = current_step.fields.create :field_type => 'radio', :name
 
 
 current_step.fields.create :field_type => 'text', :name => 'Do you want all children to have the same holiday schedule?
-                                                            <br/><spain/>¿Quiere que todos los menores tengan el mismo horario de vacaciones?', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                            <br/><spain/>¿Quiere que todos los menores tengan el mismo horario de vacaciones?', :toggle_id => toggle_id, :toggle_option => 'Yes', :render_if_id => children_amount_field.id.to_s, :render_if_value => /\A[^1]{1}/
 
 same_schedule = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes'
+                                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :render_if_id => children_amount_field.id.to_s, :render_if_value => /\A[^1]{1}/
 
 
 
