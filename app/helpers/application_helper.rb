@@ -32,9 +32,7 @@ module ApplicationHelper
   end
 
   def get_number_of_child(document)
-    if document == Document::DIVORCE_COMPLAINT
-      document.step_answers(8).last.try :answer
-    end
+    document.step_answers(8).last.try :answer if document.to_s == Document::DIVORCE_COMPLAINT
   end
 
   def get_defendant_full_name(document)
@@ -58,9 +56,7 @@ module ApplicationHelper
   end
 
   def get_self(document)
-    if document == Document::DIVORCE_COMPLAINT
-      document.step_answers(3)[answers.count - 2].try :answer
-    end
+    document.step_answers(3)[document.step_answers(3).count - 2].try :answer if document.to_s == Document::DIVORCE_COMPLAINT
   end
 
   def get_link_for_redirect(text, document_id)
