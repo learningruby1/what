@@ -32,14 +32,8 @@ module ApplicationHelper
   end
 
   def get_number_of_child(document)
-    if document.template.id == 1
-      answer = document.step_answers(8).last
-    end
-
-    if answer.nil?
-      return nil
-    else
-      return answer.answer
+    if document == Document::DIVORCE_COMPLAINT
+      document.step_answers(8).last.try :answer
     end
   end
 
@@ -64,15 +58,8 @@ module ApplicationHelper
   end
 
   def get_self(document)
-    if document.template.id == 1
-      answers = document.step_answers(3)
-      answer = answers[answers.count - 2]
-    end
-
-    if answer.nil?
-      return nil
-    else
-      return answer.answer
+    if document == Document::DIVORCE_COMPLAINT
+      document.step_answers(3)[answers.count - 2].try :answer
     end
   end
 

@@ -1,45 +1,65 @@
 .container
   %h5 REVIEW YOUR ANSWERS AND EDIT IF NECESSARY
   %h5.spain REVISE SUS RESPUESTAS Y HAY CUALQUIER CAMBIO QUE SEA NECESARIO
+  %hr
+  - field_type_to_show = ['checkbox', 'text']
 
   - @document.template.steps.each do |step|
+    %div{ :id => "scroll_#{step.id}" }
+    - next if !@document.can_render?(step)
 
     .row
       .col-md-10
-        - step_array = step.title.split('<spain/>')
-        - if step_array.first.match(/<br\/>/)
-          - text_new = step_array.first.gsub!('<br/>', '/')
-          %strong.new_roman= "#{ text_new }"
-          %strong.new_roman.spain= "#{step_array.last}:"
-        - elsif step_array.first.match(/<child_count>/) || step_array.first.match(/<child_count_spain>/)
-          - count_children = get_number_of_child(@document).to_i
-          - unless count_children.nil?
-            - if count_children == 1
-              - text_first = step_array.first.gsub('<child_count>', 'the child')
-              - text_first[0] = 'T' if text_first[0] == 't'
-              - text_second = step_array.last.gsub('<child_count_spain>', 'el menor ')
-            - else
-              - text_first = step_array.first.gsub('<child_count>', 'children')
-              - text_first[0] = 'C' if text_first[0] == 'c'
-              - text_second = step_array.last.gsub('<child_count_spain>', 'los menores')
-            - if text.match(/<uppercase_child>/) || text.match(/<uppercase_child_spain>/)
-              - if count_children == 1
-                - text.gsub!('<uppercase_child>', 'CHILD')
-                - text.gsub!('<uppercase_child_spain>', 'DEL MENOR')
-              - else
-                - text.gsub!('<uppercase_child>', 'CHILDREN')
-                - text.gsub!('<uppercase_child_spain>', 'DE LOS MENORES')
-            %strong.new_roman= "#{text_first}"
-            %strong.new_roman.spain= "#{text_second}:"
-        - else
-          %strong.new_roman= "#{step_array.first}"
-          %strong.new_roman.spain= "#{step_array.last}:"
+        %strong.new_roman= step.to_s(@document).split('<spain/>')[0]
+        %strong.new_roman.spain= step.to_s(@document).split('<spain/>')[1]
+
       .col-md-2
         = link_to document_answer_path(@document, step.step_number, :review => true), :class => 'btn btn-default' do
           %span.new_roman Change /
           %span.new_roman.spain Cambiar
+
+    .row
+      .col-md-12
+        %table{ :style => 'width: 80%; margin-left: 20px' }
+          - last_toggle = nil
+          - main_answer = nil
+          - @document.answers.where(:template_step_id => step.id).order(:id).each do |answer|
+
+            - if answer.template_field.id == @document.answers.where(:template_step_id => step.id).order(:id).first.template_field.id && answer.id != @document.answers.where(:template_step_id => step.id).order(:id).first.id
+              %tr
+                %td
+                  %hr
+
+            - next if answer.template_field.insert_place.present?
+            - next if answer.answer.nil? && field_type_to_show.exclude?(answer.template_field.field_type)
+            - if answer.template_field.toggle_id.present?
+
+              - if last_toggle != answer.template_field.toggle_id
+                - last_toggle = answer.template_field.toggle_id
+                - main_answer = answer
+
+              - if last_toggle == answer.template_field.toggle_id
+                - if main_answer.answer.present? && !main_answer.answer.match(answer.template_field.toggle_option.presence || '') || answer.template_field.toggle_option.nil? && main_answer.answer == '0'
+                  - next# if !field_type_to_show.include?(answer.template_field.field_type)
+
+            - answer_html_array = answer.to_html_array
+            %tr
+              - if field_type_to_show.include? answer.template_field.field_type
+                %td
+                  = answer_html_array[0].split('<spain/>')[0].try :html_safe
+                  %span.spain= answer_html_array[0].split('<spain/>')[1].try :html_safe
+              - else
+                %td.answer= answer_html_array[1]
+    .row
       %br
-      %br
+      %hr
+
   .row
     .col-md-6
       = link_to 'Generate PDF', generate_pdf_path(@document.id), :class => 'btn btn-default navbar-right'
+
+
+:javascript
+  if($("#scroll_#{flash[:scroll]}").length > 0)
+    $(window).scrollTop( $("#scroll_#{flash[:scroll]}").position().top - 20 );
+

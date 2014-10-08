@@ -12,6 +12,7 @@ class Document < ActiveRecord::Base
   belongs_to :template
   accepts_nested_attributes_for :answers
 
+  DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
 
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
   STEP_12 = "CHILDREN’S PRIOR ADDRESS"
@@ -231,6 +232,7 @@ class Document < ActiveRecord::Base
   end
 
   def can_render?(step)
+    return true if step.render_if_field_id.nil?
     result = []
     step.render_if_field_id.split('/').each_with_index do |e, i|
       result << (step.render_if_field_value.split('/')[i] != (TemplateField.find(e.to_i).document_answers.where(:document_id => id).first.try(:answer) || ''))
