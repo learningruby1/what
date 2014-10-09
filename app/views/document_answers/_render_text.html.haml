@@ -1,32 +1,9 @@
 - text = answer.kind_of?(DocumentAnswer) ? answer.template_field.to_text(@document, @amount_index) : answer
 - if text.present?
+  - index_of_radio = index_of_radio.present? ? index_of_radio : nil
+  - real_answer = real_answer.present? ? real_answer : nil
 
-  - unless get_self(@document).nil?
-    - if text.match(/<spain_self>/)
-      - if get_self(@document) == 'Wife'
-        - text.gsub!('<spain_self>', 'esposo')
-      - else
-        - text.gsub!('<spain_self>', 'esposa')
-
-  - unless get_number_of_child(@document).nil?
-    - if text.match(/<child_count>/) || text.match(/<child_count_spain>/)
-      - if get_number_of_child(@document).to_i == 1
-        - text.gsub!('<child_count>', 'the child')
-        - text.gsub!('<child_count_spain>', 'el menor ')
-        - if text[0] == 't'
-          - text[0] = 'T'
-      - else
-        - text.gsub!('<child_count>', 'children')
-        - text.gsub!('<child_count_spain>', 'los menores')
-        - if text[0] == 'c'
-          - text[0] = 'C'
-
-  - if text.match(/<defendant_full_name>/) || text.match(/<defendant_full_name_spain>/)
-    - defendant_name = get_defendant_full_name @document
-    - text.gsub!('<defendant_full_name>', defendant_name)
-    - text.gsub!('<defendant_full_name_spain>', defendant_name)
-
-
+  - text = replace_main_text(@document, @answers, text, @amount_index, index_of_radio, real_answer)
 
   - new_text = get_begin_text(text, @count_index)
   - unless new_text.nil?
@@ -42,7 +19,7 @@
       %strong.new_roman.spain= value.strip.html_safe
 
 - if answer.kind_of?(DocumentAnswer) && flash.any?
-  - unless @document.check_mandatory answer, answer.template_field.template_step.to_i
+  - unless @document.check_mandatory answer
     %br
     %span.alert-danger.mandatory-box
       = answer.template_field.mandatory[:hint].split('<spain/>').first

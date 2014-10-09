@@ -1,5 +1,5 @@
 .container
-  %div{ :class => "sub_amount_#{answer.template_field.toggle_id}"}
+  %div{ :class => ( !answer.template_field.toggle_id.nil? ? "sub_amount_#{ answer.template_field.toggle_id + answer.toggler_offset }" : "sub_amount_#{ answer.toggler_offset }") }
     .row.new_roman
       .col-md-12
         = render :partial => 'render_text', :locals => { :answer => answer }
@@ -9,5 +9,5 @@
     .row.new_roman.col-md-2
       %input{ :type => 'hidden', :value => answer.id }
       %a.btn.btn-default.ajax-count{ :href => '#' }
-        %span.new_roman Description /
-        %span.new_roman.spain Descripción
+        %span.new_roman Continue /
+        %span.new_roman.spain Continuar

@@ -41,15 +41,13 @@ module PdfDocument
 
         push_text "#{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}, the Affiant being duly sworn, states that at all times herein Affiant was and is over 18 years of age, not a party to nor interested in the proceeding in which this affidavit is made."
 
-        push_text "That Affiant has a #{@friend_home_address} address of #{@friend_home_address_city}, #{@friend_home_address_zip}.", @text_indent
+        push_text "That Affiant has a #{@friend_radio_address} address of #{@friend_home_address} #{@friend_home_address_city}, #{@friend_home_address_zip}.", @text_indent
 
-        push_text "That Affiant’s phone number is (insert complete phone number).", @text_indent
+        push_text "That Affiant’s phone number is #{@friend_phone}.", @text_indent
 
         push_text 'That Affiant is not required to be a licensed process server because Affiant is not engaged in business as a process server as defined in NRS 648.014.', @text_indent
 
-        if @summons_and_complaint_date_present
-          push_text "That Affiant received a copy of the Summons and Complaint on the #{@summons_and_complaint_date.split("/")[0]} day of #{@summons_and_complaint_date.split("/")[1]}, #{@summons_and_complaint_date.split("/")[2]}.", @text_indent
-        end
+        push_text "That Affiant received a copy of the Summons and Complaint on the #{@summons_and_complaint_date.split("/")[0]} day of #{@summons_and_complaint_date.split("/")[1]}, #{@summons_and_complaint_date.split("/")[2]}.", @text_indent
         if @preliminary_injunction_date_present
           push_text "That Affiant received a copy of the Preliminary Injunction on the #{@preliminary_injunction_date.split("/")[0]} day of #{@preliminary_injunction_date.split("/")[1]}, #{@preliminary_injunction_date.split("/")[2]}.", @text_indent if @preliminary_injunction_date_present
         end
@@ -65,7 +63,7 @@ module PdfDocument
         move_down
         push_text 'SUSCRIBED and SWORN to before me this'
         push_text '_______day of ___________, 20___.'
-        push_text "By (insert name of person serving) "
+        push_text "By #{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}"
         move_down 20
         default_leading 014
         push_text '______________________'

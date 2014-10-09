@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919144948) do
+ActiveRecord::Schema.define(version: 20141008133753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,10 @@ ActiveRecord::Schema.define(version: 20140919144948) do
     t.text    "answer"
     t.string  "sort_index"
     t.integer "sort_number"
+    t.integer "template_step_id"
   end
+
+  add_index "document_answers", ["template_step_id", "document_id", "template_field_id"], name: "asnwers_fast_index", using: :btree
 
   create_table "documents", force: true do |t|
     t.integer  "template_id"
@@ -46,20 +49,24 @@ ActiveRecord::Schema.define(version: 20140919144948) do
   add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "template_fields", force: true do |t|
-    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "field_type",       default: "string"
     t.integer  "template_step_id"
+    t.text     "name"
     t.integer  "toggle_id"
     t.string   "toggle_option"
     t.string   "looper_option"
     t.boolean  "dont_repeat",      default: false
     t.string   "mandatory"
+    t.string   "header_ids"
     t.integer  "amount_field_id"
     t.boolean  "raw_question",     default: true
-    t.string   "header_ids"
     t.string   "sort_index"
+    t.integer  "sub_toggle_id"
+    t.string   "insert_place"
+    t.string   "render_if_id"
+    t.string   "render_if_value"
   end
 
   add_index "template_fields", ["template_step_id"], name: "index_template_fields_on_template_step_id", using: :btree
@@ -69,7 +76,7 @@ ActiveRecord::Schema.define(version: 20140919144948) do
     t.integer "step_number"
     t.string  "title"
     t.text    "description"
-    t.integer "render_if_field_id"
+    t.string  "render_if_field_id"
     t.string  "render_if_field_value"
     t.integer "amount_field_id"
     t.integer "amount_field_if"

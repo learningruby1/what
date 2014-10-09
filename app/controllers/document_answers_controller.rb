@@ -3,9 +3,11 @@ class DocumentAnswersController < ApplicationController
 
   def edit
     if @document.present?
-      @answers = @document.prepare_answers! params[:step], params[:direction].presence || 'forward'
+      @answers = @document.prepare_answers! params[:step].to_i, params[:direction].presence || 'forward'
+      #Its correct work without this, need to test?
       @answers = DocumentAnswer.sort @answers, params[:step]
       @review = params[:review]
+
 
       if @review.present? && !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
@@ -20,20 +22,15 @@ class DocumentAnswersController < ApplicationController
 
   def update
     current_step = params[:step].to_i
-    params[:step] = params[:step].to_i.next if !@document.update_answers!(answers_params, params[:step].to_i)
+    params[:step] = @document.skip_step_if_one_child(params[:step].to_i).next if !@document.update_answers!(answers_params)
 
     if @document.errors.any?
       redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
     elsif params[:review].present?
+      flash[:scroll] = DocumentAnswer.find(answers_params.first.last.first[0]).template_step.id
       redirect_to document_review_path(@document)
     else
-      if current_step == 10 && @document.check_answers_children_residency(current_step)
-        redirect_to templates_path
-      else
-        redirect_to document_answer_path(@document, params[:step].to_i)
-      end
-      #Need to Refactoring
-      @document.edit_answers_children_residency(current_step) if current_step == 8
+      redirect_to document_answer_path(@document, params[:step].to_i)
     end
   end
 
@@ -43,11 +40,11 @@ class DocumentAnswersController < ApplicationController
     answer2 = DocumentAnswer.find params[:answer_id_second]
     tmp_value = answer2.answer.to_i
 
-    @document.update_answers!(answers_params, params[:step].to_i)
-    @document.create_or_delete_answer params[:value].to_i, answer2, params[:step], tmp_value
+    @document.update_answers!(answers_params)
+    @document.create_or_delete_answer params[:value].to_i, answer2, tmp_value
 
-    @answers = @document.prepare_answers! params[:step], true
-    @answers.sort_by!{ |item| [item.sort_index, item.sort_number] } rescue nil
+    @answers = @document.prepare_answers! answer2.template_step_id, true
+    @answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }
     @review = params[:review]
 
     if @review.present? && !@answers.blank?

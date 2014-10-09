@@ -1,15 +1,25 @@
 class TemplateStep < ActiveRecord::Base
+  include DivorceComplaintHelper
 
   has_many :fields, :class_name => 'TemplateField'
-  has_many :render_fields,  :class_name => 'DocumentAnswer',:primary_key => 'render_if_field_id', :foreign_key => 'template_field_id'
   has_many :amount_fields,    :class_name => 'DocumentAnswer', :primary_key => 'amount_field_id', :foreign_key => 'template_field_id'
   has_many :amount_answer_if, :class_name => 'DocumentAnswer', :primary_key => 'amount_field_if', :foreign_key => 'template_field_id'
+  has_many :document_answers
 
   def to_question_title
     [title].join('. ')
   end
 
-  def to_s
+  def to_s(document=nil)
+    if document.present? && document.to_s == Document::DIVORCE_COMPLAINT
+      title.gsub!('<spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'esposo' : 'esposa')
+      title.gsub!('<uppercase_spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'ESPOSO' : 'ESPOSA')
+
+      title.gsub! '<child_count>',           number_of_child(document) == '1' ? 'The child' : 'Children'
+      title.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
+      title.gsub! '<uppercase_child>',       number_of_child(document) == '1' ? 'CHILD'     : 'CHILDREN'
+      title.gsub! '<uppercase_child_spain>', number_of_child(document) == '1' ? 'EL MENOR '  : 'LOS MENORES'
+    end
     title
   end
 

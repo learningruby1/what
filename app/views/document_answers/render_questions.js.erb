@@ -1,9 +1,4 @@
 $('#questionare').replaceWith('<%= escape_javascript render("form") %>');
 
-$('[class^="toggle_"]').each(function(){
-  var this_prop_class = '.' + $(this).prop('class');
-  if($(this_prop_class    + ':first :checkbox').length > 0){
-    if(!$(this_prop_class + ':first :checkbox').is(':checked'))
-      $(this_prop_class   + ':not(:first)').hide();
-  }
-});
+checkbox_radio_toggler();
+date_init();

@@ -2,7 +2,7 @@
 
   = form_for :document_answer, :url => (@url), :html => { :class => "form-horizontal", :role => 'form', :id => 'answer_form' } do |f|
     %input{ :type => 'hidden', :value => @document.id, :id => 'document_id' }
-    %input{ :type => 'hidden', :value => @answers.first.template_field.template_step.to_i, :id => 'step_id' }
+    %input{ :type => 'hidden', :value => @answers.first.template_step_id, :id => 'step_id' }
     %input{ :type => 'hidden', :value => @review, :id => 'review' }
     .jumbotron
       .container
@@ -17,7 +17,7 @@
     .jumbotron
       .container
         .pull-left
-          - if template_step.to_i > 1
+          - if template_step.to_i > 1 && @review.blank?
             = link_to document_answer_path(@document, @document.skip_steps(template_step.to_i.pred, 'back'), :direction => 'back'), :class => 'btn btn-default' do
               %span.new_roman Back /
               %span.new_roman.spain Retroceder
@@ -30,4 +30,3 @@
             - else
               %span Next /
               %span.spain Continuar
-
