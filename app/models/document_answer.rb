@@ -88,7 +88,7 @@ class DocumentAnswer < ActiveRecord::Base
   end
 
   def self.sort _answers, step
-    if step == '47' && document.to_s == Document::DIVORCE_COMPLAINT
+    if step == '49'
       _answers.sort_by!{ |item| [item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
     else
       _answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
