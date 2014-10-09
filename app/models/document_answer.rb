@@ -82,8 +82,8 @@ class DocumentAnswer < ActiveRecord::Base
     answer
   end
 
-  def to_html_array
-    [(template_field.to_s(document).gsub(/<option\/>/, '<br/>') rescue ''),
+  def to_html_array(amount_index=1)
+    [(template_field.to_text(document, amount_index).gsub(/<option\/>/, '<br/>') rescue ''),
      to_s]
   end
 
