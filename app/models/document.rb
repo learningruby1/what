@@ -240,13 +240,13 @@ class Document < ActiveRecord::Base
     dependant_stages_status = []
     if step.render_if_field_id.present?
       step.render_if_field_id.split('/').each_with_index do |e, i|
-        dependant_stages_status << can_render?(TemplateField.find(e.to_i).template_step)
+        dependant_stages_status << cant_render?(TemplateField.find(e.to_i).template_step)
       end
-      current_dependent_steps = []
+      current_dependent_status = []
       step.render_if_field_id.split('/').each_with_index do |e, i|
-        current_dependent_steps << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?
+        current_dependent_status << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?
       end
-       !(current_dependent_steps.include?(false) && dependant_stages_status.include?(false))
+       !(current_dependent_status.include?(false) && dependant_stages_status.include?(false))
     else
       false
     end

@@ -829,7 +829,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>Mamá
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => custody_field.id.to_s, :render_if_field_value => 'With|Only#20',#22
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => custody_field.id.to_s, :render_if_field_value => 'With|Only',#22
                                      :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
 
 child_support_field = current_step.fields.create :field_type => 'radio', :name => 'I already have a child support case with the D’d office /<spain/>Ya tengo un caso de manutención de menor con la oficina del distrito
