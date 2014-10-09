@@ -303,7 +303,7 @@ current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CU
 
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
+custody_field = current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
                                                                  <option/>With dad and visit with mom /<spain/>Con papá y visitas con mamá.<spain/><place_for_insert>
                                                                  <separate/>JOINT PHYSICAL CUSTODY: when the child lives with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/><place_for_insert>
@@ -829,27 +829,43 @@ current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>Mamá
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#22
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => custody_field.id.to_s, :render_if_field_value => 'With|Only',#22
                                      :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
 
-current_step.fields.create :field_type => 'radio', :name => 'No <child> support /<spain/>No habrá manutención <child_count_spain>
-                                                             <option/>Dad will pay <child> support/<spain/>El papá pagara manutención para los menores
-                                                             <option/>Mom will pay <child> support/<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'text', :name => 'You requested sole/primary custody of your <child_sole_count> / Usted pidio la custodia primary/sole de <child_sole_count_spain>.', :toggle_id => toggle_id, :toggle_option => 'will'
+child_support_field = current_step.fields.create :field_type => 'radio', :name => 'I already have a child support case with the D’d office /<spain/>Ya tengo un caso de manutención de menor con la oficina del distrito
+                                                             <option/>No <child> support /<spain/>No habrá manutención <child_count_spain>
+                                                             <option/>Dad will pay <child> support /<spain/>El papá pagara manutención para los menores
+                                                             <option/>Mom will pay <child> support /<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'text', :name => 'Because you requested sole/primary physical custody your <child_sole_count> /<spain/>Porque usted pidio la custodia física primary/sole de <child_sole_count_spain>.', :toggle_id => toggle_id, :toggle_option => 'will'
 
-current_step.fields.create :field_type => 'radio', :name => 'Dad will pay the percentage under the law of <child_percentage_sole> of the non-custodial parent’s gross monthly income/<spain/>El papá pagara la el porcentaje bajo la ley <child_percentage_sole_spain> del ingreso bruto mensual de los padres sin custodia
-                                                             <option/>Dad will pay the following amount $/<spain/>El papá pagara la siguiente cantidad $', :toggle_id => toggle_id, :toggle_option => 'Dad', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'radio', :name => 'Mom will pay the percentage under the law of <child_percentage_sole> of the non-custodial parent’s gross monthly income/<spain/>La mamá pagara la el porcentaje bajo la ley <child_percentage_sole_spain> del ingreso bruto mensual de los padres sin custodia
-                                                             <option/>Mom will pay the following amount $/<spain/>La mamá pagara la siguiente cantidad $', :toggle_id => toggle_id, :toggle_option => 'Mom', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio', :name => 'Dad will pay the statutory <child_percentage_sole>, of his gross income to mom /<spain/>El papá pagara bajo la ley el <child_percentage_sole_spain>, de sus ingresos brutos.
+                                                             <option/>Dad will pay the following amount $ /<spain/>El papá pagara la siguiente cantidad $', :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Dad', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+field_for_mandatory = current_step.fields.create :field_type => 'radio', :name => 'Mom will pay the percentage under the law of <child_percentage_sole> of the non-custodial parent’s gross monthly income/<spain/>La mamá pagara la el porcentaje bajo la ley <child_percentage_sole_spain> del ingreso bruto mensual de los padres sin custodia
+                                                             <option/>Mom will pay the following amount $ /<spain/>La mamá pagara la siguiente cantidad $', :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Mom', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'amount', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'will', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+toggle_id += 1
+current_step.fields.create :field_type => 'amount', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'amount', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto', :template_field => field_for_mandatory.id, :toggle_option => 'amount' }
+
 
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#23
-                                     :title => 'ADDITIONAL <uppercase_child> SUPPORT QUESTION /<spain/>PREGUNTAS ADICIONALES SOBRE MANUTENCION <uppercase_child_spain>'
-current_step.fields.create :field_type => 'text', :name => 'Are you currently employed or self-employed? /<spain/>¿Actualmente tiene empleo o trabaja por su cuenta?'
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => custody_field.id.to_s, :render_if_field_value => 'Both Parents',#22_1
+                                     :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
+
+current_step.fields.create :field_type => 'text', :name => 'Because you requested joint physical custody your <child_joint_count> /<spain/>Porque usted pido la custodia física conjunta de <child_joint_count_spain>.'
+current_step.fields.create :field_type => 'text', :name => 'Child support is determine based on Gross Monthly Income of both parents /<spain/>La manutención de menor se determinar en base a los ingresos brutos mensuales de los dos padres.'
+
+current_step.fields.create :field_type => 'amount-income', :name => '.0$ as mom’s average gross monthly income /<spain/>la mamá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'amount-income', :name => '.0$ as dad’s average gross monthly income /<spain/>del papá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+
+
+
+toggle_id = 0
+toggle_id += 1
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => child_support_field.id.to_s, :render_if_field_value => 'No|Dad|Mom',#23
+                                     :title => 'ADDITIONAL CHILD SUPPORT QUESTION /<spain/>PREGUNTAS ADICIONES SOBRE MANUTENCION DE MENORES'
+current_step.fields.create :field_type => 'text', :name => 'Are you currently employed or self-employed? /<spain/>¿Actualmente tiene empleo o trabaja por su cuenta? *'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
@@ -871,9 +887,9 @@ current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#24
-                                     :title => 'ADDITIONAL <uppercase_child> SUPPORT QUESTION FOR SPOUSE /<spain/>PREGUNTAS ADICIONES DE SU <uppercase_spain_self> SOBRE LA MANUTENCION <uppercase_child_spain>'
-current_step.fields.create :field_type => 'text', :name => 'Is your spouse currently employed/self-employed? /<spain/>¿Actualmente está su <spain_self> trabajando?'
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => child_support_field.id.to_s, :render_if_field_value => 'No|Dad|Mom',#24
+                                     :title => 'ADDITIONAL CHILD SUPPORT QUESTION FOR SPOUSE /<spain/>PREGUNTAS ADICIONES DE SU (INSERT ESPOSA O ESPOSO) SOBRE LA MANUTENCION DE MENORES'
+current_step.fields.create :field_type => 'text', :name => 'Is your spouse currently employed/self-employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
 current_step.fields.create :field_type => 'radio', :name => 'No
                                                              <option/>I don’t know /<spain/>No sé
                                                              <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }

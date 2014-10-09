@@ -2,9 +2,7 @@
 - if text.present?
   - index_of_radio = index_of_radio.present? ? index_of_radio : nil
   - real_answer = real_answer.present? ? real_answer : nil
-
   - text = replace_main_text(@document, @answers, text, @amount_index, index_of_radio, real_answer)
-
   - new_text = get_begin_text(text, @count_index)
   - unless new_text.nil?
     %strong.new_roman= "#{new_text.first} /"

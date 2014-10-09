@@ -138,7 +138,7 @@ class Document < ActiveRecord::Base
           end
         end
         break if current_step.amount_field_id.present? && current_step.amount_field_if.present? &&
-                 answers.where(:template_field_id => current_step.amount_field_if).exist? &&
+                 answers.where(:template_field_id => current_step.amount_field_if).exists? &&
                  !answers.where(:template_field_id => current_step.amount_field_if).first.answer.match(current_step.amount_field_if_option)
       end
     end
@@ -226,7 +226,7 @@ class Document < ActiveRecord::Base
   def skip_steps(next_step, direction='forward')
     if template.steps.where(:step_number => next_step).exists? && template.steps.where(:step_number => next_step).first.render_if_field_id.present?
       begin
-        while (go_forward?(template.steps.where(:step_number => next_step).first))
+        while (cant_render?(template.steps.where(:step_number => next_step).first))
           next_step = direction == 'forward' ? next_step.next : next_step.pred
         end
       end rescue nil
@@ -245,22 +245,17 @@ class Document < ActiveRecord::Base
     next_step
   end
 
-  def can_render?(step)
-    return true if step.render_if_field_id.nil?
-    result = []
-    step.render_if_field_id.split('/').each_with_index do |e, i|
-      result << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?
-    end
-    result.include?(false)
-  end
-
-  def go_forward?(step)
+  def cant_render?(step)
     dependant_stages_status = []
     if step.render_if_field_id.present?
       step.render_if_field_id.split('/').each_with_index do |e, i|
-        dependant_stages_status << go_forward?(TemplateField.find(e.to_i).template_step)
+        dependant_stages_status << cant_render?(TemplateField.find(e.to_i).template_step)
       end
-       !(can_render?(step) && dependant_stages_status.include?(false))
+      current_dependent_status = []
+      step.render_if_field_id.split('/').each_with_index do |e, i|
+        current_dependent_status << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?
+      end
+       !(current_dependent_status.include?(false) && dependant_stages_status.include?(false))
     else
       false
     end

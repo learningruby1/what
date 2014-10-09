@@ -151,7 +151,7 @@ module PdfDocument
         @number_of_children = answers.next.answer.to_i
 
         if !@children_residency
-          21.times do steps.next end
+          22.times do steps.next end
         else
 
           #Step 9   Child(ren)'s Information
@@ -193,7 +193,7 @@ module PdfDocument
             @children_continue = answers.next.answer == 'Yes' rescue false
           end
           if @children_continue
-            19.times do steps.next end
+            20.times do steps.next end
           else
 
             #Step 11   CHILDREN’S CURRENT ADDRESS
@@ -296,9 +296,13 @@ module PdfDocument
 
             #Step 19   Holiday
             holiday_now = answers.next.answer == 'Yes'
-            answers.next
-            same_schedule = answers.next.answer == 'Yes'
-            holidays_amount = same_schedule ? 1 : @number_of_children
+            if @number_of_children == 1
+              holidays_amount = 1
+            else
+              answers.next
+              same_schedule = answers.next.answer == 'Yes'
+              holidays_amount = same_schedule ? 1 : @number_of_children
+            end
 
             if !holiday_now
               2.times do steps.next end
@@ -449,44 +453,70 @@ module PdfDocument
             answers = step_answers_enum steps.next
             @child_insurance = answers.next.answer
 
-            #Step 22   Child Support
-            answers = step_answers_enum steps.next
-            @child_suport_who = answers.next.answer
-            @child_suport_amount = answers.next.answer
+            #Step 22   Child Support Sole/Primary
+            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /With|Only/}.empty?
+              steps.next
+            else
+              answers = step_answers_enum steps.next
+              @child_suport_who = answers.next.answer
+              answers.next
+              @how_pay = answers.next.answer
+              answers.next
+              @pay_amount = answers.next.answer
+            end
+
+            #Step 22_1   Child Support Joint
+            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /Both/}.empty? || (@child_suport_who =~ /I already have/)
+              steps.next
+            else
+              answers = step_answers_enum steps.next
+              answers.next
+              answers.next
+              @mom_month_amount = answers.next.answer
+              @dad_month_amount = answers.next.answer
+            end
 
             #Step 23 Additional Child Support
-            answers = step_answers_enum steps.next
-            answers.next
-            @employed_presence = answers.next.answer == 'Yes' rescue false
-            if @employed_presence
-              @employer_name = answers.next.answer
-              @business_address = answers.next.answer
-              @employer_city = answers.next.answer
-              @employer_zip = answers.next.answer
-              @employer_phone = answers.next.answer
-              @drivers_license = answers.next.answer
+            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /With|Only/}.empty? || (@child_suport_who =~ /I already have/)
+              steps.next
             else
-              6.times do answers.next end
+              answers = step_answers_enum steps.next
+              answers.next
+              @employed_presence = answers.next.answer == 'Yes' rescue false
+              if @employed_presence
+                @employer_name = answers.next.answer
+                @business_address = answers.next.answer
+                @employer_city = answers.next.answer
+                @employer_zip = answers.next.answer
+                @employer_phone = answers.next.answer
+                @drivers_license = answers.next.answer
+              else
+                6.times do answers.next end
+              end
+              answers.next
+              @ethinicity = answers.next.answer
             end
-            answers.next
-            @ethinicity = answers.next.answer
 
             #Step 24 Additional Child Support For Spouse
-            answers = step_answers_enum steps.next
-            answers.next
-            @employed_presence = answers.next.answer == 'Yes' rescue false
-            if @employed_presence
-              @employer_name = answers.next.answer
-              @business_address = answers.next.answer
-              @employer_city = answers.next.answer
-              @employer_zip = answers.next.answer
-              @employer_phone = answers.next.answer
-              @drivers_license = answers.next.answer
+            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /With|Only/}.empty?
+              steps.next
             else
-              6.times do answers.next end
+              answers = step_answers_enum steps.next
+              answers.next
+              @employed_presence = answers.next.answer == 'Yes' rescue false
+              if @employed_presence
+                @employer_name = answers.next.answer
+                @business_address = answers.next.answer
+                @employer_city = answers.next.answer
+                @employer_zip = answers.next.answer
+                @employer_phone = answers.next.answer
+                @drivers_license = answers.next.answer
+              else
+                6.times do answers.next end
+              end
+              answers.next
+              @ethinicity = answers.next.answer
             end
-            answers.next
-            @ethinicity = answers.next.answer
 
             #Step 25  Wage withholding
             answers = step_answers_enum steps.next
