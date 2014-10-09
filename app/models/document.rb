@@ -244,7 +244,7 @@ class Document < ActiveRecord::Base
       end
       current_dependent_steps = []
       step.render_if_field_id.split('/').each_with_index do |e, i|
-        current_dependent_steps << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?#((TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).exclude? step.render_if_field_value.split('/')[i])
+        current_dependent_steps << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?
       end
        !(current_dependent_steps.include?(false) && dependant_stages_status.include?(false))
     else
