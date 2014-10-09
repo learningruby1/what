@@ -9,7 +9,15 @@ class TemplateStep < ActiveRecord::Base
     [title].join('. ')
   end
 
-  def to_s
+  def to_s(document=nil)
+    if document.present? && document.to_s == Document::DIVORCE_COMPLAINT
+      title.gsub!('<spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'esposo' : 'esposa')
+
+      count = document.step_answers(8).last.try :answer
+
+      title.gsub! '<child_count>', count == '1' ? 'The child' : 'Children'
+      title.gsub! '<child_count_spain>', count == '1' ? 'el menor ' : 'los menores'
+    end
     title
   end
 

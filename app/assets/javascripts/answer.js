@@ -165,9 +165,9 @@ function joint_child_support_amount(_this){
 }
 function who_pay(dad_result, mom_result){
   if(dad_result > mom_result)
-    $('.for_js').prop('innerHTML', '<span><b>Dad $' + dad_result + ' – ' + 'Mom $' + mom_result + ' = $' + (dad_result - mom_result) + '. Dad has to pay ' + (Math.round((dad_result - mom_result)* 100) / 100) + '$ per month for child support to mom. /</span> <span class="spain">Papá $' + dad_result + ' – ' + 'Mamá $' + mom_result + ' = $' + (Math.round((dad_result - mom_result)* 100) / 100) + ' es la responsabilidad de manutención de menor que  Papá  tendrá que pagar  a la mamá por mes.</span>')
+    $('.for_js').prop('innerHTML', '<span><b>Dad $' + dad_result + ' – ' + 'Mom $' + mom_result + ' = $' + (Math.round((dad_result - mom_result)* 100) / 100) + '. Dad has to pay ' + (Math.round((dad_result - mom_result)* 100) / 100) + '$ per month for child support to mom. /</span> <span class="spain">Papá $' + dad_result + ' – ' + 'Mamá $' + mom_result + ' = $' + (Math.round((dad_result - mom_result)* 100) / 100) + ' es la responsabilidad de manutención de menor que  Papá  tendrá que pagar  a la mamá por mes.</span>')
   else
-    $('.for_js').prop('innerHTML', '<span><b>Mom $' + dad_result + ' – ' + 'Dad $' + mom_result + ' = $' + (mom_result - dad_result) + '. Mom has to pay ' + (Math.round((mom_result - dad_result)* 100) / 100) + '$ per month for child support to dad. /</span> <span class="spain">Papá $' + dad_result + ' – ' + 'Papá $' + mom_result + ' = $' + (Math.round((mom_result - dad_result)* 100) / 100) + ' es la responsabilidad de manutención de menor que  Mamá  tendrá que pagar  a la papá por mes.</span>')
+    $('.for_js').prop('innerHTML', '<span><b>Mom $' + dad_result + ' – ' + 'Dad $' + mom_result + ' = $' + (Math.round((mom_result - dad_result)* 100) / 100) + '. Mom has to pay ' + (Math.round((mom_result - dad_result)* 100) / 100) + '$ per month for child support to dad. /</span> <span class="spain">Papá $' + dad_result + ' – ' + 'Papá $' + mom_result + ' = $' + (Math.round((mom_result - dad_result)* 100) / 100) + ' es la responsabilidad de manutención de menor que  Mamá  tendrá que pagar  a la papá por mes.</span>')
 }
 
 

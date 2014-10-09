@@ -12,6 +12,7 @@ class Document < ActiveRecord::Base
   belongs_to :template
   accepts_nested_attributes_for :answers
 
+  DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
 
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
   STEP_12 = "CHILDREN’S PRIOR ADDRESS"
@@ -26,7 +27,7 @@ class Document < ActiveRecord::Base
     _looped_amount = looped_amount(next_step, _answers)
     # NOTICE amount_if_answer => amount_answer_if.answer
 
-    if direction == 'forward' && _answers.present? && step.amount_field_id.present? &&
+    if direction == 'forward' && _answers.present? && (step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
       (loop_amount(next_step) != _looped_amount && (step.amount_answer_if.nil? || step.amount_if_answer(self) == step.amount_field_if_option) ||
       _looped_amount != 1 && step.amount_if_answer(self) != step.amount_field_if_option)
 
@@ -129,10 +130,15 @@ class Document < ActiveRecord::Base
           if field.raw_question == true && (i == 0 || field.dont_repeat == false)
             params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * template.steps.count) }
             params.merge!({ :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i }) if !field.sort_index.nil?
-            document_answers.push answers.create(params)
+
+            template_field = TemplateField.find(params[:template_field_id])
+            depend_answer = TemplateField.find(template_field.render_if_id).document_answers.where(:document_id => id).first if template_field.render_if_id.present?
+
+            document_answers.push(answers.create(params)) if template_field.render_if_id.nil? || depend_answer.answer.match(template_field.render_if_value)
           end
         end
         break if current_step.amount_field_id.present? && current_step.amount_field_if.present? &&
+                 answers.where(:template_field_id => current_step.amount_field_if).exists? &&
                  !answers.where(:template_field_id => current_step.amount_field_if).first.answer.match(current_step.amount_field_if_option)
       end
     end
@@ -221,7 +227,7 @@ class Document < ActiveRecord::Base
     if template.steps.where(:step_number => next_step).exists?
       if template.steps.where(:step_number => next_step).first.render_if_field_id.present?
         begin
-          while (go_forward?(template.steps.where(:step_number => next_step).first))
+          while (cant_render?(template.steps.where(:step_number => next_step).first))
             next_step = direction == 'forward' ? next_step.next : next_step.pred
           end
         end rescue nil #rescue needs cause answer can be not created at the moment
@@ -230,21 +236,17 @@ class Document < ActiveRecord::Base
     next_step
   end
 
-  def can_render?(step)
-    result = []
-    step.render_if_field_id.split('/').each_with_index do |e, i|
-      result << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?#((TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).exclude? step.render_if_field_value.split('/')[i])
-    end
-    result.include?(false)
-  end
-
-  def go_forward?(step)
+  def cant_render?(step)
     dependant_stages_status = []
     if step.render_if_field_id.present?
       step.render_if_field_id.split('/').each_with_index do |e, i|
-        dependant_stages_status << go_forward?(TemplateField.find(e.to_i).template_step)
+        dependant_stages_status << can_render?(TemplateField.find(e.to_i).template_step)
       end
-       !(can_render?(step) && dependant_stages_status.include?(false))
+      current_dependent_steps = []
+      step.render_if_field_id.split('/').each_with_index do |e, i|
+        current_dependent_steps << (TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).select { |element| element =~ Regexp.new(step.render_if_field_value.split('/')[i]) }.empty?#((TemplateField.find(e.to_i).document_answers.where(:document_id => id).map(&:answer)).exclude? step.render_if_field_value.split('/')[i])
+      end
+       !(current_dependent_steps.include?(false) && dependant_stages_status.include?(false))
     else
       false
     end
@@ -264,13 +266,12 @@ class Document < ActiveRecord::Base
     selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question.count rescue 0
   end
 
-
   def assign_owner_save!(cookies, user=nil)
     if !user.nil?
       self.user_id = user.id
     else
       cookies[:session_uniq_token] = generate_session_uniq_token if !cookies[:session_uniq_token].present?
-      self.session_uniq_token  = cookies[:session_uniq_token]
+      self.session_uniq_token = cookies[:session_uniq_token]
     end
     save!
   end

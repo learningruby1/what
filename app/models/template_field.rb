@@ -3,6 +3,7 @@ class TemplateField < ActiveRecord::Base
   belongs_to :template_step
   has_many :document_answers
   serialize :mandatory
+  serialize :render_if_value
 
   scope :raw_question, -> { where(:raw_question => true) }
   def to_s

@@ -13,6 +13,9 @@ module PdfDocument
 
     protected
     def step_answers_enum(step, loop_step=0)
+      p '*'*120
+      p step
+      p '*'*120
       step.fields.map{ |f| f.document_answers.where(:document_id => @document_id).order('id')[loop_step] }.reverse.to_enum
     end
 
@@ -60,6 +63,10 @@ module PdfDocument
       @data_array.push ["small_checked_rectangle #{x_position} #{y_position}"]
     end
 
+    def create_line(x_position, width, y_position)
+      @data_array.push ["create_line #{x_position} #{ width } #{y_position}"]
+    end
+
     def create_table
     end
 
@@ -86,6 +93,7 @@ module PdfDocument
     end
 
     def get_headed_info(answer, amount_index)
+      return '' if answer.nil?
       _header_ids = answer.template_field.header_ids.split('/')
       additional_info = TemplateField.find(_header_ids.first).document_answers.where(:document_id => @document_id).order(:id)[amount_index].answer
       additional_info += (" #{ TemplateField.find(_header_ids.last).document_answers.where(:document_id => @document_id).order(:id)[amount_index].answer }" if _header_ids.length > 1)
