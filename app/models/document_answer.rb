@@ -1,4 +1,5 @@
 class DocumentAnswer < ActiveRecord::Base
+  include DivorceComplaintHelper
 
   belongs_to :template_field, -> { includes(:template_step) }
   belongs_to :document
@@ -74,6 +75,11 @@ class DocumentAnswer < ActiveRecord::Base
             ['Other / Otro', 'Other']]
 
   def to_s
+    if answer.present? && document.to_s == Document::DIVORCE_COMPLAINT
+
+      answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
+      answer.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
+    end
     answer
   end
 
