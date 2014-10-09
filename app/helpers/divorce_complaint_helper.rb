@@ -105,14 +105,12 @@ module DivorceComplaintHelper
     text = _real_answer.template_field.to_text(_document, _amount_index, _index_of_radio) if text.match(/<insert>/)
 
     unless get_self(_document).nil?
-      if text.match(/<spain_self>/) || text.match(/<uppercase_spain_self>/)
-        if get_self(_document) == 'Wife'
-          text.gsub!('<spain_self>', 'esposo')
-          text.gsub!('<uppercase_spain_self>', 'ESPOSO')
-        else
-          text.gsub!('<spain_self>', 'esposa')
-          text.gsub!('<uppercase_spain_self>', 'ESPOSA')
-        end
+      if get_self(_document) == 'Wife'
+        text.gsub!('<spain_self>', 'esposo')
+        text.gsub!('<uppercase_spain_self>', 'ESPOSO')
+      else
+        text.gsub!('<spain_self>', 'esposa')
+        text.gsub!('<uppercase_spain_self>', 'ESPOSA')
       end
     end
 
@@ -120,25 +118,24 @@ module DivorceComplaintHelper
       count = number_of_child(_document).to_i
       sole_count = get_number_of_primary_or_sole_child(_document)
       joint_count = get_number_of_joint_child(_document)
-      if text.match(/<child_count>/) || text.match(/<child_count_spain>/) || text.match(/<residency_child>/) || text.match(/<residency_child_second>/) || text.match(/<child>/)
-        if count == 1
-          text.gsub!('<child_count>', 'the child')
-          text.gsub!('<child>', 'child')
-          text.gsub!('<child_count_spain>', 'del menor')
-          text.gsub!('<residency_child>', 'El menor debe')
-          text.gsub!('<residency_child_second>', 'Ha vivido el menor')
-          text.gsub!('<el_ellos>', 'él')
-          text[0] = 'T' if text[0] == 't'
-        else
-          text.gsub!('<child_count>', 'children')
-          text.gsub!('<child>', 'children')
-          text.gsub!('<child_count_spain>', 'de los menores')
-          text.gsub!('<residency_child>', 'Los menores deben')
-          text.gsub!('<residency_child_second>', 'Han vivido los menores')
-          text.gsub!('<el_ellos>', 'ellos')
-          text[0] = 'C' if text[0] == 'c'
-        end
+      if count == 1
+        text.gsub!('<child_count>', 'the child')
+        text.gsub!('<child>', 'child')
+        text.gsub!('<child_count_spain>', 'del menor')
+        text.gsub!('<residency_child>', 'El menor debe')
+        text.gsub!('<residency_child_second>', 'Ha vivido el menor')
+        text.gsub!('<el_ellos>', 'él')
+        text[0] = 'T' if text[0] == 't'
+      else
+        text.gsub!('<child_count>', 'children')
+        text.gsub!('<child>', 'children')
+        text.gsub!('<child_count_spain>', 'de los menores')
+        text.gsub!('<residency_child>', 'Los menores deben')
+        text.gsub!('<residency_child_second>', 'Han vivido los menores')
+        text.gsub!('<el_ellos>', 'ellos')
+        text[0] = 'C' if text[0] == 'c'
       end
+
 
       if text.match(/<uppercase_child>/) || text.match(/<uppercase_child_spain>/)
         if count == 1
