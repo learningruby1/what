@@ -92,7 +92,7 @@ module DivorceComplaintHelper
       end
     end
 
-    text = _real_answer.template_field.to_text_radio(_document, _amount_index, _index_of_radio) if text.match(/<insert>/)
+    text = _real_answer.template_field.to_text(_document, _amount_index, _index_of_radio) if text.match(/<insert>/)
 
     unless get_self(_document).nil?
       if text.match(/<spain_self>/) || text.match(/<uppercase_spain_self>/)
