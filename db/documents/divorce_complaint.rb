@@ -832,9 +832,9 @@ toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#22
                                      :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
 
-current_step.fields.create :field_type => 'radio', :name => 'No <child_count> support /<spain/>No habrá manutención <child_count_spain>
-                                                             <option/>Dad will pay child support/<spain/>El papá pagara manutención para los menores
-                                                             <option/>Mom will pay child support/<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio', :name => 'No <child> support /<spain/>No habrá manutención <child_count_spain>
+                                                             <option/>Dad will pay <child> support/<spain/>El papá pagara manutención para los menores
+                                                             <option/>Mom will pay <child> support/<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :field_type => 'text', :name => 'You requested sole/primary custody of your <child_sole_count> / Usted pidio la custodia primary/sole de <child_sole_count_spain>.', :toggle_id => toggle_id, :toggle_option => 'will'
 
 current_step.fields.create :field_type => 'radio', :name => 'Dad will pay the percentage under the law of <child_percentage_sole> of the non-custodial parent’s gross monthly income/<spain/>El papá pagara la el porcentaje bajo la ley <child_percentage_sole_spain> del ingreso bruto mensual de los padres sin custodia
