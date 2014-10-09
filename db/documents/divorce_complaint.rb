@@ -833,9 +833,9 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
 
 child_support_field = current_step.fields.create :field_type => 'radio', :name => 'I already have a child support case with the D’d office /<spain/>Ya tengo un caso de manutención de menor con la oficina del distrito
-                                                             <option/>No <child_count> support /<spain/>No habrá manutención <child_count_spain>
-                                                             <option/>Dad will pay child support /<spain/>El papá pagara manutención para los menores
-                                                             <option/>Mom will pay child support /<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                             <option/>No <child> support /<spain/>No habrá manutención <child_count_spain>
+                                                             <option/>Dad will pay <child> support /<spain/>El papá pagara manutención para los menores
+                                                             <option/>Mom will pay <child> support /<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :field_type => 'text', :name => 'Because you requested sole/primary physical custody your <child_sole_count> /<spain/>Porque usted pidio la custodia física primary/sole de <child_sole_count_spain>.', :toggle_id => toggle_id, :toggle_option => 'will'
 
 current_step.fields.create :field_type => 'radio', :name => 'Dad will pay the statutory <child_percentage_sole>, of his gross income to mom /<spain/>El papá pagara bajo la ley el <child_percentage_sole_spain>, de sus ingresos brutos.

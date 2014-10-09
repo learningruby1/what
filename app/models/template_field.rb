@@ -9,7 +9,7 @@ class TemplateField < ActiveRecord::Base
   scope :raw_question, -> { where(:raw_question => true) }
 
   def to_s(document=nil)
-    if document.to_s == Document::DIVORCE_COMPLAINT
+    if name.present? && document.to_s == Document::DIVORCE_COMPLAINT
       name.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
       name.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
       name.gsub! '<el_ellos>', number_of_child(document) == '1' ? 'él' : 'ellos'

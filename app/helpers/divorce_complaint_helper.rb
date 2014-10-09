@@ -120,9 +120,10 @@ module DivorceComplaintHelper
       count = number_of_child(_document).to_i
       sole_count = get_number_of_primary_or_sole_child(_document)
       joint_count = get_number_of_joint_child(_document)
-      if text.match(/<child_count>/) || text.match(/<child_count_spain>/) || text.match(/<residency_child>/) || text.match(/<residency_child_second>/)
+      if text.match(/<child_count>/) || text.match(/<child_count_spain>/) || text.match(/<residency_child>/) || text.match(/<residency_child_second>/) || text.match(/<child>/)
         if count == 1
           text.gsub!('<child_count>', 'the child')
+          text.gsub!('<child>', 'child')
           text.gsub!('<child_count_spain>', 'del menor')
           text.gsub!('<residency_child>', 'El menor debe')
           text.gsub!('<residency_child_second>', 'Ha vivido el menor')
@@ -130,6 +131,7 @@ module DivorceComplaintHelper
           text[0] = 'T' if text[0] == 't'
         else
           text.gsub!('<child_count>', 'children')
+          text.gsub!('<child>', 'children')
           text.gsub!('<child_count_spain>', 'de los menores')
           text.gsub!('<residency_child>', 'Los menores deben')
           text.gsub!('<residency_child_second>', 'Han vivido los menores')
