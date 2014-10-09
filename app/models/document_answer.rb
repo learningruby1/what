@@ -76,7 +76,6 @@ class DocumentAnswer < ActiveRecord::Base
 
   def to_s
     if answer.present? && document.to_s == Document::DIVORCE_COMPLAINT
-
       answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
       answer.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
     end
@@ -84,12 +83,12 @@ class DocumentAnswer < ActiveRecord::Base
   end
 
   def to_html_array
-    [(template_field.to_s.gsub(/<option\/>/, '<br/>') rescue ''),
+    [(template_field.to_s(document).gsub(/<option\/>/, '<br/>') rescue ''),
      to_s]
   end
 
   def self.sort _answers, step
-    if step == '47'
+    if step == '47' && document.to_s == Document::DIVORCE_COMPLAINT
       _answers.sort_by!{ |item| [item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
     else
       _answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
