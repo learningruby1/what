@@ -858,7 +858,6 @@ current_step.fields.create :field_type => 'text', :name => 'Child support is det
 
 current_step.fields.create :field_type => 'amount-income', :name => '.0$ as mom’s average gross monthly income /<spain/>la mamá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 current_step.fields.create :field_type => 'amount-income', :name => '.0$ as dad’s average gross monthly income /<spain/>del papá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
-current_step.fields.create :field_type => 'text_javascript', :name => ''
 
 
 
