@@ -3,7 +3,12 @@
     - if answer.template_field.field_type.match /left\z/
       .move_to_left_20
         %p= a.text_field :answer, :class => 'form-control'
-    - else
+    - elsif answer.template_field.field_type.match /income\z/
+      .amount_block
+        = a.text_field :answer, :class => 'form-control income-math'
+        = a.hidden_field 'percentage_field', :class => 'children_percentage', :value => get_percentage_for_children(get_number_of_joint_child(@document))
+        .under_amount_text
+    -else
       %p= a.text_field :answer, :class => 'form-control'
   .row.new_roman.col-md-9
     &nbsp

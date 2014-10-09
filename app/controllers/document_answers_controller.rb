@@ -8,7 +8,6 @@ class DocumentAnswersController < ApplicationController
       @answers = DocumentAnswer.sort @answers, params[:step]
       @review = params[:review]
 
-
       if @review.present? && !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
       elsif !@answers.blank?
@@ -27,6 +26,7 @@ class DocumentAnswersController < ApplicationController
     if @document.errors.any?
       redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
     elsif params[:review].present?
+      flash[:scroll] = DocumentAnswer.find(answers_params.first.last.first[0]).template_step.id
       redirect_to document_review_path(@document)
     else
       redirect_to document_answer_path(@document, params[:step].to_i)

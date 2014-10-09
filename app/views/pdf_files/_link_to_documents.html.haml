@@ -5,9 +5,10 @@
 &nbsp
 = link_to 'Summons', download_pdf_path("Divorce_summons_#{ document.id }"), :class => 'btn btn-primary'
 &nbsp
-= link_to 'Injunction', download_pdf_path("Divorce_injunction_#{ document.id }"), :class => 'btn btn-primary'
+= link_to 'Injunction(Optional)', download_pdf_path("Divorce_injunction_#{ document.id }"), :class => 'btn btn-primary'
 &nbsp
-= link_to 'Cover', download_pdf_path("Divorce_cover_#{ document.id }"), :class => 'btn btn-primary'
-
-/ = link_to 'Don\'t press it ;)', generate_pdf_path(document.id), :class => 'btn btn-danger'
-
+- answer_county = document.return_step('In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?').document_answers.first
+- if answer_county == 'Clark'
+  = link_to 'Cover', download_pdf_path("Divorce_cover_#{ document.id }"), :class => 'btn btn-primary'
+- else
+  = link_to 'Cover', download_pdf_path("Divorce_coversheet_#{ document.id }"), :class => 'btn btn-primary'
