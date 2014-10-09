@@ -13,9 +13,6 @@ module PdfDocument
 
     protected
     def step_answers_enum(step, loop_step=0)
-      p '*'*120
-      p step
-      p '*'*120
       step.fields.map{ |f| f.document_answers.where(:document_id => @document_id).order('id')[loop_step] }.reverse.to_enum
     end
 
