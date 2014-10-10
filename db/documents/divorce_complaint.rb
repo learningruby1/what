@@ -856,8 +856,8 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 current_step.fields.create :field_type => 'text', :name => 'Because you requested joint physical custody your <child_joint_count> /<spain/>Porque usted pido la custodia física conjunta de <child_joint_count_spain>.'
 current_step.fields.create :field_type => 'text', :name => 'Child support is determine based on Gross Monthly Income of both parents /<spain/>La manutención de menor se determinar en base a los ingresos brutos mensuales de los dos padres.'
 
-current_step.fields.create :field_type => 'amount-income', :name => '.0$ as mom’s average gross monthly income /<spain/>la mamá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
-current_step.fields.create :field_type => 'amount-income', :name => '.0$ as dad’s average gross monthly income /<spain/>del papá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'amount-income', :name => 'Enter $ mom’s average gross monthly income /<spain/>Pogna $ el promedio de ingreso mensual bruto de la mamá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'amount-income', :name => 'Enter $ dad’s average gross monthly income /<spain/>Ponga el promedio de ingreso mensual bruto del papá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 
 
 
