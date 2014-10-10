@@ -37,8 +37,15 @@ module PdfDocument
       table_row [ { :content => "<b>Marriage Dissolution Case</b>\n\b\b\b\b\b\b\b\b\b\bAnnulment\n\b\b\b\b\b\b\b\b\b\bDivorce –With children\n\b\b\b\b\b\b\b\b\b\bDivorce –Without children\n\b\b\b\b\b\b\b\b\b\bForeign Decree\n\b\b\b\b\b\b\b\b\b\bJoint Petition – With children\n\b\b\b\b\b\b\b\b\b\bJoint Petition – Without children\n\b\b\b\b\b\b\b\b\b\bSeparate Maintenance\n\n<b>\b\b\b\b\bSupport/Custody</b>\n<b>\b\b\b\b\bUIFSA Case (formerly URESA)</b>\n<b>\b\b\b\b\bAdoption</b>\n\b\b\b\b\b\b\b\b\b\bAdult\n\b\b\b\b\b\b\b\b\b\bMinor\n<b>\b\b\b\b\bPaternity</b>\n<b>\b\b\b\b\bTermination of Parental Rights</b>\n<b>\b\b\b\b\bMiscellaneous Domestic Relations</b>\n\b\b\b\b\b\b\b\b\b\bName Change\n\b\b\b\b\b\b\b\b\b\bPermission to Marry\n\b\b\b\b\b\b\b\b\b\bOther Family", :colspan => 2 },
                   { :content => "<b>\b\b\b\b\bGuardianship of an Adult</b>\n<b>\b\b\b\b\bGuardianship of a Minor</b>\n<b>\b\b\b\b\bGuardianship Trust</b>\n<b>Estimated Estate Value: $</b>\n\n<b>Other Family-Related Case Filing Type</b>\n<b>\b\b\b\b\bMental Health</b>\n<b>\b\b\b\b\bRequest for Temporary Protective Order</b>\n<b>\b\b\b\b\bMiscellaneous Juvenile</b>\n\b\b\b\b\b\b\b\b\b\bEmancipation", :colspan => 2 } ]
       small_rectangle 12, 416
-      small_rectangle 12, 403
-      small_rectangle 12, 390
+
+      if @children_residency
+        small_rectangle_checked 12, 403
+        small_rectangle 12, 390
+      else
+        small_rectangle 12, 403
+        small_rectangle_checked 12, 390
+      end
+
       small_rectangle 12, 377
       small_rectangle 12, 364
       small_rectangle 12, 351
@@ -71,12 +78,14 @@ module PdfDocument
       default_leading 0
 
       push_text '<b>Children involved in this case:</b>'
-      move_down 20
+      move_down 10
 
       if @children_residency
+        table_row []
         @children_info.each do |child|
-          push_text "Name: #{ child[:first_name] } #{ child[:last_name] } #{ child[:middle_name] } #{ ' '*(80 - child[:first_name].length + child[:last_name].length + child[:middle_name].length) } DOB: #{ child[:date_of_birth] }"
+          table_row [{ :content => "Name: #{ child[:first_name] } #{ child[:last_name] } #{ child[:middle_name] }", :border_width => 0 }, { :content => "DOB: #{ child[:date_of_birth] }", :border_width => 0 }]
         end
+        push_table -1, 0
         move_down 20
       end
 
