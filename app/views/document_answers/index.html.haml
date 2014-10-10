@@ -23,6 +23,7 @@
         %table{ :style => 'width: 80%; margin-left: 20px' }
           - last_toggle = nil
           - main_answer = nil
+          - amount_index = 0
           - @document.answers.where(:template_step_id => step.id).order(:id).each do |answer|
 
             - if answer.template_field.id == @document.answers.where(:template_step_id => step.id).order(:id).first.template_field.id && answer.id != @document.answers.where(:template_step_id => step.id).order(:id).first.id
@@ -42,7 +43,8 @@
                 - if main_answer.answer.present? && !main_answer.answer.match(answer.template_field.toggle_option.presence || '') || answer.template_field.toggle_option.nil? && main_answer.answer == '0'
                   - next# if !field_type_to_show.include?(answer.template_field.field_type)
 
-            - answer_html_array = answer.to_html_array
+            - amount_index += 1 if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/)
+            - answer_html_array = answer.to_html_array(amount_index)
             %tr
               - if field_type_to_show.include? answer.template_field.field_type
                 %td

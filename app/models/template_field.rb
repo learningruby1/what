@@ -20,7 +20,7 @@ class TemplateField < ActiveRecord::Base
     name
   end
 
-  def to_text(document, amount_index, index_of_radio = nil)
+  def to_text(document, amount_index=1, index_of_radio = nil)
     amount_index -= 1
 
     if !header_ids.nil?
