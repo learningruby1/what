@@ -140,7 +140,45 @@ $( document ).ready(function() {
     $(this_class).append(div);
     div = null;
   });
+
+  //For amount-income field
+  var mom_result = joint_child_support_amount($('.amount_block:first').find('.income-math'))
+  var dad_result = joint_child_support_amount($('.amount_block:last').find('.income-math'))
+  $('.amount_block:last').parent().parent().parent().append("<div class='container'><div class='row new_roman col-md-9'><div class='who_pay_text'></div></div></div>")
+  who_pay(dad_result, mom_result);
+  $('.amount_block:first').find('.income-math').keyup(function(){
+    mom_result = joint_child_support_amount($(this));
+    who_pay(dad_result, mom_result);
+  });
+  $('.amount_block:last').find('.income-math').keyup(function(){
+    dad_result = joint_child_support_amount($(this))
+    who_pay(dad_result, mom_result);
+  });
+
 });
+
+function joint_child_support_amount(_this){
+  if(_this.val() == ''){
+    return;
+  }
+  var month_income = parseInt(_this.val());
+  var percentage = parseInt($('.children_percentage').val()) / 100;
+  var result = Math.round(month_income * percentage * 100) / 100
+  _this.parent().find('.under_amount_text').prop('innerText', '$ ' + month_income + ' * ' + (percentage * 100) + '%  = ' + result);
+  return result
+}
+function who_pay(dad_result, mom_result){
+  if(dad_result == undefined || mom_result == undefined){
+    return;
+  }
+  if(dad_result > mom_result){
+    $('.who_pay_text').prop('innerHTML', '<span><b>Dad $' + dad_result + ' – ' + 'Mom $' + mom_result + ' = $' + (Math.round((dad_result - mom_result)* 100) / 100) + '. Dad has to pay ' + (Math.round((dad_result - mom_result)* 100) / 100) + '$ per month for child support to mom. /</span> <span class="spain">Papá $' + dad_result + ' – ' + 'Mamá $' + mom_result + ' = $' + (Math.round((dad_result - mom_result)* 100) / 100) + ' es la responsabilidad de manutención de menor que  Papá  tendrá que pagar  a la mamá por mes.</span>')
+  }
+   else{
+    $('.who_pay_text').prop('innerHTML', '<span><b>Mom $' + mom_result + ' – ' + 'Dad $' + dad_result + ' = $' + (Math.round((mom_result - dad_result)* 100) / 100) + '. Mom has to pay ' + (Math.round((mom_result - dad_result)* 100) / 100) + '$ per month for child support to dad. /</span> <span class="spain">Papá $' + dad_result + ' – ' + 'Papá $' + mom_result + ' = $' + (Math.round((mom_result - dad_result)* 100) / 100) + ' es la responsabilidad de manutención de menor que  Mamá  tendrá que pagar  a la papá por mes.</span>')
+  }
+}
+
 
 function check_value(value, _this){
   if(value < 1 || value > 10){

@@ -8,7 +8,6 @@ class DocumentAnswersController < ApplicationController
       @answers = DocumentAnswer.sort @answers, params[:step]
       @review = params[:review]
 
-
       if @review.present? && !@answers.blank?
         @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
       elsif !@answers.blank?
