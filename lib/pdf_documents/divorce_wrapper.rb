@@ -142,7 +142,12 @@ module PdfDocument
 
         #Step 7   Pregnacy
         answers = step_answers_enum steps.next
-        @wife_pregnacy = answers.next.answer == 'IS currently pregnant'
+        @pregnacy = answers.next.answer == 'IS currently pregnant'
+        if @pregnacy
+          @pregnacy_date = answers.next.answer
+          answers.next
+          @pregnacy_unborn = answers.next.answer == 'Yes'
+        end
 
         #Step 8   Children & Number of children
         answers = step_answers_enum steps.next
@@ -277,11 +282,6 @@ module PdfDocument
                   end
                 end
               end
-
-
-p '_'*120
-p @children_info
-p '_'*120
 
             #Step 16   Legal Custody
             answers = step_answers_enum steps.next
@@ -526,7 +526,7 @@ p '_'*120
             @child_insurance = answers.next.answer
 
             #Step 24   Child Support Sole/Primary
-            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /With|Only/}.empty?
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty?
               steps.next
             else
               answers = step_answers_enum steps.next
@@ -534,11 +534,11 @@ p '_'*120
               answers.next
               @how_pay = answers.next.answer
               answers.next
-              @pay_amount = answers.next.answer
+              @child_suport_amount = answers.next.answer
             end
 
             #Step 25   Child Support Joint
-            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /Both/}.empty? || (@child_suport_who =~ /I already have/)
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /Both/}.empty? || (@child_suport_who =~ /I already have/)
               steps.next
             else
               answers = step_answers_enum steps.next
@@ -549,7 +549,7 @@ p '_'*120
             end
 
             #Step 26 Additional Child Support
-            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /With|Only/}.empty? || (@child_suport_who =~ /I already have/)
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty? || (@child_suport_who =~ /I already have/)
               steps.next
             else
               answers = step_answers_enum steps.next
@@ -570,7 +570,7 @@ p '_'*120
             end
 
             #Step 27 Additional Child Support For Spouse
-            if @physical_custody_parent.keep_if { |each_child| each_child[:custody] =~ /With|Only/}.empty?
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty?
               steps.next
             else
               answers = step_answers_enum steps.next

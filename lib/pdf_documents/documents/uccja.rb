@@ -84,12 +84,6 @@ module PdfDocument
         end
       end
 
-      # push_text "4. I (insert DO or DO NOT (bold) know of any person not a party to this proceeding who has physical custody or claims to have custody or visitation rights with respect to any child subject to this proceeding.", @text_indent
-      # push_text "a.  Name and address of person: ((insert their answer )", @text_indent * 2
-      # push_text "(insert selection by user ) Person named has physical custody of (insert name of child)", @text_indent * 3
-      # push_text "Person named claims custody right as to (insert name of child)", @text_indent * 3
-      # push_text "Person named claims visitation rights with (insert name of child)", @text_indent * 3
-
       push_text "5. I have a continuing duty to inform the court of any proceeding in this or any other state that could affect the current proceeding and will provide updated information to the court.", @text_indent
 
       move_down 40
