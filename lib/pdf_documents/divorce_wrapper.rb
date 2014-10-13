@@ -290,7 +290,8 @@ module PdfDocument
                 end
               end
 
-              physical_custody[:answers] = selected_answers unless selected_answers.blank?
+              selected_answers.push('') unless selected_answers.blank?
+              physical_custody[:answers] = selected_answers
               @physical_custody_parent.push physical_custody
             end
 
