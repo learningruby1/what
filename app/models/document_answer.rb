@@ -78,6 +78,7 @@ class DocumentAnswer < ActiveRecord::Base
     if answer.present? && document.to_s == Document::DIVORCE_COMPLAINT
       answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
       answer.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
+      answer[0] = 'C' if answer[0] == 'c'
     end
     answer
   end

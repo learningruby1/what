@@ -15,10 +15,12 @@ class TemplateStep < ActiveRecord::Base
       title.gsub!('<spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'esposo' : 'esposa')
       title.gsub!('<uppercase_spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'ESPOSO' : 'ESPOSA')
 
-      title.gsub! '<child_count>',           number_of_child(document) == '1' ? 'The child' : 'Children'
+      title.gsub! '<child_count>',           number_of_child(document) == '1' ? 'the child' : 'children'
       title.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
       title.gsub! '<uppercase_child>',       number_of_child(document) == '1' ? 'CHILD'     : 'CHILDREN'
       title.gsub! '<uppercase_child_spain>', number_of_child(document) == '1' ? 'EL MENOR '  : 'LOS MENORES'
+      title[0] = 'C' if title[0] == 'c'
+      title[0] = 'T' if title[0] == 't'
     end
     title
   end
