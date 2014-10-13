@@ -185,17 +185,23 @@ module PdfDocument
         end
 
         move_to_left "#{ _counter += 1 }.  CHILD SUPPORT"
-        count = get_number_of_primary_or_sole_child(@document)
+        if @joint_children_count
+          amount = (@mom_month_amount.to_f * (get_percentage_for_children(@joint_children_count).to_f / 100) - @dad_month_amount.to_f * (get_percentage_for_children(@joint_children_count).to_f / 100)).abs.round(2)
+          push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{amount} of #{ @mom_month_amount > @dad_month_amount ? @mom.capitalize : @dad.capitalize }'s gross monthly income, whichever amount is greater.", @text_indent
+          push_text "The obligation to pay child support should continue until the #{ @joint_children_count > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+        end
+
         case @child_suport_who
         when /^No/
           push_text "That neither party should pay child support.", @text_indent
         when /^Dad|^Mom/
           case @how_pay
           when /following/
-            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children' : 'child' } #{ @number_of_children > 1 ? 'reach' : 'reaches' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount } per month for support of the parties' minor #{ @sole_primary_children_count > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070.", @text_indent
           when /statutory/
-            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay child support in the statutory minimum of $100 per month, per child or % #{ get_percentage_for_children(@number_of_children - count) } of #{ @child_suport_who == 'Dad will pay $' ? @mom.capitalize : @dad.capitalize }'s gross monthly income, whichever amount is greater. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay child support of % #{ get_percentage_for_children(@child_suport_amount) }. of #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } gross monthly income.", @text_indent
           end
+          push_text "The obligation to pay child support should continue until the #{ @sole_primary_children_count > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
 
         move_to_left "#{ _counter += 1 }. WAGE WITHHOLDING"
