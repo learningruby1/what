@@ -6,7 +6,7 @@
 
   - @document.template.steps.each do |step|
     %div{ :id => "scroll_#{step.id}" }
-    - next if !@document.cant_render?(step)
+    - next if @document.cant_render?(step)
 
     .row
       .col-md-10
