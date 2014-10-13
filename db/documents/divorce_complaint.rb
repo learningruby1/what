@@ -115,7 +115,7 @@ current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pr
                                                              <option/>IS currently pregnant /<spain/>ESTÁ embarazada en este momento.', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :field_type => 'only_year_born', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
 current_step.fields.create :field_type => 'text', :name => 'Is the husband the father of the unborn child? /<spain/>¿El esposo es el padre del niño por nacer?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant'
-current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 current_step = template.steps.create :step_number => step_number += 1,#8
                                      :title => 'Children /<spain/>Menores',
@@ -856,8 +856,8 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 current_step.fields.create :field_type => 'text', :name => 'Because you requested joint physical custody your <child_joint_count> /<spain/>Porque usted pido la custodia física conjunta de <child_joint_count_spain>.'
 current_step.fields.create :field_type => 'text', :name => 'Child support is determine based on Gross Monthly Income of both parents /<spain/>La manutención de menor se determinar en base a los ingresos brutos mensuales de los dos padres.'
 
-current_step.fields.create :field_type => 'amount-income', :name => '.0$ as mom’s average gross monthly income /<spain/>la mamá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
-current_step.fields.create :field_type => 'amount-income', :name => '.0$ as dad’s average gross monthly income /<spain/>del papá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'amount-income', :name => 'Enter $ mom’s average gross monthly income /<spain/>Pogna $ el promedio de ingreso mensual bruto de la mamá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'amount-income', :name => 'Enter $ dad’s average gross monthly income /<spain/>Ponga el promedio de ingreso mensual bruto del papá', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 
 
 
