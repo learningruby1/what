@@ -462,6 +462,7 @@ module PdfDocument
             if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty?
               steps.next
             else
+              @sole_primary_children_count = @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.count
               answers = step_answers_enum steps.next
               @child_suport_who = answers.next.answer
               answers.next
@@ -471,9 +472,10 @@ module PdfDocument
             end
 
             #Step 25   Child Support Joint
-            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /Both/}.empty? || (@child_suport_who =~ /I already have/)
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /Both/}.empty?
               steps.next
             else
+              @joint_children_count = @physical_custody_parent.select { |each_child| each_child[:custody] =~ /Both/}.count
               answers = step_answers_enum steps.next
               answers.next
               answers.next
