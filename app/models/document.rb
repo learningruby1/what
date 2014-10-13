@@ -236,16 +236,6 @@ class Document < ActiveRecord::Base
       end rescue nil
     end
 
-    # if direction == 'back'
-    #   child_count = return_step('Children /<spain/>Menores').document_answers.last
-    #   return next_step if child_count.nil?
-
-    #   prev_step = return_step(next_step.to_i + template.steps.first.id - 1)
-    #   if (prev_step.title.split(' /<spain/>').first == 'Legal Custody' || prev_step.title.split(' /<spain/>').first == 'Physical Custody') && child_count.answer == '1'
-    #     return next_step.to_i + template.steps.first.id - 2
-    #   end
-    # end
-
     next_step
   end
 
