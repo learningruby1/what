@@ -86,17 +86,13 @@ module DivorceComplaintHelper
     end
   end
 
-  def get_physical_custody
-    answers = TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').first.document_answers.first.answer
-  end
-
   def check_physical_custody(_answers)
     _answers.first.template_step_id == TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').second.id
   end
 
   def replace_main_text(_document, _answers, text, _amount_index, _index_of_radio, _real_answer)
     if check_physical_custody(_answers)
-      if get_physical_custody == 'Yes' && number_of_child(_document) != '1'
+      if number_of_child(_document) != '1' && TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').first.document_answers.where(:document_id => _document.id).answer == 'Yes'
         text.gsub!('the child lives', 'the children live')
         text.gsub!('el menor vive', 'los menores viven')
       end
