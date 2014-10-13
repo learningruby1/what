@@ -20,16 +20,12 @@ class DocumentAnswersController < ApplicationController
   end
 
   def update
-    current_step = params[:step].to_i
-    params[:step] = @document.skip_step_if_one_child(params[:step].to_i).next if !@document.update_answers!(answers_params)
-
-    if @document.errors.any?
-      redirect_to document_answer_path(@document, params[:step].to_i), :alert => @document.errors.full_messages.first
-    elsif params[:review].present?
-      flash[:scroll] = DocumentAnswer.find(answers_params.first.last.first[0]).template_step.id
-      redirect_to document_review_path(@document)
+    if @document.update_answers! answers_params
+      redirect_to document_answer_path(@document, params[:step].to_i, :review => params[:review]), :alert => @document.errors.full_messages.first
     else
-      redirect_to document_answer_path(@document, params[:step].to_i)
+      redirect_to params[:review].present? ?
+        document_review_path(@document, :scroll => params[:step]):
+        document_answer_path(@document, (params[:step].to_i + (params[:direction] == 'back' ? -1 : 1)))
     end
   end
 

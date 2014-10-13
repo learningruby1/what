@@ -269,8 +269,8 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Person(s) has 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#16
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
-                                     :description => 'Legal Custody: the right of the parents to make legal decision for <child_count> regarding education, health care, religion, etc. for the welfare of <child_count>.
-                                                      <br/><spain/>Custodia legal: el derecho de los padres para tomar decisiones legales acerca <child_count_spain> en cuanto a la educación, salud, religión, etc. para el bienestar <child_count_spain>.'
+                                     :description => 'Do you want all the children to have the same legal custody?
+                                                      <br/><spain/>¿Quiere que todos los menores tenga la misma custodia legal?'
 toggle_id = 0
 toggle_id += 1
 same_schedule_legal_custody = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
