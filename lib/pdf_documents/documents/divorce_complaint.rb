@@ -7,7 +7,7 @@ module PdfDocument
       push_text 'COMD', :style => :bold
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_address } #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+      push_text "#{ @plaintiff_mailing_address.classify } #{ @plaintiff_home_address_city.classify }, #{ @plaintiff_home_address_state.classify } #{ @plaintiff_home_address_zip.classify }"
 
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
@@ -69,7 +69,9 @@ module PdfDocument
       move_to_left "#{ _counter += 1 }.  MINOR CHILDREN RESIDENCY"
 
       if @children_nevada_residency
-        push_text "That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months. Nevada is the habitual residence of the #{ @number_of_children > 1 ? 'children' : 'child' } and this Court does have the jurisdiction to enter orders regarding custody and visitation", @text_indent
+        if @children_residency
+          push_text "That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months. Nevada is the habitual residence of the #{ @number_of_children > 1 ? 'children' : 'child' } and this Court does have the jurisdiction to enter orders regarding custody and visitation", @text_indent
+        end
       else
         push_text "That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } not residents of the State of  Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } not lived in this state for at least the past six (6) months. The #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada. This Court does not have the jurisdiction to enter orders regarding custody and visitation.", @text_indent
       end
