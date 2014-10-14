@@ -503,7 +503,7 @@ module PdfDocument
             end
 
             #Step 27 Additional Child Support For Spouse
-            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty?
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty? || (@child_suport_who =~ /I already have/)
               steps.next
             else
               answers = step_answers_enum steps.next
