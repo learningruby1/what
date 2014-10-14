@@ -184,7 +184,6 @@ module PdfDocument
               child_info[:country] = answers.next.answer
             end
             child_info[:social_security] = answers.next.answer
-            # child_info[:is_son] = answers.next.answer == 'Son'
             child_info[:sex] = answers.next.answer == 'Son' ? 'Male' : 'Female'
 
             @children_info.push child_info
