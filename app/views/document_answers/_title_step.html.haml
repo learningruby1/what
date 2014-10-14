@@ -1,9 +1,0 @@
-.row
-  .col-md-10
-    - step_array = @document.template.steps.where(:step_number => @index).first.to_s.split('<spain/>')
-      %strong.new_roman= "#{step_array.first}"
-      %strong.new_roman.spain= "#{step_array.last}:"
-  .col-md-2
-    = link_to document_answer_path(@document, @index, :review => true), :class => 'btn btn-default' do
-      %span.new_roman Change /
-      %span.new_roman.spain Cambiar

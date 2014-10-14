@@ -1,13 +1,12 @@
 #questionare
-
   = form_for :document_answer, :url => (@url), :html => { :class => "form-horizontal", :role => 'form', :id => 'answer_form' } do |f|
     %input{ :type => 'hidden', :value => @document.id, :id => 'document_id' }
     %input{ :type => 'hidden', :value => @answers.first.template_step_id, :id => 'step_id' }
     %input{ :type => 'hidden', :value => @review, :id => 'review' }
+
     .jumbotron
       .container
-
-        - template_step = @answers.first.template_field.template_step
+        - template_step = @answers.first.template_step
         = render :partial => 'render_text', :locals => { :answer => template_step.to_question_title }
         %hr
         = render :partial => 'render_text', :locals => { :answer => template_step.to_description(@document) }
@@ -22,7 +21,6 @@
               %span.new_roman Back /
               %span.new_roman.spain Retroceder
         .pull-right
-          / %a.btn.btn-default{ :href => 'javascript: $("#answer_form").submit();' }
           = f.button :submit, :class => 'form-control new_roman' do
             - if @review.present?
               %span Done /
