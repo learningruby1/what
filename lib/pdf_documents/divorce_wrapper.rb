@@ -265,7 +265,7 @@ module PdfDocument
                   if answer.answer == '1'
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' ' + answers.next.answer
                     tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
-                    selected_answers.push tmp_string
+                    selected_answers.push tmp_string.gsub(':A', ' A').gsub(':P', ' P')
                   else
                     3.times do answers.next end
                   end
@@ -283,7 +283,7 @@ module PdfDocument
                   if answer.answer == '1'
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' with ' + answers.next.answer + ' ' + answers.next.answer
                     tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
-                    selected_answers.push tmp_string
+                    selected_answers.push tmp_string.gsub(':A', ' A').gsub(':P', ' P')
                   else
                     4.times do answers.next end
                   end
@@ -334,6 +334,7 @@ module PdfDocument
                   holiday.push answers.next.answer
 
                   if holiday[0].answer == '1'
+                    holiday[1..-1].each { |e| e.gsub!(':A', ' A'); e.gsub!(':P', ' P') }
                     holidays.push holiday
                   end
                 end
@@ -353,6 +354,7 @@ module PdfDocument
                   end
 
                   if holiday[0].answer == '1'
+                    holiday[1..-1].each { |e| e.gsub!(':A', ' A'); e.gsub!(':P', ' P') }
                     holidays.push holiday
                   end
                 end
