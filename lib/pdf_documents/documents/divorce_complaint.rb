@@ -112,23 +112,23 @@ module PdfDocument
 
             when /^With mom/
               if @same_physical_custody
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ') }.", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               else
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ') }.", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               end
             when /^With dad/
               if @same_physical_custody
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ') }.", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               else
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ') }.", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               end
             end
 
           when /^Both/
             if @same_physical_custody
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ') }.", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
             else
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ') }.", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
             end
           when /^Only/
             case physical_custody[:custody]

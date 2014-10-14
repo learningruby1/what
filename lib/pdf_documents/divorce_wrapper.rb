@@ -284,16 +284,20 @@ module PdfDocument
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' with ' + answers.next.answer + ' ' + answers.next.answer
                     tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
                     selected_answers.push tmp_string.gsub(':A', ' A').gsub(':P', ' P')
+
                   else
                     4.times do answers.next end
                   end
                 end
               end
 
-              selected_answers.push('') unless selected_answers.blank?
+              selected_answers.push('') unless selected_answers.blank? #temporary fix
               physical_custody[:answers] = selected_answers
               @physical_custody_parent.push physical_custody
             end
+
+            #temporary fix
+            @physical_custody_parent.each { |physical_custody| physical_custody[:answers].reject!(&:empty?) if physical_custody[:answers]}
 
             #Step 20   Holiday
             @all_holidays = Array.new
@@ -326,6 +330,7 @@ module PdfDocument
 
                 7.times do
                   holiday = Array.new
+
                   holiday.push answers.next
 
                   holiday.push answers.next.answer
@@ -388,6 +393,7 @@ module PdfDocument
                   holiday.push answers.next.answer
 
                   if holiday[0].answer == '1'
+                    holiday[1..-1].each { |e| e.gsub!(':A', ' A'); e.gsub!(':P', ' P') }
                     holidays.push holiday
                   end
                 end
@@ -405,6 +411,7 @@ module PdfDocument
                   end
 
                   if holiday[0].answer == '1'
+                    holiday[1..-1].each { |e| e.gsub!(':A', ' A'); e.gsub!(':P', ' P') }
                     holidays.push holiday
                   end
                 end
@@ -418,6 +425,7 @@ module PdfDocument
                   holiday.push answers.next.answer
 
                   if holiday[0].answer == '1'
+                    holiday[1..-1].each { |e| e.gsub!(':A', ' A'); e.gsub!(':P', ' P') }
                     holidays.push holiday
                   end
                 end
@@ -431,6 +439,7 @@ module PdfDocument
                   holiday.push answers.next.answer
 
                   if holiday[0].answer == '1'
+                    holiday[1..-1].each { |e| e.gsub!(':A', ' A'); e.gsub!(':P', ' P') }
                     holidays.push holiday
                   end
                 end
@@ -445,6 +454,7 @@ module PdfDocument
                 holiday.push answers.next.answer
 
                 if holiday[0].answer == '1'
+                  holiday[1..-1].each { |e| e.gsub!(':A', ' A'); e.gsub!(':P', ' P') }
                   holidays.push holiday
                 end
 
