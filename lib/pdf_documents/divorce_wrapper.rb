@@ -351,13 +351,14 @@ module PdfDocument
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' with ' + answers.next.answer + ' ' + answers.next.answer
                     tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
                     selected_answers.push tmp_string
+
                   else
                     4.times do answers.next end
                   end
                 end
               end
 
-              physical_custody[:answers] = selected_answers unless selected_answers.blank?
+              physical_custody[:answers] = selected_answers
               @physical_custody_parent.push physical_custody
             end
 
@@ -392,6 +393,7 @@ module PdfDocument
 
                 7.times do
                   holiday = Array.new
+
                   holiday.push answers.next
 
                   holiday.push answers.next.answer
@@ -529,6 +531,7 @@ module PdfDocument
             if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty?
               steps.next
             else
+              @sole_primary_children_count = @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.count
               answers = step_answers_enum steps.next
               @child_suport_who = answers.next.answer
               answers.next
@@ -538,9 +541,10 @@ module PdfDocument
             end
 
             #Step 25   Child Support Joint
-            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /Both/}.empty? || (@child_suport_who =~ /I already have/)
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /Both/}.empty?
               steps.next
             else
+              @joint_children_count = @physical_custody_parent.select { |each_child| each_child[:custody] =~ /Both/}.count
               answers = step_answers_enum steps.next
               answers.next
               answers.next
@@ -570,7 +574,7 @@ module PdfDocument
             end
 
             #Step 27 Additional Child Support For Spouse
-            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty?
+            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty? || (@child_suport_who =~ /I already have/)
               steps.next
             else
               answers = step_answers_enum steps.next
@@ -978,7 +982,7 @@ module PdfDocument
           @alimony_how_long = answers.next.answer
           @alimony_year_month = answers.next.answer
 
-          if @alimony_year_month == 'Year(s) (example 1 year)'
+          if @alimony_year_month =~ /Year/
             if @alimony_how_long == '1'
               @alimony_year_month = 'year'
             else

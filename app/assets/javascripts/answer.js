@@ -31,10 +31,15 @@ $( document ).ready(function() {
         date = _this.parent().parent().find('[type="hidden"]');
         date.val('');
 
-        _this.parent().parent().find('.form-control').each(function(){
-
-          if (date.val().length > 0)
-            date.val(date.val() + ':');
+        _this.parent().parent().find('.form-control').each(function(i){
+          switch(i) {
+            case 1:
+              date.val(date.val() + ':');
+              break;
+            case 2:
+              date.val(date.val() + ' ');
+              break;
+          }
           date.val(date.val() + $(this).val());
         });
       });
@@ -45,9 +50,9 @@ $( document ).ready(function() {
       if(_this.val().length > 0){
 
         selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split(':')[0])
-        selects.first().parent().next().children().val(_this.val().split(':')[1]);
-        selects.last().val(_this.val().split(':')[2])
+        selects.first().val(_this.val().split(/ |:/) [0])
+        selects.first().parent().next().children().val(_this.val().split(/ |:/) [1]);
+        selects.last().val(_this.val().split(/ |:/) [2])
       }
     });
   }
@@ -221,7 +226,7 @@ function date_init(){
     for( i = 1; i <= 31; ++i )
       days += '<option>' + i + '</option>';
 
-    for( i = new Date().getFullYear() + 1; i >= start_year; --i )
+    for( i = new Date().getFullYear(); i >= start_year; --i )
       years += '<option>' + i + '</option>';
 
     for( i = new Date().getFullYear(); i >= start_year_without_day; --i )
@@ -420,9 +425,10 @@ function checkbox_radio_toggler(){
       //Radio button event
       $('.' + $(this).prop('class') + ' [type="radio"]').change(function(){
         var selected_value = $(this).next().text();
-        var parent_class = '.' + $(this).parent().parent().parent().parent().prop('class');
-        if(selected_value == 'No')
+        var parent_class = '.' + $(this).closest('[class^="toggle_"]').prop('class');
+        if(selected_value == 'No' && $(this).closest('[class^="toggle_"]').data('sub-toggle') == undefined){
           $(parent_class + ':not(:first) [type="radio"]:last').attr('checked', true);
+        }
 
         hide_checkboxes($(parent_class));
 
@@ -441,11 +447,12 @@ function checkbox_radio_toggler(){
     var result = parseInt($(this).prop('class').substr(7, $(this).prop('class').length - 7)) + 1;
     var this_class_next = '.toggle_' + result;
     var selected_value = $(this_class + ' [type="radio"]:checked:last').val();
+    var selected_class = 'toggle_' + $(this_class + ' [type="radio"]:checked:last').closest('[class^="toggle_"]').data('sub-toggle');
 
     if(!$('.' + $(this).prop('class') + ' [type="checkbox"]').length > 0 ){
       $(this_class_next).hide().each(function(){
-        if(selected_value != undefined)
-          if(selected_value.indexOf($(this).data('toggle-option')) != -1)
+        if(selected_value != undefined && selected_class != undefined)
+          if(selected_value.indexOf($(this).data('toggle-option')) != -1 && selected_class == $(this).prop('class'))
             $(this).show();
       });
     }
@@ -456,9 +463,11 @@ function checkbox_radio_toggler(){
     $(this_class + '[data-sub-toggle="'+ $(this).data('sub-toggle')+'"]').change(function(){
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked:last').val();
       if(!$('.' + $(this).prop('class') + ' [type="checkbox"]').length > 0 ){
-        $(this_class_next).hide().each(function(){
-          hide_sub_toggles($(this), selected_value);
-        });
+        if(result == $(this).data('sub-toggle')){
+          $(this_class_next).hide().each(function(){
+            hide_sub_toggles($(this), selected_value);
+          });
+        }
       }
 
       //Checkbox button event

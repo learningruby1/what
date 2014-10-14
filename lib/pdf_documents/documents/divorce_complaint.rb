@@ -7,7 +7,7 @@ module PdfDocument
       push_text 'COMD', :style => :bold
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_address } #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+      push_text "#{ @plaintiff_mailing_address.classify } #{ @plaintiff_home_address_city.classify }, #{ @plaintiff_home_address_state.classify } #{ @plaintiff_home_address_zip.classify }"
 
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
@@ -59,7 +59,7 @@ module PdfDocument
       end
 
       tmp_text = "That the wife in this case is currently pregnant."
-      tmp_text += " Husband #{ @pregnacy_unborn ? 'is' : 'is not' } the father of the he unborn child. The unborn child id due to be born on #{ @pregnacy_date }" if @pregnacy
+      tmp_text += " Husband #{ @pregnacy_unborn ? 'is' : 'is not' } the father of the he unborn child. The unborn child is due to be born on #{ @pregnacy_date }" if @pregnacy
       push_text tmp_text, @text_indent
 
       # move_down @header_margin_top
@@ -69,7 +69,9 @@ module PdfDocument
       move_to_left "#{ _counter += 1 }.  MINOR CHILDREN RESIDENCY"
 
       if @children_nevada_residency
-        push_text "That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months. Nevada is the habitual residence of the #{ @number_of_children > 1 ? 'children' : 'child' } and this Court does have the jurisdiction to enter orders regarding custody and visitation", @text_indent
+        if @children_residency
+          push_text "That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months. Nevada is the habitual residence of the #{ @number_of_children > 1 ? 'children' : 'child' } and this Court does have the jurisdiction to enter orders regarding custody and visitation", @text_indent
+        end
       else
         push_text "That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } not residents of the State of  Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } not lived in this state for at least the past six (6) months. The #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada. This Court does not have the jurisdiction to enter orders regarding custody and visitation.", @text_indent
       end
@@ -103,7 +105,6 @@ module PdfDocument
         move_to_left "#{ _counter += 1 }.  PHYSICAL CUSTODY"
 
         @physical_custody_parent.each_with_index do |physical_custody, index|
-
           case physical_custody[:custody]
 
           when /and visit/
@@ -111,23 +112,23 @@ module PdfDocument
 
             when /^With mom/
               if @same_physical_custody
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               else
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               end
             when /^With dad/
               if @same_physical_custody
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               else
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
               end
             end
 
           when /^Both/
             if @same_physical_custody
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
             else
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
             end
           when /^Only/
             case physical_custody[:custody]
@@ -185,17 +186,23 @@ module PdfDocument
         end
 
         move_to_left "#{ _counter += 1 }.  CHILD SUPPORT"
-        count = get_number_of_primary_or_sole_child(@document)
+        if @joint_children_count
+          amount = (@mom_month_amount.to_f * (get_percentage_for_children(@joint_children_count).to_f / 100) - @dad_month_amount.to_f * (get_percentage_for_children(@joint_children_count).to_f / 100)).abs.round(2)
+          push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{amount} of #{ @mom_month_amount > @dad_month_amount ? @mom.capitalize : @dad.capitalize }'s gross monthly income, whichever amount is greater.", @text_indent
+          push_text "The obligation to pay child support should continue until the #{ @joint_children_count > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+        end
+
         case @child_suport_who
         when /^No/
           push_text "That neither party should pay child support.", @text_indent
         when /^Dad|^Mom/
           case @how_pay
           when /following/
-            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children' : 'child' } #{ @number_of_children > 1 ? 'reach' : 'reaches' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount.to_i } per month for support of the parties' minor #{ @sole_primary_children_count > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070.", @text_indent
           when /statutory/
-            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay child support in the statutory minimum of $100 per month, per child or % #{ get_percentage_for_children(@number_of_children - count) } of #{ @child_suport_who == 'Dad will pay $' ? @mom.capitalize : @dad.capitalize }'s gross monthly income, whichever amount is greater. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+            push_text "That #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } should pay child support of % #{ get_percentage_for_children(@child_suport_amount.to_i) }. of #{ @child_suport_who == 'Dad will pay $' ? @dad.capitalize : @mom.capitalize } gross monthly income.", @text_indent
           end
+          push_text "The obligation to pay child support should continue until the #{ @sole_primary_children_count > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
 
         move_to_left "#{ _counter += 1 }. WAGE WITHHOLDING"
@@ -468,13 +475,13 @@ module PdfDocument
 
       case @reason_divorce
       when /^I no longer want to be married and/
-        push_text 'That the husband and wife have lived separated and apart for more than one year and there is no possibility of reconciliation.', @text_indent
+        push_text 'That the Plaintiff and Defendant have lived separated and apart for more than one year and there is no possibility of reconciliation.', @text_indent
         push_text 'WHEREFORE, Plaintiff prays for a Judgment as follows:', @text_indent
         push_text '1. That the bond of matrimony heretofore and now existing between Plaintiff and Defendant be dissolved and that Plaintiff be granted an absolute Decree of Divorce and that each of the parties be restored to the status of a single, unmarried person; ', @text_indent
         push_text '2. That the Court grant the relief requested in this Complaint; and', @text_indent
         push_text '3. For such other relief as the Court finds to be just and proper.', @text_indent
       when /^I no longer want to be married/
-        push_text 'That the husband and wife have become so incompatible in marriage that there is no possibility of reconciliation.', @text_indent
+        push_text 'That the Plaintiff and Defendant have become so incompatible in marriage that there is no possibility of reconciliation.', @text_indent
       end
 
       move_down 30

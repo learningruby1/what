@@ -1,21 +1,25 @@
 class Document < ActiveRecord::Base
+  include DivorceComplaintHelper
 
   validates :title, :presence => true
 
   has_many :answers, :class_name => 'DocumentAnswer'
   has_many :dependent_documents
   has_many :sub_documents, :through => :dependent_documents, :class_name => 'Document', :foreign_key => 'sub_document_id'
-
   has_one :dependant_document, :class_name => 'DependentDocument', :foreign_key => 'sub_document_id'
   has_one :divorce_document, :through => :dependant_document, :class_name => 'Document', :source => :document
-
   belongs_to :template
+
   accepts_nested_attributes_for :answers
 
   DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
-
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
-  STEP_12 = "CHILDREN’S PRIOR ADDRESS"
+  STEP_12 = "<uppercase_child>’S PRIOR ADDRESS"
+
+  #Not for one child
+  CHILDREN_QUESTIONS = [16, 18]
+
+
 
   #Controller answers Action edit
   def prepare_answers!(next_step, direction)
@@ -81,10 +85,10 @@ class Document < ActiveRecord::Base
                       toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
 
       if _answer.template_field.mandatory[:template_field].present?
-        parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first.answer
+        parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first
 
-        return false if _answer.answer.nil? && parent_answer == _answer.template_field.mandatory[:toggle_option] ||
-                       _answer.answer == '' && parent_answer == _answer.template_field.mandatory[:toggle_option]
+        return false if _answer.answer.nil? && parent_answer.answer == _answer.template_field.mandatory[:toggle_option] ||
+                        _answer.answer == '' && parent_answer.answer == _answer.template_field.mandatory[:toggle_option]
       end
     end
 
@@ -199,7 +203,6 @@ class Document < ActiveRecord::Base
     tmp_answers.each do |item|
       unless item.sort_index.nil?
         if answer.template_step.title.split(' /<spain/>').first == STEP_12
-
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset + (answer.answer.to_i * 2)
         else
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
@@ -226,30 +229,25 @@ class Document < ActiveRecord::Base
   def skip_steps(next_step, direction='forward')
     if template.steps.where(:step_number => next_step).exists? && template.steps.where(:step_number => next_step).first.render_if_field_id.present?
       begin
-        while (cant_render?(template.steps.where(:step_number => next_step).first))
+        while cant_render?(template.steps.where(:step_number => next_step).first)
           next_step = direction == 'forward' ? next_step.next : next_step.pred
         end
       end rescue nil
-    end
-
-    if direction == 'back'
-      child_count = return_step('Children /<spain/>Menores').document_answers.last
-      return next_step if child_count.nil?
-
-      prev_step = return_step(next_step.to_i + template.steps.first.id - 1)
-      if (prev_step.title.split(' /<spain/>').first == 'Legal Custody' || prev_step.title.split(' /<spain/>').first == 'Physical Custody') && child_count.answer == '1'
-        return next_step.to_i + template.steps.first.id - 2
-      end
     end
 
     next_step
   end
 
   def cant_render?(step)
+    return true if number_of_child(self) == '1' && CHILDREN_QUESTIONS.include?(step.step_number)
+    return cant_render_body? step
+  end
+
+  def cant_render_body?(step)
     dependant_stages_status = []
     if step.render_if_field_id.present?
       step.render_if_field_id.split('/').each_with_index do |e, i|
-        dependant_stages_status << cant_render?(TemplateField.find(e.to_i).template_step)
+        dependant_stages_status << cant_render_body?(TemplateField.find(e.to_i).template_step)
       end
       current_dependent_status = []
       step.render_if_field_id.split('/').each_with_index do |e, i|
@@ -283,23 +281,6 @@ class Document < ActiveRecord::Base
       self.session_uniq_token = cookies[:session_uniq_token]
     end
     save!
-  end
-
-  def skip_step_if_one_child(_step)
-    child_count = return_step('Children /<spain/>Menores').document_answers.last
-    return _step if child_count.nil?
-
-    next_step = return_step(_step + template.steps.first.id)
-
-    if (next_step.title.split(' /<spain/>').first == 'Legal Custody' || next_step.title.split(' /<spain/>').first == 'Physical Custody') && child_count.answer == '1'
-      if answers.where(:template_step_id => _step + template.steps.first.id).blank?
-        answers.create(:template_field_id => next_step.fields.first.id, :template_step_id => _step + template.steps.first.id, :toggler_offset => 0, :answer => 'Yes')
-      else
-        answers.where(:template_step_id => _step + template.steps.first.id).first.update(:answer => 'Yes')
-      end
-      return _step + template.steps.first.id
-    end
-    _step
   end
 
   def return_step(_param)

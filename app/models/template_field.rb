@@ -16,6 +16,8 @@ class TemplateField < ActiveRecord::Base
 
       name.gsub! '<spain_self>', get_self(document) == 'Wife' ? 'esposo' : 'esposa'
       name.gsub! '<uppercase_spain_self>', get_self(document) ? 'ESPOSO' : 'ESPOSA'
+
+      name[0] = 'C' if name[0] == 'c'
     end
     name
   end
