@@ -21,8 +21,14 @@
       - when /date|time|only_year_born|only_year|day_of_week/
         = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
 
+      - when /states|select_person/
+        = render :partial => 'document_answers/fields/persons_and_states', :locals => { :a => a, :answer => answer }
+
       - when /text_radio/
         = render :partial => 'document_answers/fields/text_radio', :locals => { :a => a, :answer => answer }
+
+      - when /text|label/
+        = render :partial => 'document_answers/fields/text', :locals => { :a => a, :answer => answer }
 
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
@@ -41,7 +47,6 @@
         = render :partial => 'document_answers/fields/string', :locals => { :a => a, :answer => answer }
         - if answer.template_field.to_text(@document, @amount_index).match(/<beginText\/>/)
           - hash_index[answer.sort_index] += 1 rescue nil
-
 
       - else
         = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }
