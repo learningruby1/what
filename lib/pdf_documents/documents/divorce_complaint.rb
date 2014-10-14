@@ -475,13 +475,13 @@ module PdfDocument
 
       case @reason_divorce
       when /^I no longer want to be married and/
-        push_text 'That the husband and wife have lived separated and apart for more than one year and there is no possibility of reconciliation.', @text_indent
+        push_text 'That the Plaintiff and Defendant have lived separated and apart for more than one year and there is no possibility of reconciliation.', @text_indent
         push_text 'WHEREFORE, Plaintiff prays for a Judgment as follows:', @text_indent
         push_text '1. That the bond of matrimony heretofore and now existing between Plaintiff and Defendant be dissolved and that Plaintiff be granted an absolute Decree of Divorce and that each of the parties be restored to the status of a single, unmarried person; ', @text_indent
         push_text '2. That the Court grant the relief requested in this Complaint; and', @text_indent
         push_text '3. For such other relief as the Court finds to be just and proper.', @text_indent
       when /^I no longer want to be married/
-        push_text 'That the husband and wife have become so incompatible in marriage that there is no possibility of reconciliation.', @text_indent
+        push_text 'That the Plaintiff and Defendant have become so incompatible in marriage that there is no possibility of reconciliation.', @text_indent
       end
 
       move_down 30
