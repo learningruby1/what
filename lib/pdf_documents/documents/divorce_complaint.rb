@@ -59,7 +59,7 @@ module PdfDocument
       end
 
       tmp_text = "That the wife in this case is currently pregnant."
-      tmp_text += " Husband #{ @pregnacy_unborn ? 'is' : 'is not' } the father of the he unborn child. The unborn child id due to be born on #{ @pregnacy_date }" if @pregnacy
+      tmp_text += " Husband #{ @pregnacy_unborn ? 'is' : 'is not' } the father of the he unborn child. The unborn child is due to be born on #{ @pregnacy_date }" if @pregnacy
       push_text tmp_text, @text_indent
 
       # move_down @header_margin_top
@@ -105,7 +105,6 @@ module PdfDocument
         move_to_left "#{ _counter += 1 }.  PHYSICAL CUSTODY"
 
         @physical_custody_parent.each_with_index do |physical_custody, index|
-
           case physical_custody[:custody]
 
           when /and visit/
@@ -113,23 +112,23 @@ module PdfDocument
 
             when /^With mom/
               if @same_physical_custody
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ').gsub(':A', ' A').gsub(':P', ' P') }.", @text_indent
               else
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ').gsub(':A', ' A').gsub(':P', ' P') }.", @text_indent
               end
             when /^With dad/
               if @same_physical_custody
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ').gsub(':A', ' A').gsub(':P', ' P') }.", @text_indent
               else
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ').gsub(':A', ' A').gsub(':P', ' P') }.", @text_indent
               end
             end
 
           when /^Both/
             if @same_physical_custody
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ').gsub(':A', ' A').gsub(':P', ' P') }.", @text_indent
             else
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].reject(&:empty?).join('; ').gsub(':A', ' A').gsub(':P', ' P') }.", @text_indent
             end
           when /^Only/
             case physical_custody[:custody]
@@ -162,13 +161,13 @@ module PdfDocument
               holiday_string = holy[0].template_field.name.split(' /<spain/>').first
               case holy.count
               when 3
-                holiday_string += ": from #{ holy[1] } to #{ holy[2] }"
+                holiday_string += ": from #{ holy[1].gsub(':A', ' A').gsub(':P', ' P') } to #{ holy[2].gsub(':A', ' A').gsub(':P', ' P') }"
               when 4
-                holiday_string += ": from #{ holy[1] } to #{ holy[2] }, #{ holy[3] }"
+                holiday_string += ": from #{ holy[1].gsub(':A', ' A').gsub(':P', ' P') } to #{ holy[2].gsub(':A', ' A').gsub(':P', ' P') }, #{ holy[3].gsub(':A', ' A').gsub(':P', ' P') }"
               when 5
-                holiday_string += ": from #{ holy[1] } to #{ holy[2] } with #{ holy[3] }, #{ holy[4] }"
+                holiday_string += ": from #{ holy[1].gsub(':A', ' A').gsub(':P', ' P') } to #{ holy[2].gsub(':A', ' A').gsub(':P', ' P') } with #{ holy[3] }, #{ holy[4] }"
               when 7
-                holiday_string += ": #{ holy[1] }, #{ holy[2] } from #{ holy[3] } to #{ holy[4] }, with #{ holy[5] }, #{ holy[6] }"
+                holiday_string += ": #{ holy[1].gsub(':A', ' A').gsub(':P', ' P') }, #{ holy[2].gsub(':A', ' A').gsub(':P', ' P') } from #{ holy[3].gsub(':A', ' A').gsub(':P', ' P') } to #{ holy[4].gsub(':A', ' A').gsub(':P', ' P') }, with #{ holy[5] }, #{ holy[6] }"
               end
               push_text holiday_string, @text_indent
             end
