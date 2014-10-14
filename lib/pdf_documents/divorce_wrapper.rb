@@ -184,7 +184,7 @@ module PdfDocument
               child_info[:country] = answers.next.answer
             end
             child_info[:social_security] = answers.next.answer
-            child_info[:is_son] = answers.next.answer == 'Son'
+            child_info[:sex] = answers.next.answer == 'Son' ? 'Male' : 'Female'
 
             @children_info.push child_info
           end
@@ -208,13 +208,79 @@ module PdfDocument
             answers = step_answers_enum steps.next
 
             #Step 13   CHILDREN’S QUESTION 1
-            answers = step_answers_enum steps.next
+            answers = document.step_answers steps.next
+            k = -1
+            all_cases = []
+            @number_of_children.times do |i|
+              k += 1
+              has_cases = answers[k += 1].answer == 'Yes' rescue false
+              has_cases ? @children_info[i][:question_1_case_count] = answers[k += 1].answer.to_i : k += 1
+              @children_info[i][:toggler_offset] = answers[k].toggler_offset
+              @children_info[i][:question_1_cases] = []
+            end
+
+            @number_of_children.times do |i|
+              if @children_info[i][:question_1_case_count].present?
+                  @children_info[i][:question_1_case_count].times do
+                    case_data = {}
+                    k += 1
+                    case_data[:role] = answers[k += 1].answer
+                    case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                    case_data[:name_of_court] = answers[k += 1].answer
+                    case_data[:state] = answers[k += 1].answer
+                    case_data[:case_number] = answers[k += 1].answer
+                    case_data[:date] = answers[k += 1].answer
+                    @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
+                  end
+                end
+              end
 
             #Step 14   CHILDREN’S QUESTION 2
-            answers = step_answers_enum steps.next
+            answers = document.step_answers steps.next
+            k = -1
+            @number_of_children.times do |i|
+              k += 1
+              has_cases = answers[k += 1].answer == 'Yes' rescue false
+              has_cases ? @children_info[i][:question_2_case_count] = answers[k += 1].answer.to_i : k += 1
+              @children_info[i][:question_2_cases] = []
+            end
+
+            @number_of_children.times do |i|
+              if @children_info[i][:question_2_case_count].present?
+                  @children_info[i][:question_2_case_count].times do
+                    case_data = {}
+                    k += 1
+                    case_data[:role] = answers[k += 1].answer
+                    case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                    case_data[:name_of_court] = answers[k += 1].answer
+                    case_data[:state] = answers[k += 1].answer
+                    case_data[:case_number] = answers[k += 1].answer
+                    case_data[:date] = answers[k += 1].answer
+                    @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
+                  end
+                end
+              end
 
             #Step 15   CHILDREN’S QUESTION 3
-            answers = step_answers_enum steps.next
+            answers = document.step_answers steps.next
+            k = -1
+            @number_of_children.times do |i|
+              k += 1
+              has_cases = answers[k += 1].answer == 'Yes' rescue false
+              has_cases ? @children_info[i][:question_3_case_count] = answers[k += 1].answer.to_i : k += 1
+              @children_info[i][:question_3_cases] = []
+            end
+            @number_of_children.times do |i|
+              if @children_info[i][:question_3_case_count].present?
+                  @children_info[i][:question_3_case_count].times do
+                    case_data = {}
+                    case_data[:name] = answers[k += 1].answer
+                    case_data[:address] = answers[k += 1].answer
+                    case_data[:rights] = answers[k += 1].answer
+                    @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
+                  end
+                end
+              end
 
             #Step 16   Legal Custody
             answers = step_answers_enum steps.next
@@ -304,7 +370,7 @@ module PdfDocument
             holiday_now = answers.next.answer == 'Yes'
             if @number_of_children == 1
               holidays_amount = 1
-            else
+            elsif holiday_now
               answers.next
               same_schedule = answers.next.answer == 'Yes'
               holidays_amount = same_schedule ? 1 : @number_of_children

@@ -2,13 +2,13 @@ module PdfDocument
   class Pdf
     require 'pdf_documents/wrapper'
     require 'pdf_documents/divorce_wrapper'
-    # require 'pdf_documents/filed_case_wrapper'
     require 'pdf_documents/documents/divorce_complaint'
     require 'pdf_documents/documents/divorce_summons'
     require 'pdf_documents/documents/divorce_injunction'
     require 'pdf_documents/documents/divorce_cover'
     require 'pdf_documents/documents/divorce_coversheet'
     require 'pdf_documents/documents/affidative_or_acceptance_of_service'
+    require 'pdf_documents/documents/uccja'
     require 'prawn'
 
     def generate(document)
@@ -19,6 +19,7 @@ module PdfDocument
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
+        generate_document PdfDocument::Uccja.new(document).generate,             "UCCJA_#{ document.id }"
         if answer_county == 'Clark'
           generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
         else
