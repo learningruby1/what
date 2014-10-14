@@ -291,13 +291,9 @@ module PdfDocument
                 end
               end
 
-              selected_answers.push('') unless selected_answers.blank? #temporary fix
               physical_custody[:answers] = selected_answers
               @physical_custody_parent.push physical_custody
             end
-
-            #temporary fix
-            @physical_custody_parent.each { |physical_custody| physical_custody[:answers].reject!(&:empty?) if physical_custody[:answers]}
 
             #Step 20   Holiday
             @all_holidays = Array.new
