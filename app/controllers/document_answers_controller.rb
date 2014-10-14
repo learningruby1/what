@@ -40,6 +40,7 @@ class DocumentAnswersController < ApplicationController
 
     @answers = @document.prepare_answers! answer2.template_step_id, true
     @answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }
+
     @review = params[:review]
 
     if @review.present? && !@answers.blank?

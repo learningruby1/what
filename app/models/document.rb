@@ -14,7 +14,7 @@ class Document < ActiveRecord::Base
 
   DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
-  STEP_12 = "CHILDREN’S PRIOR ADDRESS"
+  STEP_12 = "<uppercase_child>’S PRIOR ADDRESS"
 
   #Not for one child
   CHILDREN_QUESTIONS = [16, 18]
@@ -85,10 +85,10 @@ class Document < ActiveRecord::Base
                       toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
 
       if _answer.template_field.mandatory[:template_field].present?
-        parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first.answer
+        parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first
 
-        return false if _answer.answer.nil? && parent_answer == _answer.template_field.mandatory[:toggle_option] ||
-                       _answer.answer == '' && parent_answer == _answer.template_field.mandatory[:toggle_option]
+        return false if _answer.answer.nil? && parent_answer.answer == _answer.template_field.mandatory[:toggle_option] ||
+                        _answer.answer == '' && parent_answer.answer == _answer.template_field.mandatory[:toggle_option]
       end
     end
 
@@ -203,7 +203,6 @@ class Document < ActiveRecord::Base
     tmp_answers.each do |item|
       unless item.sort_index.nil?
         if answer.template_step.title.split(' /<spain/>').first == STEP_12
-
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset + (answer.answer.to_i * 2)
         else
           answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
