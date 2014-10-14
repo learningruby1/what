@@ -284,13 +284,13 @@ module PdfDocument
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' with ' + answers.next.answer + ' ' + answers.next.answer
                     tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
                     selected_answers.push tmp_string
+
                   else
                     4.times do answers.next end
                   end
                 end
               end
 
-              selected_answers.push('') unless selected_answers.blank?
               physical_custody[:answers] = selected_answers
               @physical_custody_parent.push physical_custody
             end
@@ -326,6 +326,7 @@ module PdfDocument
 
                 7.times do
                   holiday = Array.new
+
                   holiday.push answers.next
 
                   holiday.push answers.next.answer

@@ -31,10 +31,15 @@ $( document ).ready(function() {
         date = _this.parent().parent().find('[type="hidden"]');
         date.val('');
 
-        _this.parent().parent().find('.form-control').each(function(){
-
-          if (date.val().length > 0)
-            date.val(date.val() + ':');
+        _this.parent().parent().find('.form-control').each(function(i){
+          switch(i) {
+            case 1:
+              date.val(date.val() + ':');
+              break;
+            case 2:
+              date.val(date.val() + ' ');
+              break;
+          }
           date.val(date.val() + $(this).val());
         });
       });
@@ -45,9 +50,9 @@ $( document ).ready(function() {
       if(_this.val().length > 0){
 
         selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split(':')[0])
-        selects.first().parent().next().children().val(_this.val().split(':')[1]);
-        selects.last().val(_this.val().split(':')[2])
+        selects.first().val(_this.val().split(/ |:/) [0])
+        selects.first().parent().next().children().val(_this.val().split(/ |:/) [1]);
+        selects.last().val(_this.val().split(/ |:/) [2])
       }
     });
   }

@@ -14,7 +14,7 @@
       = a.hidden_field :answer, :value => answer.answer
   - else
     .col-md-12.input-group{ 'data-date-format' => (answer.template_field.field_type == 'date' ? 'MM/DD/YYYY' : 'H:mm'), :class => answer.template_field.field_type }
-      = a.hidden_field :answer, :value => answer.answer || ('1:00:AM' if answer.template_field.field_type != 'date')
+      = a.hidden_field :answer, :value => answer.answer || ('1:00 AM' if answer.template_field.field_type != 'date')
 
 .col-md-12
   %br
