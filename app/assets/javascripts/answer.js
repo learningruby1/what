@@ -221,7 +221,7 @@ function date_init(){
     for( i = 1; i <= 31; ++i )
       days += '<option>' + i + '</option>';
 
-    for( i = new Date().getFullYear() + 1; i >= start_year; --i )
+    for( i = new Date().getFullYear(); i >= start_year; --i )
       years += '<option>' + i + '</option>';
 
     for( i = new Date().getFullYear(); i >= start_year_without_day; --i )
