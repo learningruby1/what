@@ -28,7 +28,7 @@ module DivorceComplaintHelper
   end
 
   def get_number_of_joint_child(document)
-    document.step_answers(19).map(&:answer).keep_if {|a| a.to_s.downcase == 'both parents'}.length
+    document.step_answers(18).map(&:answer).keep_if {|a| a.to_s.downcase == 'both parents'}.length
   end
 
   def get_number_of_primary_or_sole_child(document)

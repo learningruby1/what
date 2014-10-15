@@ -12,14 +12,14 @@ module PdfDocument
     require 'prawn'
 
     def generate(document)
-      answer_county = TemplateStep.where(:title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?').first.document_answers.first
-
+      answer_county = TemplateStep.where(:title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?').first.document_answers.where(:document_id => document.id).first.answer
+      children_nevada_residency = TemplateStep.where(:title => 'Children’s Residency /<spain/>Residencia de los Menores').first.document_answers.where(:document_id => document.id).map(&:answer).include? 'Yes' rescue false
       case document.template.to_s
       when /^Complaint for Divorce/
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
-        generate_document PdfDocument::Uccja.new(document).generate,             "UCCJA_#{ document.id }"
+        generate_document PdfDocument::Uccja.new(document).generate,             "UCCJA_#{ document.id }" if children_nevada_residency
         if answer_county == 'Clark'
           generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
         else

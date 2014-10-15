@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :documents, :only => [] do
     get 'step/:step/edit' => 'document_answers#edit', :as => :answer
     post 'step/:step' => 'document_answers#update', :as => :answer_update
-    get 'step/:step/render_questions' => 'document_answers#render_questions', :as => :render_questions
+    post 'step/:step/render_questions' => 'document_answers#render_questions', :as => :render_questions
     get 'review' => 'document_answers#index'
   end
 
