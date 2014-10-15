@@ -7,8 +7,6 @@ module PdfDocument
 
       push_header "Case No. #{ '_'*30 }  (Assigned by Clerk’s Office)", 12
       move_down 10
-      push_header "#{ '_'*25 }", 10
-      move_down 10
 
       push_text '<b>I. PARTY INFORMATION</b>'
       table_row [ { :content => 'Plaintiff/Petitioner', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 }, { :content => 'Defendant/Respondent/Co-Petitioner', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 } ]
