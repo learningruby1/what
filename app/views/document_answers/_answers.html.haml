@@ -18,7 +18,7 @@
       -#NOTICE: fields can contain toggle_x class, if so, they can't contain any other classes!!1
       - case answer.template_field.field_type
 
-      - when /date|^time|only_year_born|only_year|day_of_week/
+      - when /date|time|only_year_born|only_year|day_of_week/
         = render :partial => 'document_answers/fields/datetime', :locals => { :a => a, :answer => answer }
 
       - when /states|select_person/
