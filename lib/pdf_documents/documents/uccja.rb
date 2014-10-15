@@ -102,16 +102,3 @@ module PdfDocument
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
