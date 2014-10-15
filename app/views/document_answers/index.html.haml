@@ -2,7 +2,7 @@
   %h5 REVIEW YOUR ANSWERS AND EDIT IF NECESSARY
   %h5.spain REVISE SUS RESPUESTAS Y HAY CUALQUIER CAMBIO QUE SEA NECESARIO
   %hr
-  - field_type_to_show = ['checkbox', 'text']
+  - field_type_to_show = /review_show|checkbox|time/
 
   - @document.template.steps.each do |step|
     %div{ :id => "scroll_#{step.id}" }
@@ -21,37 +21,41 @@
     .row
       .col-md-12
         %table{ :style => 'width: 80%; margin-left: 20px' }
+
           - last_toggle = nil
           - main_answer = nil
           - amount_index = 0
           - @document.answers.where(:template_step_id => step.id).order(:id).each do |answer|
-
             - if answer.template_field.id == @document.answers.where(:template_step_id => step.id).order(:id).first.template_field.id && answer.id != @document.answers.where(:template_step_id => step.id).order(:id).first.id
               %tr
                 %td
                   %hr
 
-            - next if answer.template_field.insert_place.present?
-            - next if answer.answer.nil? && !field_type_to_show.include?(answer.template_field.field_type)
+            - #Skip if answer not mentioned to show
+            - #next if answer.template_field.insert_place.present?
+            - next if answer.answer.nil? && !answer.template_field.field_type.match(field_type_to_show)
             - if answer.template_field.toggle_id.present?
-
               - if last_toggle != answer.template_field.toggle_id
                 - last_toggle = answer.template_field.toggle_id
                 - main_answer = answer
-
               - if last_toggle == answer.template_field.toggle_id
                 - if main_answer.answer.present? && !main_answer.answer.match(answer.template_field.toggle_option.presence || '') || answer.template_field.toggle_option.nil? && main_answer.answer == '0'
-                  - next# if !field_type_to_show.include?(answer.template_field.field_type)
+                  - next
 
-            - amount_index += 1 if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/)
+            - #Insert fullfiling
+            - if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/)
+              - next if @document.looped_amount(answer.template_step.step_number, answer.template_step.document_answers.where(:document_id => @document.id)) < 2
+              - amount_index += 1
             - answer_html_array = answer.to_html_array(amount_index)
+
             %tr
-              - if field_type_to_show.include? answer.template_field.field_type
-                %td
+              %td
+                - if answer.template_field.field_type.match(field_type_to_show)
                   = answer_html_array[0].split('<spain/>')[0].try :html_safe
                   %span.spain= answer_html_array[0].split('<spain/>')[1].try :html_safe
-              - else
-                %td.answer= answer_html_array[1]
+
+                - if !answer.template_field.field_type.match(/checkbox/)
+                  %span.answer= answer.to_spain.try :html_safe
     .row
       %br
       %hr
