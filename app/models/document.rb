@@ -80,15 +80,23 @@ class Document < ActiveRecord::Base
 
       return false if (_answer.template_field.toggle_id.nil? || parent_toggler == _answer) && step.fields.where(:sub_toggle_id => _answer.template_field.toggle_id).where.not(:sub_toggle_id => nil).count == 0
 
-      return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
+      if _answer.template_field.field_type == 'checkbox'
+        return false if get_checked_answer_count(_answer) == 0 && parent_toggler.answer.match(toggle_option)
+      else
+        return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
                       toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option == 'Yes' ? '1' : 'false')
+      end
+
 
       if _answer.template_field.mandatory[:template_field].present?
+
         parent_answer = DocumentAnswer.where(:template_field_id => _answer.template_field.mandatory[:template_field], :document_id => id, :toggler_offset => _answer.toggler_offset).order('id').first
 
         return false if _answer.answer.nil? && parent_answer.answer == _answer.template_field.mandatory[:toggle_option] ||
-                        _answer.answer == '' && parent_answer.answer == _answer.template_field.mandatory[:toggle_option]
+                        _answer.answer == '' && parent_answer.answer == _answer.template_field.mandatory[:toggle_option] ||
+                        _answer.answer.nil? && parent_answer.template_field.name.split(' /<spain/>').first == _answer.template_field.mandatory[:toggle_option] && parent_answer.answer == '1' ||
+                        _answer.answer == '' && parent_answer.template_field.name.split(' /<spain/>').first == _answer.template_field.mandatory[:toggle_option] && parent_answer.answer == '1'
       end
     end
 
@@ -105,6 +113,10 @@ class Document < ActiveRecord::Base
       end
     end
     true
+  end
+
+  def get_checked_answer_count(_answer)
+    template.steps.find(_answer.template_step_id + template.steps.first.id - 1).fields.where(:toggle_id => _answer.template_field.toggle_id).map{ |item| item.document_answers.where(:answer => '1', :toggler_offset => _answer.toggler_offset) }.flatten.count
   end
 
   def add_mandatory_error
