@@ -70,7 +70,8 @@ module DivorceComplaintHelper
     document.step_answers(3)[document.step_answers(3).count - 2].try :answer if document.to_s == Document::DIVORCE_COMPLAINT
   end
 
-  def get_link_for_redirect(text, document_id)
+  def get_link_for_redirect(text, document_id, answer)
+    answer.update :answer => nil
     text.sub! /:document_id/, document_id.to_s
     path = /<link=(.*)>/.match(text).to_a.last
      "window.location='#{path}';"
