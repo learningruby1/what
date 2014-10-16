@@ -48,5 +48,8 @@
         - if answer.template_field.to_text(@document, @amount_index).match(/<beginText\/>/)
           - hash_index[answer.sort_index] += 1 rescue nil
 
+      - when /checkbox/
+        = render :partial => 'document_answers/fields/checkbox', :locals => { :a => a, :answer => answer }
+
       - else
         = render :partial => "document_answers/fields/#{ answer.template_field.field_type }", :locals => { :a => a, :answer => answer }

@@ -161,7 +161,7 @@ module PdfDocument
               stroke_line [array_tmp.second.to_i, array_tmp.last.to_i - 4], [array_tmp.second.to_i + 4, array_tmp.last.to_i - 8]
               stroke_line [array_tmp.second.to_i + 4, array_tmp.last.to_i - 8], [array_tmp.second.to_i + 8, array_tmp.last.to_i]
             when /^move_to_left/
-              font_size(command_number){ text next_line, :indent_paragraphs => 200, :inline_format => true }
+              font_size(command_number){ text next_line, :indent_paragraphs => 170, :inline_format => true }
             when /^create_line/
               array_tmp = command.split(' ')
               stroke do

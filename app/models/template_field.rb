@@ -34,7 +34,8 @@ class TemplateField < ActiveRecord::Base
       tmp_array = index_of_radio.nil? ? tmp_array = to_s(document).split('<spain/>') : tmp_array = to_s(document).split('<option/>')
       tmp_array = tmp_array[index_of_radio].split('<spain/>') unless index_of_radio.nil?
       text += tmp_array.first.gsub(/<insert>/, additional_info) if !to_s(document).nil?
-      text += '<div class="spain">' + tmp_array.last.gsub(/<insert>/, additional_info) + '</div>'
+      text += '<div class="spain">' + tmp_array.last.gsub(/<insert>/, additional_info) + '</div>' if tmp_array[1].present?
+      text
     else
       to_s(document)
     end

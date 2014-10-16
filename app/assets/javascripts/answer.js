@@ -114,27 +114,27 @@ $( document ).ready(function() {
 
   //Fill fields for Mailing address auto if select option
   $('.radio_3:first').on('click', function(){
-    var address = $('.container').eq(7).find('div:eq(1) input').val();
-    var city = $('.container').eq(8).find('div:eq(1) input').val();
-    var state = $('.container').eq(9).find('.col-md-2 select').val();
-    var zip = $('.container').eq(10).find('div:eq(1) input').val();
+    var address = $('[data-toggle-option]').eq(5).find('.container div:eq(1) input').val();
+    var city = $('[data-toggle-option]').eq(6).find('.container div:eq(1) input').val();
+    var state = $('[data-toggle-option]').eq(7).find('.container .col-md-2 select').val();
+    var zip = $('[data-toggle-option]').eq(8).find('.container div:eq(1) input').val();
 
-    $('.container').eq(11).find('div:eq(2) input').prop('value', address);
-    $('.container').eq(12).find('div:eq(1) input').prop('value', city);
-    $('.container').eq(13).find('.col-md-2 select').prop('value', state);
-    $('.container').eq(14).find('div:eq(1) input').prop('value', zip);
+    $('[data-toggle-option]').eq(9).find('.container div:eq(2) div input').prop('value', address);
+    $('[data-toggle-option]').eq(10).find('.container div:eq(1) input').prop('value', city);
+    $('[data-toggle-option]').eq(11).find('.container .col-md-2 select').prop('value', state);
+    $('[data-toggle-option]').eq(12).find('.container div:eq(1) input').prop('value', zip);
   });
 
-  $('.container').eq(11).find('div:eq(1) input').on('keydown', function(){
+  $('[data-toggle-option]').eq(9).find('.container div:eq(2) div input').on('keydown', function(){
     $('.radio_3:first').prop('checked', false)
   });
-  $('.container').eq(12).find('div:eq(1) input').on('keydown', function(){
+  $('[data-toggle-option]').eq(10).find('.container div:eq(1) input').on('keydown', function(){
     $('.radio_3:first').prop('checked', false)
   });
-  $('.container').eq(14).find('div:eq(1) input').on('keydown', function(){
+  $('[data-toggle-option]').eq(12).find('.container div:eq(1) input').on('keydown', function(){
     $('.radio_3:first').prop('checked', false)
   });
-  $('.container').eq(13).find('.col-md-2 select').on('change', function(){
+  $('[data-toggle-option]').eq(11).find('.container .col-md-2 select').on('change', function(){
     $('.radio_3:first').prop('checked', false)
   });
 
@@ -186,7 +186,7 @@ function who_pay(dad_result, mom_result){
 
 
 function check_value(value, _this){
-  if(value < 1 || value > 10){
+  if(value < 1 || value > 9){
     _this.after('<div id="error" style="width:240px; background:#FAACAC; padding: 3px; border-radius: 5px; color: red; margin-top: 3px;"><span>Only from 1 to 9</span>/<span class="spain">Sólo del 1 al 9</span></div>');
     setTimeout(function(){ $('#error').remove(); }, 5000);
     return false
@@ -495,8 +495,7 @@ function hide_sub_toggles(_this, selected_value){
 
 function checkbox_button_event(_this){
   if($('.' + _this.prop('class') + ' [type="checkbox"]').length > 0 ){
-    var radio_result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) - 1;
-    var this_class = '.toggle_' + (parseInt(_this.data('sub-toggle')) + radio_result);
+    var this_class = '.toggle_' + (parseInt(_this.data('sub-toggle')));
 
     if($('.' + _this.prop('class') + '[data-sub-toggle="'+ _this.data('sub-toggle')+'"]' + '[data-toggle-option="'+ _this.data('toggle-option')+'"]' + ' [type="checkbox"]').is(':checked'))
       $(this_class + '[data-toggle-option="'+ _this.data('toggle-option')+'"]').show();
@@ -509,8 +508,7 @@ function hide_checkboxes(_this){
   if($('.' + _this.prop('class') + ' [type="checkbox"]').length > 0 ){
     $('.' + _this.prop('class') + ' [type="checkbox"]:checked').prop('checked',false);
     $('.' + _this.prop('class') + '[data-sub-toggle]').each(function(){
-      var radio_result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) - 1;
-      $('.toggle_' + (parseInt($(this).data('sub-toggle')) + radio_result)).hide();
+      $('.toggle_' + (parseInt($(this).data('sub-toggle')))).hide();
     });
   }
 }

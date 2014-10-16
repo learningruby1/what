@@ -7,8 +7,6 @@ module PdfDocument
 
       push_header "Case No. #{ '_'*30 }  (Assigned by Clerk’s Office)", 12
       move_down 10
-      push_header "#{ '_'*25 }", 10
-      move_down 10
 
       push_text '<b>I. PARTY INFORMATION</b>'
       table_row [ { :content => 'Plaintiff/Petitioner', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 }, { :content => 'Defendant/Respondent/Co-Petitioner', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 } ]
@@ -36,42 +34,42 @@ module PdfDocument
       default_leading 4
       table_row [ { :content => "<b>Marriage Dissolution Case</b>\n\b\b\b\b\b\b\b\b\b\bAnnulment\n\b\b\b\b\b\b\b\b\b\bDivorce –With children\n\b\b\b\b\b\b\b\b\b\bDivorce –Without children\n\b\b\b\b\b\b\b\b\b\bForeign Decree\n\b\b\b\b\b\b\b\b\b\bJoint Petition – With children\n\b\b\b\b\b\b\b\b\b\bJoint Petition – Without children\n\b\b\b\b\b\b\b\b\b\bSeparate Maintenance\n\n<b>\b\b\b\b\bSupport/Custody</b>\n<b>\b\b\b\b\bUIFSA Case (formerly URESA)</b>\n<b>\b\b\b\b\bAdoption</b>\n\b\b\b\b\b\b\b\b\b\bAdult\n\b\b\b\b\b\b\b\b\b\bMinor\n<b>\b\b\b\b\bPaternity</b>\n<b>\b\b\b\b\bTermination of Parental Rights</b>\n<b>\b\b\b\b\bMiscellaneous Domestic Relations</b>\n\b\b\b\b\b\b\b\b\b\bName Change\n\b\b\b\b\b\b\b\b\b\bPermission to Marry\n\b\b\b\b\b\b\b\b\b\bOther Family", :colspan => 2 },
                   { :content => "<b>\b\b\b\b\bGuardianship of an Adult</b>\n<b>\b\b\b\b\bGuardianship of a Minor</b>\n<b>\b\b\b\b\bGuardianship Trust</b>\n<b>Estimated Estate Value: $</b>\n\n<b>Other Family-Related Case Filing Type</b>\n<b>\b\b\b\b\bMental Health</b>\n<b>\b\b\b\b\bRequest for Temporary Protective Order</b>\n<b>\b\b\b\b\bMiscellaneous Juvenile</b>\n\b\b\b\b\b\b\b\b\b\bEmancipation", :colspan => 2 } ]
-      small_rectangle 12, 416
+      small_rectangle 12, 437
 
       if @children_residency
-        small_rectangle_checked 12, 403
-        small_rectangle 12, 390
+        small_rectangle_checked 12, 424
+        small_rectangle 12, 411
       else
-        small_rectangle 12, 403
-        small_rectangle_checked 12, 390
+        small_rectangle 12, 424
+        small_rectangle_checked 12, 411
       end
 
-      small_rectangle 12, 377
-      small_rectangle 12, 364
-      small_rectangle 12, 351
-      small_rectangle 12, 338
-      small_rectangle 2, 312
-      small_rectangle 2, 299
-      small_rectangle 2, 286
-      small_rectangle 12, 273
-      small_rectangle 12, 260
-      small_rectangle 2, 248
-      small_rectangle 2, 234
-      small_rectangle 2, 221
-      small_rectangle 12, 208
-      small_rectangle 12, 195
-      small_rectangle 12, 182
+      small_rectangle 12, 398
+      small_rectangle 12, 387
+      small_rectangle 12, 372
+      small_rectangle 12, 359
+      small_rectangle 2, 333
+      small_rectangle 2, 320
+      small_rectangle 2, 307
+      small_rectangle 12, 294
+      small_rectangle 12, 281
+      small_rectangle 2, 269
+      small_rectangle 2, 255
+      small_rectangle 2, 242
+      small_rectangle 12, 229
+      small_rectangle 12, 216
+      small_rectangle 12, 203
 
-      small_rectangle 273, 429
-      small_rectangle 273, 416
-      small_rectangle 273, 403
-      small_rectangle 273, 350
-      small_rectangle 273, 337
-      small_rectangle 273, 324
-      small_rectangle 281, 311
+      small_rectangle 273, 450
+      small_rectangle 273, 437
+      small_rectangle 273, 424
+      small_rectangle 273, 371
+      small_rectangle 273, 358
+      small_rectangle 273, 345
+      small_rectangle 281, 332
 
-      create_line 270, 540, 364
-      create_line 270, 540, 353
+      create_line 270, 540, 385
+      create_line 270, 540, 374
 
       push_table -1
       move_down 20
@@ -90,7 +88,7 @@ module PdfDocument
       end
 
 
-      push_text "<u>#{ ' '*10 } #{ Time.now.strftime("%Y-%d-%m") } #{ ' '*60}</u> #{ ' '*15} #{ '_'*30 }"
+      push_text "<u>#{ ' '*10 } #{ Time.now.strftime("%m-%d-%Y") } #{ ' '*60}</u> #{ ' '*15} #{ '_'*30 }"
       push_text "#{ ' '*10 } Date #{ ' '*85 } Signature of Preparer #{ @plaintiff_first_name } #{ @plaintiff_last_name } #{ @plaintiff_middle_name }"
 
       finishing

@@ -36,11 +36,11 @@ current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo
 current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }, :field_type => 'string-upcase'
 current_step.fields.create :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 current_step.fields.create :name => 'Social Security # /<spain/># Seguro Social: <spain/>e.g. XXX-XX-XXXX', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. /<spain/>Por favor, ponga un número de Seguro Social válido' }
-current_step.fields.create :name => 'Home Address /<spain/>Dirección de casa: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
+current_step.fields.create :field_type => 'string review_show', :name => 'Home Address /<spain/>Dirección de casa: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
-current_step.fields.create :name => 'Mailing Address /<spain/>Dirección de correo o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :field_type => 'text_radio'
+current_step.fields.create :field_type => 'string review_show', :name => 'Mailing Address /<spain/>Dirección de correo o postal: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :field_type => 'text_radio'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
 current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
@@ -139,7 +139,7 @@ current_step.fields.create :name => 'Middle Initial /<spain/>Inicial del Segundo
 child_last_name = current_step.fields.create :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }, :field_type => 'string-upcase'
 current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 
-current_step.fields.create :name => 'Place of Birth /<spain/>Lugar de nacimiento:', :field_type => 'text'
+current_step.fields.create :name => 'Place of Birth /<spain/>Lugar de nacimiento:', :field_type => 'text review_show'
 current_step.fields.create :name => 'In the United States /<spain/>En los Estados Unidos
                                      <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :name => 'City /<spain/>Ciudad: *',  :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize'
@@ -158,7 +158,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'text', :name => '<child_count> must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
                                                             <spain/><residency_child> haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre <el_ellos>.'
-current_step.fields.create :field_type => 'text', :name => 'Have <child_count> lived in Nevada for over 6 months? /<spain/>¿<residency_child_second> en Nevada por más de 6 meses?'
+current_step.fields.create :field_type => 'text review_show', :name => 'Have <child_count> lived in Nevada for over 6 months? /<spain/>¿<residency_child_second> en Nevada por más de 6 meses?'
 
 toggle_id = 0
 toggle_id += 1
@@ -173,7 +173,6 @@ current_step.fields.create :field_type => 'text', :name => 'Nevada Court does no
 current_step.fields.create :field_type => 'text', :name => 'Do you still want to continue? /<spain/>¿Quiere continuar?', :toggle_id => toggle_id, :toggle_option => 'No'
 current_step.fields.create :field_type => 'redirect', :name => 'No<link=/templates>
                                                                 <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #11
                                      :title => '<uppercase_child>’S ADDRESS /<spain/>DIRECCIÓN <uppercase_child_spain>', :description => 'The law requires that you provide the address where <child_count> have lived for the last 5 years.
@@ -235,7 +234,7 @@ current_step.fields.create :field_type => 'select_person', :name => 'Relationshi
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #12
                                      :title => '<uppercase_child>’S QUESTION 1 /<spain/><uppercase_child_spain> PREGUNTA 1'
-current_step.fields.create :field_type => 'text', :name => 'Have YOU PARTICIPATED as a party, witness or any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of <insert>?<br/><spain/>¿HA PARTICIPADO USTED como demandado, demandante,  testigo o de cualquier otro modo en cualquier otro caso de custodia con <insert> en este u otro estado ?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'Have YOU PARTICIPATED as a party, witness or any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of <insert>?<br/><spain/>¿HA PARTICIPADO USTED como demandado, demandante,  testigo o de cualquier otro modo en cualquier otro caso de custodia con <insert> en este u otro estado ?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
@@ -250,7 +249,7 @@ current_step.fields.create :name => 'Date of court order or Judgment: */<spain/>
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #13
                                      :title => '<uppercase_child>’S QUESTION 2 /<spain/><uppercase_child_spain> PREGUNTA 2'
-current_step.fields.create :field_type => 'text', :name => 'IS THERE ANY proceeding at this time including cases of domestic violence, protective orders, termination of parental rights or adoption in this state or another regarding <insert>?<br/><spain/>¿HAY ALGÚN procedimiento en este momento, incluyendo caso de violencia doméstica, órdenes de protección, patria potestad o adopción en este estado o en otro con respecto a <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'IS THERE ANY proceeding at this time including cases of domestic violence, protective orders, termination of parental rights or adoption in this state or another regarding <insert>?<br/><spain/>¿HAY ALGÚN procedimiento en este momento, incluyendo caso de violencia doméstica, órdenes de protección, patria potestad o adopción en este estado o en otro con respecto a <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
@@ -266,7 +265,7 @@ current_step.fields.create :name => 'Date of court order or Judgment: */<spain/>
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #14
                                      :title => '<uppercase_child>’S QUESTION 3 /<spain/><uppercase_child_spain> PREGUNTA 3'
 
-current_step.fields.create :field_type => 'text', :name => 'DO YOU KNOW of anyone, besides you and the other parent of <insert>, that has physical custody or came of custody or visitation rights over <insert>?<br/><spain/>¿CONOCE de alguien, que no sea usted y el otro padre de <insert>, que tiene la custodia física o derecho de custodia o visitas de <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'DO YOU KNOW of anyone, besides you and the other parent of <insert>, that has physical custody or came of custody or visitation rights over <insert>?<br/><spain/>¿CONOCE de alguien, que no sea usted y el otro padre de <insert>, que tiene la custodia física o derecho de custodia o visitas de <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
@@ -276,7 +275,7 @@ current_step.fields.create :name => 'Address: * /<spain/>Dirección: *', :mandat
 current_step.fields.create :field_type => 'radio-last', :name => 'Person(s) has PHYSICAL custody <insert> /<spain/>Persona (s) tiene la custodia FÍSICA <insert><option/>Person(s) claims CUSTODY rights <insert> /<spain/>Persona (s) reclama los derechos de CUSTODIA <insert><option/>Person(s) claim VISITATION rights <insert> /<spain/>Persona (s) reclamar derechos de VISITAS <insert>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_option => 'Yes', :amount_field_id => question_third.id, :raw_question => false, :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sub_toggle_id => toggle_id + 1
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#15
-                                     :title => 'Legal Custody /<spain/>Custodia Legal',
+                                     :title => 'Same Legal Custody /<spain/>Misma Custodia Legal',
                                      :description => 'Do you want all the children to have the same legal custody?
                                                       <br/><spain/>¿Quiere que todos los menores tenga la misma custodia legal?'
 toggle_id = 0
@@ -287,13 +286,13 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Legal Custody /<spain/>Custodia Legal',
                                      :description => 'Who will have legal custody of <child_count>? /<spain/>¿Quién tendrá la custodia legal <child_count_spain>?'
 
-current_step.fields.create :field_type => 'text', :name => 'Legal custody of <insert>.<spain/>Custodia legal de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'Legal custody of <insert>.<spain/>Custodia legal de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'BOTH Parents /<spain/>AMBOS padres
                                                              <option/>Only MOM /<spain/>Solo MAMÁ
                                                              <option/>Only DAD /<spain/>Solo PAPÁ', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id, :render_if_field_value => 'Yes',#17
-                                     :title => 'Physical Custody /<spain/>Custodia Física',
+                                     :title => 'Same Physical Custody /<spain/>Misma Custodia Física',
                                      :description => 'Do you want all the children to have the same physical custody?
                                                       <br/><spain/>¿Quiere que todos los menores tengan la misma custodia física?'
 toggle_id = 0
@@ -302,10 +301,10 @@ same_schedule_physical_custody = current_step.fields.create :field_type => 'radi
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, :amount_field_if => same_schedule_physical_custody.id, :amount_field_if_option => 'No',#18
                                      :title => 'Physical Custody /<spain/>Custodia Física',
-                                     :description => 'Select  the type of custody you would like to have:
+                                     :description => 'Select the type of custody you would like to have:
                                                       <br/><spain/>Seleccione el tipo de custodia que usted desea:'
 
-current_step.fields.create :field_type => 'text', :name => 'Physical custody of <insert>.<spain/>Custodia física de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'Physical custody of <insert>.<spain/>Custodia física de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA'
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child lives with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : cuando el menor vive con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
 
@@ -324,46 +323,46 @@ current_step.fields.create :field_type => 'checkbox', :name => 'His days off /<s
 current_step.fields.create :field_type => 'checkbox', :name => '1 Weekend a month /<spain/>1 fin de semana al mes', :toggle_id => toggle_id, :toggle_option => 'With mom', :insert_place => '2'
 current_step.fields.create :field_type => 'checkbox', :name => 'Every Other Weekend /<spain/>Fin de semana por medio', :toggle_id => toggle_id, :toggle_option => 'With mom', :insert_place => '2'
 current_step.fields.create :field_type => 'checkbox', :name => 'Every weekend /<spain/>Todos los fin de semana', :toggle_id => toggle_id, :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'checkbox', :name => 'Monday /<spain/>Lunes', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 1, :insert_place => '2'
+field_for_mandatory_monday = current_step.fields.create :field_type => 'checkbox', :name => 'Monday /<spain/>Lunes', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 1, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 1, :name => 'From /<spain/>Desde', :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 1, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 1, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_monday.id, :toggle_option => 'Monday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 1, :name => 'and /<spain/>y', :toggle_option => 'With mom', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Tuesday /<spain/>Martes', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 2, :insert_place => '2'
+field_for_mandatory_tuesday = current_step.fields.create :field_type => 'checkbox', :name => 'Tuesday /<spain/>Martes', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 2, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 2, :name => 'From /<spain/>Desde', :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 2, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 2, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_tuesday.id, :toggle_option => 'Tuesday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 2, :name => 'and /<spain/>y', :toggle_option => 'With mom', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Wednesday /<spain/>Miércoles', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 3, :insert_place => '2'
+field_for_mandatory_wednesday = current_step.fields.create :field_type => 'checkbox', :name => 'Wednesday /<spain/>Miércoles', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 3, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 3, :name => 'From /<spain/>Desde', :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 3, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 3, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_wednesday.id, :toggle_option => 'Wednesday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 3, :name => 'and /<spain/>y', :toggle_option => 'With mom', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Thursday /<spain/>Jueves', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 4, :insert_place => '2'
+field_for_mandatory_thursday = current_step.fields.create :field_type => 'checkbox', :name => 'Thursday /<spain/>Jueves', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 4, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 4, :name => 'From /<spain/>Desde', :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 4, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 4, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_thursday.id, :toggle_option => 'Thursday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 4, :name => 'and /<spain/>y', :toggle_option => 'With mom', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Friday /<spain/>Viernes', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 5, :insert_place => '2'
+field_for_mandatory_friday = current_step.fields.create :field_type => 'checkbox', :name => 'Friday /<spain/>Viernes', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 5, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 5, :name => 'From /<spain/>Desde', :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 5, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 5, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_friday.id, :toggle_option => 'Friday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 5, :name => 'and /<spain/>y', :toggle_option => 'With mom', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Saturday /<spain/>Sábado', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 6, :insert_place => '2'
+field_for_mandatory_saturday = current_step.fields.create :field_type => 'checkbox', :name => 'Saturday /<spain/>Sábado', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 6, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 6, :name => 'From /<spain/>Desde', :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 6, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 6, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_saturday.id, :toggle_option => 'Saturday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 6, :name => 'and /<spain/>y', :toggle_option => 'With mom', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Sunday /<spain/>Domingo', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 7, :insert_place => '2'
+field_for_mandatory_sunday = current_step.fields.create :field_type => 'checkbox', :name => 'Sunday /<spain/>Domingo', :toggle_id => toggle_id, :toggle_option => 'With mom', :sub_toggle_id => toggle_id + 7, :insert_place => '2', :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 7, :name => 'From /<spain/>Desde', :toggle_option => 'With mom', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 7, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 7, :name => 'To /<spain/>Hasta', :toggle_option => 'With mom', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_sunday.id, :toggle_option => 'Sunday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 7, :name => 'and /<spain/>y', :toggle_option => 'With mom', :insert_place => '2'
 
 current_step.fields.create :field_type => 'text', :name => 'Visitation with mom will be /<spain/>Las visitas con el mamá serán:', :toggle_id => toggle_id, :toggle_option => 'With dad', :insert_place => '2'
@@ -371,97 +370,98 @@ current_step.fields.create :field_type => 'checkbox', :name => 'Her days off /<s
 current_step.fields.create :field_type => 'checkbox', :name => '1 Weekend a month /<spain/>1 fin de semana al mes', :toggle_id => toggle_id, :toggle_option => 'With dad', :insert_place => '2'
 current_step.fields.create :field_type => 'checkbox', :name => 'Every Other Weekend /<spain/>Fin de semana por medio', :toggle_id => toggle_id, :toggle_option => 'With dad', :insert_place => '2'
 current_step.fields.create :field_type => 'checkbox', :name => 'Every weekend /<spain/>Todos los fin de semana', :toggle_id => toggle_id, :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'checkbox', :name => 'Monday /<spain/>Lunes', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 1, :insert_place => '2'
+field_for_mandatory_monday = current_step.fields.create :field_type => 'checkbox', :name => 'Monday /<spain/>Lunes', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 1, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 1, :name => 'From /<spain/>Desde', :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 1, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 1, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_monday.id, :toggle_option => 'Monday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 1, :name => 'and /<spain/>y', :toggle_option => 'With dad', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Tuesday /<spain/>Martes', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 2, :insert_place => '2'
+field_for_mandatory_tuesday = current_step.fields.create :field_type => 'checkbox', :name => 'Tuesday /<spain/>Martes', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 2, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 2, :name => 'From /<spain/>Desde', :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 2, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 2, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_tuesday.id, :toggle_option => 'Tuesday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 2, :name => 'and /<spain/>y', :toggle_option => 'With dad', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Wednesday /<spain/>Miércoles', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 3, :insert_place => '2'
+field_for_mandatory_wednesday = current_step.fields.create :field_type => 'checkbox', :name => 'Wednesday /<spain/>Miércoles', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 3, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 3, :name => 'From /<spain/>Desde', :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 3, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 3, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_wednesday.id, :toggle_option => 'Wednesday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 3, :name => 'and /<spain/>y', :toggle_option => 'With dad', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Thursday /<spain/>Jueves', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 4, :insert_place => '2'
+field_for_mandatory_thursday = current_step.fields.create :field_type => 'checkbox', :name => 'Thursday /<spain/>Jueves', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 4, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 4, :name => 'From /<spain/>Desde', :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 4, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 4, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_thursday.id, :toggle_option => 'Thursday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 4, :name => 'and /<spain/>y', :toggle_option => 'With dad', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Friday /<spain/>Viernes', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 5, :insert_place => '2'
+field_for_mandatory_friday = current_step.fields.create :field_type => 'checkbox', :name => 'Friday /<spain/>Viernes', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 5, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 5, :name => 'From /<spain/>Desde', :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 5, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 5, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_friday.id, :toggle_option => 'Friday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 5, :name => 'and /<spain/>y', :toggle_option => 'With dad', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Saturday /<spain/>Sábado', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 6, :insert_place => '2'
+field_for_mandatory_saturday = current_step.fields.create :field_type => 'checkbox', :name => 'Saturday /<spain/>Sábado', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 6, :insert_place => '2'
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 6, :name => 'From /<spain/>Desde', :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 6, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 6, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_saturday.id, :toggle_option => 'Saturday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 6, :name => 'and /<spain/>y', :toggle_option => 'With dad', :insert_place => '2'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Sunday /<spain/>Domingo', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 7, :insert_place => '2'
+field_for_mandatory_sunday = current_step.fields.create :field_type => 'checkbox', :name => 'Sunday /<spain/>Domingo', :toggle_id => toggle_id, :toggle_option => 'With dad', :sub_toggle_id => toggle_id + 7, :insert_place => '2', :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 7, :name => 'From /<spain/>Desde', :toggle_option => 'With dad', :insert_place => '2'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 7, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '2'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 7, :name => 'To /<spain/>Hasta', :toggle_option => 'With dad', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_sunday.id, :toggle_option => 'Sunday' }, :insert_place => '2'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 7, :name => 'and /<spain/>y', :toggle_option => 'With dad', :insert_place => '2'
 
 current_step.fields.create :field_type => 'checkbox', :name => '1st and 3rd week with mom and  2nd and 4th  week  with dad /<spain/>1ra y 3ra semana con mamá y 2da y 4ta semana con papá', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'checkbox', :name => '2nd and 4th week with mom and 1st and 3rd week with /<spain/>2da y 4ta semana con mamá y 1ra y 3ra semana con papá', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'checkbox', :name => 'Monday /<spain/>Lunes', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 1, :insert_place => '3'
+current_step.fields.create :field_type => 'checkbox', :name => '2nd and 4th week with mom and 1st and 3rd week with Dad /<spain/>2da y 4ta semana con mamá y 1ra y 3ra semana con papá', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :insert_place => '3'
+field_for_mandatory_monday = current_step.fields.create :field_type => 'checkbox', :name => 'Monday /<spain/>Lunes', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 1, :insert_place => '3'
 
-current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 1, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :insert_place => '3'
+
+current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 1, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory_monday.id, :toggle_option => 'Monday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 1, :name => 'From /<spain/>Desde', :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 1, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '3'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 1, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_monday.id, :toggle_option => 'Monday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 1, :name => 'and /<spain/>y', :toggle_option => 'Both Parents', :insert_place => '3'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Tuesday /<spain/>Martes', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 2, :insert_place => '3'
+field_for_mandatory_tuesday = current_step.fields.create :field_type => 'checkbox', :name => 'Tuesday /<spain/>Martes', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 2, :insert_place => '3'
 
-current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 2, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :insert_place => '3'
+current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 2, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory_tuesday.id, :toggle_option => 'Tuesday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 2, :name => 'From /<spain/>Desde', :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 2, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '3'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 2, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_tuesday.id, :toggle_option => 'Tuesday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 2, :name => 'and /<spain/>y', :toggle_option => 'Both Parents', :insert_place => '3'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Wednesday /<spain/>Miércoles', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 3, :insert_place => '3'
+field_for_mandatory_wednesday = current_step.fields.create :field_type => 'checkbox', :name => 'Wednesday /<spain/>Miércoles', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 3, :insert_place => '3'
 
-current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 3, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :insert_place => '3'
+current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 3, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory_wednesday.id, :toggle_option => 'Wednesday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 3, :name => 'From /<spain/>Desde', :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 3, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '3'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 3, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_wednesday.id, :toggle_option => 'Wednesday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 3, :name => 'and /<spain/>y', :toggle_option => 'Both Parents', :insert_place => '3'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Thursday /<spain/>Jueves', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 4, :insert_place => '3'
+field_for_mandatory_thursday = current_step.fields.create :field_type => 'checkbox', :name => 'Thursday /<spain/>Jueves', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 4, :insert_place => '3'
 
-current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 4, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :insert_place => '3'
+current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 4, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory_thursday.id, :toggle_option => 'Thursday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 4, :name => 'From /<spain/>Desde', :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 4, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '3'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 4, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_thursday.id, :toggle_option => 'Thursday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 4, :name => 'and /<spain/>y', :toggle_option => 'Both Parents', :insert_place => '3'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Friday /<spain/>Viernes', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 5, :insert_place => '3'
+field_for_mandatory_friday = current_step.fields.create :field_type => 'checkbox', :name => 'Friday /<spain/>Viernes', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 5, :insert_place => '3'
 
-current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 5, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :insert_place => '3'
+current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 5, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory_friday.id, :toggle_option => 'Friday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 5, :name => 'From /<spain/>Desde', :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 5, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '3'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 5, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_friday.id, :toggle_option => 'Friday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 5, :name => 'and /<spain/>y', :toggle_option => 'Both Parents', :insert_place => '3'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Saturday /<spain/>Sábado', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 6, :insert_place => '3'
+field_for_mandatory_saturday = current_step.fields.create :field_type => 'checkbox', :name => 'Saturday /<spain/>Sábado', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 6, :insert_place => '3'
 
-current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 6, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :insert_place => '3'
+current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 6, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory_saturday.id, :toggle_option => 'Saturday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 6, :name => 'From /<spain/>Desde', :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 6, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '3'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 6, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_saturday.id, :toggle_option => 'Saturday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 6, :name => 'and /<spain/>y', :toggle_option => 'Both Parents', :insert_place => '3'
 
-current_step.fields.create :field_type => 'checkbox', :name => 'Sunday /<spain/>Domingo', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 7, :insert_place => '3'
+field_for_mandatory_sunday = current_step.fields.create :field_type => 'checkbox', :name => 'Sunday /<spain/>Domingo', :toggle_id => toggle_id, :toggle_option => 'Both Parents', :sub_toggle_id => toggle_id + 7, :insert_place => '3', :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 7, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :insert_place => '3'
+current_step.fields.create :field_type => 'radio', :name => 'Mom /<spain/>mamá<option/>Dad /<spain/>papá', :toggle_id => toggle_id + 7, :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor', :template_field => field_for_mandatory_sunday.id, :toggle_option => 'Sunday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 7, :name => 'From /<spain/>Desde', :toggle_option => 'Both Parents', :insert_place => '3'
-current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 7, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana' }, :insert_place => '3'
+current_step.fields.create :field_type => 'day_of_week', :toggle_id => toggle_id + 7, :name => 'To /<spain/>Hasta', :toggle_option => 'Both Parents', :mandatory => { :value => /\w+/, :hint => 'Provide a day of week /<spain/>Por favor, proporcionar un día de la semana', :template_field => field_for_mandatory_sunday.id, :toggle_option => 'Sunday' }, :insert_place => '3'
 current_step.fields.create :field_type => 'time', :toggle_id => toggle_id + 7, :name => 'and /<spain/>y', :toggle_option => 'Both Parents', :insert_place => '3'
 
 
@@ -473,11 +473,11 @@ toggle_id += 1
 children_holidays_now = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
-current_step.fields.create :field_type => 'text', :name => 'Do you want all children to have the same holiday schedule?
+current_step.fields.create :field_type => 'text review_show', :name => 'Do you want all children to have the same holiday schedule?
                                                             <br/><spain/>¿Quiere que todos los menores tengan el mismo horario de vacaciones?', :toggle_id => toggle_id, :toggle_option => 'Yes', :render_if_id => children_amount_field.id.to_s, :render_if_value => /\A[^1]{1}/
 
 same_schedule = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
-                                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :render_if_id => children_amount_field.id.to_s, :render_if_value => /\A[^1]{1}/
+                                                                             <option/>No', :toggle_id => toggle_id, :toggle_option => 'Yes', :render_if_id => children_amount_field.id.to_s, :render_if_value => /\A[^1]{1}/, :sub_toggle_id => toggle_id + 1
 
 
 
@@ -485,7 +485,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :title => 'Holiday /<spain/>Feriados',
                                      :description => 'Check all the holiday that apply for your <child_count>:<br/><spain/>Marque todos los feriados que aplican para su <child_count_spain>:'
 
-current_step.fields.create :field_type => 'text', :name => 'Holidays schedule for <insert><spain/>Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'Holidays schedule for <insert><spain/>Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 
 toggle_id = 0
 toggle_id += 1
@@ -604,7 +604,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                      :description => 'Check all the holiday that apply for your <child_count>:<br/>
                                                       <spain/>Marque todos los feriados que aplican para su <child_count_spain>:'
 
-current_step.fields.create :field_type => 'text', :name => 'More Holidays schedule for <insert><spain/>Más Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'More Holidays schedule for <insert><spain/>Más Holidays schedule para <insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 
 toggle_id = 0
 toggle_id += 1
@@ -873,7 +873,7 @@ toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => child_support_field.id.to_s, :render_if_field_value => 'No|Dad|Mom',#25
                                      :title => 'ADDITIONAL CHILD SUPPORT QUESTION /<spain/>PREGUNTAS ADICIONES SOBRE MANUTENCION DE MENORES'
-current_step.fields.create :field_type => 'text', :name => 'Are you currently employed or self-employed? /<spain/>¿Actualmente tiene empleo o trabaja por su cuenta? *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Are you currently employed or self-employed? /<spain/>¿Actualmente tiene empleo o trabaja por su cuenta? *'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
@@ -884,7 +884,7 @@ current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :man
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono: ', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
 
-current_step.fields.create :field_type => 'text', :name => 'Your Ethinicity /<spain/>Su Raza: *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Your Ethinicity /<spain/>Su Raza: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
                                                              <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano
@@ -897,7 +897,7 @@ toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => child_support_field.id.to_s, :render_if_field_value => 'No|Dad|Mom',#26
                                      :title => 'ADDITIONAL CHILD SUPPORT QUESTION FOR SPOUSE /<spain/>PREGUNTAS ADICIONES DE SU (INSERT ESPOSA O ESPOSO) SOBRE LA MANUTENCION DE MENORES'
-current_step.fields.create :field_type => 'text', :name => 'Is your spouse currently employed/self-employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Is your spouse currently employed/self-employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
 current_step.fields.create :field_type => 'radio', :name => 'No
                                                              <option/>I don’t know /<spain/>No sé
                                                              <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -909,7 +909,7 @@ current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :man
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
 
-current_step.fields.create :field_type => 'text', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
                                                              <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano
@@ -950,7 +950,7 @@ toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id,#29
                                      :title => '<child_count> Tax Exemption /<spain/>En los Impuestos <child_count_spain>'
 
-current_step.fields.create :field_type => 'text', :name => 'Who will claim <insert> as dependent on tax returns?<br/><spain/>¿Quién reclamará <insert> como dependiente en los impuestos?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
+current_step.fields.create :field_type => 'text review_show', :name => 'Who will claim <insert> as dependent on tax returns?<br/><spain/>¿Quién reclamará <insert> como dependiente en los impuestos?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'radio', :name => 'Should be allocated per federal law /<spain/>Sea asignada por ley federal
                                                              <option/>Mom every year /<spain/>Mamá todos los años
                                                              <option/>Dad every year /<spain/>Papá todos los años
@@ -1049,42 +1049,42 @@ toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Car /<spain/>Carro', :toggle_id => toggle_id, :sort_index => 'a1'
 car_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
-current_step.fields.create :name => 'Car/Carro<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
+current_step.fields.create :field_type => 'string review_show', :name => 'Car/Carro<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con el
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con el', :toggle_id => toggle_id, :amount_field_id => car_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Motorcycle /<spain/>Motocicleta', :toggle_id => toggle_id, :sort_index => 'b1'
 motorcycle_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'b2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
-current_step.fields.create :name => 'Motorcycle/Motocicleta<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
+current_step.fields.create :field_type => 'string review_show', :name => 'Motorcycle/Motocicleta<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :amount_field_id => motorcycle_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'RV', :toggle_id => toggle_id, :sort_index => 'c1'
 rv_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'c2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
-current_step.fields.create :name => 'RV/RV<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
+current_step.fields.create :field_type => 'string review_show', :name => 'RV/RV<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :amount_field_id => rv_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Boat /<spain/>Barco', :toggle_id => toggle_id, :sort_index => 'd1'
 boat_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'd2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
-current_step.fields.create :name => 'Boat/Barco<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
+current_step.fields.create :field_type => 'string review_show', :name => 'Boat/Barco<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con el
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con el', :toggle_id => toggle_id, :amount_field_id => boat_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Trailer /<spain/>Remolque', :toggle_id => toggle_id, :sort_index => 'e1'
 trailer_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'e2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
-current_step.fields.create :name => 'Trailer/Remolque<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => trailer_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
+current_step.fields.create :field_type => 'string review_show', :name => 'Trailer/Remolque<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => trailer_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con el
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con el', :toggle_id => toggle_id, :amount_field_id => trailer_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Other /<spain/>Otro', :toggle_id => toggle_id, :sort_index => 'f1'
 other_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'f2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
-current_step.fields.create :name => 'Other/Otro<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => other_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
+current_step.fields.create :field_type => 'string review_show', :name => 'Other/Otro<beginText/>Write year, model and VIN # if you have it /<spain/>Escriba el año, modelo y VIN # si lo tiene', :toggle_id => toggle_id, :amount_field_id => other_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter year, model and VIN /<spain/>Por favor introduce el año, modelo y VIN' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :toggle_id => toggle_id, :amount_field_id => other_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -1103,7 +1103,7 @@ toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
 plan_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
-current_step.fields.create :name => 'Retirement plan /Plan de Retiro<beginText/>Name of the plan: /<spain/>Nombre del plan de beneficios:', :toggle_id => toggle_id, :amount_field_id => plan_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter name of the plan /<spain/>Por favor ingrese el nombre del plan' }
+current_step.fields.create :field_type => 'string review_show', :name => 'Retirement plan /Plan de Retiro<beginText/>Name of the plan: /<spain/>Nombre del plan de beneficios:', :toggle_id => toggle_id, :amount_field_id => plan_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter name of the plan /<spain/>Por favor ingrese el nombre del plan' }
 current_step.fields.create :field_type => 'radio', :name => 'Wife will keep it /<spain/>Esposa se quedara con el
                                                              <option/>Divide /<spain/>Dividir
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con el', :toggle_id => toggle_id, :amount_field_id => plan_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }

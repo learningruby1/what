@@ -89,7 +89,7 @@ class DocumentAnswer < ActiveRecord::Base
   end
 
   def to_html_array(amount_index=1)
-    [(template_field.to_text(document, amount_index).gsub(/<option\/>/, '<br/>') rescue ''),
+    [(template_field.to_text(document, amount_index).gsub(/<option\/>/, '<br/>').gsub('*', '') rescue ''),
      to_s]
   end
 
@@ -98,6 +98,13 @@ class DocumentAnswer < ActiveRecord::Base
       _answers.sort_by!{ |item| [item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
     else
       _answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
+    end
+  end
+
+  def to_spain
+    return to_s if !template_field.field_type.match(/radio/)
+    template_field.to_text(document).split('<option/>').each do |a|
+      return a.gsub('*', '') if a.match(Regexp.new(answer))
     end
   end
 end

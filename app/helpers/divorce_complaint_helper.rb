@@ -70,7 +70,8 @@ module DivorceComplaintHelper
     document.step_answers(3)[document.step_answers(3).count - 2].try :answer if document.to_s == Document::DIVORCE_COMPLAINT
   end
 
-  def get_link_for_redirect(text, document_id)
+  def get_link_for_redirect(text, document_id, answer)
+    answer.update :answer => nil
     text.sub! /:document_id/, document_id.to_s
     path = /<link=(.*)>/.match(text).to_a.last
      "window.location='#{path}';"
@@ -86,12 +87,8 @@ module DivorceComplaintHelper
     end
   end
 
-  def check_physical_custody(_answers)
-    _answers.first.template_step_id == TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').second.id
-  end
-
   def replace_main_text(_document, _answers, text, _amount_index, _index_of_radio, _real_answer)
-    if check_physical_custody(_answers)
+    if _answers.first.template_step_id == 18
       if number_of_child(_document) != '1' && TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').first.document_answers.where(:document_id => _document.id).first.answer == 'Yes'
         text.gsub!('the child lives', 'the children live')
         text.gsub!('el menor vive', 'los menores viven')
