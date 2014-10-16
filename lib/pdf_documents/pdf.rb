@@ -20,7 +20,7 @@ module PdfDocument
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
         generate_document PdfDocument::Uccja.new(document).generate,             "UCCJA_#{ document.id }" if children_nevada_residency
-        if answer_county.answer == 'Clark'
+        if answer_county == 'Clark'
           generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
         else
           generate_document PdfDocument::DivorceCoversheet.new(document).generate, "Divorce_coversheet_#{ document.id }"
