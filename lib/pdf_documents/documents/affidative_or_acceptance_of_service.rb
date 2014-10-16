@@ -11,8 +11,8 @@ module PdfDocument
       end
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_addres }"
-      push_text "#{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+      push_text "#{ @plaintiff_mailing_addres.titleize }"
+      push_text "#{ @plaintiff_home_address_city.classify }, #{ @plaintiff_home_address_state.classify } #{ @plaintiff_home_address_zip.classify }"
 
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
