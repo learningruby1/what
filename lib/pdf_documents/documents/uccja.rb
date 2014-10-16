@@ -31,46 +31,52 @@ module PdfDocument
 
 
       @number_of_children.times do |i|
+        @children_info[i][:addresses].sort! { |x,y| y[:move_date] <=> x[:move_date]  }
         table_row [ { :content => "#{i+1}. Child’s Name", :width => 150, :font_style => :bold }, { :content => "Place of Birth", :width => 170, :font_style => :bold },                                                            { :content => "Birth Date", :width => 120, :font_style => :bold },     { :content => "Sex", :width => 100, :font_style => :bold } ]
         table_row [ { :content => @children_names[i], :width => 150 },                           { :content => "#{@children_info[i][:city].to_s} #{@children_info[i][:state].to_s} #{@children_info[i][:country].to_s}", :width => 170 }, { :content => @children_info[i][:date_of_birth].to_s, :width => 120 }, { :content => @children_info[i][:sex].to_s, :width => 100 } ]
-
-        table_row [ { :content =>"Period of Residence", :width => 150, :font_style => :bold }, { :content =>"Address", :width => 170, :font_style => :bold }, { :content =>"Person Child lived with", :width => 120, :font_style => :bold }, { :content =>"Relationship", :width => 100, :font_style => :bold } ]
-        table_row [ { :content =>"(insert) to Present", :width => 150 }, { :content =>"(insert)", :width => 170 }, { :content =>"(insert)", :width => 120 }, { :content =>"(insert)", :width => 100 } ]
-        table_row [ { :content =>"To (insert)", :width => 150 }, { :content =>"(insert)", :width => 170 }, { :content =>"(insert)", :width => 120 }, { :content =>"(insert)", :width => 100 } ]
+        table_row [   { :content =>"Period of Residence", :width => 150, :font_style => :bold },                                     { :content =>"Address", :width => 170, :font_style => :bold },                                                                                             { :content =>"Person Child lived with", :width => 120, :font_style => :bold }, { :content =>"Relationship", :width => 100, :font_style => :bold } ]
+        @children_info[i][:addresses].each_with_index do |address, index|
+          table_row [ { :content =>"#{'From' if index != 0 } #{address[:move_date].strftime("%m/%Y")} #{'to Present' if index == 0}", :width => 150 }, { :content =>"#{address[:address].to_s}, #{address[:city].to_s} #{address[:state]}#{address[:country]} #{address[:zip].to_s}", :width => 170 }, { :content =>"#{address[:lived_with].upcase}", :width => 120 },                       { :content =>"#{address[:persone_relationship]}", :width => 100 } ]
+        end
       end
       push_table -1, 0
       move_down 40
 
+
+      if @children_info.select { |e| e[:question_1_case_count] }.empty?
+        push_text "2. I <b>HAVE NOT</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
+      else
+        push_text "2. I <b>HAVE</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
+      end
       @number_of_children.times do |i|
-        if @children_info.select { |e| e[:question_1_case_count] }.empty?
-          push_text "2. I <b>HAVE NOT</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
-        else
-          push_text "2. I <b>HAVE</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
-        end
         @children_info[i][:question_1_case_count].to_i.times do |j|
           push_text "a. Name of each child involved: " + @children_names[i], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_1_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{@children_info[i][:question_1_cases][j][:name_of_court].to_s} #{@children_info[i][:question_1_cases][j][:state].to_s} #{@children_info[i][:question_1_cases][j][:case_number].to_s}", @text_indent * 2
           push_text "d. Date of court order or judgment in other proceeding: " + @children_info[i][:question_1_cases][j][:date].to_s, @text_indent * 2
         end
+      end
 
-        if @children_info.select { |e| e[:question_2_case_count] }.empty?
-          push_text "3. I <b>DO NOT</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
-        else
-          push_text "3. I <b>DO</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
-        end
+      if @children_info.select { |e| e[:question_2_case_count] }.empty?
+        push_text "3. I <b>DO NOT</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
+      else
+        push_text "3. I <b>DO</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
+      end
+      @number_of_children.times do |i|
         @children_info[i][:question_2_case_count].to_i.times do |j|
           push_text "a. Name of each child involved: " + @children_names[i], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_2_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{@children_info[i][:question_2_cases][j][:name_of_court].to_s} #{@children_info[i][:question_2_cases][j][:state].to_s} #{@children_info[i][:question_2_cases][j][:case_number].to_s}", @text_indent * 2
           push_text "d. Date of court order or judgment in other proceeding: " + @children_info[i][:question_2_cases][j][:date].to_s, @text_indent * 2
         end
+      end
 
-        if @children_info.select { |e| e[:question_3_case_count] }.empty?
-          push_text "4. I <b>DO NOT</b> know of any person not a party to this proceeding who has physical custody or claims to have custody or visitation rights with respect to any child subject to this proceeding.", @text_indent
-        else
-          push_text "4. I <b>DO</b> know of any person not a party to this proceeding who has physical custody or claims to have custody or visitation rights with respect to any child subject to this proceeding.", @text_indent
-        end
+      if @children_info.select { |e| e[:question_3_case_count] }.empty?
+        push_text "4. I <b>DO NOT</b> know of any person not a party to this proceeding who has physical custody or claims to have custody or visitation rights with respect to any child subject to this proceeding.", @text_indent
+      else
+        push_text "4. I <b>DO</b> know of any person not a party to this proceeding who has physical custody or claims to have custody or visitation rights with respect to any child subject to this proceeding.", @text_indent
+      end
+      @number_of_children.times do |i|
         @children_info[i][:question_3_case_count].to_i.times do |j|
           push_text "a. Name and address of person: #{@children_info[i][:question_3_cases][j][:name].to_s} #{@children_info[i][:question_3_cases][j][:address].to_s}", @text_indent * 2
           case @children_info[i][:question_3_cases][j][:rights]
