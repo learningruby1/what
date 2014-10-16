@@ -68,7 +68,7 @@ module PdfDocument
 
       move_to_left "#{ _counter += 1 }.  MINOR CHILDREN RESIDENCY"
 
-      if @children_nevada_residency
+      if @children_nevada_residency && @number_of_children
         if @children_residency
           push_text "That the minor #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada and #{ @number_of_children > 1 ? 'have' : 'has' } lived in this state for at least the past six (6) months. Nevada is the habitual residence of the #{ @number_of_children > 1 ? 'children' : 'child' } and this Court does have the jurisdiction to enter orders regarding custody and visitation", @text_indent
         end
