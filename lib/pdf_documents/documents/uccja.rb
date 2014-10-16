@@ -28,8 +28,6 @@ module PdfDocument
       push_header '<b>DECLARATION UNDER UNIFORM CHILD CUSTODY JURISDICTION ENFORCEMENT ACT (NRS 125A.385)'
       move_down 20
       push_text "1. There #{ @number_of_children > 1 ? "are #{ @number_of_children } children" : 'is 1 child' } of the parties subject to this proceeding. The name, place of birth, birth date and sex of each child, present address, periods of residence and places where each child has lived within the last (5) five years, and the name(s), present address and relationship to the child of each person with whom the child has lived during that time are: "
-
-
       @number_of_children.times do |i|
         @children_info[i][:addresses].sort! { |x,y| y[:move_date] <=> x[:move_date]  }
         table_row [ { :content => "#{i+1}. Child’s Name", :width => 150, :font_style => :bold }, { :content => "Place of Birth", :width => 170, :font_style => :bold },                                                            { :content => "Birth Date", :width => 120, :font_style => :bold },     { :content => "Sex", :width => 100, :font_style => :bold } ]

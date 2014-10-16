@@ -7,10 +7,14 @@
 &nbsp
 = link_to 'Injunction(Optional)', download_pdf_path("Divorce_injunction_#{ document.id }"), :class => 'btn btn-primary'
 &nbsp
-- answer_county = document.return_step('In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?').document_answers.first
+- answer_county = document.return_step('In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?').document_answers.where(:document_id => document.id).first
+- children_present = TemplateStep.where(:title => 'Children /<spain/>Menores').first.document_answers.where(:document_id => document.id).map(&:answer).include? 'Yes'
+- children_nevada_residency = TemplateStep.where(:title => 'Children’s Residency /<spain/>Residencia de los Menores').first.document_answers.where(:document_id => document.id).map(&:answer).include? 'Yes'
+
 - if answer_county == 'Clark'
   = link_to 'Cover', download_pdf_path("Divorce_cover_#{ document.id }"), :class => 'btn btn-primary'
 - else
   = link_to 'Cover', download_pdf_path("Divorce_coversheet_#{ document.id }"), :class => 'btn btn-primary'
 &nbsp
-= link_to 'UCCJA', download_pdf_path("UCCJA_#{ document.id }"), :class => 'btn btn-primary'
+- if children_present && children_nevada_residency
+  = link_to 'UCCJA', download_pdf_path("UCCJA_#{ document.id }"), :class => 'btn btn-primary'
