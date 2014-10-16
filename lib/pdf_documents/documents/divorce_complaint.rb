@@ -7,7 +7,7 @@ module PdfDocument
       push_text 'COMD', :style => :bold
 
       push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_address.titleize } #{ @plaintiff_home_address_city.classify }, #{ @plaintiff_home_address_state.classify } #{ @plaintiff_home_address_zip.classify }"
+      push_text "#{ @plaintiff_mailing_address } #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
 
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
@@ -112,23 +112,40 @@ module PdfDocument
 
             when /^With mom/
               if @same_physical_custody
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @dad.capitalize } having visitation as follows:", @text_indent
+                physical_custody[:answers].each_with_index do |answer, index|
+                  push_text "#{ (97 + index).chr }. #{ answer }"
+                end
               else
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
-              end
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows:", @text_indent
+                physical_custody[:answers].each_with_index do |answer, index|
+                  push_text "#{ (97 + index).chr }. #{ answer }"
+                end              end
             when /^With dad/
               if @same_physical_custody
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ @mom.capitalize } having visitation as follows:", @text_indent
+                physical_custody[:answers].each_with_index do |answer, index|
+                  push_text "#{ (97 + index).chr }. #{ answer }"
+                end
               else
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows:", @text_indent
+                physical_custody[:answers].each_with_index do |answer, index|
+                  push_text "#{ (97 + index).chr }. #{ answer }"
+                end
               end
             end
 
           when /^Both/
             if @same_physical_custody
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows:", @text_indent
+              physical_custody[:answers].each_with_index do |answer, index|
+                push_text "#{ (97 + index).chr }. #{ answer }"
+              end
             else
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows: #{ physical_custody[:answers].join('; ') }.", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows:", @text_indent
+              physical_custody[:answers].each_with_index do |answer, index|
+                push_text "#{ (97 + index).chr }. #{ answer }"
+              end
             end
           when /^Only/
             case physical_custody[:custody]
@@ -193,6 +210,8 @@ module PdfDocument
         end
 
         case @child_suport_who
+        when /I already have/
+          push_text "Plaintiff already has a child support case with the D’d office.", @text_indent
         when /^No/
           push_text "That neither party should pay child support.", @text_indent
         when /^Dad|^Mom/
