@@ -76,14 +76,14 @@ module PdfDocument
 
         @plaintiff_date_of_birth = answers.next.answer
         @plaintiff_social_security = answers.next.answer
-        @plaintiff_home_address = answers.next.answer
-        @plaintiff_home_address_city = answers.next.answer
-        @plaintiff_home_address_state = answers.next.answer
-        @plaintiff_home_address_zip = answers.next.answer
-        @plaintiff_mailing_address = answers.next.answer
-        @plaintiff_mailing_address_city = answers.next.answer
-        @plaintiff_mailing_address_state = answers.next.answer
-        @plaintiff_mailing_address_zip = answers.next.answer
+        @plaintiff_home_address = answers.next.answer.titleize
+        @plaintiff_home_address_city = answers.next.answer.classify
+        @plaintiff_home_address_state = answers.next.answer.classify
+        @plaintiff_home_address_zip = answers.next.answer.classify
+        @plaintiff_mailing_address = answers.next.answer.titleize
+        @plaintiff_mailing_address_city = answers.next.answer.classify
+        @plaintiff_mailing_address_state = answers.next.answer.classify
+        @plaintiff_mailing_address_zip = answers.next.answer.classify
         #@plaintiff_zip = answers.next.answer
         @plaintiff_phone = answers.next.answer
         @plaintiff_email = answers.next.answer
@@ -101,14 +101,14 @@ module PdfDocument
         @defendant_last_name = answers.next.answer
         @defendant_date_of_birth = answers.next.answer
         @defendant_social_security = answers.next.answer
-        @defendant_mailing_address = answers.next.answer
+        @defendant_mailing_address = answers.next.answer.titleize
         if answers.next.answer == "Outside the United States"
           2.times do answers.next end
-          @defendant_city = answers.next.answer
-          @defendant_country = answers.next.answer
+          @defendant_city = answers.next.answer.classify
+          @defendant_country = answers.next.answer.classify
         else
-          @defendant_city = answers.next.answer
-          @defendant_state = answers.next.answer
+          @defendant_city = answers.next.answer.classify
+          @defendant_state = answers.next.answer.classify
           2.times do answers.next end
         end
         @defendant_zip = answers.next.answer
