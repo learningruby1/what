@@ -205,8 +205,7 @@ module PdfDocument
             answers = document.step_answers steps.next
             k = -1
             @number_of_children.times do |i|
-              k += 1
-              @children_info[i][:addresses_count] = answers[k += 1].answer.to_i
+              @children_info[i][:addresses_count] = answers[k += 2].answer.to_i
               @children_info[i][:toggler_offset] = answers[k].toggler_offset
               @children_info[i][:addresses] = []
             end
@@ -214,8 +213,7 @@ module PdfDocument
             @number_of_children.times do |i|
               @children_info[i][:addresses_count].to_i.times do
                 address_data = {}
-                k += 1
-                address_data[:where] = answers[k += 1].answer
+                address_data[:where] = answers[k += 2].answer
                 case address_data[:where]
                 when 'Outside the United States'
                   k += 6
@@ -231,7 +229,7 @@ module PdfDocument
                     address_data[:persone_relationship] = address_data[:lived_with]
                     k += 3
                   end
-                  @children_info[answers[k-1].toggler_offset.to_i / document.template.steps.count][:addresses] << address_data
+                  @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
                 when 'Same as me'
                   address_data[:move_date] = answers[k += 12].answer.to_date
                   address_data[:address] = @plaintiff_home_address
@@ -241,7 +239,7 @@ module PdfDocument
                   address_data[:lived_with] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
                   address_data[:persone_relationship] = address_data[:lived_with]
                   k += 2
-                  @children_info[answers[k-1].toggler_offset.to_i / document.template.steps.count][:addresses] << address_data
+                  @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
                 when 'In the United States'
                   address_data[:address] = answers[k += 1].answer
                   address_data[:city] = answers[k += 1].answer
@@ -256,7 +254,7 @@ module PdfDocument
                     address_data[:persone_relationship] = address_data[:lived_with]
                     k += 8
                   end
-                  @children_info[answers[k-1].toggler_offset.to_i / document.template.steps.count][:addresses] << address_data
+                  @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
                 end
               end
             end
@@ -265,8 +263,7 @@ module PdfDocument
             answers = document.step_answers steps.next
             k = -1
             @number_of_children.times do |i|
-              k += 1
-              has_cases = answers[k += 1].answer == 'Yes' rescue false
+              has_cases = answers[k += 2].answer == 'Yes' rescue false
               has_cases ? @children_info[i][:question_1_case_count] = answers[k += 1].answer.to_i : k += 1
               @children_info[i][:question_1_cases] = []
             end
@@ -275,8 +272,7 @@ module PdfDocument
               if @children_info[i][:question_1_case_count].present?
                   @children_info[i][:question_1_case_count].times do
                     case_data = {}
-                    k += 1
-                    case_data[:role] = answers[k += 1].answer
+                    case_data[:role] = answers[k += 2].answer
                     case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
                     case_data[:name_of_court] = answers[k += 1].answer
                     case_data[:state] = answers[k += 1].answer
@@ -291,8 +287,7 @@ module PdfDocument
             answers = document.step_answers steps.next
             k = -1
             @number_of_children.times do |i|
-              k += 1
-              has_cases = answers[k += 1].answer == 'Yes' rescue false
+              has_cases = answers[k += 2].answer == 'Yes' rescue false
               has_cases ? @children_info[i][:question_2_case_count] = answers[k += 1].answer.to_i : k += 1
               @children_info[i][:question_2_cases] = []
             end
@@ -301,8 +296,7 @@ module PdfDocument
               if @children_info[i][:question_2_case_count].present?
                   @children_info[i][:question_2_case_count].times do
                     case_data = {}
-                    k += 1
-                    case_data[:role] = answers[k += 1].answer
+                    case_data[:role] = answers[k += 2].answer
                     case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
                     case_data[:name_of_court] = answers[k += 1].answer
                     case_data[:state] = answers[k += 1].answer
@@ -317,8 +311,7 @@ module PdfDocument
             answers = document.step_answers steps.next
             k = -1
             @number_of_children.times do |i|
-              k += 1
-              has_cases = answers[k += 1].answer == 'Yes' rescue false
+              has_cases = answers[k += 2].answer == 'Yes' rescue false
               has_cases ? @children_info[i][:question_3_case_count] = answers[k += 1].answer.to_i : k += 1
               @children_info[i][:question_3_cases] = []
             end
