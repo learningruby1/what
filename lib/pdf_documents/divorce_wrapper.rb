@@ -227,17 +227,9 @@ module PdfDocument
                     address_data[:persone_relationship] = answers[k += 1].answer
                   else
                     if address_data[:persone_relationship] == 'MOM'
-                      if @mom == 'plaintiff'
-                        address_data[:lived_with] = "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } "
-                      else
-                        address_data[:lived_with] = "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } "
-                      end
+                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
                     else
-                      if @dad == 'plaintiff'
-                        address_data[:lived_with] = "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } "
-                      else
-                        address_data[:lived_with] = "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } "
-                      end
+                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
                     end
                     k += 3
                   end
@@ -250,17 +242,9 @@ module PdfDocument
                   address_data[:zip] = @plaintiff_home_address_zip
                   address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
                     if address_data[:persone_relationship] == 'MOM'
-                      if @mom == 'plaintiff'
-                        address_data[:lived_with] = "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } "
-                      else
-                        address_data[:lived_with] = "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } "
-                      end
+                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
                     else
-                      if @dad == 'plaintiff'
-                        address_data[:lived_with] = "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } "
-                      else
-                        address_data[:lived_with] = "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name } "
-                      end
+                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
                     end
                   k += 2
                   @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
