@@ -44,6 +44,8 @@ module PdfDocument
               @friend_first_name = answers.next.answer
               @friend_middle_name = answers.next.answer
               @friend_last_name = answers.next.answer
+              @friend_full_name = "#{ @friend_first_name } #{ @friend_middle_name } #{ @friend_last_name }".squish
+
               @friend_radio_address = answers.next.answer.split[0].downcase
               @friend_home_address = answers.next.answer
               @friend_home_address_city = answers.next.answer
@@ -73,6 +75,7 @@ module PdfDocument
         @plaintiff_first_name = answers.next.answer
         @plaintiff_middle_name = answers.next.answer
         @plaintiff_last_name = answers.next.answer
+        @plaintiff_full_name = "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }".squish
 
         @plaintiff_date_of_birth = answers.next.answer
         @plaintiff_social_security = answers.next.answer
@@ -99,6 +102,8 @@ module PdfDocument
         @defendant_first_name = answers.next.answer
         @defendant_middle_name = answers.next.answer
         @defendant_last_name = answers.next.answer
+        @defendant_full_name = "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }".squish
+
         @defendant_date_of_birth = answers.next.answer
         @defendant_social_security = answers.next.answer
         @defendant_mailing_address = answers.next.answer.titleize
@@ -112,7 +117,6 @@ module PdfDocument
           2.times do answers.next end
         end
         @defendant_zip = answers.next.answer
-
         @defendant_email = answers.next.answer
         @defendant_phone = answers.next.answer
 
@@ -227,9 +231,9 @@ module PdfDocument
                     address_data[:persone_relationship] = answers[k += 1].answer
                   else
                     if address_data[:persone_relationship] == 'MOM'
-                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
+                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                     else
-                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
+                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                     end
                     k += 3
                   end
@@ -242,9 +246,9 @@ module PdfDocument
                   address_data[:zip] = @plaintiff_home_address_zip
                   address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
                     if address_data[:persone_relationship] == 'MOM'
-                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
+                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                     else
-                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }" : "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
+                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                     end
                   k += 2
                   @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data

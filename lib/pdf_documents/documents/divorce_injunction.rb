@@ -7,7 +7,7 @@ module PdfDocument
       push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 40
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },<br/>                    Plaintiff,<br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },<br/>#{ ' '*20 }Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
+      table_row [ { :content => "#{ @plaintiff_full_name },<br/>                    Plaintiff,<br/>vs.<br/><br/>#{ @defendant_full_name },<br/>#{ ' '*20 }Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
                   { :content => "CASE No.:<br/><br/>DEPT No.:<br/><br/><b><u>JOINT PRELIMINARY INJUNCTION</b>", :width => 240, :border_width => 0 } ]
       push_table -1, 0
       move_down 30
@@ -38,7 +38,7 @@ module PdfDocument
       table_row [ { :content => 'Submitted by:', :width => 300, :border_width => 0 }, { :content => clerk_or_judge, :width => 240, :border_width => 0 } ]
       table_row [ { :content => '_'*35, :width => 300, :border_width => 0 }, { :content => '_'*35, :width => 240, :border_width => 0 } ]
       table_row [ { :content => 'Signature', :width => 300, :border_width => 0 }, { :content => deputy_or_judge, :width => 240, :border_width => 0 } ]
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }", :width => 300, :border_width => 0 }, { :content => "#{  }", :width => 240, :border_width => 0 } ]
+      table_row [ { :content => "#{ @plaintiff_full_name }", :width => 300, :border_width => 0 }, { :content => "#{  }", :width => 240, :border_width => 0 } ]
       push_table -1, 0
 
       finishing

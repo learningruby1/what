@@ -143,7 +143,7 @@ module PdfDocument
       end
 
       move_down 20
-      push_text "<u>#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }    </u>                _________________________                        ____________________"
+      push_text "<u>#{ @plaintiff_full_name }    </u>                _________________________                        ____________________"
       push_text 'Printed Name of Preparer                   Signature of Preparer                                        Date'
 
       #start_new_page

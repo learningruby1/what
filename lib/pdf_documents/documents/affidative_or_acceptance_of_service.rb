@@ -10,12 +10,11 @@ module PdfDocument
         push_text 'ACSR', :style => :bold
       end
 
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_addres.titleize }"
-      push_text "#{ @plaintiff_home_address_city.classify }, #{ @plaintiff_home_address_state.classify } #{ @plaintiff_home_address_zip.classify }"
+      push_text @plaintiff_full_name
+      push_text "#{ @plaintiff_mailing_addres } #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state } #{ @plaintiff_mailing_address_zip }"
 
-      push_text "#{ @plaintiff_phone }"
-      push_text "#{ @plaintiff_email }"
+      push_text @plaintiff_phone
+      push_text @plaintiff_email
       push_text 'Self-Represented', :style => :bold
 
       @person_who_give.include?('accept') ? (move_down 40) : (move_down 20)
@@ -24,7 +23,7 @@ module PdfDocument
       move_down 20
 
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.", :width => 300, :font_style => :bold },
+      table_row [ { :content => "#{ @plaintiff_full_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_full_name } <br/>Defendant.", :width => 300, :font_style => :bold },
                   { :content => "<br/>CASE  NO.: #{@case.to_s}<br/><br/><br/>DEPT NO.: #{@dept.to_s}", :width => 240 } ]
       push_table -1, 0
 
@@ -39,17 +38,17 @@ module PdfDocument
         push_text "COUNTY OF #{'_'*18}"
         move_down
 
-        push_text "#{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}, the Affiant being duly sworn, states that at all times herein Affiant was and is over 18 years of age, not a party to nor interested in the proceeding in which this affidavit is made."
+        push_text "#{ @friend_full_name }, the Affiant being duly sworn, states that at all times herein Affiant was and is over 18 years of age, not a party to nor interested in the proceeding in which this affidavit is made."
 
-        push_text "That Affiant has a #{@friend_radio_address} address of #{@friend_home_address} #{@friend_home_address_city}, #{@friend_home_address_zip}.", @text_indent
+        push_text "That Affiant has a #{@friend_radio_address} address of #{ @friend_home_address } #{ @friend_home_address_city }, #{ @friend_home_address_zip }.", @text_indent
 
         push_text "That Affiant’s phone number is #{@friend_phone}.", @text_indent
 
         push_text 'That Affiant is not required to be a licensed process server because Affiant is not engaged in business as a process server as defined in NRS 648.014.', @text_indent
 
-        push_text "That Affiant received a copy of the Summons and Complaint on the #{@summons_and_complaint_date.split("/")[0]} day of #{@summons_and_complaint_date.split("/")[1]}, #{@summons_and_complaint_date.split("/")[2]}.", @text_indent
+        push_text "That Affiant received a copy of the Summons and Complaint on the #{ @summons_and_complaint_date.split("/")[0] } day of #{ @summons_and_complaint_date.split("/")[1] }, #{ @summons_and_complaint_date.split("/")[2] }.", @text_indent
         if @preliminary_injunction_date_present
-          push_text "That Affiant received a copy of the Preliminary Injunction on the #{@preliminary_injunction_date.split("/")[0]} day of #{@preliminary_injunction_date.split("/")[1]}, #{@preliminary_injunction_date.split("/")[2]}.", @text_indent if @preliminary_injunction_date_present
+          push_text "That Affiant received a copy of the Preliminary Injunction on the #{ @preliminary_injunction_date.split("/")[0] } day of #{ @preliminary_injunction_date.split("/")[1] }, #{ @preliminary_injunction_date.split("/")[2] }.", @text_indent if @preliminary_injunction_date_present
         end
         push_text "That Affiant personally served (insert Plaintiff or Defendant) with a copy of the above stated documents on the (insert date) day (insert Month), (insert year) at about (insert time  a.m. or p.m.) by:", @text_indent
 
@@ -57,13 +56,13 @@ module PdfDocument
         move_down 20
         default_leading 0
         table_row [ { :content => "<br/><br/><br/><br/><br/>", :width => 300, :font_style => :bold, :border_width => 0  },
-                    { :content => "<br/>#{'_'*40}<br/>Signature of Affiant<br/>#{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}", :width => 240, :border_width => 0  } ]
+                    { :content => "<br/>#{'_'*40}<br/>Signature of Affiant<br/>#{ @friend_full_name }", :width => 240, :border_width => 0  } ]
         push_table -1, 0
 
         move_down
         push_text 'SUSCRIBED and SWORN to before me this'
         push_text '_______day of ___________, 20___.'
-        push_text "By #{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}"
+        push_text "By #{ @friend_full_name }"
         move_down 20
         default_leading 014
         push_text '______________________'
@@ -74,7 +73,7 @@ module PdfDocument
         push_text ' '
         push_header 'ACCEPTANCE OF SERVICE'
         move_down 15
-        push_text "I, #{@defendant_first_name} #{@defendant_middle_name} #{@defendant_last_name}, the Defendant in the above stated action accept service of #{'SUMMONS, COMPLAINT' if @summons_and_complaint_date_present}#{', JOINT PRELIMINARY INJUCTION' if @preliminary_injunction_date_present}."
+        push_text "I, #{ @defendant_full_name }, the Defendant in the above stated action accept service of #{'SUMMONS, COMPLAINT' if @summons_and_complaint_date_present}#{', JOINT PRELIMINARY INJUCTION' if @preliminary_injunction_date_present}."
 
         move_down 40
         push_text 'DATED this_______day of ___________, 20___.'
@@ -82,7 +81,7 @@ module PdfDocument
         move_down 30
         default_leading 0
         table_row [ { :content => "<br/><br/><br/><br/><br/>", :width => 300, :font_style => :bold, :border_width => 0  },
-                    { :content => "<br/>#{'_'*40}<br/>Signature<br/><br/><br/>#{'_'*40}<br/>#{@defendant_first_name} #{@defendant_middle_name} #{@defendant_last_name}", :width => 240, :border_width => 0  } ]
+                    { :content => "<br/>#{'_'*40}<br/>Signature<br/><br/><br/>#{'_'*40}<br/>#{ @defendant_full_name }", :width => 240, :border_width => 0  } ]
         push_table -1, 0
       end
 

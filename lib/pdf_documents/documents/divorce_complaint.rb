@@ -6,11 +6,11 @@ module PdfDocument
       default_leading 5
       push_text 'COMD', :style => :bold
 
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_address } #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+      push_text @plaintiff_full_name
+      push_text "#{ @plaintiff_mailing_address } #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state } #{ @plaintiff_mailing_address_zip }"
 
-      push_text "#{ @plaintiff_phone }"
-      push_text "#{ @plaintiff_email }"
+      push_text @plaintiff_phone
+      push_text @plaintiff_email
       push_text 'Plaintiff Self-Represented', :style => :bold
 
       move_down 20
@@ -19,19 +19,19 @@ module PdfDocument
       move_down 20
 
       default_leading 3
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },", :inline_format => true
+      push_text "#{ @plaintiff_full_name },", :inline_format => true
       push_text "Plaintiff,#{ ' '*61 }CASE NO.:"
       move_down 10
       push_text "vs.#{ ' '*71 }DEPT NO.:"
       move_down 10
-      push_text "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },", :inline_format => true
+      push_text "#{ @defendant_full_name },", :inline_format => true
       push_text 'Defendant.'
 
       default_leading 8
       move_down 30
       push_header 'COMPLAINT FOR DIVORCE'
 
-      push_text "COMES NOW Plaintiff, #{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
+      push_text "COMES NOW Plaintiff, #{ @plaintiff_full_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
 
       move_to_left "#{ _counter += 1 }.  RESIDENCY"
       push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of #{ @clark_nye.upcase } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
@@ -507,7 +507,7 @@ module PdfDocument
       push_text 'DATED THIS _______day of  ___________, 20___'
       default_leading 0
       push_text 'Submitted by: __________________', 130
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }   Signature", 200
+      push_text "#{ @plaintiff_full_name }   Signature", 200
 
       # move_down @header_margin_top
       # default_leading 8
@@ -525,7 +525,7 @@ module PdfDocument
       move_down 30
       default_leading 0
       push_text 'Submitted by: __________________'
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
+      push_text "#{ @plaintiff_full_name }"
 
       finishing
     end

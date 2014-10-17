@@ -5,9 +5,8 @@ module PdfDocument
       default_leading 5
       push_text 'CC13', :style => :bold
 
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_addres }"
-      push_text "#{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+      push_text "#{ @plaintiff_full_name }"
+      push_text "#{ @plaintiff_mailing_addres } #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state } #{ @plaintiff_mailing_address_zip }"
 
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
@@ -19,7 +18,7 @@ module PdfDocument
       move_down 20
 
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
+      table_row [ { :content => "#{ @plaintiff_full_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_full_name }<br/>Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
                   { :content => "<br/>CASE  NO.: #{@case.to_s}<br/><br/><br/>DEPT NO.: #{@dept.to_s}", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
@@ -82,12 +81,12 @@ module PdfDocument
       push_text 'DATED THIS_______day of ___________, 20___.'
       default_leading 2
       push_text '______________________'
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Signature"
+      push_text "#{ @plaintiff_full_name } Signature"
 
       push_text '<b>I declare under penalty of perjury under the law of the State of Nevada that the foregoing is true and correct.', @text_indent
 
       table_row [ { :content => "Signed on: #{ '_' * 35 }", :width => 300, :border_width => 0  },
-                  { :content => "#{ '_' * 35 }<br/> #{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Signature", :width => 240, :border_width => 0  } ]
+                  { :content => "#{ '_' * 35 }<br/> #{ @plaintiff_full_name }<br/>Signature", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
       finishing

@@ -6,7 +6,7 @@ module PdfDocument
       push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 30
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.", :width => 300, :font_style => :bold },
+      table_row [ { :content => "#{ @plaintiff_full_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_full_name }<br/>Defendant.", :width => 300, :font_style => :bold },
                   { :content => "<br/>CASE  NO.:<br/><br/><br/>DEPT NO.:", :width => 240 } ]
       push_table -1, 0
 
@@ -17,7 +17,7 @@ module PdfDocument
 
       push_text '<b>NOTICE!  YOU HAVE BEEN SUED.  THE COURT MAY DECIDE AGAINST YOU WITHOUT YOUR BEING HEARD UNLESS YOU RESPOND WITHIN 20 DAYS.  READ THE INFORMATION BELOW.</b>'
       move_down
-      push_text "<b>TO THE DEFENDANT:</b> #{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }"
+      push_text "<b>TO THE DEFENDANT:</b> #{ @defendant_full_name }"
 
       move_down
       push_text 'A civil Complaint for Divorce has been filed by the plaintiff against you; this action is brought to recover a judgment dissolving the bonds of matrimony existing between you and the plaintiff.', @text_indent
@@ -49,7 +49,7 @@ module PdfDocument
       table_row [ { :content => 'Submitted by:', :width => 300, :border_width => 0 }, { :content => 'Clerk of the Court', :width => 240, :border_width => 0 } ]
       table_row [ { :content => '_'*35, :width => 300, :border_width => 0 }, { :content => '_'*35, :width => 240, :border_width => 0 } ]
       table_row [ { :content => 'Signature', :width => 300, :font_style => :bold, :border_width => 0 }, { :content => 'Deputy Clerk', :width => 240, :font_style => :bold, :border_width => 0 } ]
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }", :width => 300, :border_width => 0 }, { :content => "#{ deputy_clerk_info }", :width => 240, :border_width => 0 } ]
+      table_row [ { :content => "#{ @plaintiff_full_name }", :width => 300, :border_width => 0 }, { :content => "#{ deputy_clerk_info }", :width => 240, :border_width => 0 } ]
       push_table -1, 0
 
       @data_array_enum = @data_array.to_enum
