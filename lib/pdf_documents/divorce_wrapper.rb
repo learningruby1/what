@@ -194,7 +194,7 @@ module PdfDocument
           2.times do answers.next end
           @children_nevada_residency = answers.next.answer == 'Yes' rescue false
           if !@children_nevada_residency
-            3.times do answers.next end
+            2.times do answers.next end
             @children_continue = answers.next.answer == 'Yes' rescue false
           end
           if @children_continue
