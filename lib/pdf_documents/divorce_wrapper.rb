@@ -166,16 +166,14 @@ module PdfDocument
           #Step 9   Child(ren)'s Information
           step = steps.next
           @children_info = Array.new
-          @children_names = Array.new
 
           @number_of_children.times do |i|
-
             answers = step_answers_enum step, i
             child_info = Hash.new
             child_info[:first_name] = answers.next.answer
             child_info[:middle_name] = answers.next.answer
             child_info[:last_name] = answers.next.answer
-            @children_names << "#{child_info[:first_name]} #{child_info[:middle_name]} #{child_info[:last_name]}"
+            child_info[:full_name] = "#{child_info[:first_name]} #{child_info[:middle_name]} #{child_info[:last_name]}".squish
             child_info[:date_of_birth] = answers.next.answer
             answers.next
             if answers.next.answer == 'In the United States'

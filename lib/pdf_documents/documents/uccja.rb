@@ -30,7 +30,7 @@ module PdfDocument
       @number_of_children.times do |i|
         @children_info[i][:addresses].sort! { |x,y| y[:move_date] <=> x[:move_date]  }
         table_row [ { :content => "#{i+1}. Child’s Name", :width => 150, :font_style => :bold }, { :content => "Place of Birth", :width => 170, :font_style => :bold },                                                            { :content => "Birth Date", :width => 120, :font_style => :bold },     { :content => "Sex", :width => 100, :font_style => :bold } ]
-        table_row [ { :content => @children_names[i], :width => 150 },                           { :content => "#{ @children_info[i][:city] } #{ @children_info[i][:state] }#{ @children_info[i][:country] }", :width => 170 }, { :content => @children_info[i][:date_of_birth], :width => 120 }, { :content => @children_info[i][:sex], :width => 100 } ]
+        table_row [ { :content => @children_info[i][:full_name], :width => 150 },                { :content => "#{ @children_info[i][:city] } #{ @children_info[i][:state] }#{ @children_info[i][:country] }", :width => 170 },    { :content => @children_info[i][:date_of_birth], :width => 120 },      { :content => @children_info[i][:sex], :width => 100 } ]
         table_row [   { :content =>"Period of Residence", :width => 150, :font_style => :bold },                                                            { :content =>"Address", :width => 170, :font_style => :bold },                                                                             { :content =>"Person Child lived with", :width => 120, :font_style => :bold },          { :content =>"Relationship", :width => 100, :font_style => :bold } ]
         @children_info[i][:addresses].each_with_index do |address, index|
           table_row [ { :content =>"#{ 'From' if index != 0 } #{ address[:move_date].strftime("%m/%Y") } #{ 'to Present' if index == 0 }", :width => 150 }, { :content =>"#{ address[:address] }, #{ address[:city] } #{ address[:state] }#{ address[:country] } #{ address[:zip] }", :width => 170 }, { :content =>"#{ address[:lived_with].upcase }", :width => 120 },                       { :content =>"#{ address[:persone_relationship] }", :width => 100 } ]
@@ -43,7 +43,7 @@ module PdfDocument
       push_text "2. I <b>HAVE#{' NOT' if @children_info.select { |e| e[:question_1_case_count] }.empty? }</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
       @number_of_children.times do |i|
         @children_info[i][:question_1_case_count].to_i.times do |j|
-          push_text "a. Name of each child involved: " + @children_names[i], @text_indent * 2
+          push_text "a. Name of each child involved: " + @children_info[i][:full_name], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_1_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{ @children_info[i][:question_1_cases][j][:name_of_court] } #{ @children_info[i][:question_1_cases][j][:state] } #{ @children_info[i][:question_1_cases][j][:case_number] }", @text_indent * 2
           push_text "d. Date of court order or judgment in other proceeding: " + @children_info[i][:question_1_cases][j][:date].to_s, @text_indent * 2
@@ -53,7 +53,7 @@ module PdfDocument
       push_text "3. I <b>DO#{' NOT' if @children_info.select { |e| e[:question_2_case_count] }.empty? }</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
       @number_of_children.times do |i|
         @children_info[i][:question_2_case_count].to_i.times do |j|
-          push_text "a. Name of each child involved: " + @children_names[i], @text_indent * 2
+          push_text "a. Name of each child involved: " + @children_info[i][:full_name], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_2_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{ @children_info[i][:question_2_cases][j][:name_of_court] } #{ @children_info[i][:question_2_cases][j][:state] } #{ @children_info[i][:question_2_cases][j][:case_number] }", @text_indent * 2
           push_text "d. Date of court order or judgment in other proceeding: " + @children_info[i][:question_2_cases][j][:date].to_s, @text_indent * 2
@@ -66,11 +66,11 @@ module PdfDocument
           push_text "a. Name and address of person: #{ @children_info[i][:question_3_cases][j][:name] } #{ @children_info[i][:question_3_cases][j][:address] }", @text_indent * 2
           case @children_info[i][:question_3_cases][j][:rights]
           when /VISITATION/
-            push_text "Person named claims visitation rights with " + @children_names[i], @text_indent * 3
+            push_text "Person named claims visitation rights with " + @children_info[i][:full_name], @text_indent * 3
           when /CUSTODY/
-            push_text "Person named claims custody right as to " + @children_names[i], @text_indent * 3
+            push_text "Person named claims custody right as to " + @children_info[i][:full_name], @text_indent * 3
           when /PHYSICAL/
-            push_text "Person named has physical custody of " + @children_names[i], @text_indent * 3
+            push_text "Person named has physical custody of " + @children_info[i][:full_name], @text_indent * 3
           end
         end
       end

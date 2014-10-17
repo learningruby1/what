@@ -12,13 +12,13 @@ module PdfDocument
       table_row [ { :content => 'Plaintiff/Petitioner', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 }, { :content => 'Defendant/Respondent/Co-Petitioner', :colspan => 2, :align => :center, :font_style => :bold, :width => 270 } ]
       default_leading 4
       table_row [ { :content => "Name: #{ @plaintiff_full_name }
-                                Address: #{ @plaintiff_mailing_address }, #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state }, #{ @plaintiff_mailing_address_zip }
-                                City, State, Zip: #{ @plaintiff_home_address }, #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state }, #{ @plaintiff_home_address_zip }
+                                Address: #{ @plaintiff_mailing_address }
+                                City, State, Zip: #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state }, #{ @plaintiff_mailing_address_zip }
                                 Phone #: #{ @plaintiff_phone }
                                 Date of Birth: #{ @plaintiff_date_of_birth }
                                 <b>Attorney Information (Name/Address/Phone)</b>\n\n\n\n", :colspan => 2 },
                   { :content => "Name: #{ @defendant_full_name }
-                                Address: #{ @defendant_city }, #{ @defendant_country.present? ? @defendant_country : @defendant_state }, #{ @defendant_zip }
+                                Address: #{ @defendant_mailing_address }
                                 City, #{ @defendant_country.present? ? 'Country' : 'State' }, Zip: #{ @defendant_city }, #{ @defendant_country }#{ @defendant_state }, #{ @defendant_zip }
                                 Phone #: #{ @defendant_phone }
                                 Date of Birth: #{ @defendant_date_of_birth }
@@ -88,7 +88,7 @@ module PdfDocument
       end
 
 
-      push_text "<u>#{ ' '*10 } #{ Time.now.strftime("%m-%d-%Y") } #{ ' '*60}</u> #{ ' '*15} #{ '_'*30 }"
+      push_text "<u>#{ ' '*10 } #{ Time.now.strftime("%m-%d-%Y") } #{ ' '*60 }</u> #{ ' '*15 } #{ '_'*30 }"
       push_text "#{ ' '*10 } Date #{ ' '*85 } Signature of Preparer #{ @plaintiff_full_name }"
 
       finishing
