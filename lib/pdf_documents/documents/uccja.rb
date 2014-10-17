@@ -24,7 +24,7 @@ module PdfDocument
 
 
       table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
-                  { :content => "<br/>CASE  NO.: #{@case.to_s}<br/><br/><br/>DEPT NO.: #{@dept.to_s}", :width => 240, :border_width => 0  } ]
+                  { :content => "<br/>CASE  NO.: <br/><br/><br/>DEPT NO.: ", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
       default_leading 8

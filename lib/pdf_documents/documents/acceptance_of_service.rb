@@ -1,7 +1,7 @@
 module PdfDocument
   class AcceptanceOfService < DivorceWrapper
     def can_generate?
-      @person_who_give =~ /accept/
+      @filed_case[:person_who_give] =~ /accept/
     end
 
     def generate
@@ -24,7 +24,7 @@ module PdfDocument
 
 
       table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.", :width => 300, :font_style => :bold },
-                  { :content => "<br/>CASE  NO.: #{@case.to_s}<br/><br/><br/>DEPT NO.: #{@dept.to_s}", :width => 240 } ]
+                  { :content => "<br/>CASE  NO.: #{ @filed_case[:case] }<br/><br/><br/>DEPT NO.: #{ @filed_case[:dept] }", :width => 240 } ]
       push_table -1, 0
 
       default_leading 8
@@ -33,7 +33,7 @@ module PdfDocument
       push_text ' '
       push_header 'ACCEPTANCE OF SERVICE'
       move_down 15
-      push_text "I, #{@defendant_first_name} #{@defendant_middle_name} #{@defendant_last_name}, the Defendant in the above stated action accept service of #{'SUMMONS, COMPLAINT' if @summons_and_complaint_date_present}#{', JOINT PRELIMINARY INJUCTION' if @preliminary_injunction_date_present}."
+      push_text "I, #{@defendant_first_name} #{@defendant_middle_name} #{@defendant_last_name}, the Defendant in the above stated action accept service of #{'SUMMONS, COMPLAINT'}#{ ', JOINT PRELIMINARY INJUCTION' if @filed_case[:preliminary_injunction_date].present? }."
 
       move_down 40
       push_text 'DATED this_______day of ___________, 20___.'

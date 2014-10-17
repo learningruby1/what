@@ -21,38 +21,40 @@ module PdfDocument
     #Filed_Case_Step 1
           steps = document.template.steps.to_enum
           answers = step_answers_enum steps.next
-          @case = answers.next.answer
-          @dept = answers.next.answer
+          @filed_case = {}
+          @filed_case[:case] = answers.next.answer
+          @filed_case[:dept] = answers.next.answer
           answers.next.answer
           answers.next.answer
-          @summons_and_complaint_date = answers.next.answer
-          @preliminary_injunction_date_present = answers.next.answer == '1' rescue false
-          @preliminary_injunction_date = answers.next.answer if @preliminary_injunction_date_present
+          @filed_case[:summons_and_complaint_date] = answers.next.answer
+          answers.next.answer
+          @filed_case[:preliminary_injunction_date] = answers.next.answer
 
     #Filed_Case_Step 2
           answers = step_answers_enum steps.next
           answers.next.answer
-          @addres_for_opposing = answers.next.answer == 'Yes' rescue false
+          @filed_case[:addres_for_opposing_present] = answers.next.answer == 'Yes' rescue false
 
     #Filed_Case_Step 3
-          if @addres_for_opposing
+          if @filed_case[:addres_for_opposing_present]
             answers = step_answers_enum steps.next
             answers.next.answer
-            @person_who_give = answers.next.answer
-            if @person_who_give == 'I have a friend/Family member'
+            @filed_case[:person_who_give] = answers.next.answer
+            if @filed_case[:person_who_give] =~ /I have a friend/
               answers.next.answer
-              @friend_first_name = answers.next.answer
-              @friend_middle_name = answers.next.answer
-              @friend_last_name = answers.next.answer
-              @friend_radio_address = answers.next.answer.split[0].downcase
-              @friend_home_address = answers.next.answer
-              @friend_home_address_city = answers.next.answer
-              @friend_home_address_zip = answers.next.answer
-              @friend_phone = answers.next.answer
+              @filed_case[:friend] = {}
+              @filed_case[:friend][:first_name] = answers.next.answer
+              @filed_case[:friend][:middle_name] = answers.next.answer
+              @filed_case[:friend][:last_name] = answers.next.answer
+              @filed_case[:friend][:full_name] = "#{ @filed_case[:friend][:first_name] } #{ @filed_case[:friend][:middle_name] } #{ @filed_case[:friend][:last_name] }".squish
+              @filed_case[:friend][:address_type] = answers.next.answer.split[0].downcase
+              @filed_case[:friend][:address] = answers.next.answer
+              @filed_case[:friend][:city] = answers.next.answer
+              @filed_case[:friend][:zip] = answers.next.answer
+              @filed_case[:friend][:phone] = answers.next.answer
             end
           end
         end
-
 
 
         @document_id = @divorce_document.id

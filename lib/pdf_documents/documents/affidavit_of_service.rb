@@ -1,7 +1,7 @@
 module PdfDocument
   class AffidavitOfService < DivorceWrapper
     def can_generate?
-      @person_who_give =~ /I have a friend/
+      @filed_case[:person_who_give] =~ /I have a friend/
     end
 
     def generate
@@ -24,7 +24,7 @@ module PdfDocument
 
 
       table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.", :width => 300, :font_style => :bold },
-                  { :content => "<br/>CASE  NO.: #{@case.to_s}<br/><br/><br/>DEPT NO.: #{@dept.to_s}", :width => 240 } ]
+                  { :content => "<br/>CASE  NO.: #{ @filed_case[:case] }<br/><br/><br/>DEPT NO.: #{ @filed_case[:dept] }", :width => 240 } ]
       push_table -1, 0
 
       default_leading 8
@@ -37,31 +37,31 @@ module PdfDocument
       push_text "COUNTY OF #{'_'*18}"
       move_down
 
-      push_text "#{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}, the Affiant being duly sworn, states that at all times herein Affiant was and is over 18 years of age, not a party to nor interested in the proceeding in which this affidavit is made."
+      push_text "#{ @filed_case[:friend][:full_name] }, the Affiant being duly sworn, states that at all times herein Affiant was and is over 18 years of age, not a party to nor interested in the proceeding in which this affidavit is made."
 
-      push_text "That Affiant has a #{@friend_radio_address} address of #{@friend_home_address} #{@friend_home_address_city}, #{@friend_home_address_zip}.", @text_indent
+      push_text "That Affiant has a #{ @filed_case[:friend][:address_type] } address of #{ @filed_case[:friend][:address] } #{ @filed_case[:friend][:city] }, #{ @filed_case[:friend][:zip] }.", @text_indent
 
-      push_text "That Affiant’s phone number is #{@friend_phone}.", @text_indent
+      push_text "That Affiant’s phone number is #{ @filed_case[:friend][:phone] }.", @text_indent
 
       push_text 'That Affiant is not required to be a licensed process server because Affiant is not engaged in business as a process server as defined in NRS 648.014.', @text_indent
 
-      push_text "That Affiant received a copy of the Summons and Complaint on the #{@summons_and_complaint_date.split("/")[0]} day of #{@summons_and_complaint_date.split("/")[1]}, #{@summons_and_complaint_date.split("/")[2]}.", @text_indent
-      if @preliminary_injunction_date_present
-        push_text "That Affiant received a copy of the Preliminary Injunction on the #{@preliminary_injunction_date.split("/")[0]} day of #{@preliminary_injunction_date.split("/")[1]}, #{@preliminary_injunction_date.split("/")[2]}.", @text_indent if @preliminary_injunction_date_present
-      end
+      push_text "That Affiant received a copy of the Summons and Complaint on the #{@filed_case[:summons_and_complaint_date].split("/")[0]} day of #{@filed_case[:summons_and_complaint_date].split("/")[1]}, #{@filed_case[:summons_and_complaint_date].split("/")[2]}.", @text_indent
+
+      push_text "That Affiant received a copy of the Preliminary Injunction on the #{@filed_case[:preliminary_injunction_date].split("/")[0]} day of #{@filed_case[:preliminary_injunction_date].split("/")[1]}, #{@filed_case[:preliminary_injunction_date].split("/")[2]}.", @text_indent if @filed_case[:preliminary_injunction_date].present?
+
       push_text "That Affiant personally served (insert Plaintiff or Defendant) with a copy of the above stated documents on the (insert date) day (insert Month), (insert year) at about (insert time  a.m. or p.m.) by:", @text_indent
 
 
       move_down 20
       default_leading 0
       table_row [ { :content => "<br/><br/><br/><br/><br/>", :width => 300, :font_style => :bold, :border_width => 0  },
-                  { :content => "<br/>#{'_'*40}<br/>Signature of Affiant<br/>#{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}", :width => 240, :border_width => 0  } ]
+                  { :content => "<br/>#{'_'*40}<br/>Signature of Affiant<br/>#{ @filed_case[:friend][:full_name] }", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
       move_down
       push_text 'SUSCRIBED and SWORN to before me this'
       push_text '_______day of ___________, 20___.'
-      push_text "By #{@friend_first_name} #{@friend_middle_name} #{@friend_last_name}"
+      push_text "By #{ @filed_case[:friend][:full_name] }"
       move_down 20
       default_leading 014
       push_text '______________________'
