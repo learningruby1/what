@@ -1,5 +1,9 @@
 module PdfDocument
   class Uccja < DivorceWrapper
+    def can_generate?
+      @children_residency && @children_nevada_residency
+    end
+
     def generate
       _counter = 0
       default_leading 5
