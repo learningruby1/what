@@ -9,6 +9,7 @@ class Document < ActiveRecord::Base
   has_one :dependant_document, :class_name => 'DependentDocument', :foreign_key => 'sub_document_id'
   has_one :divorce_document, :through => :dependant_document, :class_name => 'Document', :source => :document
   belongs_to :template
+  belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
 
   accepts_nested_attributes_for :answers
 
@@ -298,4 +299,5 @@ class Document < ActiveRecord::Base
   def return_step(_param)
     _param.kind_of?(String) ? template.steps.where(:title => _param).first : template.steps.find(_param)
   end
+
 end

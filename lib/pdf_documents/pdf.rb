@@ -11,6 +11,21 @@ module PdfDocument
     require 'pdf_documents/documents/affidavit_of_service'
     require 'pdf_documents/documents/uccja'
     require 'prawn'
+    require 'zip'
+
+
+  def get_zip(user)
+    folder = "#{ Rails.root }/documents/pdf/#{ user.id }"
+    zipfile_name = "#{ Rails.root }/documents/pdf/files#{ user.id }.zip"
+    File.delete(zipfile_name) if File.exists? zipfile_name
+    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
+      Dir.foreach(folder) do |item|
+        item_path = "#{ folder }/#{ item }"
+        zipfile.add(item, item_path) if File.file? item_path
+      end
+    end
+    zipfile_name
+  end
 
     def generate(document)
       case document.template.to_s
@@ -19,29 +34,32 @@ module PdfDocument
         cover = PdfDocument::DivorceCover.new(document)
         coversheet = PdfDocument::DivorceCoversheet.new(document)
 
-        generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
-        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
-        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
-        generate_document uccja.generate,                                        "UCCJA_#{ document.id }" if uccja.can_generate?
-        generate_document cover.generate,                                        "Divorce_cover_#{ document.id }" if cover.can_generate?
-        generate_document coversheet.generate,                                   "Divorce_coversheet_#{ document.id }" if coversheet.can_generate?
+        generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint", document, true, true
+        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons", document
+        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction", document
+        generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
+        generate_document cover.generate,                                        "Divorce_cover", document if cover.can_generate?
+        generate_document coversheet.generate,                                   "Divorce_coversheet", document if coversheet.can_generate?
       when /^Filed Case/
         acceptance_of_service = PdfDocument::AcceptanceOfService.new(document)
         affidavit_of_service = PdfDocument::AffidavitOfService.new(document)
 
-        generate_document acceptance_of_service.generate,      "Affidavit_Acceptance_of_service_#{ document.id }" if acceptance_of_service.can_generate?
-        generate_document affidavit_of_service.generate,       "Affidavit_Acceptance_of_service_#{ document.id }" if affidavit_of_service.can_generate?
+        generate_document acceptance_of_service.generate,      "Affidavit_Acceptance_of_service", document if acceptance_of_service.can_generate?
+        generate_document affidavit_of_service.generate,       "Affidavit_Acceptance_of_service", document if affidavit_of_service.can_generate?
       end
     end
 
-    def generate_document(wrapped_document, document_name, judical_layout=false, footer_layout=false)
+    def generate_document(wrapped_document, pdf_name, document, judical_layout=false, footer_layout=false)
 
       if judical_layout
         numbers = ''; 28.times do |i| numbers += "\n\n#{ i + 1 }" end
         leading = 8
       end
 
-      Prawn::Document.generate("documents/pdf/#{ document_name }.pdf") do
+      user_folder = document.owner.id.to_s
+      Dir.mkdir("#{Rails.root}/documents/pdf/#{ user_folder }") unless File.exists?("#{Rails.root}/documents/pdf/#{ user_folder }")
+
+      Prawn::Document.generate("documents/pdf/#{ document.owner.id }/#{ pdf_name }.pdf") do
         font "Times-Roman"
 
         if !judical_layout

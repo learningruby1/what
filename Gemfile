@@ -19,6 +19,8 @@ gem 'devise'
 
 gem 'puma'
 
+gem 'rubyzip'
+
 gem 'net-ssh', '~> 2.9.1'
 group :development, :test do
   gem 'capistrano', '~> 3.0'

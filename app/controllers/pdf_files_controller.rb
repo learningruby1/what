@@ -17,8 +17,8 @@ class PdfFilesController < ApplicationController
   end
 
   def download
-    if current_user.documents.where(:id => params[:filename].split('_').last.try(:to_i) || 0).exists?
-      send_file "documents/pdf/#{ params[:filename] }.pdf", :type => "application/pdf", :x_sendfile => true
+    if current_user.documents.exists?
+      send_file PdfDocument::Pdf.new.get_zip current_user
     else
       redirect_to pdf_files_path
     end
@@ -32,4 +32,5 @@ class PdfFilesController < ApplicationController
   def get_user_documents
     @documents = current_user.documents.where(:template => 1)
   end
+
 end
