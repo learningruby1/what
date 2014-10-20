@@ -14,6 +14,8 @@ class Document < ActiveRecord::Base
   accepts_nested_attributes_for :answers
 
   DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
+  FILED_CASE = 'Filed Case /<spain/>Caso archivado'
+  AFTER_SERVICE = 'After Service /<spain/>Después de servicio'
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
   STEP_12 = "<uppercase_child>’S ADDRESS"
 

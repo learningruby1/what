@@ -19,7 +19,7 @@
               %span.spain Documentos
           %td
 
-      - @documents.each do |document|
+      - @documents.select { |doc| !doc.divorce_document.present? }.each do |document|
         %tr
           %td
             %h5

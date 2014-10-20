@@ -30,7 +30,7 @@ class PdfFilesController < ApplicationController
   end
 
   def get_user_documents
-    @documents = current_user.documents.where(:template => 1)
+    @documents = current_user.documents
   end
 
 end
