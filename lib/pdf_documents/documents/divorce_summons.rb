@@ -6,8 +6,8 @@ module PdfDocument
       push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 30
 
-      table_row [ { :content => "#{ @plaintiff_full_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_full_name }<br/>Defendant.", :width => 300, :font_style => :bold },
-                  { :content => "<br/>CASE  NO.:<br/><br/><br/>DEPT NO.:", :width => 240 } ]
+      table_row [ { :content => "#{ @plaintiff_full_name }\nPlaintiff,\n\nvs.\n\n#{ @defendant_full_name }\nDefendant.", :width => 300, :font_style => :bold },
+                  { :content => "\nCASE  NO.:\n\n\nDEPT NO.:", :width => 240 } ]
       push_table -1, 0
 
       move_down 20
@@ -36,13 +36,13 @@ module PdfDocument
 
       deputy_clerk_info = case @clark_nye
         when 'Clark'
-          'Family Courts and Services Center<br/>601 North Pecos Road<br/>Las Vegas, Nevada 89101'
+          'Family Courts and Services Center\n601 North Pecos Road\nLas Vegas, Nevada 89101'
         when 'Nye'
-          '1520 E. Basin Ave. Ste. 108<br/>Pahrump, NV 89060'
+          '1520 E. Basin Ave. Ste. 108\nPahrump, NV 89060'
         when 'Esmeralda'
-          'Esmeralda County Clerk Office<br/>P.O. Box 547<br/>Goldfield, NV 89013'
+          'Esmeralda County Clerk Office\nP.O. Box 547\nGoldfield, NV 89013'
         when 'Mineral'
-          'Mineral County Clerk Office<br/>P.O. Box 1450<br/>Hawthorne, NV 89415'
+          'Mineral County Clerk Office\nP.O. Box 1450\nHawthorne, NV 89415'
         end
 
       move_down 40
