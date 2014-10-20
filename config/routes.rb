@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  root 'welcome#index'
+  root 'pdf_files#welcome'
 
   resources :paypal_payments, :only => [:new, :create]
 

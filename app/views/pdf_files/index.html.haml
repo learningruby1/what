@@ -35,7 +35,7 @@
             /   .glyphicon.glyphicon-edit
             /   Edit /
             /   %span.spain Editar
-            = link_to 'Create Filed Case', template_documents_path(:document_id => document.id, :template_id => 2), :method => :post, :class => 'btn btn-default'
+            / = link_to 'Create Filed Case', template_documents_path(:document_id => document.id, :template_id => 2), :method => :post, :class => 'btn btn-default'
             - if document.is_generated?
               - if current_user
                 - if current_user.paypal_payment_id.present?

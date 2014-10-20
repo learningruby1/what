@@ -1,0 +1,10 @@
+.jumbotron
+  .container.new_roman
+    %h2.text-muted
+      Welcome Back /
+      %span.spain Bienvenido
+
+    %p= link_to 'Continue with your forms >>', templates_path, :class => 'btn btn-default new_roman'
+    / In prodaction user always must have documet
+    - if @documents.present?
+      %p= link_to 'Just filed >>', template_documents_path(:document_id => @documents.first.id, :template_id => 2), :method => :post, :class => 'btn btn-default new_roman'
