@@ -1,5 +1,8 @@
 module PdfDocument
   class DivorceCover < DivorceWrapper
+    def can_generate?
+      @clark_nye == 'Clark'
+    end
 
     def generate
       push_header "<b>IN THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE</b>", 12
