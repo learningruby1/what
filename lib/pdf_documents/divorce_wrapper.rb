@@ -224,15 +224,15 @@ module PdfDocument
                   address_data[:country] = answers[k += 1].answer
                   address_data[:move_date] = answers[k += 1].answer.to_date
                   address_data[:persone_relationship] = answers[k += 1].answer
-                  if address_data[:persone_relationship] == 'Other'
+                  case address_data[:persone_relationship]
+                  when 'Other'
                     address_data[:lived_with] = answers[k += 2].answer
                     address_data[:persone_relationship] = answers[k += 1].answer
-                  else
-                    if address_data[:persone_relationship] == 'MOM'
-                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                    else
-                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                    end
+                  when 'MOM'
+                    address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
+                    k += 3
+                  when 'DAD'
+                    address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                     k += 3
                   end
                   @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
@@ -243,11 +243,7 @@ module PdfDocument
                   address_data[:state] = @plaintiff_home_address_state
                   address_data[:zip] = @plaintiff_home_address_zip
                   address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
-                    if address_data[:persone_relationship] == 'MOM'
-                      address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                    else
-                      address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                    end
+                  address_data[:lived_with] = @plaintiff_full_name
                   k += 2
                   @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
                 when 'In the United States'
