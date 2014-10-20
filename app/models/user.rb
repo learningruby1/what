@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :documents
-  has_many :mail_reminders
+  has_one :mail_reminder
 
   def to_s
     email
@@ -55,6 +55,14 @@ class User < ActiveRecord::Base
 
   def bind_sub_document(document_id, sub_document)
     documents.find(document_id).sub_documents << sub_document
+  end
+
+  def create_mail_reminder!
+    if mail_reminder.present?
+      update(:created_at => Time.now)
+    else
+      mail_reminder.create
+    end
   end
 
 end

@@ -1,7 +1,7 @@
 class Document < ActiveRecord::Base
   include DivorceComplaintHelper
 
-  validates :title, :presence => true
+  validates :template_name, :presence => true
 
   has_many :answers, :class_name => 'DocumentAnswer'
   has_many :dependent_documents
@@ -286,16 +286,6 @@ class Document < ActiveRecord::Base
   def looped_amount(step, _answers)
     selected_array = _answers.select{ |item| item.template_field.raw_question == true }
     selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question.count rescue 0
-  end
-
-  def assign_owner_save!(cookies, user=nil)
-    if !user.nil?
-      self.user_id = user.id
-    else
-      cookies[:session_uniq_token] = generate_session_uniq_token if !cookies[:session_uniq_token].present?
-      self.session_uniq_token = cookies[:session_uniq_token]
-    end
-    save!
   end
 
   def return_step(_param)
