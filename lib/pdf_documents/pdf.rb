@@ -44,8 +44,8 @@ module PdfDocument
         acceptance_of_service = PdfDocument::AcceptanceOfService.new(document)
         affidavit_of_service = PdfDocument::AffidavitOfService.new(document)
 
-        generate_document acceptance_of_service.generate,      "Affidavit_Acceptance_of_service", document if acceptance_of_service.can_generate?
-        generate_document affidavit_of_service.generate,       "Affidavit_Acceptance_of_service", document if affidavit_of_service.can_generate?
+        generate_document acceptance_of_service.generate,      "Acceptance_of_service", document if acceptance_of_service.can_generate?
+        generate_document affidavit_of_service.generate,       "Affidavit_of_service", document if affidavit_of_service.can_generate?
       end
     end
 
