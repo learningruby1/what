@@ -11,7 +11,7 @@ class PdfFilesController < ApplicationController
   end
 
   def generate
-    PdfDocument::Pdf.new.generate @document, current_user
+    PdfDocument::Pdf.new.generate @document
     @document.update :is_generated => true
     redirect_to pdf_files_path, :notice => 'Document complete'
   end
