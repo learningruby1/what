@@ -57,11 +57,11 @@ class User < ActiveRecord::Base
     documents.find(document_id).sub_documents << sub_document
   end
 
-  def create_mail_reminder!
+  def create_mail_reminder!(reminder_type)
     if mail_reminder.present?
-      update(:created_at => Time.now)
+      mail_reminder.update(:created_at => Time.now)
     else
-      mail_reminder.create
+      mail_reminder = MailReminder.create(:user_id => id, :reminder_type => reminder_type)
     end
   end
 

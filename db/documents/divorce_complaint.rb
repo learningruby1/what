@@ -172,7 +172,7 @@ current_step.fields.create :field_type => 'text', :name => 'Nevada Court does no
                                                             No. La corte de Nevada no tiene el poder para establecer custodia en este momento, PERO usted todavía puede divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'No'
 current_step.fields.create :field_type => 'text', :name => 'Do you still want to continue? /<spain/>¿Quiere continuar?', :toggle_id => toggle_id, :toggle_option => 'No'
 current_step.fields.create :field_type => 'redirect', :name => 'No<link=/templates>
-                                                                <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+                                                                <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #11
                                      :title => '<uppercase_child>’S ADDRESS /<spain/>DIRECCIÓN <uppercase_child_spain>', :description => 'The law requires that you provide the address where <child_count> have lived for the last 5 years.

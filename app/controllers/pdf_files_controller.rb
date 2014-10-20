@@ -17,6 +17,7 @@ class PdfFilesController < ApplicationController
   end
 
   def download
+    current_user.create_mail_reminder! MailForm::REMINDER_TYPE.first
     if current_user.documents.exists?
       send_file PdfDocument::Pdf.new.get_zip current_user
     else
