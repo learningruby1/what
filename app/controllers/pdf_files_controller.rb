@@ -2,13 +2,12 @@ class PdfFilesController < ApplicationController
   require 'pdf_documents/pdf'
 
   before_action :get_user_document, :only => [:generate]
+  before_action :get_user_documents, :only => [:index, :welcome]
 
   def index
-    if user_signed_in?
-      @documents = current_user.documents.where(:template => 1)
-    else
-      @documents = Document.where(:session_uniq_token => cookies[:session_uniq_token])
-    end
+  end
+
+  def welcome
   end
 
   def generate
@@ -27,11 +26,10 @@ class PdfFilesController < ApplicationController
 
   private
   def get_user_document
+    @document = user_signed_in? ? current_user.documents.find(params[:document_id]) : Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token]).first
+  end
 
-    if user_signed_in?
-      @document = current_user.documents.find(params[:document_id])
-    else
-      @document =  Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token]).first
-    end
+  def get_user_documents
+    @documents = user_signed_in? ? current_user.documents.where(:template => 1) : Document.where(:session_uniq_token => cookies[:session_uniq_token])
   end
 end
