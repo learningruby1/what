@@ -5,10 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def after_sign_in_path_for(user)
-    Document.where(:session_uniq_token => cookies[:session_uniq_token], :user_id => nil).update_all :session_uniq_token => nil, :user_id => current_user
-    cookies[:session_uniq_token] = nil
-    if user.sign_in_count == 1
-      user.documents.create :template_id => 1
+    if !user.documents.present?
+      user.documents << Template.where(:name => Document::DIVORCE_COMPLAINT).first.documents.build
       document_answer_path :document_id => user.documents.last.id, :step => 1
     else
       root_path
