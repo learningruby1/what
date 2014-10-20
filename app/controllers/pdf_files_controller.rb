@@ -26,10 +26,10 @@ class PdfFilesController < ApplicationController
 
   private
   def get_user_document
-    @document = user_signed_in? ? current_user.documents.find(params[:document_id]) : Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token]).first
+    @document = current_user.documents.find(params[:document_id])
   end
 
   def get_user_documents
-    @documents = user_signed_in? ? current_user.documents.where(:template => 1) : Document.where(:session_uniq_token => cookies[:session_uniq_token])
+    @documents = current_user.documents.where(:template => 1)
   end
 end
