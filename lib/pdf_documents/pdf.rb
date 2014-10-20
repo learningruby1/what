@@ -34,18 +34,18 @@ module PdfDocument
         cover = PdfDocument::DivorceCover.new(document)
         coversheet = PdfDocument::DivorceCoversheet.new(document)
 
-        generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", current_user, true, true
-        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }", current_user
-        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }", current_user
-        generate_document uccja.generate,                                        "UCCJA_#{ document.id }", current_user if uccja.can_generate?
-        generate_document cover.generate,                                        "Divorce_cover_#{ document.id }", current_user if cover.can_generate?
-        generate_document coversheet.generate,                                   "Divorce_coversheet_#{ document.id }", current_user if coversheet.can_generate?
+        generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint", current_user, true, true
+        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons", current_user
+        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction", current_user
+        generate_document uccja.generate,                                        "UCCJA", current_user if uccja.can_generate?
+        generate_document cover.generate,                                        "Divorce_cover", current_user if cover.can_generate?
+        generate_document coversheet.generate,                                   "Divorce_coversheet", current_user if coversheet.can_generate?
       when /^Filed Case/
         acceptance_of_service = PdfDocument::AcceptanceOfService.new(document)
         affidavit_of_service = PdfDocument::AffidavitOfService.new(document)
 
-        generate_document acceptance_of_service.generate,      "Affidavit_Acceptance_of_service_#{ document.id }", current_user if acceptance_of_service.can_generate?
-        generate_document affidavit_of_service.generate,       "Affidavit_Acceptance_of_service_#{ document.id }", current_user if affidavit_of_service.can_generate?
+        generate_document acceptance_of_service.generate,      "Affidavit_Acceptance_of_service", current_user if acceptance_of_service.can_generate?
+        generate_document affidavit_of_service.generate,       "Affidavit_Acceptance_of_service", current_user if affidavit_of_service.can_generate?
       end
     end
 
