@@ -60,7 +60,7 @@ module PdfDocument
         push_table -1, 0
 
         move_down
-        push_text 'SUSCRIBED and SWORN to before me this'
+        push_text 'SUBSCRIBED and SWORN to before me this'
         push_text '_______day of ___________, 20___.'
         push_text "By #{ @friend_full_name }"
         move_down 20

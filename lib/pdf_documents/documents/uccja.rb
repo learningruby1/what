@@ -1,5 +1,9 @@
 module PdfDocument
   class Uccja < DivorceWrapper
+    def can_generate?
+      @children_residency && @children_nevada_residency
+    end
+
     def generate
       _counter = 0
       default_leading 5
@@ -17,9 +21,8 @@ module PdfDocument
       push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 20
 
-
-      table_row [ { :content => "#{ @plaintiff_full_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_full_name }<br/>Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
-                  { :content => "<br/>CASE  NO.: #{@case.to_s}<br/><br/><br/>DEPT NO.: #{@dept.to_s}", :width => 240, :border_width => 0  } ]
+      table_row [ { :content => "#{ @plaintiff_full_name }\nPlaintiff,\n\nvs.\n\n#{ @defendant_full_name }\nDefendant.\n#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
+                  { :content => "\nCASE  NO.: \n\n\nDEPT NO.: ", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
       default_leading 8
@@ -86,7 +89,7 @@ module PdfDocument
       push_text '<b>I declare under penalty of perjury under the law of the State of Nevada that the foregoing is true and correct.', @text_indent
 
       table_row [ { :content => "Signed on: #{ '_' * 35 }", :width => 300, :border_width => 0  },
-                  { :content => "#{ '_' * 35 }<br/> #{ @plaintiff_full_name }<br/>Signature", :width => 240, :border_width => 0  } ]
+                  { :content => "#{ '_' * 35 }\n #{ @plaintiff_full_name }\nSignature", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
       finishing

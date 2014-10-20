@@ -7,8 +7,8 @@ module PdfDocument
       push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 40
 
-      table_row [ { :content => "#{ @plaintiff_full_name },<br/>                    Plaintiff,<br/>vs.<br/><br/>#{ @defendant_full_name },<br/>#{ ' '*20 }Defendant.<br/>#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
-                  { :content => "CASE No.:<br/><br/>DEPT No.:<br/><br/><b><u>JOINT PRELIMINARY INJUNCTION</b>", :width => 240, :border_width => 0 } ]
+      table_row [ { :content => "#{ @plaintiff_full_name },\n                    Plaintiff,\nvs.\n\n#{ @defendant_full_name },\n#{ ' '*20 }Defendant.\n#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
+                  { :content => "CASE No.:\n\nDEPT No.:\n\n<b><u>JOINT PRELIMINARY INJUNCTION</b>", :width => 240, :border_width => 0 } ]
       push_table -1, 0
       move_down 30
 

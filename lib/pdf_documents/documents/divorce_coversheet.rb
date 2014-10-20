@@ -1,5 +1,9 @@
 module PdfDocument
   class DivorceCoversheet < DivorceWrapper
+    def can_generate?
+      @clark_nye != 'Clark'
+    end
+
     def generate
       push_header "CIVIL (FAMILY - RELATED) COVER SHEET"
       push_header "#{ @clark_nye } COUNTY, NEVADA"
