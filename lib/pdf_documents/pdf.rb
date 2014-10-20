@@ -7,27 +7,30 @@ module PdfDocument
     require 'pdf_documents/documents/divorce_injunction'
     require 'pdf_documents/documents/divorce_cover'
     require 'pdf_documents/documents/divorce_coversheet'
-    require 'pdf_documents/documents/affidative_or_acceptance_of_service'
+    require 'pdf_documents/documents/acceptance_of_service'
+    require 'pdf_documents/documents/affidavit_of_service'
     require 'pdf_documents/documents/uccja'
     require 'prawn'
 
     def generate(document)
-      answer_county = TemplateStep.where(:title => 'In what county are you going to file your case? /<spain/>¿En qué condado va a archivar su caso?').first.document_answers.where(:document_id => document.id).first.answer
-      children_nevada_residency = TemplateStep.where(:title => 'Children’s Residency /<spain/>Residencia de los Menores').first.document_answers.where(:document_id => document.id).map(&:answer).include? 'Yes' rescue false
-      children_present = TemplateStep.where(:title => 'Children /<spain/>Menores').first.document_answers.where(:document_id => document.id).map(&:answer).include? 'Yes' rescue false
       case document.template.to_s
       when /^Complaint for Divorce/
+        uccja = PdfDocument::Uccja.new(document)
+        cover = PdfDocument::DivorceCover.new(document)
+        coversheet = PdfDocument::DivorceCoversheet.new(document)
+
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint_#{ document.id }", true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons_#{ document.id }"
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction_#{ document.id }"
-        generate_document PdfDocument::Uccja.new(document).generate,             "UCCJA_#{ document.id }" if children_present && children_nevada_residency
-        if answer_county == 'Clark'
-          generate_document PdfDocument::DivorceCover.new(document).generate,      "Divorce_cover_#{ document.id }"
-        else
-          generate_document PdfDocument::DivorceCoversheet.new(document).generate, "Divorce_coversheet_#{ document.id }"
-        end
+        generate_document uccja.generate,                                        "UCCJA_#{ document.id }" if uccja.can_generate?
+        generate_document cover.generate,                                        "Divorce_cover_#{ document.id }" if cover.can_generate?
+        generate_document coversheet.generate,                                   "Divorce_coversheet_#{ document.id }" if coversheet.can_generate?
       when /^Filed Case/
-        generate_document PdfDocument::AffidativeOrAcceptanceOfService.new(document).generate,      "AffidativeAcceptance_of_service_#{ document.id }"
+        acceptance_of_service = PdfDocument::AcceptanceOfService.new(document)
+        affidavit_of_service = PdfDocument::AffidavitOfService.new(document)
+
+        generate_document acceptance_of_service.generate,      "Affidavit_Acceptance_of_service_#{ document.id }" if acceptance_of_service.can_generate?
+        generate_document affidavit_of_service.generate,       "Affidavit_Acceptance_of_service_#{ document.id }" if affidavit_of_service.can_generate?
       end
     end
 
