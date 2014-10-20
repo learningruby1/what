@@ -39,7 +39,9 @@
             - if document.is_generated?
               - if current_user
                 - if current_user.paypal_payment_id.present?
-                  = render :partial => 'link_to_documents', :locals => { :document => document }
+                  / = render :partial => 'link_to_documents', :locals => { :document => document }
+                  = link_to 'Download', download_pdf_path, :class => 'btn btn-primary'
+
 
                 - else
                   = link_to new_paypal_payment_path, :class => 'btn btn-primary modal_remote',
@@ -47,7 +49,8 @@
                     .glyphicon.glyphicon-cloud-download
                     Pay to Download /
                     %span Pagar por descargar
-                = render :partial => 'link_to_documents', :locals => { :document => document }
+                / = render :partial => 'link_to_documents', :locals => { :document => document }
+                = link_to 'Download', download_pdf_path, :class => 'btn btn-primary'
 
               - else
                 = link_to new_user_session_path, :class => 'btn btn-primary modal_remote',
@@ -69,5 +72,5 @@
                       .glyphicon.glyphicon-edit
                       Edit /
                       %span.spain Editar
-                    - if sub_document.is_generated?
-                      = link_to 'Affidative_Acceptance', download_pdf_path("Affidavit_Acceptance_of_service_#{ sub_document.id }"), :class => 'btn btn-primary'
+                    / - if sub_document.is_generated?
+                    /   = link_to 'Affidative_Acceptance', download_pdf_path("Affidavit_Acceptance_of_service_#{ sub_document.id }"), :class => 'btn btn-primary'
