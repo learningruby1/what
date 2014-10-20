@@ -11,6 +11,21 @@ module PdfDocument
     require 'pdf_documents/documents/affidavit_of_service'
     require 'pdf_documents/documents/uccja'
     require 'prawn'
+    require 'zip'
+
+
+  def get_zip(current_user)
+    folder = "#{ Rails.root }/documents/pdf/#{ current_user.id }"
+    zipfile_name = "#{ Rails.root }/documents/pdf/files#{ current_user.id }.zip"
+    File.delete(zipfile_name) if File.exists? zipfile_name
+    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
+      Dir.foreach(folder) do |item|
+        item_path = "#{ folder }/#{ item }"
+        zipfile.add(item, item_path) if File.file? item_path
+      end
+    end
+    zipfile_name
+  end
 
     def generate(document, current_user)
       case document.template.to_s
