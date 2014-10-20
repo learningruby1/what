@@ -1,0 +1,20 @@
+- if @day == 20 || @day == 60
+  %p Hi #{ get_plaintiff_full_name(@document) }, remember to login and enter date of service, to see what is next. Have a nice day. #{ link_to "Formsmama.com", 'http://formsmama.com/' }
+  %p{ :style => 'color: #009933;' }
+    Hola
+    = "#{ get_plaintiff_full_name(@document) }, "
+    recuerde de regresar a su cuenta  y escribir el día que le dieron los documentos a
+    = "#{ get_defendant_full_name(@document) }, "
+    para ver lo que siguiente. Atentamente,
+    = link_to "Formsmama.com", 'http://formsmama.com/'
+- elsif @day == 80
+  %p Hi #{ get_plaintiff_full_name(@document) }, remember to login and enter date of service. You only have 120 days from the date of filing to serve #{ get_defendant_full_name(@document) }. After 120 days the court might dismiss your case and you will have to start again. If you think you need an extension complete the request to extend form. Have a nice day. #{ link_to "Formsmama.com", 'http://formsmama.com/' }
+  %p{ :style => 'color: #009933;' }
+    Hola
+    = "#{ get_plaintiff_full_name(@document) }: "
+    Recuerde de regresar a su cuenta  y escribir el día que le dieron los documentos a
+    = "#{ get_defendant_full_name(@document) }. "
+    Tiene solamente 120 días para entregarle los documentos a
+    = "#{ get_defendant_full_name(@document) }. "
+    Después de 120 la corte puede cerrarle y caso y tendrá que comenzar uno nuevo. Si necesita una extensión, complete el formulario de extensión.  Atentamente,
+    = link_to "Formsmama.com", 'http://formsmama.com/'
