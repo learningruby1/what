@@ -23,8 +23,8 @@ module PdfDocument
       move_down 20
 
 
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }<br/>Plaintiff,<br/><br/>vs.<br/><br/>#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }<br/>Defendant.", :width => 300, :font_style => :bold },
-                  { :content => "<br/>CASE  NO.: #{ @filed_case[:case] }<br/><br/><br/>DEPT NO.: #{ @filed_case[:dept] }", :width => 240 } ]
+      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }\nPlaintiff,\n\nvs.\n\n#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }\nDefendant.", :width => 300, :font_style => :bold },
+                  { :content => "\nCASE  NO.: #{ @filed_case[:case] }\n\n\nDEPT NO.: #{ @filed_case[:dept] }", :width => 240 } ]
       push_table -1, 0
 
       default_leading 8
@@ -54,8 +54,8 @@ module PdfDocument
 
       move_down 20
       default_leading 0
-      table_row [ { :content => "<br/><br/><br/><br/><br/>", :width => 300, :font_style => :bold, :border_width => 0  },
-                  { :content => "<br/>#{'_'*40}<br/>Signature of Affiant<br/>#{ @filed_case[:friend][:full_name] }", :width => 240, :border_width => 0  } ]
+      table_row [ { :content => '', :width => 300, :font_style => :bold, :border_width => 0  },
+                  { :content => "\n #{'_'*40} \n Signature of Affiant \n #{ @filed_case[:friend][:full_name] }", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
       move_down
