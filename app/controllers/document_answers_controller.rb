@@ -33,10 +33,10 @@ class DocumentAnswersController < ApplicationController
     answer = DocumentAnswer.find params[:answer_id_first]
     answer.update :answer => '1'
     answer2 = DocumentAnswer.find params[:answer_id_second]
-    tmp_value = answer2.answer.to_i
+    old_value_answer = answer2.answer.to_i
 
     @document.update_answers!(answers_params)
-    @document.create_or_delete_answer params[:value].to_i, answer2, tmp_value
+    @document.create_or_delete_answer params[:value].to_i, answer2, old_value_answer
 
     @answers = @document.prepare_answers! answer2.template_step_id, true
     @answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :documents
+  has_many :mail_reminders
 
   def to_s
     email

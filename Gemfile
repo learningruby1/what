@@ -33,3 +33,5 @@ gem 'prawn'
 
 gem 'paypal-sdk-rest'
 gem 'gritter'
+
+gem 'whenever', :require => false

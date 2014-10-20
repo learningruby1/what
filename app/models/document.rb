@@ -301,5 +301,4 @@ class Document < ActiveRecord::Base
   def return_step(_param)
     _param.kind_of?(String) ? template.steps.where(:title => _param).first : template.steps.find(_param)
   end
-
 end

@@ -38,6 +38,12 @@ set :linked_dirs, %w{ bin log tmp/pids tmp/cache tmp/sockets vendor/bundle publi
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
+# Puma custum config
+set :puma_conf, "#{ shared_path }/config/puma.rb"
+
+#Update cron file
+after "deploy:symlink", "deploy:update_crontab"
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
@@ -56,5 +62,10 @@ namespace :deploy do
       #   execute :rake, 'cache:clear'
       # end
     end
+  end
+
+  desc "Update the crontab file"
+  task :update_crontab, :roles => :db do
+    run "cd #{release_path} && whenever --update-crontab #{application}"
   end
 end
