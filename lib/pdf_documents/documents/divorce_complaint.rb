@@ -6,11 +6,11 @@ module PdfDocument
       default_leading 5
       push_text 'COMD', :style => :bold
 
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_address } #{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+      push_text @plaintiff_full_name
+      push_text "#{ @plaintiff_mailing_address } #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state } #{ @plaintiff_mailing_address_zip }"
 
-      push_text "#{ @plaintiff_phone }"
-      push_text "#{ @plaintiff_email }"
+      push_text @plaintiff_phone
+      push_text @plaintiff_email
       push_text 'Plaintiff Self-Represented', :style => :bold
 
       move_down 20
@@ -19,19 +19,19 @@ module PdfDocument
       move_down 20
 
       default_leading 3
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name },", :inline_format => true
+      push_text "#{ @plaintiff_full_name },", :inline_format => true
       push_text "Plaintiff,#{ ' '*61 }CASE NO.:"
       move_down 10
       push_text "vs.#{ ' '*71 }DEPT NO.:"
       move_down 10
-      push_text "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name },", :inline_format => true
+      push_text "#{ @defendant_full_name },", :inline_format => true
       push_text 'Defendant.'
 
       default_leading 8
       move_down 30
       push_header 'COMPLAINT FOR DIVORCE'
 
-      push_text "COMES NOW Plaintiff, #{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
+      push_text "COMES NOW Plaintiff, #{ @plaintiff_full_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
 
       move_to_left "#{ _counter += 1 }.  RESIDENCY"
       push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of #{ @clark_nye.upcase } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
@@ -43,8 +43,8 @@ module PdfDocument
       if @children_residency
         tmp_text = "That the parties have #{ @number_of_children } minor #{ @number_of_children > 1 ? 'children' : 'child' } to wit:"
 
-        @children_info.each do |c|
-          tmp_text += " #{ c[:first_name] } #{ c[:middle_name] } #{ c[:last_name] } born #{ c[:date_of_birth] }, "
+        @children_info.each do |child|
+          tmp_text += " #{ child[:full_name] } born #{ child[:date_of_birth] }, "
         end
         tmp_text += " who #{ @number_of_children > 1 ? 'are' : 'is' } the issue of this marriage, and here are no other minor children adopted or otherwise."
 
@@ -84,19 +84,19 @@ module PdfDocument
             if @same_legal_custody
               push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
             else
-              push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @children_names[index] }.", @text_indent
+              push_text "That both parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @children_info[index][:full_name] }.", @text_indent
             end
           when 'Only MOM'
             if @same_legal_custody
               push_text "The #{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
             else
-              push_text "The #{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @children_names[index] }.", @text_indent
+              push_text "The #{ @mom.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @children_info[index][:full_name] }.", @text_indent
             end
           when 'Only DAD'
             if @same_legal_custody
               push_text "The #{ @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
             else
-              push_text "The #{ @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @children_names[index] }.", @text_indent
+              push_text "The #{ @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @children_info[index][:full_name] }.", @text_indent
             end
           end
         end
@@ -116,7 +116,7 @@ module PdfDocument
                   push_text "#{ (97 + index).chr }. #{ answer }"
                 end
               else
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @dad.capitalize } having visitation as follows:", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_info[index][:full_name] } with #{ @dad.capitalize } having visitation as follows:", @text_indent
                 physical_custody[:answers].each_with_index do |answer, index|
                   push_text "#{ (97 + index).chr }. #{ answer }"
                 end              end
@@ -127,7 +127,7 @@ module PdfDocument
                   push_text "#{ (97 + index).chr }. #{ answer }"
                 end
               else
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_names[index] } with #{ @mom.capitalize } having visitation as follows:", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @children_info[index][:full_name] } with #{ @mom.capitalize } having visitation as follows:", @text_indent
                 physical_custody[:answers].each_with_index do |answer, index|
                   push_text "#{ (97 + index).chr }. #{ answer }"
                 end
@@ -141,7 +141,7 @@ module PdfDocument
                 push_text "#{ (97 + index).chr }. #{ answer }"
               end
             else
-              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_names[index] } and the parties’ timeshare should be as follows:", @text_indent
+              push_text "That the parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @children_info[index][:full_name] } and the parties’ timeshare should be as follows:", @text_indent
               physical_custody[:answers].each_with_index do |answer, index|
                 push_text "#{ (97 + index).chr }. #{ answer }"
               end
@@ -152,13 +152,13 @@ module PdfDocument
               if @same_physical_custody
                 push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
               else
-                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @children_names[index] }.", @text_indent
+                push_text "That #{ @mom.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @children_info[index][:full_name] }.", @text_indent
               end
             when /dad/
               if @same_physical_custody
                 push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
               else
-                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @children_names[index] }.", @text_indent
+                push_text "That #{ @dad.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @children_info[index][:full_name] }.", @text_indent
               end
             end
           end
@@ -247,14 +247,14 @@ module PdfDocument
 
           case tax.first
           when /^Should be/
-            push_text "The tax deduction for #{ @children_names[tax.second] } should be allocated per federal law.", @text_indent
+            push_text "The tax deduction for #{ @children_info[tax.second][:full_name] } should be allocated per federal law.", @text_indent
           when /^Mom every|^Dad every/
-            push_text "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_names[tax.second] }, as dependent for Federal Tax purposes every year.", @text_indent
+            push_text "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor child: #{ @children_info[tax.second][:full_name] }, as dependent for Federal Tax purposes every year.", @text_indent
           when /^Dad and Mom/
             if @number_of_children == 1
-              push_text "That the parties should alternate claiming the minor child: #{ @children_names.first }, as dependent(s) for Federal Tax purposes. Plaintiff will start claiming the child starting #{tax.last}.", @text_indent
+              push_text "That the parties should alternate claiming the minor child: #{ @children_info.first[:full_name] }, as dependent(s) for Federal Tax purposes. Plaintiff will start claiming the child starting #{tax.last}.", @text_indent
             elsif @number_of_children > 1
-              push_text "That Plaintiff should claim minor #{ @children_names[tax.second] }, as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor #{ @children_names[tax.second] }, as dependent(s) for Federal Tax purposes every year.", @text_indent
+              push_text "That Plaintiff should claim minor #{ @children_info[tax.second][:full_name] }, as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor #{ @children_info[tax.second][:full_name] }, as dependent(s) for Federal Tax purposes every year.", @text_indent
             end
           end
 
@@ -506,7 +506,7 @@ module PdfDocument
       push_text 'DATED THIS _______day of  ___________, 20___'
       default_leading 0
       push_text 'Submitted by: __________________', 130
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }   Signature", 200
+      push_text "#{ @plaintiff_full_name }   Signature", 200
 
       # move_down @header_margin_top
       # default_leading 8
@@ -524,7 +524,7 @@ module PdfDocument
       move_down 30
       default_leading 0
       push_text 'Submitted by: __________________'
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
+      push_text "#{ @plaintiff_full_name }"
 
       finishing
     end

@@ -9,9 +9,8 @@ module PdfDocument
       default_leading 5
       push_text 'CC13', :style => :bold
 
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }"
-      push_text "#{ @plaintiff_mailing_addres }"
-      push_text "#{ @plaintiff_home_address_city }, #{ @plaintiff_home_address_state } #{ @plaintiff_home_address_zip }"
+      push_text "#{ @plaintiff_full_name }"
+      push_text "#{ @plaintiff_mailing_addres } #{ @plaintiff_mailing_address_city }, #{ @plaintiff_mailing_address_state } #{ @plaintiff_mailing_address_zip }"
 
       push_text "#{ @plaintiff_phone }"
       push_text "#{ @plaintiff_email }"
@@ -22,8 +21,7 @@ module PdfDocument
       push_header "STATE OF NEVADA, IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
       move_down 20
 
-
-      table_row [ { :content => "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }\nPlaintiff,\n\nvs.\n\n#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }\nDefendant.\n#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
+      table_row [ { :content => "#{ @plaintiff_full_name }\nPlaintiff,\n\nvs.\n\n#{ @defendant_full_name }\nDefendant.\n#{ '_'*20 }", :width => 300, :font_style => :bold, :border_width => 0 },
                   { :content => "\nCASE  NO.: \n\n\nDEPT NO.: ", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
@@ -35,7 +33,7 @@ module PdfDocument
       @number_of_children.times do |i|
         @children_info[i][:addresses].sort! { |x,y| y[:move_date] <=> x[:move_date]  }
         table_row [ { :content => "#{i+1}. Child’s Name", :width => 150, :font_style => :bold }, { :content => "Place of Birth", :width => 170, :font_style => :bold },                                                            { :content => "Birth Date", :width => 120, :font_style => :bold },     { :content => "Sex", :width => 100, :font_style => :bold } ]
-        table_row [ { :content => @children_names[i], :width => 150 },                           { :content => "#{ @children_info[i][:city] } #{ @children_info[i][:state] }#{ @children_info[i][:country] }", :width => 170 }, { :content => @children_info[i][:date_of_birth], :width => 120 }, { :content => @children_info[i][:sex], :width => 100 } ]
+        table_row [ { :content => @children_info[i][:full_name], :width => 150 },                { :content => "#{ @children_info[i][:city] } #{ @children_info[i][:state] }#{ @children_info[i][:country] }", :width => 170 },    { :content => @children_info[i][:date_of_birth], :width => 120 },      { :content => @children_info[i][:sex], :width => 100 } ]
         table_row [   { :content =>"Period of Residence", :width => 150, :font_style => :bold },                                                            { :content =>"Address", :width => 170, :font_style => :bold },                                                                             { :content =>"Person Child lived with", :width => 120, :font_style => :bold },          { :content =>"Relationship", :width => 100, :font_style => :bold } ]
         @children_info[i][:addresses].each_with_index do |address, index|
           table_row [ { :content =>"#{ 'From' if index != 0 } #{ address[:move_date].strftime("%m/%Y") } #{ 'to Present' if index == 0 }", :width => 150 }, { :content =>"#{ address[:address] }, #{ address[:city] } #{ address[:state] }#{ address[:country] } #{ address[:zip] }", :width => 170 }, { :content =>"#{ address[:lived_with].upcase }", :width => 120 },                       { :content =>"#{ address[:persone_relationship] }", :width => 100 } ]
@@ -48,7 +46,7 @@ module PdfDocument
       push_text "2. I <b>HAVE#{' NOT' if @children_info.select { |e| e[:question_1_case_count] }.empty? }</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
       @number_of_children.times do |i|
         @children_info[i][:question_1_case_count].to_i.times do |j|
-          push_text "a. Name of each child involved: " + @children_names[i], @text_indent * 2
+          push_text "a. Name of each child involved: " + @children_info[i][:full_name], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_1_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{ @children_info[i][:question_1_cases][j][:name_of_court] } #{ @children_info[i][:question_1_cases][j][:state] } #{ @children_info[i][:question_1_cases][j][:case_number] }", @text_indent * 2
           push_text "d. Date of court order or judgment in other proceeding: " + @children_info[i][:question_1_cases][j][:date].to_s, @text_indent * 2
@@ -58,7 +56,7 @@ module PdfDocument
       push_text "3. I <b>DO#{' NOT' if @children_info.select { |e| e[:question_2_case_count] }.empty? }</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
       @number_of_children.times do |i|
         @children_info[i][:question_2_case_count].to_i.times do |j|
-          push_text "a. Name of each child involved: " + @children_names[i], @text_indent * 2
+          push_text "a. Name of each child involved: " + @children_info[i][:full_name], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_2_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{ @children_info[i][:question_2_cases][j][:name_of_court] } #{ @children_info[i][:question_2_cases][j][:state] } #{ @children_info[i][:question_2_cases][j][:case_number] }", @text_indent * 2
           push_text "d. Date of court order or judgment in other proceeding: " + @children_info[i][:question_2_cases][j][:date].to_s, @text_indent * 2
@@ -71,11 +69,11 @@ module PdfDocument
           push_text "a. Name and address of person: #{ @children_info[i][:question_3_cases][j][:name] } #{ @children_info[i][:question_3_cases][j][:address] }", @text_indent * 2
           case @children_info[i][:question_3_cases][j][:rights]
           when /VISITATION/
-            push_text "Person named claims visitation rights with " + @children_names[i], @text_indent * 3
+            push_text "Person named claims visitation rights with " + @children_info[i][:full_name], @text_indent * 3
           when /CUSTODY/
-            push_text "Person named claims custody right as to " + @children_names[i], @text_indent * 3
+            push_text "Person named claims custody right as to " + @children_info[i][:full_name], @text_indent * 3
           when /PHYSICAL/
-            push_text "Person named has physical custody of " + @children_names[i], @text_indent * 3
+            push_text "Person named has physical custody of " + @children_info[i][:full_name], @text_indent * 3
           end
         end
       end
@@ -86,12 +84,12 @@ module PdfDocument
       push_text 'DATED THIS_______day of ___________, 20___.'
       default_leading 2
       push_text '______________________'
-      push_text "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name } Signature"
+      push_text "#{ @plaintiff_full_name } Signature"
 
       push_text '<b>I declare under penalty of perjury under the law of the State of Nevada that the foregoing is true and correct.', @text_indent
 
       table_row [ { :content => "Signed on: #{ '_' * 35 }", :width => 300, :border_width => 0  },
-                  { :content => "#{ '_' * 35 }\n #{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }\nSignature", :width => 240, :border_width => 0  } ]
+                  { :content => "#{ '_' * 35 }\n #{ @plaintiff_full_name }\nSignature", :width => 240, :border_width => 0  } ]
       push_table -1, 0
 
       finishing
