@@ -8,15 +8,15 @@ current_step = template.steps.create :step_number => step_number += 1,#1
 toggle_id = 0
 toggle_id += 1
 #Correct Spain hints
-current_step.fields.create :name => 'Enter the Case # /<spain/>Escriba el # del Caso *', :mandatory => { :value => /^\d+/, :hint => 'Enter correct # /<spain/>Escriba #' }, :field_type => 'string'
-current_step.fields.create :name => 'Enter the Dept.: /<spain/>Escriba el Departamento: *', :mandatory => { :value => /^\d+/, :hint => 'Enter correct Dept /<spain/>Escriba ' }, :field_type => 'string'
+current_step.fields.create :name => 'Enter the Case # /<spain/>Escriba el # del Caso *', :mandatory => { :value => /.+/, :hint => 'Enter correct # /<spain/>Escriba #' }, :field_type => 'string'
+current_step.fields.create :name => 'Enter the Dept.: /<spain/>Escriba el Departamento: *', :mandatory => { :value => /.+/, :hint => 'Enter correct Dept /<spain/>Escriba ' }, :field_type => 'string'
 
 current_step.fields.create :field_type => 'text', :name => 'Date of filing, you will find this information usually on the right side corner. <br/><spain/>Fecha de archivo,  usted encontrará esta información normalmente en la esquina derecha.'
 current_step.fields.create :field_type => 'text', :name => 'Summons and Complaint /<spain/>Citatorio y Demanda: *'
 current_step.fields.create :name => '', :field_type => 'date'
 
 toggle_id += 1
-current_step.fields.create :field_type => 'checkbox', :name => 'Preliminary Injunction /<spain/>Precautoria Conjunta *', :toggle_id => toggle_id
+current_step.fields.create :field_type => 'checkbox', :name => 'Preliminary Injunction /<spain/>Precautoria Conjunta', :toggle_id => toggle_id
 current_step.fields.create :name => '', :field_type => 'date', :toggle_id => toggle_id, :toggle_option => 'Preliminary'
 
 
