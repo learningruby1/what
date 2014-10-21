@@ -6,7 +6,11 @@
 
     %p= link_to 'Continue with your forms >>', templates_path, :class => 'btn btn-default new_roman'
     / In prodaction user always must have documet
-    - if @documents.select { |doc| doc.template.name == Document::FILED_CASE }.empty?
-      %p= link_to 'Just filed >>', template_documents_path(:document_id => @documents.first.id, :template_id => ActiveRecord::Base::Template.where(:name => Document::FILED_CASE).first.id), :method => :post, :class => 'btn btn-default new_roman'
-    - else
-      %p= link_to 'Just filed >>', template_documents_path(:document_id => @documents.first.id, :template_id => ActiveRecord::Base::Template.where(:name => Document::AFTER_SERVICE).first.id), :method => :post, :class => 'btn btn-default new_roman'
+    - divorce_document = @documents.select { |doc| (doc.template.name == Document::DIVORCE_COMPLAINT) && doc.is_generated? }
+    - if divorce_document.present?
+      - if divorce_document.first.sub_documents.present?
+        %p= link_to 'Just filed >>', document_answer_path(:document_id => divorce_document.first.sub_documents.first.id, :step => 1), :class => 'btn btn-default new_roman'
+        - if divorce_document.first.sub_documents.first.is_generated?
+          %p= link_to 'After service >>', template_documents_path(:document_id => divorce_document.first.sub_documents.first.id, :template_id => ActiveRecord::Base::Template.where(:name => Document::AFTER_SERVICE).first.id), :method => :post, :class => 'btn btn-default new_roman'
+      - else
+        %p= link_to 'Just filed >>', template_documents_path(:document_id => @documents.first.id, :template_id => ActiveRecord::Base::Template.where(:name => Document::FILED_CASE).first.id), :method => :post, :class => 'btn btn-default new_roman'
