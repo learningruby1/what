@@ -611,13 +611,14 @@ module PdfDocument
               @employed_presence = answers.next.answer == 'Yes' rescue false
               if @employed_presence
                 @employer_name = answers.next.answer
-                @business_address = answers.next.answer
-                @employer_city = answers.next.answer
-                @employer_zip = answers.next.answer
+                @business_address = answers.next.answer.titleize
+                @employer_city = answers.next.answer.classify
+                @employer_state = answers.next.answer.classify
+                @employer_zip = answers.next.answer.classify
                 @employer_phone = answers.next.answer
                 @drivers_license = answers.next.answer
               else
-                6.times do answers.next end
+                7.times do answers.next end
               end
               answers.next
               @ethinicity = answers.next.answer
@@ -632,13 +633,14 @@ module PdfDocument
               @employed_presence = answers.next.answer == 'Yes' rescue false
               if @employed_presence
                 @employer_name = answers.next.answer
-                @business_address = answers.next.answer
-                @employer_city = answers.next.answer
-                @employer_zip = answers.next.answer
+                @business_address = answers.next.answer.titleize
+                @employer_city = answers.next.answer.classify
+                @employer_state = answers.next.answer.classify
+                @employer_zip = answers.next.answer.classify
                 @employer_phone = answers.next.answer
                 @drivers_license = answers.next.answer
               else
-                6.times do answers.next end
+                7.times do answers.next end
               end
               answers.next
               @ethinicity = answers.next.answer

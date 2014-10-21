@@ -840,7 +840,7 @@ toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => custody_field.id.to_s, :render_if_field_value => 'With|Only',#23
                                      :title => '<child_count> Support /<spain/>Manutención <child_count_spain>'
 
-child_support_field = current_step.fields.create :field_type => 'radio', :name => 'I already have a child support case with the D’d office /<spain/>Ya tengo un caso de manutención de menor con la oficina del distrito
+child_support_field = current_step.fields.create :field_type => 'radio', :name => 'I already have a child support case with the DA office /<spain/>Ya tengo un caso de manutención de menor con la oficina del distrito
                                                              <option/>No <child> support /<spain/>No habrá manutención <child_count_spain>
                                                              <option/>Dad will pay <child> support /<spain/>El papá pagara manutención para los menores
                                                              <option/>Mom will pay <child> support /<spain/>La mamá pagara manutención para', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -880,6 +880,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
 current_step.fields.create :name => 'Employer Name /<spain/>Nombre del empleador  *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Business Address /<spain/>Dirección del Negocio: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string-capitalize'
+current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono: ', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
@@ -905,6 +906,7 @@ current_step.fields.create :field_type => 'radio', :name => 'No
 current_step.fields.create :name => 'Employer Name /<spain/>Nombre del empleador  *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Business Address /<spain/>Dirección del Negocio: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string-capitalize'
+current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
