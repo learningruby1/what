@@ -22,4 +22,4 @@
 .container.new_roman
   .col-md-4
     %h3
-      %p= link_to 'Divorce / Divorcio >>', template_documents_path(@templates.first), :class => 'btn btn-default new_roman', :method => :post, :data => {:confirm => 'Are you sure? This will delete existing file!'}
+      %p= link_to 'Complaint for Divorce / Demanda de Divorcio >>', template_documents_path(ActiveRecord::Base::Template.where(:name => Document::DIVORCE_COMPLAINT).first.id), :class => 'btn btn-default new_roman', :method => :post, :data => {:confirm => 'Are you sure? This will delete existing file!'}
