@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :documents
-  has_one :mail_reminder
+  has_many :mail_reminder
 
   def to_s
     email
@@ -58,11 +58,15 @@ class User < ActiveRecord::Base
   end
 
   def create_mail_reminder!(reminder_type)
-    if mail_reminder.present?
-      mail_reminder.update(:created_at => Time.now)
-    else
-      mail_reminder = MailReminder.create(:user_id => id, :reminder_type => reminder_type)
+    if mail_reminder.blank?
+      mail_reminder.create(:reminder_type => reminder_type)
     end
+  end
+
+  def create_document template_id
+    documents.where(:template_id => template_id).destroy_all
+    template = Template.find(template_id)
+    template.documents.create(:template_name => template.name, :user_id => id)
   end
 
 end

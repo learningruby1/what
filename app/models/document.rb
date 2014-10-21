@@ -52,7 +52,7 @@ class Document < ActiveRecord::Base
       _answers = step_answers(next_step)
       _answers += create_next_step_answers!(next_step, _answers.first.toggler_offset + _answers.length)
     end
-    _answers
+    DocumentAnswer.sort _answers, next_step
   end
 
   #Controller answers Action update
@@ -239,6 +239,19 @@ class Document < ActiveRecord::Base
       delete_hidden_answers! step, answer, answer.answer.to_i - value, answer.template_field_id if tmp_value > value
       answer.update :answer => value
     end
+  end
+
+  def return_hidden_answers(answer_id_first, answer_id_second, answers_params, value)
+    main_answer = DocumentAnswer.find answer_id_first
+    main_answer.update :answer => '1'
+    count_item_answer = DocumentAnswer.find answer_id_second
+    old_value = count_item_answer.answer.to_i
+
+    update_answers!(answers_params)
+    create_or_delete_answer value.to_i, count_item_answer, old_value
+
+    _answers = prepare_answers! count_item_answer.template_step_id, true
+    _answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }
   end
 
   def skip_steps(next_step, direction='forward')
