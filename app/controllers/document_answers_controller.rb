@@ -28,7 +28,7 @@ class DocumentAnswersController < ApplicationController
   end
 
   def render_questions
-    @answers = @document.return_hidden_answers( params[:answer_id_first], params[:answer_id_second], answers_params, params[:value] )
+    @answers = @document.hidden_answers( params[:answer_id_first], params[:answer_id_second], answers_params, params[:value] )
     @review = params[:review]
 
     if @review.present? && !@answers.blank?

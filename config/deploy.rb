@@ -38,7 +38,7 @@ set :linked_dirs, %w{ bin log tmp/pids tmp/cache tmp/sockets vendor/bundle publi
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
-# Puma custum config
+# Puma custom config
 set :puma_conf, "#{ shared_path }/config/puma.rb"
 
 #Update cron file

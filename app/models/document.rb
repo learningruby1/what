@@ -241,7 +241,7 @@ class Document < ActiveRecord::Base
     end
   end
 
-  def return_hidden_answers(answer_id_first, answer_id_second, answers_params, value)
+  def hidden_answers(answer_id_first, answer_id_second, answers_params, value)
     main_answer = DocumentAnswer.find answer_id_first
     main_answer.update :answer => '1'
     count_item_answer = DocumentAnswer.find answer_id_second
