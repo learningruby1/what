@@ -1,7 +1,7 @@
 class Document < ActiveRecord::Base
   include DivorceComplaintHelper
 
-  validates :title, :presence => true
+  validates :template_name, :presence => true
 
   has_many :answers, :class_name => 'DocumentAnswer'
   has_many :dependent_documents
@@ -52,7 +52,7 @@ class Document < ActiveRecord::Base
       _answers = step_answers(next_step)
       _answers += create_next_step_answers!(next_step, _answers.first.toggler_offset + _answers.length)
     end
-    _answers
+    DocumentAnswer.sort _answers, next_step
   end
 
   #Controller answers Action update
@@ -241,6 +241,19 @@ class Document < ActiveRecord::Base
     end
   end
 
+  def return_hidden_answers(answer_id_first, answer_id_second, answers_params, value)
+    main_answer = DocumentAnswer.find answer_id_first
+    main_answer.update :answer => '1'
+    count_item_answer = DocumentAnswer.find answer_id_second
+    old_value = count_item_answer.answer.to_i
+
+    update_answers!(answers_params)
+    create_or_delete_answer value.to_i, count_item_answer, old_value
+
+    _answers = prepare_answers! count_item_answer.template_step_id, true
+    _answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }
+  end
+
   def skip_steps(next_step, direction='forward')
     if template.steps.where(:step_number => next_step).exists? && template.steps.where(:step_number => next_step).first.render_if_field_id.present?
       begin
@@ -288,18 +301,7 @@ class Document < ActiveRecord::Base
     selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question.count rescue 0
   end
 
-  def assign_owner_save!(cookies, user=nil)
-    if !user.nil?
-      self.user_id = user.id
-    else
-      cookies[:session_uniq_token] = generate_session_uniq_token if !cookies[:session_uniq_token].present?
-      self.session_uniq_token = cookies[:session_uniq_token]
-    end
-    save!
-  end
-
   def return_step(_param)
     _param.kind_of?(String) ? template.steps.where(:title => _param).first : template.steps.find(_param)
   end
-
 end

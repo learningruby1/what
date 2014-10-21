@@ -1,0 +1,20 @@
+- if @day == 10
+  %p Hello, #{ get_plaintiff_full_name(@document) }, have you heard from #{ get_defendant_full_name(@document) }? If #{ get_defendant_full_name(@document) } doesn’t response you can file a Divorce Decree by Default. Login to purchase the Default packet.
+  %p{ :style => 'color: #009933;' }
+    Hola,
+    = "#{ get_plaintiff_full_name(@document) }, "
+    ha escuchado de
+    = "#{ get_defendant_full_name(@document) }? "
+    Si
+    = "#{ get_defendant_full_name(@document) } "
+    no responde puede obtener un decreto de divorcio por fallo. Ingrese en su cuenta y comprar el formulario de Fallo.
+-elsif @day == 20
+  %p Hello, #{ get_plaintiff_full_name(@document) } have you heard from #{ get_defendant_full_name(@document) }? If #{ get_defendant_full_name(@document) } doesn’t response you can file a Divorce Decree by Default. Login to purchase the Default packet.
+  %p{ :style => 'color: #009933;' }
+    Hola,
+    = "#{ get_plaintiff_full_name(@document) }, "
+    ha escuchado de
+    = "#{ get_defendant_full_name(@document) }? "
+    Si
+    = "#{ get_defendant_full_name(@document) }? "
+    no responde puede obtener un decreto de divorcio por fallo. Ingrese en su cuenta y comprar el formulario de Fallo.

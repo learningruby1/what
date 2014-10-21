@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :documents
+  has_many :mail_reminder
 
   def to_s
     email
@@ -54,6 +55,18 @@ class User < ActiveRecord::Base
 
   def bind_sub_document(document_id, sub_document)
     documents.find(document_id).sub_documents << sub_document
+  end
+
+  def create_mail_reminder!(reminder_type)
+    if mail_reminder.blank?
+      mail_reminder.create(:reminder_type => reminder_type)
+    end
+  end
+
+  def create_document template_id
+    documents.where(:template_id => template_id).destroy_all
+    template = Template.find(template_id)
+    template.documents.create(:template_name => template.name, :user_id => id)
   end
 
 end

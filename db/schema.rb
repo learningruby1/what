@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008133753) do
+ActiveRecord::Schema.define(version: 20141020113147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20141008133753) do
     t.string   "session_uniq_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "title",              default: "Untitled document"
+    t.string   "template_name",      default: "Untitled document"
     t.boolean  "is_generated",       default: false
   end
 
@@ -50,12 +50,11 @@ ActiveRecord::Schema.define(version: 20141008133753) do
 
   create_table "mail_reminders", force: true do |t|
     t.integer  "user_id"
-    t.integer  "document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "reminder_type"
   end
 
-  add_index "mail_reminders", ["document_id"], name: "index_mail_reminders_on_document_id", using: :btree
   add_index "mail_reminders", ["user_id"], name: "index_mail_reminders_on_user_id", using: :btree
 
   create_table "template_fields", force: true do |t|
