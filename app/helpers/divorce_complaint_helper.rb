@@ -89,7 +89,7 @@ module DivorceComplaintHelper
 
   def replace_main_text(_document, _answers, text, _amount_index, _index_of_radio, _real_answer)
     if _answers.first.template_step_id == 18
-      if number_of_child(_document) != '1' && TemplateStep.where(:title => 'Physical Custody /<spain/>Custodia Física').first.document_answers.where(:document_id => _document.id).first.answer == 'Yes'
+      if number_of_child(_document) != '1' && TemplateStep.where(:title => 'Same Legal Custody /<spain/>Misma Custodia Legal').first.document_answers.where(:document_id => _document.id).first.answer == 'Yes'
         text.gsub!('the child lives', 'the children live')
         text.gsub!('el menor vive', 'los menores viven')
       end

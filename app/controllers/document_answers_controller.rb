@@ -3,6 +3,7 @@ class DocumentAnswersController < ApplicationController
 
   def edit
     if @document.present?
+      @current_step = params[:step]
       @answers = @document.prepare_answers! params[:step].to_i, params[:direction].presence || 'forward'
       @review = params[:review]
 
@@ -28,7 +29,8 @@ class DocumentAnswersController < ApplicationController
   end
 
   def render_questions
-    @answers = @document.hidden_answers( params[:answer_id_first], params[:answer_id_second], answers_params, params[:value] )
+    @current_step = params[:step]
+    @answers = @document.hidden_answers( params[:answer_id_first], params[:answer_id_second], answers_params, params[:value], params[:step] )
     @review = params[:review]
 
     if @review.present? && !@answers.blank?
