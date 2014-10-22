@@ -41,7 +41,7 @@ set :keep_releases, 5
 # Puma custom config
 set :puma_conf, "#{ shared_path }/config/puma.rb"
 
-after "deploy:migrate", "app:db:clear"
+#after "deploy:migrate", "app:db:clear"
 #after "deploy:migrate", "app:db:seed"
 
 namespace :deploy do
