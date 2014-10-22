@@ -47,20 +47,20 @@ module DivorceComplaintHelper
   end
 
   def get_defendant_full_name(document)
-    divorce_document = case document.template.id
-      when 1
+    divorce_document = case document.to_s
+      when Document::DIVORCE_COMPLAINT
         document
-      when 2
+      when Document::FILED_CASE
         document.divorce_document
       end
     divorce_document.step_answers(4).map(&:answer)[0..2].join(' ').squeeze(' ')
   end
 
   def get_plaintiff_full_name(document)
-    divorce_document = case document.template.id
-      when 1
+    divorce_document = case document.to_s
+      when Document::DIVORCE_COMPLAINT
         document
-      when 2
+      when Document::FILED_CASE
         document.divorce_document
       end
     divorce_document.step_answers(3).map(&:answer)[0..2].join(' ').squeeze(' ')
