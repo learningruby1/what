@@ -13,9 +13,7 @@ namespace :app do
     task :seed do
       on roles(:all) do
         within release_path do
-          Dir.glob("db/documents/*.rb").each do |filename|
-            execute :rake, "app:db:seed:#{File.basename(filename, ".rb")}"
-          end
+          execute :rake, "app:db:seed"
         end
       end
     end

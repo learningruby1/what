@@ -119,7 +119,7 @@ class Document < ActiveRecord::Base
   end
 
   def get_checked_answer_count(_answer)
-    template.steps.find(_answer.template_step_id + template.steps.first.id - 1).fields.where(:toggle_id => _answer.template_field.toggle_id).map{ |item| item.document_answers.where(:answer => '1', :toggler_offset => _answer.toggler_offset) }.flatten.count
+    template.steps.find(_answer.template_field.template_step.step_number.to_i + template.steps.first.id - 1).fields.where(:toggle_id => _answer.template_field.toggle_id).map{ |item| item.document_answers.where(:answer => '1', :toggler_offset => _answer.toggler_offset) }.flatten.count
   end
 
   def add_mandatory_error
@@ -191,7 +191,7 @@ class Document < ActiveRecord::Base
   def delete_hidden_answers!(next_step, answer, loop_amount, amount_field_id)
     step = answer.template_step
     if step.present?
-      tmp_answers = step_answers(next_step)
+      tmp_answers = step_answers(next_step.to_i)
       answers = []
       tmp_answers.each do |item|
         unless item.sort_index.nil?
@@ -212,7 +212,7 @@ class Document < ActiveRecord::Base
   end
 
   def get_last_sort_answer(step, sort_char, answer)
-    tmp_answers = step_answers(step)
+    tmp_answers = step_answers(step.to_i)
     answers = []
 
     tmp_answers.each do |item|
@@ -228,9 +228,9 @@ class Document < ActiveRecord::Base
     answers.last
   end
 
-  def create_or_delete_answer(value, answer, tmp_value)
+  def create_or_delete_answer(value, answer, tmp_value, step)
     toggler_offset = answer.toggler_offset
-    step = answer.template_step_id
+
     if answer.answer.nil?
       create_hidden_answers! answer, value, get_last_sort_answer(step, answer.sort_index, answer), toggler_offset
       answer.update :answer => value
@@ -241,16 +241,16 @@ class Document < ActiveRecord::Base
     end
   end
 
-  def hidden_answers(answer_id_first, answer_id_second, answers_params, value)
+  def hidden_answers(answer_id_first, answer_id_second, answers_params, value, step)
     main_answer = DocumentAnswer.find answer_id_first
     main_answer.update :answer => '1'
     count_item_answer = DocumentAnswer.find answer_id_second
     old_value = count_item_answer.answer.to_i
 
     update_answers!(answers_params)
-    create_or_delete_answer value.to_i, count_item_answer, old_value
+    create_or_delete_answer value.to_i, count_item_answer, old_value, step
 
-    _answers = prepare_answers! count_item_answer.template_step_id, true
+    _answers = prepare_answers! step.to_i, true
     _answers.sort_by!{ |item| [item.toggler_offset, item.sort_index ? 1 : 0, item.sort_index, item.sort_number] }
   end
 
@@ -288,7 +288,7 @@ class Document < ActiveRecord::Base
   end
 
   def step_answers(step)
-    step = step.id if step.kind_of?(TemplateStep)
+    step = step.step_number if step.kind_of?(TemplateStep)
     answers.where(:template_step_id => step + template.steps.first.id - 1).order(:id).to_a rescue nil
   end
 

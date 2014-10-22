@@ -7,17 +7,17 @@ module PdfDocument
 
       @document = document
 
-      @divorce_document = case document.template.id
-        when 1
+      @divorce_document = case document.template.name
+        when Document::DIVORCE_COMPLAINT
           document
-        when 2
+        when Document::FILED_CASE
           document.divorce_document
         end
 
         @document_id = document.id
         @data_array = Array.new
 
-        if document.template.id == 2
+        if document.template.name == Document::FILED_CASE
     #Filed_Case_Step 1
           steps = document.template.steps.to_enum
           answers = step_answers_enum steps.next
@@ -63,7 +63,6 @@ module PdfDocument
         steps = document.template.steps.to_enum
         answers = step_answers_enum steps.next
         @packet = answers.next.answer
-
 
         #Step 2
         answers = step_answers_enum steps.next
@@ -193,6 +192,7 @@ module PdfDocument
 
           #Step 10   Legal Custody
           answers = step_answers_enum steps.next
+
           2.times do answers.next end
           @children_nevada_residency = answers.next.answer == 'Yes' rescue false
           if !@children_nevada_residency
@@ -205,6 +205,7 @@ module PdfDocument
 
             #Step 11   CHILDREN’S ADDRESS
             answers = document.step_answers steps.next
+
             k = -1
             @number_of_children.times do |i|
               @children_info[i][:addresses_count] = answers[k += 2].answer.to_i
