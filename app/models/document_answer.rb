@@ -93,6 +93,7 @@ class DocumentAnswer < ActiveRecord::Base
      to_s]
   end
 
+  # FOR-224
   def self.sort _answers, step
     if step == '50'
       _answers.sort_by!{ |item| [item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
