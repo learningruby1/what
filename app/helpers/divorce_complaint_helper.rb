@@ -47,7 +47,7 @@ module DivorceComplaintHelper
   end
 
   def get_defendant_full_name(document)
-    divorce_document = case document.template.name
+    divorce_document = case document.to_s
       when Document::DIVORCE_COMPLAINT
         document
       when Document::FILED_CASE
@@ -57,7 +57,7 @@ module DivorceComplaintHelper
   end
 
   def get_plaintiff_full_name(document)
-    divorce_document = case document.template.name
+    divorce_document = case document.to_s
       when Document::DIVORCE_COMPLAINT
         document
       when Document::FILED_CASE
