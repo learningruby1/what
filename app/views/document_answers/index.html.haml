@@ -5,13 +5,13 @@
   - field_type_to_show = /review_show|checkbox|time/
 
   - @document.template.steps.each do |step|
-    %div{ :id => "scroll_#{step.id}" }
-    - next if @document.cant_render?(step)
+    %div{ :id => "scroll_#{step.step_number}" }
+    - next if @document.cant_render?(step) || step.document_answers.blank?
 
     .row
       .col-md-10
-        %strong.new_roman= step.to_s(@document).split('<spain/>')[0]
-        %strong.new_roman.spain= step.to_s(@document).split('<spain/>')[1]
+        %strong.new_roman= step.to_s(@document).split('<spain/>')[0].html_safe
+        %strong.new_roman.spain= step.to_s(@document).split('<spain/>')[1].html_safe
 
       .col-md-2
         = link_to document_answer_path(@document, step.step_number, :review => true), :class => 'btn btn-default' do
@@ -25,14 +25,14 @@
           - last_toggle = nil
           - main_answer = nil
           - amount_index = 0
-          - @document.answers.where(:template_step_id => step.id).order(:id).each do |answer|
+          - DocumentAnswer.sort(@document.answers.where(:template_step_id => step.id).order(:id).to_a, step).each do |answer|
+            -# hr for amount
             - if answer.template_field.id == @document.answers.where(:template_step_id => step.id).order(:id).first.template_field.id && answer.id != @document.answers.where(:template_step_id => step.id).order(:id).first.id
               %tr
                 %td
                   %hr
 
             - #Skip if answer not mentioned to show
-            - #next if answer.template_field.insert_place.present?
             - next if answer.answer.nil? && !answer.template_field.field_type.match(field_type_to_show)
             - if answer.template_field.toggle_id.present?
               - if last_toggle != answer.template_field.toggle_id
@@ -44,7 +44,7 @@
 
             - #Insert fullfiling
             - if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/)
-              - next if @document.looped_amount(answer.template_step.step_number, answer.template_step.document_answers.where(:document_id => @document.id)) < 2
+              - #next if @document.looped_amount(answer.template_step.step_number, answer.template_step.document_answers.where(:document_id => @document.id)) < 2
               - amount_index += 1
             - answer_html_array = answer.to_html_array(amount_index)
 
@@ -65,5 +65,6 @@
       = link_to 'Generate PDF', generate_pdf_path(@document.id), :class => 'btn btn-default navbar-right'
 
 :javascript
-  if($("#scroll_#{params[:scroll]}").length > 0)
+  if($("#scroll_#{params[:scroll]}").length > 0){
     $(window).scrollTop( $("#scroll_#{params[:scroll]}").position().top - 20 );
+  }
