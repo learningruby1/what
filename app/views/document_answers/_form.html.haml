@@ -1,7 +1,7 @@
 #questionare
   = form_for :document_answer, :url => (document_answer_update_path(@document, @answers.first.step_number, :review => params[:review])), :html => { :class => "form-horizontal", :role => 'form', :id => 'answer_form' } do |f|
     %input{ :type => 'hidden', :value => @document.id, :id => 'document_id' }
-    %input{ :type => 'hidden', :value => params[:step], :id => 'step_id' }
+    %input{ :type => 'hidden', :value => @current_step, :id => 'step_id' }
     %input{ :type => 'hidden', :value => params[:review], :id => 'review' }
 
     .jumbotron

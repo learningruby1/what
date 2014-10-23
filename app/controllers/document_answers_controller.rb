@@ -4,6 +4,8 @@ class DocumentAnswersController < ApplicationController
   def edit
     if @document.present?
       @answers = @document.prepare_answers! params[:step].to_i, params[:direction].presence || 'forward'
+      @current_step = @answers.first.template_field.template_step.to_i unless @answers.blank?
+
       redirect_to generate_pdf_path(@document.id) if @answers.blank?
     else
       redirect_to root_path
@@ -22,6 +24,7 @@ class DocumentAnswersController < ApplicationController
 
   def render_questions
     @answers = @document.hidden_answers(params[:answer_id_first], params[:answer_id_second], answers_params, params[:value], params[:step])
+    @current_step = params[:step]
   end
 
   def index
