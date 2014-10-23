@@ -78,9 +78,6 @@ class Document < ActiveRecord::Base
       _answer = answers.find(answer.first)
       # save answer
 
-      # Check this for step 11
-      # _answer.answer = answer.last['answer'].presence || nil
-      answer.last["answer"] = nil if answer.last["answer"].nil?
       _answer.answer = answer.last[:answer]
 
       _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
