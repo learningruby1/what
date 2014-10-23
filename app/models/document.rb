@@ -27,7 +27,6 @@ class Document < ActiveRecord::Base
   #Controller answers Action edit
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
-
     _answers = step_answers(next_step) rescue nil
 
     template_step = TemplateStep.find next_step + template.steps.first.id - 1 rescue nil
@@ -43,7 +42,6 @@ class Document < ActiveRecord::Base
     end
 
     _answers = _create_next_step_answers!(next_step) if _answers.blank?
-    #Check, FOR-224
     DocumentAnswer.sort _answers, next_step
   end
 
