@@ -4,7 +4,7 @@ class DocumentAnswersController < ApplicationController
   def edit
     if @document.present?
       @answers = @document.prepare_answers! params[:step].to_i, params[:direction].presence || 'forward'
-      @current_step = @answers.first.template_field.template_step.to_i
+      @current_step = @answers.first.template_field.template_step.to_i unless @answers.blank?
 
       redirect_to generate_pdf_path(@document.id) if @answers.blank?
     else
