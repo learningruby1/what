@@ -3,6 +3,12 @@
     %input{ :type => 'hidden', :value => @document.id, :id => 'document_id' }
     %input{ :type => 'hidden', :value => @current_step, :id => 'step_id' }
 
+    - if params[:review]
+      .container
+        = f.button :submit, :class => 'btn btn-default new_roman', :name => 'btn_review' do
+          %span Back to review /
+          %span.spain Retroceder a revisar
+
     .jumbotron
       .container
         - template_step = @answers.first.template_step
@@ -21,13 +27,6 @@
               %span.new_roman.spain Retroceder
 
         .pull-right
-          %table
-            %td
-              - if params[:review]
-                = f.button :submit, :class => 'btn btn-default new_roman', :name => 'btn_review' do
-                  %span Next to review /
-                  %span.spain Continuar a revisar
-            %td
-              = f.button :submit, :class => 'btn btn-default new_roman' do
-                %span Next /
-                %span.spain Continuar
+          = f.button :submit, :class => 'btn btn-default new_roman' do
+            %span Next /
+            %span.spain Continuar
