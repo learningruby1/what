@@ -298,7 +298,9 @@ module PdfDocument
                 case_data[:case_number] = answers[k += 1].answer
                 case_data[:date] = answers[k += 1].answer
                 k += 2
-                @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
+                if @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases].present?
+                  @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
+                end
               end
             end
 
@@ -334,7 +336,9 @@ module PdfDocument
                 case_data[:case_number] = answers[k += 1].answer
                 case_data[:date] = answers[k += 1].answer
                 k += 2
-                @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
+                if @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases].present?
+                  @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
+                end
               end
             end
 
@@ -363,7 +367,9 @@ module PdfDocument
                 case_data[:address] = answers[k += 1].answer
                 case_data[:rights] = answers[k += 1].answer
                 k += 2
-                @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
+                if @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases].present?
+                  @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
+                end
               end
             end
 
