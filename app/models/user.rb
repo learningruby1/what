@@ -64,9 +64,8 @@ class User < ActiveRecord::Base
   end
 
   def create_document(template_id)
-    documents.where(:template_id => template_id).destroy_all
+    # documents.where(:template_id => template_id).destroy_all
     template = Template.find(template_id)
     template.documents.create(:template_name => template.name, :user_id => id)
   end
-
 end

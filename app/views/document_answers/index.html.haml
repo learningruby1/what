@@ -6,7 +6,7 @@
 
   - @document.template.steps.each do |step|
     %div{ :id => "scroll_#{step.step_number}" }
-    - next if @document.cant_render?(step) || step.document_answers.blank?
+    - next if @document.cant_render?(step)# || step.document_answers.blank?
 
     .row
       .col-md-10
@@ -25,12 +25,11 @@
           - last_toggle = nil
           - main_answer = nil
           - amount_index = 0
-          - DocumentAnswer.sort(@document.answers.where(:template_step_id => step.id).order(:id).to_a, step).each do |answer|
+          - DocumentAnswer.sort(@document.answers.where(:template_step_id => step.id).to_a, step).each do |answer|
             -# hr for amount
-            - if answer.template_field.id == @document.answers.where(:template_step_id => step.id).order(:id).first.template_field.id && answer.id != @document.answers.where(:template_step_id => step.id).order(:id).first.id
-              %tr
-                %td
-                  %hr
+            - if answer.template_field.id == DocumentAnswer.sort(@document.answers.where(:template_step_id => step.id).to_a, step).first.template_field.id && answer.id != @document.answers.where(:template_step_id => step.id).order(:id).first.id
+              %div
+                %hr
 
             - #Skip if answer not mentioned to show
             - next if answer.answer.nil? && !answer.template_field.field_type.match(field_type_to_show)
@@ -48,14 +47,21 @@
               - amount_index += 1
             - answer_html_array = answer.to_html_array(amount_index)
 
-            %tr
-              %td
-                - if answer.template_field.field_type.match(field_type_to_show)
-                  = answer_html_array[0].split('<spain/>')[0].try :html_safe
-                  %span.spain= answer_html_array[0].split('<spain/>')[1].try :html_safe
+            - if answer.template_field.field_type.match(/rev_inline/)
+              %span &nbsp
+            - else
+              %div
 
-                - if !answer.template_field.field_type.match(/checkbox/)
-                  %span.answer= answer.to_spain.try :html_safe
+            - if answer.template_field.field_type.match(field_type_to_show) && answer.template_field.insert_place.nil?
+              = answer_html_array[0].split('<spain/>')[0].try :html_safe
+              %span.spain= answer_html_array[0].split('<spain/>')[1].try :html_safe
+
+            - if !answer.template_field.field_type.match(/checkbox/)
+              %span.answer= answer.to_spain.try :html_safe
+
+            - if answer.template_field.field_type.match(/rev_br/)
+              %br
+              %br
     .row
       %br
       %hr
