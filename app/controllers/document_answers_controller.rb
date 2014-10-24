@@ -33,8 +33,7 @@ class DocumentAnswersController < ApplicationController
   end
 
   def delete_fields_block
-    # This need only if to some child added blocks and then delete block from another child
-    # @document.update_answers! answers_params
+    @document.update_answers! answers_params
     @document.delete_answers_block! params[:answer_id]
   end
 

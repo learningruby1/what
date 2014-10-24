@@ -148,7 +148,8 @@ class Document < ActiveRecord::Base
 
   # Add/delete block of fields
   def add_answers_block!(answer_id)
-    last_button = answers.find(answer_id.to_i + 1) # its Delete button
+    #Its Delete button
+    last_button = answers.find(answer_id.to_i + 1)
     index = last_button.sort_number
     last_button.template_step.fields.where(:amount_field_id => TemplateField.find(last_button.template_field_id).amount_field_id).reverse_each do |field|
       index += 1
@@ -161,11 +162,13 @@ class Document < ActiveRecord::Base
 
   def delete_answers_block!(answer_id)
     answer = answers.find answer_id
-    if answer.sort_number.to_i == 1 #Its not bug, its feature! When Delete presed to first block it cant be deleted, it need to just not shown as like answer of first radio = 'No'
+      #Its not bug, its feature! When Delete presed to first block it cant be deleted, it need to just not shown as like answer of first radio = 'No'
+    if answer.sort_number.to_i == 1
       answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id, :answer => 'Yes').first.update :answer => 'No'
     else
-      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(answer.template_step.fields.where(:amount_field_id => TemplateField.find(answer.template_field_id).amount_field_id).count).each { |ans| ans.delete }
-      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(2).each { |ans| ans.update :answer => '' } # This will show buttons Add and Delete(in _loop_button)
+      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(answer.template_step.fields.where(:amount_field_id => TemplateField.find(answer.template_field_id).amount_field_id).count).each{ |ans| ans.delete }
+      # This will show buttons Add and Delete(in _loop_button)
+      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
     end
   end
   # End of Add/delete block of fields
