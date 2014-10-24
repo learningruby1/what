@@ -41,7 +41,6 @@ class Document < ActiveRecord::Base
     end
 
     _answers = _create_next_step_answers!(next_step) if _answers.blank?
-    #Check, FOR-224
     DocumentAnswer.sort _answers, next_step
   end
 
@@ -78,9 +77,6 @@ class Document < ActiveRecord::Base
       _answer = answers.find(answer.first)
       # save answer
 
-      # Check this for step 11
-      # _answer.answer = answer.last['answer'].presence || nil
-      answer.last["answer"] = nil if answer.last["answer"].nil?
       _answer.answer = answer.last[:answer]
 
       _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)

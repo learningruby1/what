@@ -1,8 +1,13 @@
 #questionare
-  = form_for :document_answer, :url => (@url), :html => { :class => "form-horizontal", :role => 'form', :id => 'answer_form' } do |f|
+  = form_for :document_answer, :url => (document_answer_update_path(@document, @answers.first.step_number, :review => params[:review])), :html => { :class => "form-horizontal", :role => 'form', :id => 'answer_form' } do |f|
     %input{ :type => 'hidden', :value => @document.id, :id => 'document_id' }
     %input{ :type => 'hidden', :value => @current_step, :id => 'step_id' }
-    %input{ :type => 'hidden', :value => @review, :id => 'review' }
+
+    - if params[:review]
+      .container
+        = f.button :submit, :class => 'btn btn-default new_roman', :name => 'btn_review' do
+          %span Back to review /
+          %span.spain Retroceder a revisar
 
     .jumbotron
       .container
@@ -16,15 +21,12 @@
     .jumbotron
       .container
         .pull-left
-          - if template_step.to_i > 1 && @review.blank?
-            = link_to document_answer_path(@document, @document.skip_steps(template_step.to_i.pred, 'back'), :direction => 'back'), :class => 'btn btn-default' do
+          - if template_step.to_i > 1
+            = link_to document_answer_path(@document, @document.skip_steps(template_step.to_i.pred, 'back'), :direction => 'back', :review => params[:review]), :class => 'btn btn-default' do
               %span.new_roman Back /
               %span.new_roman.spain Retroceder
+
         .pull-right
-          = f.button :submit, :class => 'form-control new_roman' do
-            - if @review.present?
-              %span Done /
-              %span.spain Done
-            - else
-              %span Next /
-              %span.spain Continuar
+          = f.button :submit, :class => 'btn btn-default new_roman' do
+            %span Next /
+            %span.spain Continuar

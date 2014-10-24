@@ -59,7 +59,6 @@ class DocumentAnswer < ActiveRecord::Base
             ['West Virginia', 'WV'],
             ['Wisconsin', 'WI'],
             ['Wyoming', 'WY']]
-
   PERSON = [['', ''],
             ['Grandma / Abuela', 'Grandma'],
             ['Grandpa / Abuelo', 'Grandpa'],
@@ -78,11 +77,9 @@ class DocumentAnswer < ActiveRecord::Base
     if answer.present? && document.to_s == Document::DIVORCE_COMPLAINT
       answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
       answer.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
-
-      answer.gsub! '<child>', number_of_child(document) == '1' ? 'child' : 'children'
+      answer.gsub! '<child>',                 number_of_child(document) == '1' ? 'child' : 'children'
       sole_count = get_number_of_primary_or_sole_child document
       answer.gsub!('<child_percentage_sole>', "#{sole_count} children #{get_percentage_for_children(sole_count)}%")
-
       answer[0] = 'C' if answer[0] == 'c'
     end
     answer
@@ -93,8 +90,11 @@ class DocumentAnswer < ActiveRecord::Base
      to_s]
   end
 
-  # FOR-224
-  def self.sort _answers, step
+  def step_number
+    template_field.template_step.to_i
+  end
+
+  def self.sort(_answers, step)
     if step == '50'
       _answers.sort_by!{ |item| [item.sort_index ? 1 : 0, item.sort_index, item.sort_number, item.template_field_id] }
     else
@@ -105,7 +105,13 @@ class DocumentAnswer < ActiveRecord::Base
   def to_spain
     return to_s if !template_field.field_type.match(/radio/)
     template_field.to_text(document).split('<option/>').each do |a|
-      return a.gsub('*', '') if a.match(Regexp.new(answer))
+      if a.match(Regexp.new answer)
+        if a.match '<spain/>'
+          splited_answer = a.split '<spain/>'
+          a = splited_answer[0] + ' <span class="spain">' + splited_answer[1] + '</span>'
+        end
+        return a.gsub('*', '')
+      end
     end
   end
 end

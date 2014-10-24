@@ -3,15 +3,9 @@ class DocumentAnswersController < ApplicationController
 
   def edit
     if @document.present?
-      @current_step = params[:step]
       @answers = @document.prepare_answers! params[:step].to_i, params[:direction].presence || 'forward'
-      @review = params[:review]
+      @current_step = @answers.first.template_field.template_step.to_i unless @answers.blank?
 
-      if @review.present? && !@answers.blank?
-        @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
-      elsif !@answers.blank?
-        @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)
-      end
       redirect_to generate_pdf_path(@document.id) if @answers.blank?
     else
       redirect_to root_path
@@ -22,22 +16,15 @@ class DocumentAnswersController < ApplicationController
     if @document.update_answers! answers_params
       redirect_to document_answer_path(@document, params[:step].to_i, :review => params[:review]), :alert => @document.errors.full_messages.first
     else
-      redirect_to params[:review].present? ?
+      redirect_to params[:review].present? && params[:btn_review] ?
         document_review_path(@document, :scroll => params[:step]):
-        document_answer_path(@document, (params[:step].to_i + (params[:direction] == 'back' ? -1 : 1)))
+        document_answer_path(@document, (params[:step].to_i + (params[:direction] == 'back' ? -1 : 1)), :review => params[:review])
     end
   end
 
   def render_questions
+    @answers = @document.hidden_answers(params[:answer_id_first], params[:answer_id_second], answers_params, params[:value], params[:step])
     @current_step = params[:step]
-    @answers = @document.hidden_answers( params[:answer_id_first], params[:answer_id_second], answers_params, params[:value], params[:step] )
-    @review = params[:review]
-
-    if @review.present? && !@answers.blank?
-      @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i, :review => true)
-    elsif !@answers.blank?
-      @url = document_answer_update_path(@document, @answers.first.template_field.template_step.to_i)
-    end
   end
 
   def add_fields_block
