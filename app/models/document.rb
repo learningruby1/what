@@ -28,12 +28,11 @@ class Document < ActiveRecord::Base
   def prepare_answers!(next_step, direction)
     next_step = skip_steps next_step
     _answers = step_answers(next_step) rescue nil
-
     template_step = TemplateStep.find next_step + template.steps.first.id - 1 rescue nil
 
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
-    if direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
+    if !template_step.fields.where(:field_type => 'loop_button').present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
       (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) ||
       _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option)
 
@@ -121,7 +120,7 @@ class Document < ActiveRecord::Base
       end
     end
 
-    if _answer.sort_number == 2 && _answer.answer != ''
+    if _answer.sort_number == 2 && _answer.answer.present?
       step = _answer.template_step
       parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       prev_answer = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first.answer
@@ -146,6 +145,33 @@ class Document < ActiveRecord::Base
   end
   # End of check mandatory
 
+
+  # Add/delete block of fields
+  def add_answers_block!(answer_id)
+    #Its Delete button
+    last_button = answers.find(answer_id.to_i + 1)
+    index = last_button.sort_number
+    last_button.template_step.fields.where(:amount_field_id => TemplateField.find(last_button.template_field_id).amount_field_id).reverse_each do |field|
+      index += 1
+      answers.create(:template_field_id => field.id, :toggler_offset => last_button.toggler_offset, :sort_index => last_button.sort_index, :sort_number => index, :template_step_id => last_button.template_step_id )
+    end
+    # This will hide buttons Add and Delete(in _loop_button)
+    last_button.update :answer => 'none'
+    answers.find(answer_id.to_i).update :answer => 'none'
+  end
+
+  def delete_answers_block!(answer_id)
+    answer = answers.find answer_id
+      #Its not bug, its feature! When Delete presed to first block it cant be deleted, it need to just not shown as like answer of first radio = 'No'
+    if answer.sort_number.to_i == 1
+      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id, :answer => 'Yes').first.update :answer => 'No'
+    else
+      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(answer.template_step.fields.where(:amount_field_id => TemplateField.find(answer.template_field_id).amount_field_id).count).each{ |ans| ans.delete }
+      # This will show buttons Add and Delete(in _loop_button)
+      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
+    end
+  end
+  # End of Add/delete block of fields
 
   # Hidden answers
   def create_hidden_answers!(answer, loop_amount, last_answer, toggler_offset=0)

@@ -1,0 +1,7 @@
+.container
+  %div{ :class => 'one_more' }
+    = a.hidden_field :answer, :value => answer.answer
+    .row.new_roman.col-md-2
+      %a.btn.btn-default.loop-button.ajax-count{ :answer => answer.id, :name => "#{ answer.template_field.field_type.match('add') ? 'Add' : 'Delete' }", :style => "display:#{ answer.answer }" }
+        %span.new_roman #{ answer.template_field.name.split(' /<spain/>').first } /
+        %span.new_roman.spain #{ answer.template_field.name.split(' /<spain/>').last }

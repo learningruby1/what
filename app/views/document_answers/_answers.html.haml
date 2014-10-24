@@ -33,6 +33,9 @@
       - when /radio/
         = render :partial => 'document_answers/fields/radio', :locals => { :a => a, :answer => answer }
 
+      - when /loop_button/
+        = render :partial => 'document_answers/fields/loop_button', :locals => { :a => a, :answer => answer }
+
       - when /sub_amount/
         = render :partial => 'document_answers/fields/sub_amount', :locals => { :a => a, :answer => answer }
 

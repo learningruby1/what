@@ -270,69 +270,96 @@ module PdfDocument
             answers = document.step_answers steps.next
             k = -1
             @number_of_children.times do |i|
+              @children_info[i][:toggler_offset] = answers[k + 2].toggler_offset
               has_cases = answers[k += 2].answer == 'Yes' rescue false
-              has_cases ? @children_info[i][:question_1_case_count] = answers[k += 1].answer.to_i : k += 1
-              @children_info[i][:question_1_cases] = []
+              if has_cases
+                @children_info[i][:question_1_cases] = []
+                case_data = {}
+                case_data[:role] = answers[k += 2].answer
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:name_of_court] = answers[k += 1].answer
+                case_data[:state] = answers[k += 1].answer
+                case_data[:case_number] = answers[k += 1].answer
+                case_data[:date] = answers[k += 1].answer
+                k += 2
+                @children_info[i][:question_1_cases] << case_data
+              else
+                k += 9
+              end
             end
 
-            @number_of_children.times do |i|
-              if @children_info[i][:question_1_case_count].present?
-                  @children_info[i][:question_1_case_count].times do
-                    case_data = {}
-                    case_data[:role] = answers[k += 2].answer
-                    case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
-                    case_data[:name_of_court] = answers[k += 1].answer
-                    case_data[:state] = answers[k += 1].answer
-                    case_data[:case_number] = answers[k += 1].answer
-                    case_data[:date] = answers[k += 1].answer
-                    @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
-                  end
-                end
-              end
+            while answers.count - 1 > k do
+              case_data = {}
+              case_data[:role] = answers[k += 2].answer
+              case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+              case_data[:name_of_court] = answers[k += 1].answer
+              case_data[:state] = answers[k += 1].answer
+              case_data[:case_number] = answers[k += 1].answer
+              case_data[:date] = answers[k += 1].answer
+              k += 2
+              @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
+            end
 
             #Step 13   CHILDREN’S QUESTION 2
             answers = document.step_answers steps.next
             k = -1
             @number_of_children.times do |i|
+              @children_info[i][:toggler_offset] = answers[k + 2].toggler_offset
               has_cases = answers[k += 2].answer == 'Yes' rescue false
-              has_cases ? @children_info[i][:question_2_case_count] = answers[k += 1].answer.to_i : k += 1
-              @children_info[i][:question_2_cases] = []
+              if has_cases
+                @children_info[i][:question_2_cases] = []
+                case_data = {}
+                case_data[:role] = answers[k += 2].answer
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:name_of_court] = answers[k += 1].answer
+                case_data[:state] = answers[k += 1].answer
+                case_data[:case_number] = answers[k += 1].answer
+                case_data[:date] = answers[k += 1].answer
+                k += 2
+                @children_info[i][:question_2_cases] << case_data
+              else
+                k += 9
+              end
             end
 
-            @number_of_children.times do |i|
-              if @children_info[i][:question_2_case_count].present?
-                  @children_info[i][:question_2_case_count].times do
-                    case_data = {}
-                    case_data[:role] = answers[k += 2].answer
-                    case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
-                    case_data[:name_of_court] = answers[k += 1].answer
-                    case_data[:state] = answers[k += 1].answer
-                    case_data[:case_number] = answers[k += 1].answer
-                    case_data[:date] = answers[k += 1].answer
-                    @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
-                  end
-                end
-              end
+            while answers.count - 1 > k do
+              case_data = {}
+              case_data[:role] = answers[k += 2].answer
+              case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+              case_data[:name_of_court] = answers[k += 1].answer
+              case_data[:state] = answers[k += 1].answer
+              case_data[:case_number] = answers[k += 1].answer
+              case_data[:date] = answers[k += 1].answer
+              k += 2
+              @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
+            end
 
             #Step 14   CHILDREN’S QUESTION 3
             answers = document.step_answers steps.next
             k = -1
             @number_of_children.times do |i|
               has_cases = answers[k += 2].answer == 'Yes' rescue false
-              has_cases ? @children_info[i][:question_3_case_count] = answers[k += 1].answer.to_i : k += 1
-              @children_info[i][:question_3_cases] = []
-            end
-            @number_of_children.times do |i|
-              if @children_info[i][:question_3_case_count].present?
-                  @children_info[i][:question_3_case_count].times do
-                    case_data = {}
-                    case_data[:name] = answers[k += 1].answer
-                    case_data[:address] = answers[k += 1].answer
-                    case_data[:rights] = answers[k += 1].answer
-                    @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
-                  end
-                end
+               if has_cases
+                @children_info[i][:question_3_cases] = []
+                case_data = {}
+                case_data[:name] = answers[k += 1].answer
+                case_data[:address] = answers[k += 1].answer
+                case_data[:rights] = answers[k += 1].answer
+                k += 2
+                @children_info[i][:question_3_cases] << case_data
+              else
+                k += 5
               end
+            end
+
+            while answers.count - 1 > k do
+              case_data = {}
+              case_data[:name] = answers[k += 1].answer
+              case_data[:address] = answers[k += 1].answer
+              case_data[:rights] = answers[k += 1].answer
+              k += 2
+              @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
+            end
 
             #Step 15   Legal Custody
             answers = step_answers_enum steps.next
