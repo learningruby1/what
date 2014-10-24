@@ -32,7 +32,7 @@ class Document < ActiveRecord::Base
 
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
-    if !template_step.fields.where(:field_type => 'loop_button').present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
+    if !template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
       (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) ||
       _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option)
 
@@ -120,7 +120,7 @@ class Document < ActiveRecord::Base
       end
     end
 
-    if _answer.sort_number == 2 && _answer.answer.present?
+    if !_answer.template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present? && _answer.sort_number == 2 && _answer.answer.present?
       step = _answer.template_step
       parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
       prev_answer = answers.where(:template_field_id => parent_template.id, :toggler_offset => _answer.toggler_offset).first.answer

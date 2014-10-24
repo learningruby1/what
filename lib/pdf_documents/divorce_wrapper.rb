@@ -288,16 +288,18 @@ module PdfDocument
               end
             end
 
-            while answers.count - 1 > k do
-              case_data = {}
-              case_data[:role] = answers[k += 2].answer
-              case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
-              case_data[:name_of_court] = answers[k += 1].answer
-              case_data[:state] = answers[k += 1].answer
-              case_data[:case_number] = answers[k += 1].answer
-              case_data[:date] = answers[k += 1].answer
-              k += 2
-              @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
+            if @children_info.select{ |e| e[:question_1_cases] }.present?
+              while answers.count - 1 > k do
+                case_data = {}
+                case_data[:role] = answers[k += 2].answer
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:name_of_court] = answers[k += 1].answer
+                case_data[:state] = answers[k += 1].answer
+                case_data[:case_number] = answers[k += 1].answer
+                case_data[:date] = answers[k += 1].answer
+                k += 2
+                @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
+              end
             end
 
             #Step 13   CHILDREN’S QUESTION 2
@@ -322,16 +324,18 @@ module PdfDocument
               end
             end
 
-            while answers.count - 1 > k do
-              case_data = {}
-              case_data[:role] = answers[k += 2].answer
-              case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
-              case_data[:name_of_court] = answers[k += 1].answer
-              case_data[:state] = answers[k += 1].answer
-              case_data[:case_number] = answers[k += 1].answer
-              case_data[:date] = answers[k += 1].answer
-              k += 2
-              @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
+            if @children_info.select{ |e| e[:question_2_cases] }.present?
+              while answers.count - 1 > k do
+                case_data = {}
+                case_data[:role] = answers[k += 2].answer
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:name_of_court] = answers[k += 1].answer
+                case_data[:state] = answers[k += 1].answer
+                case_data[:case_number] = answers[k += 1].answer
+                case_data[:date] = answers[k += 1].answer
+                k += 2
+                @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
+              end
             end
 
             #Step 14   CHILDREN’S QUESTION 3
@@ -352,13 +356,15 @@ module PdfDocument
               end
             end
 
-            while answers.count - 1 > k do
-              case_data = {}
-              case_data[:name] = answers[k += 1].answer
-              case_data[:address] = answers[k += 1].answer
-              case_data[:rights] = answers[k += 1].answer
-              k += 2
-              @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
+            if @children_info.select{ |e| e[:question_3_cases] }.present?
+              while answers.count - 1 > k do
+                case_data = {}
+                case_data[:name] = answers[k += 1].answer
+                case_data[:address] = answers[k += 1].answer
+                case_data[:rights] = answers[k += 1].answer
+                k += 2
+                @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
+              end
             end
 
             #Step 15   Legal Custody
