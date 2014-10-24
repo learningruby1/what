@@ -43,9 +43,9 @@ module PdfDocument
       move_down 40
 
 
-      push_text "2. I <b>HAVE#{' NOT' if @children_info.select { |e| e[:question_1_case_count] }.empty? }</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
+      push_text "2. I <b>HAVE#{' NOT' if @children_info.select { |e| e[:question_1_cases] }.empty? }</b> participated as a party, witness, or in any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of a child involved in this proceeding.", @text_indent
       @number_of_children.times do |i|
-        @children_info[i][:question_1_case_count].to_i.times do |j|
+        @children_info[i][:question_1_cases].to_a.count.times do |j|
           push_text "a. Name of each child involved: " + @children_info[i][:full_name], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_1_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{ @children_info[i][:question_1_cases][j][:name_of_court] } #{ @children_info[i][:question_1_cases][j][:state] } #{ @children_info[i][:question_1_cases][j][:case_number] }", @text_indent * 2
@@ -53,9 +53,9 @@ module PdfDocument
         end
       end
 
-      push_text "3. I <b>DO#{' NOT' if @children_info.select { |e| e[:question_2_case_count] }.empty? }</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
+      push_text "3. I <b>DO#{' NOT' if @children_info.select { |e| e[:question_2_cases] }.empty? }</b> know of any proceeding that could affect the current proceeding including proceedings for enforcement and proceedings related to domestic violence, protective orders, termination of parental rights and adoptions pending in a court of this or any other state concerning a child involved in this proceeding other than that set out in item 1 above.", @text_indent
       @number_of_children.times do |i|
-        @children_info[i][:question_2_case_count].to_i.times do |j|
+        @children_info[i][:question_2_cases].to_a.count.times do |j|
           push_text "a. Name of each child involved: " + @children_info[i][:full_name], @text_indent * 2
           push_text "b. Your role in other proceeding: " + @children_info[i][:question_2_cases][j][:role].to_s, @text_indent * 2
           push_text "c. Court, state, and case number of other proceeding: #{ @children_info[i][:question_2_cases][j][:name_of_court] } #{ @children_info[i][:question_2_cases][j][:state] } #{ @children_info[i][:question_2_cases][j][:case_number] }", @text_indent * 2
@@ -63,9 +63,9 @@ module PdfDocument
         end
       end
 
-      push_text "4. I <b>DO#{' NOT' if @children_info.select { |e| e[:question_3_case_count] }.empty? }</b> know of any person not a party to this proceeding who has physical custody or claims to have custody or visitation rights with respect to any child subject to this proceeding.", @text_indent
+      push_text "4. I <b>DO#{' NOT' if @children_info.select { |e| e[:question_3_cases] }.empty? }</b> know of any person not a party to this proceeding who has physical custody or claims to have custody or visitation rights with respect to any child subject to this proceeding.", @text_indent
       @number_of_children.times do |i|
-        @children_info[i][:question_3_case_count].to_i.times do |j|
+        @children_info[i][:question_3_cases].to_a.count.times do |j|
           push_text "a. Name and address of person: #{ @children_info[i][:question_3_cases][j][:name] } #{ @children_info[i][:question_3_cases][j][:address] }", @text_indent * 2
           case @children_info[i][:question_3_cases][j][:rights]
           when /VISITATION/

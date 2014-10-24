@@ -1,5 +1,5 @@
 class DocumentAnswersController < ApplicationController
-  before_action :get_document, :only => [:edit, :update, :render_questions, :index]
+  before_action :get_document, :only => [:edit, :update, :render_questions, :add_fields_block, :delete_fields_block, :index]
 
   def edit
     if @document.present?
@@ -40,16 +40,23 @@ class DocumentAnswersController < ApplicationController
     end
   end
 
+  def add_fields_block
+    @document.update_answers! answers_params
+    @document.add_answers_block! params[:answer_id]
+  end
+
+  def delete_fields_block
+    # This need only if to some child added blocks and then delete block from another child
+    # @document.update_answers! answers_params
+    @document.delete_answers_block! params[:answer_id]
+  end
+
   def index
   end
 
   private
   def get_document
-    if user_signed_in?
-      @document = current_user.documents.find(params[:document_id])
-    else
-      @document = Document.where(:id => params[:document_id], :session_uniq_token => cookies[:session_uniq_token], :user_id => nil).first
-    end
+    @document = current_user.documents.find(params[:document_id])
   end
 
   def answers_params
