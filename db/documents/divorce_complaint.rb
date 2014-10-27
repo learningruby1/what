@@ -163,11 +163,6 @@ current_step.fields.create :field_type => 'text review_show', :name => 'Have <ch
 toggle_id = 0
 toggle_id += 1
 continue_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-# current_step.fields.create :field_type => 'text', :name => 'The law requires that you provide the address where <child_count> have lived for the last 5 years.
-#                                                               If <child_count> is younger than 5 year old, where <child_count> has lived since birth.
-#                                                             If you don’t remember all the address do your best by using the internet since your document might be returned by the Judge if a lot of the information is missing.<br/><spain/>
-#                                                             La ley requiere que usted proporcione la dirección donde <child_count_spain> han vivido durante los últimos 5 años. Si <child_count_spain> tiene menos de 5 años de edad, escriba las direcciones donde ha vivido desde que nació.
-#                                                             Si no recuerda todas las direcciones trate de usar el internet ya que pueda ser que el juez le devuelva el documento si falta mucha de la información.', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'text', :name => 'Nevada Court does not have the legal right to set custody at this time, BUT you can still get a divorce without custody. However, you will need to address the children’s health insurance and child support issue.<br/><spain/>
                                                             No. La corte de Nevada no tiene el poder para establecer custodia en este momento, PERO usted todavía puede divorciarse sin custodia.', :toggle_id => toggle_id, :toggle_option => 'No'
 current_step.fields.create :field_type => 'text', :name => 'Do you still want to continue? /<spain/>¿Quiere continuar?', :toggle_id => toggle_id, :toggle_option => 'No'
@@ -180,57 +175,140 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                             If you don’t remember all the address do your best by using the internet since your document might be returned by the Judge if a lot of the information is missing.<br/><spain/>
                                                             La ley requiere que usted proporcione la dirección donde <child_count_spain> han vivido durante los últimos 5 años. Si <child_count_spain> tiene menos de 5 años de edad, escriba las direcciones donde ha vivido desde que nació.
                                                             Si no recuerda todas las direcciones trate de usar el internet ya que pueda ser que el juez le devuelva el documento si falta mucha de la información.'
+address_count = current_step.fields.create :field_type => 'text',
+                           :name => '<insert>',
+                           :header_ids => "#{ child_name.id }/#{ child_last_name.id }",
+                           :sort_index => 'a1'
+current_step.fields.create :field_type => 'text',
+                           :name => 'Address information /<spain/>Información de dirección',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'text', :name => '<insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sort_index => 'a1'
-address_count = current_step.fields.create :name => 'How Many Addresses? /<spain/>¿Cuántos Direcciones?:', :field_type => 'sub_amount', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
-current_step.fields.create :field_type => 'text', :name => 'Address information /<spain/>Información de dirección', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :field_type => 'radio', :name => 'Same as me /<spain/>La misma que yo<option/>Outside the United States /<spain/>Fuera de los Estados Unidos<option/>In the United States /<spain/>En los Estados Unidos', :toggle_id => toggle_id, :amount_field_id => address_count.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio',
+                           :name => 'Same as me /<spain/>La misma que yo<option/>Outside the United States /<spain/>Fuera de los Estados Unidos<option/>In the United States /<spain/>En los Estados Unidos',
+                           :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
+                           :toggle_id => toggle_id,
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
 
-current_step.fields.create :name => 'Address /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false, :field_type => 'string-capitalize'
-current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize', :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :field_type => 'date_without_day', :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }, :amount_field_id => address_count.id, :raw_question => false
-field_for_mandatory_first = current_step.fields.create :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false, :sub_toggle_id => toggle_id + 1
 
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Address /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :name => 'City-Town-Province /<spain/>Ciudad-Pueblo-Provincia: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize', :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Country /<spain/>País: * ', :mandatory => { :value => /^\w+$/, :hint => 'Provide a country /<spain/>Por favor, proporcionar un país' }, :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :field_type => 'date_without_day', :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección', :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }, :amount_field_id => address_count.id, :raw_question => false
-field_for_mandatory_second = current_step.fields.create :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false, :sub_toggle_id => toggle_id + 1
+current_step.fields.create :field_type => 'string-capitalize',
+                           :name => 'Address /<spain/>Dirección: *',
+                           :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' },
+                           :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
 
-current_step.fields.create :field_type => 'date_without_day', :name => 'Child moved to my address /<spain/>El menor se mudó a mi dirección', :toggle_id => toggle_id, :toggle_option => 'Same as me', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }, :amount_field_id => address_count.id, :raw_question => false
+current_step.fields.create :field_type => 'string-capitalize',
+                           :name => 'City /<spain/>Ciudad: *',
+                           :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' },
+                           :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'states',
+                           :name => 'State /<spain/>Estado: *',
+                           :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' },
+                           :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ',
+                           :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' },
+                           :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'date_without_day',
+                           :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección',
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
+                           :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+field_for_mandatory_first = current_step.fields.create :field_type => 'radio',
+                                                       :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
+                                                       :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
+                                                       :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                                                       :sub_toggle_id => toggle_id + 1,
+                                                       :amount_field_id => address_count.id,
+                                                       :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'string-capitalize',
+                           :name => 'Address /<spain/>Dirección: *',
+                           :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' },
+                           :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'string-capitalize',
+                           :name => 'City-Town-Province /<spain/>Ciudad-Pueblo-Provincia: *',
+                           :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' },
+                           :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'string-capitalize',
+                           :name => 'Country /<spain/>País: * ',
+                           :mandatory => { :value => /^\w+$/, :hint => 'Provide a country /<spain/>Por favor, proporcionar un país' },
+                           :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'date_without_day',
+                           :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección',
+                           :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
+field_for_mandatory_second = current_step.fields.create :field_type => 'radio',
+                                                        :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
+                                                        :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
+                                                        :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
+                                                        :sub_toggle_id => toggle_id + 1,
+                                                        :amount_field_id => address_count.id,
+                                                        :sort_index => 'a1'
+
+
+current_step.fields.create :field_type => 'date_without_day',
+                           :name => 'Child moved to my address /<spain/>El menor se mudó a mi dirección',
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
+                           :toggle_id => toggle_id, :toggle_option => 'Same as me',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+
 
 
 toggle_id += 1
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of person /<spain/>Nombre de la persona: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido', :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' }, :toggle_id => toggle_id, :toggle_option => 'Other', :amount_field_id => address_count.id, :raw_question => false
-current_step.fields.create :field_type => 'select_person', :name => 'Relationship to child /<spain/>Parentesco con el menor: *', :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona', :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' }, :toggle_id => toggle_id, :toggle_option => 'Other', :amount_field_id => address_count.id, :raw_question => false
+current_step.fields.create :field_type => 'string-capitalize',
+                           :name => 'Name of person /<spain/>Nombre de la persona: *',
+                           :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido',
+                                           :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
+                           :toggle_id => toggle_id, :toggle_option => 'Other',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
 
-# current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => field_for_render_1.id.to_s + '/' + field_for_render_2.id.to_s + '/' + field_for_render_3.id.to_s, :render_if_field_value => 'Yes/Yes/Yes', :amount_field_id => children_amount_field.id, #12
-#                                      :title => '<uppercase_child>’S PRIOR ADDRESS /<spain/>DIRECCION ANTERIO <uppercase_child_spain>'
-# toggle_id = 0
-# toggle_id += 1
-# current_step.fields.create :field_type => 'text', :name => '<insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sort_index => 'a1'
-# address_count = current_step.fields.create :name => 'How Many Addresses?/<spain/>¿Cuántos Direcciones?:', :field_type => 'sub_amount', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Description" /<spain/>Por favor introduce el recuento o el botón "Descripción"' }
-# current_step.fields.create :field_type => 'radio', :name => 'In the United States /<spain/>En los Estados Unidos<option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :amount_field_id => address_count.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'select_person',
+                           :name => 'Relationship to child /<spain/>Parentesco con el menor: *',
+                           :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona',
+                                           :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
+                           :toggle_id => toggle_id, :toggle_option => 'Other',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
 
-# current_step.fields.create :name => 'Address /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize', :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :field_type => 'date_without_day', :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }, :amount_field_id => address_count.id, :raw_question => false
-# field_for_mandatory_first = current_step.fields.create :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :toggle_option => 'In the United States', :amount_field_id => address_count.id, :raw_question => false, :sub_toggle_id => toggle_id + 1
 
-# current_step.fields.create :name => 'Address /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :name => 'City-Town-Province /<spain/>Ciudad-Pueblo-Provincia: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :field_type => 'string-capitalize', :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :name => 'Country /<spain/>País: * ', :mandatory => { :value => /^\w+$/, :hint => 'Provide a country /<spain/>Por favor, proporcionar un país' }, :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :field_type => 'date_without_day', :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección', :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }, :amount_field_id => address_count.id, :raw_question => false
-# field_for_mandatory_second = current_step.fields.create :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :toggle_option => 'Outside the United States', :amount_field_id => address_count.id, :raw_question => false, :sub_toggle_id => toggle_id + 1
+current_step.fields.create :field_type => 'loop_button-add',
+                           :name => 'Add one more address /<spain/> Añadir una dirección más',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
+current_step.fields.create :field_type => 'loop_button-delete',
+                           :name => 'Delete last address /<spain/> Eliminar la última dirección',
+                           :amount_field_id => address_count.id,
+                           :sort_index => 'a1'
 
-# toggle_id += 1
-# current_step.fields.create :name => 'Name of person /<spain/>Nombre de la persona: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido', :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' }, :toggle_id => toggle_id, :toggle_option => 'Other', :amount_field_id => address_count.id, :raw_question => false
-# current_step.fields.create :field_type => 'select_person', :name => 'Relationship to child /<spain/>Parentesco con el menor: *', :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona', :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' }, :toggle_id => toggle_id, :toggle_option => 'Other', :amount_field_id => address_count.id, :raw_question => false
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #12
                                      :title => '<uppercase_child>’S QUESTION 1 /<spain/><uppercase_child_spain> PREGUNTA 1'
@@ -238,21 +316,13 @@ current_step.fields.create :field_type => 'text review_show', :name => 'Have YOU
 toggle_id = 0
 toggle_id += 1
 participated = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :name => '', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :name => 'Date of court order or Judgment: */<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-
-current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :name => '', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :name => 'Date of court order or Judgment: * /<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
+current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :name => '', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :name => 'Date of court order or Judgment: * /<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
 
 current_step.fields.create :field_type => 'loop_button-add', :name => 'Add /<spain/> Añadir', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
 current_step.fields.create :field_type => 'loop_button-delete', :name => 'Delete /<spain/> Eliminar', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
@@ -263,21 +333,13 @@ current_step.fields.create :field_type => 'text review_show', :name => 'IS THERE
 toggle_id = 0
 toggle_id += 1
 participated = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :name => '', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :name => 'Date of court order or Judgment: */<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-
-current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :name => '', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :name => 'Date of court order or Judgment: * /<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
+current_step.fields.create :field_type => 'text', :name => 'Your role in the case: * /<spain/>Que fue su participación en el caso: *', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'radio', :name => 'Party /<spain/>Demandado  o demandante<option/>Witness /<spain/>Testigo<option/>Other /<spain/>Otra', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :name => '', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of court: * /<spain/>Nombre de la corte: *', :mandatory => { :value => /\w+/, :hint => 'Provide a name of court /<spain/>Por favor, proporcionar un nombre de la corte' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :name => 'Case number: /<spain/>Número de caso: ', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :name => 'Date of court order or Judgment: * /<spain/>Fecha de la orden judicial o sentencia: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date /<spain/>Por favor, introduzca una fecha' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
 
 current_step.fields.create :field_type => 'loop_button-add', :name => 'Add /<spain/> Añadir', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
 current_step.fields.create :field_type => 'loop_button-delete', :name => 'Delete /<spain/> Eliminar', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
@@ -289,13 +351,9 @@ current_step.fields.create :field_type => 'text review_show', :name => 'DO YOU K
 toggle_id = 0
 toggle_id += 1
 participated = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of person: * /<spain/>Nombre de la persona: *', :mandatory => { :value => /\w+/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Address: * /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
-current_step.fields.create :field_type => 'radio-last', :name => 'Person(s) has PHYSICAL custody <insert> /<spain/>Persona (s) tiene la custodia FÍSICA <insert><option/>Person(s) claims CUSTODY rights <insert> /<spain/>Persona (s) reclama los derechos de CUSTODIA <insert><option/>Person(s) claim VISITATION rights <insert> /<spain/>Persona (s) reclamar derechos de VISITAS <insert>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_option => 'Yes', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sub_toggle_id => toggle_id + 1, :sort_index => 'a1'
-
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of person: * /<spain/>Nombre de la persona: *', :mandatory => { :value => /\w+/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'string-capitalize', :name => 'Address: * /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
-current_step.fields.create :field_type => 'radio-last', :name => 'Person(s) has PHYSICAL custody <insert> /<spain/>Persona (s) tiene la custodia FÍSICA <insert><option/>Person(s) claims CUSTODY rights <insert> /<spain/>Persona (s) reclama los derechos de CUSTODIA <insert><option/>Person(s) claim VISITATION rights <insert> /<spain/>Persona (s) reclamar derechos de VISITAS <insert>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_option => 'Yes', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sub_toggle_id => toggle_id + 1, :sort_index => 'a1', :amount_field_id => participated.id, :raw_question => false
+current_step.fields.create :field_type => 'string-capitalize', :name => 'Name of person: * /<spain/>Nombre de la persona: *', :mandatory => { :value => /\w+/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'string-capitalize', :name => 'Address: * /<spain/>Dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1', :amount_field_id => participated.id
+current_step.fields.create :field_type => 'radio-last', :name => 'Person(s) has PHYSICAL custody <insert> /<spain/>Persona (s) tiene la custodia FÍSICA <insert><option/>Person(s) claims CUSTODY rights <insert> /<spain/>Persona (s) reclama los derechos de CUSTODIA <insert><option/>Person(s) claim VISITATION rights <insert> /<spain/>Persona (s) reclamar derechos de VISITAS <insert>', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_option => 'Yes', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sub_toggle_id => toggle_id + 1, :sort_index => 'a1', :amount_field_id => participated.id
 
 current_step.fields.create :field_type => 'loop_button-add', :name => 'Add /<spain/> Añadir', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
 current_step.fields.create :field_type => 'loop_button-delete', :name => 'Delete /<spain/> Eliminar', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'

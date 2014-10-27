@@ -19,7 +19,6 @@ class Document < ActiveRecord::Base
 
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
 
-  STEP_12 = "<uppercase_child>’S ADDRESS"
   #Not for one child
   CHILDREN_QUESTIONS = [15, 17]
 
@@ -53,7 +52,7 @@ class Document < ActiveRecord::Base
 
         current_step.fields.reverse_each do |field|
           if field.raw_question == true && (i == 0 || field.dont_repeat == false)
-            params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * template.steps.count) }
+            params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * 1000) }
             params.merge!({ :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i }) if !field.sort_index.nil?
 
             template_field = TemplateField.find(params[:template_field_id])
@@ -153,7 +152,7 @@ class Document < ActiveRecord::Base
     index = last_button.sort_number
     last_button.template_step.fields.where(:amount_field_id => TemplateField.find(last_button.template_field_id).amount_field_id).reverse_each do |field|
       index += 1
-      answers.create(:template_field_id => field.id, :toggler_offset => last_button.toggler_offset, :sort_index => last_button.sort_index, :sort_number => index, :template_step_id => last_button.template_step_id )
+      answers.create(:template_field_id => field.id, :toggler_offset => (last_button.toggler_offset + 10), :sort_index => last_button.sort_index, :sort_number => index, :template_step_id => last_button.template_step_id )
     end
     # This will hide buttons Add and Delete(in _loop_button)
     last_button.update :answer => 'none'
@@ -162,14 +161,9 @@ class Document < ActiveRecord::Base
 
   def delete_answers_block!(answer_id)
     answer = answers.find answer_id
-      #Its not bug, its feature! When Delete presed to first block it cant be deleted, it need to just not shown as like answer of first radio = 'No'
-    if answer.sort_number.to_i == 1
-      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id, :answer => 'Yes').first.update :answer => 'No'
-    else
-      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(answer.template_step.fields.where(:amount_field_id => TemplateField.find(answer.template_field_id).amount_field_id).count).each{ |ans| ans.delete }
-      # This will show buttons Add and Delete(in _loop_button)
-      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
-    end
+      answers.where(:toggler_offset => answer.toggler_offset - 10, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
+      # This will delete last block
+      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).destroy_all
   end
   # End of Add/delete block of fields
 
@@ -183,11 +177,7 @@ class Document < ActiveRecord::Base
       loop_amount.times do |i|
         step.fields.where(:amount_field_id => answer.template_field_id).reverse_each do |field|
           index += 1
-          if step.title.split(' /<spain/>').first == STEP_12
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset + (counter + i + 1) * 2, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => answer.template_step_id )
-          else
-            answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => answer.template_step_id )
-          end
+          answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => answer.template_step_id )
         end
       end
     end
@@ -200,11 +190,7 @@ class Document < ActiveRecord::Base
       answers = []
       tmp_answers.each do |item|
         unless item.sort_index.nil?
-          if step.title.split(' /<spain/>').first == STEP_12
-            answers << item if item.sort_index.include?(answer.sort_index) && item.toggler_offset >= answer.toggler_offset && item.toggler_offset <= (answer.answer.to_i + answer.toggler_offset)*2
-          else
-            answers << item if item.sort_index.include?(answer.sort_index) && item.toggler_offset == answer.toggler_offset
-          end
+          answers << item if item.sort_index.include?(answer.sort_index) && item.toggler_offset == answer.toggler_offset
         end
       end
       answers.sort!{ |a, b| b[:sort_number] <=> a[:sort_number] }
@@ -222,11 +208,7 @@ class Document < ActiveRecord::Base
 
     tmp_answers.each do |item|
       unless item.sort_index.nil?
-        if answer.template_step.title.split(' /<spain/>').first == STEP_12
-          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset + (answer.answer.to_i * 2)
-        else
-          answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
-        end
+        answers << item if item.sort_index.include?(sort_char) && item.toggler_offset == answer.toggler_offset
       end
     end
     answers.sort_by!{ |item| [item.sort_index, item.sort_number] }
