@@ -130,10 +130,14 @@ module PdfDocument
         @marriage_country = answers.next.answer
         @marriage_date = answers.next.answer
 
+
         @marriage_country_string = "in the city of #{ @in_the_us ? @marriage_city : @marriage_city_town_province }"
         @marriage_country_string += @in_the_us ? " State of #{ @marriage_state }" : " Country of #{ @marriage_country }"
         @marriage_country_string += ' and have since remained husband and wife.'
 
+        @marriage_date_decree = @marriage_date.to_date.strftime('%d day of %B, %Y')
+        @marriage_country_decree = "in the city of #{ @in_the_us ? @marriage_city : @marriage_city_town_province }"
+        @marriage_country_decree += @in_the_us ? " State of #{ @marriage_state } County of #{ @clark_nye }" : " Country of #{ @marriage_country }"
 
         @marriage_country_string_short = "#{ @in_the_us ? @marriage_city : @marriage_city_town_province }"
         @marriage_country_string_short += @in_the_us ? " State of #{ @marriage_state }" : " Country of #{ @marriage_country }"
@@ -419,16 +423,16 @@ module PdfDocument
             answers = step_answers_enum steps.next
 
             #Step 20   Holiday
-            holiday_now = answers.next.answer == 'Yes'
+            @holiday_now = answers.next.answer == 'Yes'
             if @number_of_children == 1
               holidays_amount = 1
-            elsif holiday_now
+            elsif @holiday_now
               answers.next
               same_schedule = answers.next.answer == 'Yes'
               holidays_amount = same_schedule ? 1 : @number_of_children
             end
 
-            if !holiday_now
+            if !@holiday_now
               2.times do steps.next end
             else
               step = steps.next
