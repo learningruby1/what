@@ -113,8 +113,8 @@ current_step = template.steps.create :step_number => step_number += 1,#7
 
 current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pregnant /<spain/>NO ESTÁ embarazada en este momento.
                                                              <option/>IS currently pregnant /<spain/>ESTÁ embarazada en este momento.', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :field_type => 'only_year_born', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
-current_step.fields.create :field_type => 'text', :name => 'Is the husband the father of the unborn child? /<spain/>¿El esposo es el padre del niño por nacer?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant'
+current_step.fields.create :field_type => 'only_year_born review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
+current_step.fields.create :field_type => 'text review_show', :name => 'Is the husband the father of the unborn child? /<spain/>¿El esposo es el padre del niño por nacer?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant'
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 current_step = template.steps.create :step_number => step_number += 1,#8
@@ -184,7 +184,7 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                             Si no recuerda todas las direcciones trate de usar el internet ya que pueda ser que el juez le devuelva el documento si falta mucha de la información.'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :field_type => 'text', :name => '<insert>', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sort_index => 'a1'
+current_step.fields.create :field_type => 'text review_show', :name => '<insert> addresses <spain/><insert> direcciones', :header_ids => "#{ child_name.id }/#{ child_last_name.id }", :sort_index => 'a1'
 address_count = current_step.fields.create :name => 'How Many Addresses? /<spain/>¿Cuántos Direcciones?:', :field_type => 'sub_amount', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :field_type => 'text', :name => 'Address information /<spain/>Información de dirección', :amount_field_id => address_count.id, :raw_question => false
 current_step.fields.create :field_type => 'radio', :name => 'Same as me /<spain/>La misma que yo<option/>Outside the United States /<spain/>Fuera de los Estados Unidos<option/>In the United States /<spain/>En los Estados Unidos', :toggle_id => toggle_id, :amount_field_id => address_count.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -338,7 +338,7 @@ current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CU
 
 toggle_id = 0
 toggle_id += 1
-custody_field = current_step.fields.create :field_type => 'radio-sub review_show', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
+custody_field = current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
                                                                  <option/>With dad and visit with mom /<spain/>Con papá y visitas con mamá.<spain/><place_for_insert>
                                                                  <separate/>JOINT PHYSICAL CUSTODY: when the child lives with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/><place_for_insert>
