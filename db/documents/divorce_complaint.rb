@@ -177,12 +177,12 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                             If you don’t remember all the address do your best by using the internet since your document might be returned by the Judge if a lot of the information is missing.<br/><spain/>
                                                             La ley requiere que usted proporcione la dirección donde <child_count_spain> han vivido durante los últimos 5 años. Si <child_count_spain> tiene menos de 5 años de edad, escriba las direcciones donde ha vivido desde que nació.
                                                             Si no recuerda todas las direcciones trate de usar el internet ya que pueda ser que el juez le devuelva el documento si falta mucha de la información.'
-address_count = current_step.fields.create :field_type => 'text',
-                           :name => '<insert>',
-                           :header_ids => "#{ child_name.id }/#{ child_last_name.id }",
-                           :sort_index => 'a1'
-current_step.fields.create :field_type => 'text review_show',
-                           :name => '<insert> addresses <spain/><insert> direcciones',
+address_count = current_step.fields.create :field_type => 'text review_show',
+                                           :name => '<insert> addresses <spain/><insert> direcciones',
+                                           :header_ids => "#{ child_name.id }/#{ child_last_name.id }",
+                                           :sort_index => 'a1'
+current_step.fields.create :field_type => 'text',
+                           :name => 'Address information /<spain/>Información de dirección',
                            :amount_field_id => address_count.id,
                            :sort_index => 'a1'
 toggle_id = 0
