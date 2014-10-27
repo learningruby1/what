@@ -5,6 +5,7 @@ class PdfFilesController < ApplicationController
   before_action :get_user_documents, :only => [:index, :welcome]
 
   def index
+    @file_names = Dir.glob("documents/pdf/#{current_user.id}/*.pdf")
   end
 
   def welcome
@@ -18,8 +19,8 @@ class PdfFilesController < ApplicationController
 
   def download
     current_user.create_mail_reminder! MailForm::REMINDER_TYPE.first
-    if current_user.documents.exists?
-      send_file PdfDocument::Pdf.new.get_zip current_user
+    if current_user.documents.where(:id => params[:filename].split('_').last.try(:to_i) || 0).exists?
+      send_file "documents/pdf/#{ params[:filename] }.pdf", :type => "application/pdf", :x_sendfile => true
     else
       redirect_to pdf_files_path
     end
@@ -33,5 +34,4 @@ class PdfFilesController < ApplicationController
   def get_user_documents
     @documents = current_user.documents
   end
-
 end

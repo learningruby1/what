@@ -55,10 +55,12 @@ module PdfDocument
 
       move_to_left "#{ _counter += 1 }. MINOR CHILDREN"
       minor_children_text = "That the parties have #{ @number_of_children } minor #{ @number_of_children > 1 ? 'children' : 'child' } who #{ @number_of_children > 1 ? 'are' : 'is' } the issue of this marriage or have been adopted by the parties."
-      minor_children_text += ' The '
-      @children_info.each_with_index do |child, index|
-        minor_children_text += "#{ child[:full_name] } born #{ child[:date_of_birth] }"
-        minor_children_text += @children_info.count == index + 1 ? '.' : '; '
+      if @number_of_children
+        minor_children_text += ' The '
+        @children_info.each_with_index do |child, index|
+          minor_children_text += "#{ child[:full_name] } born #{ child[:date_of_birth] }"
+          minor_children_text += @children_info.count == index + 1 ? '.' : '; '
+        end
       end
 
       push_text minor_children_text, @text_indent
