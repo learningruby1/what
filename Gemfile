@@ -35,3 +35,4 @@ gem 'paypal-sdk-rest'
 gem 'gritter'
 
 gem 'whenever', :require => false
+gem 'american_date'
