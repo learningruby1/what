@@ -19,8 +19,6 @@ gem 'devise'
 
 gem 'puma'
 
-gem 'rubyzip'
-
 gem 'net-ssh', '~> 2.9.1'
 group :development, :test do
   gem 'capistrano', '~> 3.0'
@@ -35,3 +33,4 @@ gem 'paypal-sdk-rest'
 gem 'gritter'
 
 gem 'whenever', :require => false
+gem 'american_date'

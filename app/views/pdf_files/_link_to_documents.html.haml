@@ -1,0 +1,2 @@
+- @file_names.each do |filename|
+  = link_to File.basename(filename, ".pdf"), download_pdf_path(File.basename(filename, ".pdf")), :class => 'btn btn-primary'

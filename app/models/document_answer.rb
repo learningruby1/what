@@ -103,7 +103,7 @@ class DocumentAnswer < ActiveRecord::Base
   end
 
   def to_spain
-    return to_s if !template_field.field_type.match(/radio/)
+    return to_s if !template_field.field_type.match(/radio/) || template_field.field_type.match(/text_radio/)
     template_field.to_text(document).split('<option/>').each do |a|
       if a.match(Regexp.new answer)
         if a.match '<spain/>'

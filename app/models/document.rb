@@ -78,8 +78,9 @@ class Document < ActiveRecord::Base
 
       _answer.answer = answer.last[:answer]
 
-      _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase$/)
-      _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize$/)
+      _answer.answer = '000-00-0000' if _answer.answer == '' && _answer.template_field.field_type.match(/social_security/)
+      _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase/)
+      _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize/)
       _answer.save
 
       looper = add_mandatory_error unless check_mandatory(_answer)

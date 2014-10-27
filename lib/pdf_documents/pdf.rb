@@ -10,22 +10,9 @@ module PdfDocument
     require 'pdf_documents/documents/acceptance_of_service'
     require 'pdf_documents/documents/affidavit_of_service'
     require 'pdf_documents/documents/uccja'
+    require 'pdf_documents/documents/decree_of_divorce'
     require 'prawn'
-    require 'zip'
 
-
-  def get_zip(user)
-    folder = "#{ Rails.root }/documents/pdf/#{ user.id }"
-    zipfile_name = "#{ Rails.root }/documents/pdf/files#{ user.id }.zip"
-    File.delete(zipfile_name) if File.exists? zipfile_name
-    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
-      Dir.foreach(folder) do |item|
-        item_path = "#{ folder }/#{ item }"
-        zipfile.add(item, item_path) if File.file? item_path
-      end
-    end
-    zipfile_name
-  end
 
     def generate(document)
       case document.template.to_s
@@ -37,6 +24,7 @@ module PdfDocument
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint", document, true, true
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons", document
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction", document
+        generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true
         generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
         generate_document cover.generate,                                        "Divorce_cover", document if cover.can_generate?
         generate_document coversheet.generate,                                   "Divorce_coversheet", document if coversheet.can_generate?
@@ -196,7 +184,7 @@ module PdfDocument
 
         if footer_layout
           bounding_box [bounds.left, bounds.bottom + 35], :width  => bounds.width do
-            number_pages "www.FormsMama.com                          Page <page> of <total>                    Complaint for divorce #{ Time.now.year }", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
+            number_pages "www.FormsMama.com                          Page <page> of <total>                    #{ pdf_name.titleize } #{ Time.now.year }", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
           end
         end
       end

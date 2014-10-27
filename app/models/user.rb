@@ -68,5 +68,4 @@ class User < ActiveRecord::Base
     template = Template.find(template_id)
     template.documents.create(:template_name => template.name, :user_id => id)
   end
-
 end
