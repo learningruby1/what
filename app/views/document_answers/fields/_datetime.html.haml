@@ -3,6 +3,9 @@
   - if answer.template_field.field_type == 'date_without_day'
     .col-md-12.input-group{ 'data-date-format' => 'MM/DD/YYYY', :class => answer.template_field.field_type }
       = a.hidden_field :answer, :value => answer.answer
+  - elsif answer.template_field.field_type == 'date_after_born'
+    .col-md-12.input-group{ 'data-date-format' => 'MM/DD/YYYY', :class => answer.template_field.field_type, :locals => { :date => TemplateField.find(answer.template_field.header_ids.to_i).document_answers.where(:document_id => answer.document.id, :toggler_offset => answer.toggler_offset).first.answer } }
+      = a.hidden_field :answer, :value => answer.answer
   - elsif answer.template_field.field_type == 'only_year_born'
     .col-md-12.input-group{ 'data-date-format' => 'MM/DD/YYYY', :class => answer.template_field.field_type }
       = a.hidden_field :answer, :value => answer.answer

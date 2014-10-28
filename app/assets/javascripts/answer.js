@@ -209,9 +209,10 @@ function check_value(value, _this){
 function date_init(){
   var date = $('.date');
   var date_without_day = $('.date_without_day');
+  var date_after_born = $('.date_after_born');
   var only_year = $('.only_year')
   var only_year_born = $('.only_year_born')
-  if (date.length > 0 || date_without_day.length > 0 || only_year.length > 0 || only_year_born.length > 0){
+  if (date.length > 0 || date_without_day.length > 0 || only_year.length > 0 || only_year_born.length > 0 || date_after_born.length > 0){
 
     var months = '<option value="1">January / Enero</option>' +
                  '<option value="2">February / Febrero</option>' +
@@ -259,6 +260,16 @@ function date_init(){
 
     date_without_day.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
                 '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + years_without_day + '</select></div>');
+
+    date_after_born.each(function(){
+      var start_born_year_without_day = parseInt($(this).attr('locals-date').split('/')[2]) < (new Date().getFullYear() - 5) ? new Date().getFullYear() - 5 : parseInt($(this).attr('locals-date').split('/')[2]);
+      var after_born_years_without_day = '';
+      for( i = new Date().getFullYear(); i >= start_born_year_without_day; --i ){
+        after_born_years_without_day += '<option>' + i + '</option>';
+      }
+      $(this).append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
+                     '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + after_born_years_without_day + '</select></div>');
+    });
 
     date.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
                 '<div class="col-md-2 margin-left"><select class="day form-control">'  + '<option disabled="disabled" selected="selected">Day / Día</option>' + days + '</select></div>' +
@@ -335,7 +346,30 @@ function date_init(){
     });
 
     date_without_day.find('[type="hidden"]').each(function(){
+      var _this = $(this);
+      if(_this.val().length > 0){
+        selects = _this.parent().find('.form-control');
+        selects.first().val(_this.val().split('/')[0]);
+        selects.first().parent().next().children().val(_this.val().split('/')[1]);
+      }
+    });
 
+    $('.date_after_born select').each(function(){
+      $(this).change(function(){
+
+        var _this = $(this);
+        date_after_born = _this.parent().parent().find('[type="hidden"]');
+        date_after_born.val('');
+
+        _this.parent().parent().find('.form-control').each(function(){
+          if (date_after_born.val().length > 0)
+            date_after_born.val(date_after_born.val() + '/');
+          date_after_born.val(date_after_born.val() + $(this).val());
+        });
+      });
+    });
+
+    date_after_born.find('[type="hidden"]').each(function(){
       var _this = $(this);
       if(_this.val().length > 0){
         selects = _this.parent().find('.form-control');
