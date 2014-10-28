@@ -26,17 +26,20 @@ class TemplateField < ActiveRecord::Base
     amount_index -= 1
     if !header_ids.nil?
       _header_ids = header_ids.split('/')
-      additional_info = document.answers.where(:template_field_id => _header_ids.first).order('id')[amount_index].answer
-      additional_info += " " + document.answers.where(:template_field_id => _header_ids.last).order('id')[amount_index].answer.to_s if _header_ids.length > 1
+      additional_info = document.answers.where(:template_field_id => _header_ids[0]).order('id')[amount_index].answer
+      additional_info += " " + document.answers.where(:template_field_id => _header_ids[1]).order('id')[amount_index].answer.to_s if _header_ids.length > 1
+      birth_day = _header_ids.length > 2 ? document.answers.where(:template_field_id => _header_ids[2]).order('id')[amount_index].answer.to_s : ''
 
       tmp_array = index_of_radio.nil? ? tmp_array = to_s(document).split('<spain/>') : tmp_array = to_s(document).split('<option/>')
       tmp_array = tmp_array[index_of_radio].split('<spain/>') unless index_of_radio.nil?
       text = ''
       text += tmp_array.first.gsub(/<insert>/, additional_info) if !to_s(document).nil?
-      text += '<div class="spain">' + tmp_array.last.gsub(/<insert>/, additional_info) + '</div>' if tmp_array[1].present?
+      text += "<div class='spain' #{ ('birth_date='+birth_day) if birth_day }>" + tmp_array.last.gsub(/<insert>/, additional_info) + '</div>' if tmp_array[1].present?
+      text.gsub!(/<birth_date>/, birth_day)
       text
     else
       to_s document
     end
   end
+
 end

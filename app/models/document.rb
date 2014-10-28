@@ -33,9 +33,9 @@ class Document < ActiveRecord::Base
 
     # Delete answers
     _looped_amount = looped_amount(next_step, _answers)
-    if !template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
+    if (!template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
       (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) ||
-      _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option)
+      _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option)) || (_answers.map(&:toggler_offset).map { |toggler| toggler / TOGGLER_OFFSET }.uniq.count != number_of_child(self).to_i && template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present?)
 
       _answers.each(&:destroy)
       _answers = nil
@@ -154,7 +154,8 @@ class Document < ActiveRecord::Base
     last_button = answers.find(answer_id.to_i + 1)
     index = last_button.sort_number
     last_button.template_step.fields.where(:amount_field_id => TemplateField.find(last_button.template_field_id).amount_field_id).reverse_each do |field|
-      answers.create(:template_field_id => field.id, :toggler_offset => (last_button.toggler_offset + BLOCK_DIFFERENCE), :sort_index => last_button.sort_index, :sort_number => index += 1, :template_step_id => last_button.template_step_id )
+      offset = last_button.template_step.fields.where(:toggle_id => 2).present? ? last_button.toggler_offset + BLOCK_DIFFERENCE : last_button.toggler_offset
+      answers.create(:template_field_id => field.id, :toggler_offset => offset, :sort_index => last_button.sort_index, :sort_number => index += 1, :template_step_id => last_button.template_step_id )
     end
     # This will hide buttons Add and Delete(in _loop_button)
     last_button.update :answer => 'none'
@@ -163,9 +164,10 @@ class Document < ActiveRecord::Base
 
   def delete_answers_block!(answer_id)
     answer = answers.find answer_id
-      answers.where(:toggler_offset => answer.toggler_offset - BLOCK_DIFFERENCE, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
-      # This will delete last block
-      answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).destroy_all
+    offset = answer.template_step.fields.where(:toggle_id => 2).present? ? answer.toggler_offset - BLOCK_DIFFERENCE : answer.toggler_offset
+    # This will delete last block
+    answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(answer.template_step.fields.where(:amount_field_id => TemplateField.find(answer.template_field_id).amount_field_id).count).each{ |ans| ans.delete }
+    answers.where(:toggler_offset => offset, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
   end
   # End of Add/delete block of fields
 
@@ -174,12 +176,9 @@ class Document < ActiveRecord::Base
     step = answer.template_step
     if step.present?
       index = last_answer.sort_number
-      counter = return_value_for_counter answer
-
       loop_amount.times do |i|
         step.fields.where(:amount_field_id => answer.template_field_id).reverse_each do |field|
-          index += 1
-          answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index, :template_step_id => answer.template_step_id )
+          answers.create(:template_field_id => field.id, :toggler_offset => toggler_offset, :sort_index => last_answer.sort_index, :sort_number => index += 1, :template_step_id => answer.template_step_id )
         end
       end
     end

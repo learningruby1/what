@@ -137,7 +137,7 @@ child_name = current_step.fields.create :field_type => 'string upcase', :name =>
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
 
 child_last_name = current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
-current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+child_birth = current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 
 current_step.fields.create :field_type => 'text review_show', :name => 'Place of Birth /<spain/>Lugar de nacimiento:'
 current_step.fields.create :field_type => 'radio', :name => 'In the United States /<spain/>En los Estados Unidos
@@ -177,13 +177,13 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                             If you don’t remember all the address do your best by using the internet since your document might be returned by the Judge if a lot of the information is missing.<br/><spain/>
                                                             La ley requiere que usted proporcione la dirección donde <child_count_spain> han vivido durante los últimos 5 años. Si <child_count_spain> tiene menos de 5 años de edad, escriba las direcciones donde ha vivido desde que nació.
                                                             Si no recuerda todas las direcciones trate de usar el internet ya que pueda ser que el juez le devuelva el documento si falta mucha de la información.'
-address_count = current_step.fields.create :field_type => 'text review_show',
-                                           :name => '<insert> addresses <spain/><insert> direcciones',
-                                           :header_ids => "#{ child_name.id }/#{ child_last_name.id }",
+top_field = current_step.fields.create :field_type => 'text review_show',
+                                           :name => '<insert> <birth_date> <spain/><insert> <birth_date>',
+                                           :header_ids => "#{ child_name.id }/#{ child_last_name.id }/#{ child_birth.id }",
                                            :sort_index => 'a1'
 current_step.fields.create :field_type => 'text',
                            :name => 'Address information /<spain/>Información de dirección',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 toggle_id = 0
 toggle_id += 1
@@ -191,7 +191,7 @@ current_step.fields.create :field_type => 'radio',
                            :name => 'Same as me /<spain/>La misma que yo<option/>Outside the United States /<spain/>Fuera de los Estados Unidos<option/>In the United States /<spain/>En los Estados Unidos',
                            :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                            :toggle_id => toggle_id,
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 
@@ -199,87 +199,89 @@ current_step.fields.create :field_type => 'string-capitalize',
                            :name => 'Address /<spain/>Dirección: *',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 current_step.fields.create :field_type => 'string-capitalize',
                            :name => 'City /<spain/>Ciudad: *',
                            :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 current_step.fields.create :field_type => 'states',
                            :name => 'State /<spain/>Estado: *',
                            :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ',
                            :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
-current_step.fields.create :field_type => 'date_without_day',
+current_step.fields.create :field_type => 'date_after_born',
                            :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección',
                            :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
-                           :amount_field_id => address_count.id,
-                           :sort_index => 'a1'
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1',
+                           :header_ids => "#{ child_birth.id }"
 
 field_for_mandatory_first = current_step.fields.create :field_type => 'radio',
                                                        :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
                                                        :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                        :toggle_id => toggle_id, :toggle_option => 'In the United States',
                                                        :sub_toggle_id => toggle_id + 1,
-                                                       :amount_field_id => address_count.id,
+                                                       :amount_field_id => top_field.id,
                                                        :sort_index => 'a1'
-
 current_step.fields.create :field_type => 'string-capitalize',
                            :name => 'Address /<spain/>Dirección: *',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' },
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 current_step.fields.create :field_type => 'string-capitalize',
                            :name => 'City-Town-Province /<spain/>Ciudad-Pueblo-Provincia: *',
                            :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' },
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 current_step.fields.create :field_type => 'string-capitalize',
                            :name => 'Country /<spain/>País: * ',
                            :mandatory => { :value => /^\w+$/, :hint => 'Provide a country /<spain/>Por favor, proporcionar un país' },
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
-current_step.fields.create :field_type => 'date_without_day',
+current_step.fields.create :field_type => 'date_after_born',
                            :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección',
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
                            :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
-                           :amount_field_id => address_count.id,
-                           :sort_index => 'a1'
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1',
+                           :header_ids => "#{ child_birth.id }"
 
 field_for_mandatory_second = current_step.fields.create :field_type => 'radio',
                                                         :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
                                                         :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                         :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
                                                         :sub_toggle_id => toggle_id + 1,
-                                                        :amount_field_id => address_count.id,
+                                                        :amount_field_id => top_field.id,
                                                         :sort_index => 'a1'
 
 
-current_step.fields.create :field_type => 'date_without_day',
+current_step.fields.create :field_type => 'date_after_born',
                            :name => 'Child moved to my address /<spain/>El menor se mudó a mi dirección',
                            :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
                            :toggle_id => toggle_id, :toggle_option => 'Same as me',
-                           :amount_field_id => address_count.id,
-                           :sort_index => 'a1'
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1',
+                           :header_ids => "#{ child_birth.id }"
 
 
 
@@ -289,7 +291,7 @@ current_step.fields.create :field_type => 'string-capitalize',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido',
                                            :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
                            :toggle_id => toggle_id, :toggle_option => 'Other',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 current_step.fields.create :field_type => 'select_person',
@@ -297,17 +299,16 @@ current_step.fields.create :field_type => 'select_person',
                            :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona',
                                            :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
                            :toggle_id => toggle_id, :toggle_option => 'Other',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
-
 
 current_step.fields.create :field_type => 'loop_button-add',
                            :name => 'Add one more address /<spain/> Añadir una dirección más',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 current_step.fields.create :field_type => 'loop_button-delete',
                            :name => 'Delete last address /<spain/> Eliminar la última dirección',
-                           :amount_field_id => address_count.id,
+                           :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
 
