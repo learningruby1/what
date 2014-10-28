@@ -16,6 +16,8 @@ class Document < ActiveRecord::Base
   DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
   FILED_CASE = 'Filed Case /<spain/>Caso archivado'
   AFTER_SERVICE = 'After Service /<spain/>Después de servicio'
+  TOGGLER_OFFSET = 1000
+  BLOCK_DIFFERENCE = 10
 
   MANDATORY_MESSAGE = 'Check the mandatory fields /<spain/>Por favor, revisa los campos obligatorios'
 
@@ -52,7 +54,7 @@ class Document < ActiveRecord::Base
 
         current_step.fields.reverse_each do |field|
           if field.raw_question == true && (i == 0 || field.dont_repeat == false)
-            params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * 1000) }
+            params = { :template_field_id => field.id, :template_step_id => field.template_step.id, :toggler_offset => (toggler_offset + i * TOGGLER_OFFSET) }
             params.merge!({ :sort_index => field.sort_index[0], :sort_number => field.sort_index[1, field.sort_index.length].to_i }) if !field.sort_index.nil?
 
             template_field = TemplateField.find(params[:template_field_id])
@@ -152,8 +154,7 @@ class Document < ActiveRecord::Base
     last_button = answers.find(answer_id.to_i + 1)
     index = last_button.sort_number
     last_button.template_step.fields.where(:amount_field_id => TemplateField.find(last_button.template_field_id).amount_field_id).reverse_each do |field|
-      index += 1
-      answers.create(:template_field_id => field.id, :toggler_offset => (last_button.toggler_offset + 10), :sort_index => last_button.sort_index, :sort_number => index, :template_step_id => last_button.template_step_id )
+      answers.create(:template_field_id => field.id, :toggler_offset => (last_button.toggler_offset + BLOCK_DIFFERENCE), :sort_index => last_button.sort_index, :sort_number => index += 1, :template_step_id => last_button.template_step_id )
     end
     # This will hide buttons Add and Delete(in _loop_button)
     last_button.update :answer => 'none'
@@ -162,7 +163,7 @@ class Document < ActiveRecord::Base
 
   def delete_answers_block!(answer_id)
     answer = answers.find answer_id
-      answers.where(:toggler_offset => answer.toggler_offset - 10, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
+      answers.where(:toggler_offset => answer.toggler_offset - BLOCK_DIFFERENCE, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
       # This will delete last block
       answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).destroy_all
   end

@@ -212,9 +212,9 @@ module PdfDocument
 
             k = -1
             while answers.count - 1 > k do
-              if answers[k+3].toggler_offset % 1000 == 0
-                @children_info[answers[k+3].toggler_offset / 1000][:addresses] = []
-                @children_info[answers[k+3].toggler_offset / 1000][:toggler_offset] = answers[k+3].toggler_offset
+              if answers[k+3].toggler_offset % Document::TOGGLER_OFFSET == 0
+                @children_info[answers[k+3].toggler_offset / Document::TOGGLER_OFFSET][:addresses] = []
+                @children_info[answers[k+3].toggler_offset / Document::TOGGLER_OFFSET][:toggler_offset] = answers[k+3].toggler_offset
                 k += 3
               else
                 k += 2
@@ -241,7 +241,7 @@ module PdfDocument
                   address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                   k += 10
                 end
-                @children_info[answers[k-1].toggler_offset / 1000][:addresses] << address_data
+                @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               when 'Outside the United States'
                 address_data[:address] = answers[k += 7].answer
                 address_data[:city] = answers[k += 1].answer
@@ -260,7 +260,7 @@ module PdfDocument
                   address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                   k += 5
                 end
-                @children_info[answers[k-1].toggler_offset / 1000][:addresses] << address_data
+                @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               when 'Same as me'
                 address_data[:move_date] = answers[k += 12].answer.to_date
                 address_data[:address] = @plaintiff_home_address
@@ -270,7 +270,7 @@ module PdfDocument
                 address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
                 address_data[:lived_with] = @plaintiff_full_name
                 k += 4
-                @children_info[answers[k-1].toggler_offset / 1000][:addresses] << address_data
+                @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               end
             end
 
@@ -296,7 +296,7 @@ module PdfDocument
               end
             end
 
-            if @children_info.select{ |e| e[:question_1_cases] }.present?
+            if @children_info.select{ |child| child[:question_1_cases] }.present?
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
@@ -306,8 +306,8 @@ module PdfDocument
                 case_data[:case_number] = answers[k += 1].answer
                 case_data[:date] = answers[k += 1].answer
                 k += 2
-                if @children_info.select{ |e| (answers[k-1].toggler_offset - e[:toggler_offset]) / 1000 == 0 }.first[:question_1_cases].present?
-                  @children_info.select{ |e| (answers[k-1].toggler_offset - e[:toggler_offset]) / 1000 == 0 }.first[:question_1_cases] << case_data
+                if @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_1_cases].present?
+                  @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_1_cases] << case_data
                 end
               end
             end
@@ -334,7 +334,7 @@ module PdfDocument
               end
             end
 
-            if @children_info.select{ |e| e[:question_2_cases] }.present?
+            if @children_info.select{ |child| child[:question_2_cases] }.present?
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
@@ -344,8 +344,8 @@ module PdfDocument
                 case_data[:case_number] = answers[k += 1].answer
                 case_data[:date] = answers[k += 1].answer
                 k += 2
-                if @children_info.select{ |e| (answers[k-1].toggler_offset - e[:toggler_offset]) / 1000 == 0 }.first[:question_2_cases].present?
-                  @children_info.select{ |e| (answers[k-1].toggler_offset - e[:toggler_offset]) / 1000 == 0 }.first[:question_2_cases] << case_data
+                if @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_2_cases].present?
+                  @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_2_cases] << case_data
                 end
               end
             end
@@ -368,15 +368,15 @@ module PdfDocument
               end
             end
 
-            if @children_info.select{ |e| e[:question_3_cases] }.present?
+            if @children_info.select{ |child| child[:question_3_cases] }.present?
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:name] = answers[k += 1].answer
                 case_data[:address] = answers[k += 1].answer
                 case_data[:rights] = answers[k += 1].answer
                 k += 2
-                if @children_info.select{ |e| (answers[k-1].toggler_offset - e[:toggler_offset]) / 1000 == 0 }.first[:question_3_cases].present?
-                  @children_info.select{ |e| (answers[k-1].toggler_offset - e[:toggler_offset]) / 1000 == 0 }.first[:question_3_cases] << case_data
+                if @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_3_cases].present?
+                  @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_3_cases] << case_data
                 end
               end
             end
