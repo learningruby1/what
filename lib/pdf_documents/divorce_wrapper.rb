@@ -211,62 +211,66 @@ module PdfDocument
             answers = document.step_answers steps.next
 
             k = -1
-            @number_of_children.times do |i|
-              @children_info[i][:addresses_count] = answers[k += 2].answer.to_i
-              @children_info[i][:toggler_offset] = answers[k].toggler_offset
-              @children_info[i][:addresses] = []
-            end
-
-            @number_of_children.times do |i|
-              @children_info[i][:addresses_count].to_i.times do
-                address_data = {}
-                address_data[:where] = answers[k += 2].answer
-                case address_data[:where]
-                when 'Outside the United States'
-                  k += 6
-                  address_data[:address] = answers[k += 1].answer
-                  address_data[:city] = answers[k += 1].answer
-                  address_data[:country] = answers[k += 1].answer
-                  address_data[:move_date] = answers[k += 1].answer.to_date
-                  address_data[:persone_relationship] = answers[k += 1].answer
-                  case address_data[:persone_relationship]
-                  when 'Other'
-                    address_data[:lived_with] = answers[k += 2].answer
-                    address_data[:persone_relationship] = answers[k += 1].answer
-                  when 'MOM'
-                    address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                    k += 3
-                  when 'DAD'
-                    address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                    k += 3
-                  end
-                  @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
-                when 'Same as me'
-                  address_data[:move_date] = answers[k += 12].answer.to_date
-                  address_data[:address] = @plaintiff_home_address
-                  address_data[:city] = @plaintiff_home_address_city
-                  address_data[:state] = @plaintiff_home_address_state
-                  address_data[:zip] = @plaintiff_home_address_zip
-                  address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
-                  address_data[:lived_with] = @plaintiff_full_name
+            while answers.count - 1 > k do
+              if answers[k+3].toggler_offset % Document::TOGGLER_OFFSET == 0
+                @children_info[answers[k+3].toggler_offset / Document::TOGGLER_OFFSET][:addresses] = []
+                @children_info[answers[k+3].toggler_offset / Document::TOGGLER_OFFSET][:toggler_offset] = answers[k+3].toggler_offset
+                k += 3
+              else
+                k += 2
+              end
+              address_data = {}
+              address_data[:where] = answers[k].answer
+              case address_data[:where]
+              when 'In the United States'
+                address_data[:address] = answers[k += 1].answer
+                address_data[:city] = answers[k += 1].answer
+                address_data[:state] = answers[k += 1].answer
+                address_data[:zip] = answers[k += 1].answer
+                address_data[:move_date] = answers[k += 1].answer.to_date
+                address_data[:persone_relationship] = answers[k += 1].answer.upcase
+                case address_data[:persone_relationship]
+                when 'OTHER'
+                  address_data[:lived_with] = answers[k += 7].answer
+                  address_data[:persone_relationship] = answers[k += 1].answer.upcase
                   k += 2
-                  @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
-                when 'In the United States'
-                  address_data[:address] = answers[k += 1].answer
-                  address_data[:city] = answers[k += 1].answer
-                  address_data[:state] = answers[k += 1].answer
-                  address_data[:zip] = answers[k += 1].answer
-                  address_data[:move_date] = answers[k += 1].answer.to_date
-                  address_data[:lived_with] = answers[k += 1].answer
-                  if address_data[:lived_with] == 'Other'
-                    address_data[:lived_with] = answers[k += 7].answer
-                    address_data[:persone_relationship] = answers[k += 1].answer
-                  else
-                    address_data[:persone_relationship] = address_data[:lived_with]
-                    k += 8
-                  end
-                  @children_info[answers[k-1].toggler_offset / document.template.steps.count][:addresses] << address_data
+                when 'MOM'
+                  address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
+                  k += 10
+                when 'DAD'
+                  address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
+                  k += 10
                 end
+                @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
+              when 'Outside the United States'
+                address_data[:address] = answers[k += 7].answer
+                address_data[:city] = answers[k += 1].answer
+                address_data[:country] = answers[k += 1].answer
+                address_data[:move_date] = answers[k += 1].answer.to_date
+                address_data[:persone_relationship] = answers[k += 1].answer.upcase
+                case address_data[:persone_relationship]
+                when 'OTHER'
+                  address_data[:lived_with] = answers[k += 2].answer
+                  address_data[:persone_relationship] = answers[k += 1].answer.upcase
+                  k += 2
+                when 'MOM'
+                  address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
+                  k += 5
+                when 'DAD'
+                  address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
+                  k += 5
+                end
+                @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
+              when 'Same as me'
+                address_data[:move_date] = answers[k += 12].answer.to_date
+                address_data[:address] = @plaintiff_home_address
+                address_data[:city] = @plaintiff_home_address_city
+                address_data[:state] = @plaintiff_home_address_state
+                address_data[:zip] = @plaintiff_home_address_zip
+                address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
+                address_data[:lived_with] = @plaintiff_full_name
+                k += 4
+                @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               end
             end
 
@@ -292,7 +296,7 @@ module PdfDocument
               end
             end
 
-            if @children_info.select{ |e| e[:question_1_cases] }.present?
+            if @children_info.select{ |child| child[:question_1_cases] }.present?
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
@@ -302,8 +306,8 @@ module PdfDocument
                 case_data[:case_number] = answers[k += 1].answer
                 case_data[:date] = answers[k += 1].answer
                 k += 2
-                if @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases].present?
-                  @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_1_cases] << case_data
+                if @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_1_cases].present?
+                  @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_1_cases] << case_data
                 end
               end
             end
@@ -330,7 +334,7 @@ module PdfDocument
               end
             end
 
-            if @children_info.select{ |e| e[:question_2_cases] }.present?
+            if @children_info.select{ |child| child[:question_2_cases] }.present?
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
@@ -340,8 +344,8 @@ module PdfDocument
                 case_data[:case_number] = answers[k += 1].answer
                 case_data[:date] = answers[k += 1].answer
                 k += 2
-                if @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases].present?
-                  @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_2_cases] << case_data
+                if @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_2_cases].present?
+                  @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_2_cases] << case_data
                 end
               end
             end
@@ -364,15 +368,15 @@ module PdfDocument
               end
             end
 
-            if @children_info.select{ |e| e[:question_3_cases] }.present?
+            if @children_info.select{ |child| child[:question_3_cases] }.present?
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:name] = answers[k += 1].answer
                 case_data[:address] = answers[k += 1].answer
                 case_data[:rights] = answers[k += 1].answer
                 k += 2
-                if @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases].present?
-                  @children_info.select{ |e| e[:toggler_offset] == answers[k-1].toggler_offset }.first[:question_3_cases] << case_data
+                if @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_3_cases].present?
+                  @children_info.select{ |child| (answers[k-1].toggler_offset - child[:toggler_offset]) / Document::TOGGLER_OFFSET == 0 }.first[:question_3_cases] << case_data
                 end
               end
             end
