@@ -21,13 +21,13 @@ module PdfDocument
         cover = PdfDocument::DivorceCover.new(document)
         coversheet = PdfDocument::DivorceCoversheet.new(document)
 
-        generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Divorce_complaint", document, true, true
-        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Divorce_summons", document
-        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Divorce_injunction", document
-        generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true
+        generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Complaint", document, true, true, "Divorce_complaint"
+        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Summons", document
+        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Injunction(Optional)", document
+        generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
         generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
-        generate_document cover.generate,                                        "Divorce_cover", document if cover.can_generate?
-        generate_document coversheet.generate,                                   "Divorce_coversheet", document if coversheet.can_generate?
+        generate_document cover.generate,                                        "Cover", document if cover.can_generate?
+        generate_document coversheet.generate,                                   "Cover", document if coversheet.can_generate?
       when /^Filed Case/
         acceptance_of_service = PdfDocument::AcceptanceOfService.new(document)
         affidavit_of_service = PdfDocument::AffidavitOfService.new(document)
@@ -37,7 +37,7 @@ module PdfDocument
       end
     end
 
-    def generate_document(wrapped_document, pdf_name, document, judical_layout=false, footer_layout=false)
+    def generate_document(wrapped_document, pdf_name, document, judical_layout=false, footer_layout=false, footer_name = '')
 
       if judical_layout
         numbers = ''; 28.times do |i| numbers += "\n\n#{ i + 1 }" end
@@ -184,7 +184,7 @@ module PdfDocument
 
         if footer_layout
           bounding_box [bounds.left, bounds.bottom + 35], :width  => bounds.width do
-            number_pages "www.FormsMama.com                          Page <page> of <total>                    #{ pdf_name.titleize } #{ Time.now.year }", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
+            number_pages "www.FormsMama.com                          Page <page> of <total>                    #{ footer_name.titleize } #{ Time.now.year }", { :start_count_at => 0, :page_filter => :all, :align => :center, :size => 12, :color => '858585' }
           end
         end
       end
