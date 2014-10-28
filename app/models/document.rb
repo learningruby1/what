@@ -154,7 +154,7 @@ class Document < ActiveRecord::Base
     last_button = answers.find(answer_id.to_i + 1)
     index = last_button.sort_number
     last_button.template_step.fields.where(:amount_field_id => TemplateField.find(last_button.template_field_id).amount_field_id).reverse_each do |field|
-      offset = last_button.template_step.fields.where(:toggle_id => [2,3,4]).present? ? last_button.toggler_offset + BLOCK_DIFFERENCE : last_button.toggler_offset
+      offset = last_button.template_step.fields.where(:toggle_id => 2).present? ? last_button.toggler_offset + BLOCK_DIFFERENCE : last_button.toggler_offset
       answers.create(:template_field_id => field.id, :toggler_offset => offset, :sort_index => last_button.sort_index, :sort_number => index += 1, :template_step_id => last_button.template_step_id )
     end
     # This will hide buttons Add and Delete(in _loop_button)
@@ -164,9 +164,8 @@ class Document < ActiveRecord::Base
 
   def delete_answers_block!(answer_id)
     answer = answers.find answer_id
-    offset = answer.template_step.fields.where(:toggle_id => [2,3,4]).present? ? answer.toggler_offset - BLOCK_DIFFERENCE : answer.toggler_offset
+    offset = answer.template_step.fields.where(:toggle_id => 2).present? ? answer.toggler_offset - BLOCK_DIFFERENCE : answer.toggler_offset
     # This will delete last block
-    # TemplateStep.find(15).fields.where(:amount_field_id => 106).count
     answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(answer.template_step.fields.where(:amount_field_id => TemplateField.find(answer.template_field_id).amount_field_id).count).each{ |ans| ans.delete }
     answers.where(:toggler_offset => offset, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
   end
