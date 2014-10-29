@@ -104,7 +104,7 @@ class Document < ActiveRecord::Base
       return false if (_answer.template_field.toggle_id.nil? || parent_toggler == _answer) && step.fields.where(:sub_toggle_id => _answer.template_field.toggle_id).where.not(:sub_toggle_id => nil).count == 0
 
       if _answer.template_field.field_type == 'checkbox'
-        return false if get_checked_answer_count(_answer) == 0 && parent_toggler.answer.match(toggle_option)
+        return false if parent_toggler.answer.present? && get_checked_answer_count(_answer) == 0 && parent_toggler.answer.match(toggle_option)
       else
         return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||
