@@ -23,7 +23,7 @@ namespace :app do
       on roles(:all) do
         within release_path do
           execute :rake, 'app:db:clear'
-          execute :rake, 'db:seed'
+          execute :rake, 'app:db:seed'
         end
       end
     end
