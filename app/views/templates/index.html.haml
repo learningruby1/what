@@ -22,4 +22,14 @@
 .container.new_roman
   .col-md-4
     %h3
-      %p= link_to 'Divorce / Divorcio >>', template_documents_path(ActiveRecord::Base::Template.where(:name => Document::DIVORCE_COMPLAINT).first.id), :class => 'btn btn-default new_roman', :method => :post, :data => {:confirm => 'Are you sure? This will delete existing file!'}
+      %p
+        %fieldset.btn-group{ :style => 'width: 100%' }
+          %legend
+            %span= 'Divorce'
+            %span.spain= '/ Divorcio'
+          - if @documents.present?
+            - document = @documents.sort_by(&:updated_at).first
+            = link_to document_review_path(document), :style => 'width: 50%', :class => 'btn btn-success new_roman' do
+              = 'Continue / Continuar'
+              / %span.spain= document.to_s.split('<spain/>').last
+          = link_to 'New / Nuevo', template_documents_path(ActiveRecord::Base::Template.where(:name => Document::DIVORCE_COMPLAINT).first.id), :style => 'width: 50%', :class => 'btn btn-info new_roman', :method => :post, :data => {:confirm => 'Are you sure? This will delete existing file!'}
