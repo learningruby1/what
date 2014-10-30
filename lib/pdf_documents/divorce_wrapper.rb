@@ -223,7 +223,7 @@ module PdfDocument
               address_data[:where] = answers[k].answer
               case address_data[:where]
               when 'In the United States'
-                address_data[:address] = answers[k += 1].answer
+                address_data[:address] = answers[k += 2].answer
                 address_data[:city] = answers[k += 1].answer
                 address_data[:state] = answers[k += 1].answer
                 address_data[:zip] = answers[k += 1].answer
@@ -231,45 +231,45 @@ module PdfDocument
                 address_data[:persone_relationship] = answers[k += 1].answer.upcase
                 case address_data[:persone_relationship]
                 when 'OTHER'
-                  address_data[:lived_with] = answers[k += 7].answer
+                  address_data[:lived_with] = answers[k += 1].answer
                   address_data[:persone_relationship] = answers[k += 1].answer.upcase
-                  k += 2
+                  k += 9
                 when 'MOM'
                   address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 10
+                  k += 11
                 when 'DAD'
                   address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 10
+                  k += 11
                 end
                 @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               when 'Outside the United States'
-                address_data[:address] = answers[k += 7].answer
+                address_data[:address] = answers[k += 10].answer
                 address_data[:city] = answers[k += 1].answer
                 address_data[:country] = answers[k += 1].answer
                 address_data[:move_date] = answers[k += 1].answer.to_date
                 address_data[:persone_relationship] = answers[k += 1].answer.upcase
                 case address_data[:persone_relationship]
                 when 'OTHER'
-                  address_data[:lived_with] = answers[k += 2].answer
+                  address_data[:lived_with] = answers[k += 1].answer
                   address_data[:persone_relationship] = answers[k += 1].answer.upcase
                   k += 2
                 when 'MOM'
                   address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 5
+                  k += 4
                 when 'DAD'
                   address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 5
+                  k += 4
                 end
                 @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               when 'Same as me'
-                address_data[:move_date] = answers[k += 12].answer.to_date
+                address_data[:move_date] = answers[k += 1].answer.to_date
                 address_data[:address] = @plaintiff_home_address
                 address_data[:city] = @plaintiff_home_address_city
                 address_data[:state] = @plaintiff_home_address_state
                 address_data[:zip] = @plaintiff_home_address_zip
                 address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
                 address_data[:lived_with] = @plaintiff_full_name
-                k += 4
+                k += 17
                 @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               end
             end
@@ -704,7 +704,7 @@ module PdfDocument
             answers.next
             answers.next
             @request_arrears = answers.next.answer == 'Yes' rescue false
-            @request_arrears_from = answers.next.answer.gsub(/\/[0-9]{1,2}\//, '/')
+            @request_arrears_from = answers.next.answer.to_s.gsub(/\/[0-9]{1,2}\//, '/')
             answers.next
             @request_amount_paid = answers.next.answer
 
