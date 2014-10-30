@@ -5,7 +5,6 @@ $( document ).ready(function() {
     $("[name*='answer(3i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
     $("[name*='answer(2i)']:not([type='hidden'])").wrap("<div class='col-md-3 margin-left'></div>")
 
-  day_of_week_init();
   var time = $('.time');
   if (time.length > 0){
 
@@ -208,44 +207,6 @@ function check_value(value, _this){
     return false
   }
   return true
-}
-
-function day_of_week_init(){
-  var day_of_week = $('.day_of_week');
-  if (day_of_week.length > 0){
-    var days_of_week = '<option value="1">Monday / Lunes</option>' +
-                 '<option value="2">Tuesday / Martes</option>' +
-                 '<option value="3">Wednesday / Miércoles</option>' +
-                 '<option value="4">Thursday / Jueves</option>' +
-                 '<option value="5">Friday / Viernes</option>' +
-                 '<option value="6">Saturday / Sábado</option>' +
-                 '<option value="7">Sunday / Domingo</option>';
-
-    day_of_week.append('<div class="col-md-3 margin-left"><select class="day_of_week form-control">' + '<option disabled="disabled" selected="selected">Day of week / Día de la semana</option>' + days_of_week + '</select></div>');
-
-    $('.day_of_week select').each(function(){
-      $(this).change(function(){
-        var _this = $(this);
-        day_of_week = _this.parent().parent().find('[type="hidden"]');
-        day_of_week.val('');
-
-        _this.parent().parent().find('.form-control').each(function(){
-          if (day_of_week.val().length > 0)
-            day_of_week.val(day_of_week.val() + '/');
-          day_of_week.val(day_of_week.val() + $(this).val());
-        });
-      });
-    });
-
-    day_of_week.find('[type="hidden"]').each(function(){
-
-      var _this = $(this);
-      if(_this.val().length > 0){
-        selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split('/')[0]);
-      }
-    });
-  }
 }
 
 function checkbox_radio_toggler(){
