@@ -3,13 +3,13 @@ module PdfDocument
     def generate
       push_header "<b>NEVADA STATE DIVISION OF WELFARE AND SUPPORTIVE SERVICES</b>"
       push_header "<b>CHILD SUPPORT ENFORCEMENT</b>"
-      move_down 20
+      move_down 10
       push_header "IN THE FAMILY DIVISION"
       push_header "OF THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE STATE OF NEVADA"
       push_header "IN AND FOR THE COUNTY OF #{ @clark_nye.upcase }"
-      move_down 20
+      move_down 10
       push_header "<b>CONFIDENTIAL FAMILY COURT INFORMATION SHEET</b>"
-      move_down 20
+      move_down 10
 
       push_text "<u>#{ @plaintiff_full_name }</u>", 40
       push_text "Plaintiff/Petitioner#{ ' '*51 }Case No.: #{ '_'*20 }", 40
@@ -53,12 +53,12 @@ module PdfDocument
       push_table -1, 0
       move_down
 
-      coordinates_array = [{ :x => 43, :y => 478 }, { :x => 124, :y => 478 }, { :x => 312, :y => 478 }, { :x => 394, :y => 478 }]
+      coordinates_array = [{ :x => 43, :y => 508 }, { :x => 124, :y => 508 }, { :x => 312, :y => 508 }, { :x => 394, :y => 508 }]
       coordinates_array.each do |coordinate|
         small_rectangle coordinate[:x], coordinate[:y]
       end
 
-      coordinates_array = [{ :x => 49, :y => 297 }, { :x => 153, :y => 297 }, { :x => 4, :y => 286 }, { :x => 91, :y => 286 }, { :x => 4, :y => 275 }, { :x => 150, :y => 275 }]
+      coordinates_array = [{ :x => 49, :y => 327 }, { :x => 153, :y => 327 }, { :x => 4, :y => 316 }, { :x => 91, :y => 316 }, { :x => 4, :y => 305 }, { :x => 150, :y => 305 }]
       _ethinicity = @plaintiff_ethinicity
       2.times do
         case _ethinicity
@@ -86,19 +86,19 @@ module PdfDocument
           small_rectangle coordinate[:x], coordinate[:y]
         end
 
-        coordinates_array = [{ :x => 317, :y => 297 }, { :x => 421, :y => 297 }, { :x => 274, :y => 286 }, { :x => 361, :y => 286 }, { :x => 274, :y => 275 }, { :x => 420, :y => 275 }]
+        coordinates_array = [{ :x => 317, :y => 327 }, { :x => 421, :y => 327 }, { :x => 274, :y => 316 }, { :x => 361, :y => 316 }, { :x => 274, :y => 305 }, { :x => 420, :y => 305 }]
         _ethinicity = @defendant_ethinicity
       end
 
-      @plaintiff_employed_presence ? [small_rectangle_checked(87, 256), small_rectangle(120, 256)] : [small_rectangle(87, 256), small_rectangle_checked(120, 256)]
+      @plaintiff_employed_presence ? [small_rectangle_checked(87, 286), small_rectangle(120, 286)] : [small_rectangle(87, 286), small_rectangle_checked(120, 286)]
 
-      @defendant_employed_presence ? [small_rectangle_checked(357, 256), small_rectangle(390, 256)] : [small_rectangle(357, 256), small_rectangle_checked(390, 256)]
+      @defendant_employed_presence ? [small_rectangle_checked(357, 286), small_rectangle(390, 286)] : [small_rectangle(357, 286), small_rectangle_checked(390, 286)]
 
-      coordinates_array = [{ :x => 32, :y => 450}, { :x => 103, :y => 432}, { :x => 60, :y => 414},
-                           { :x => 88, :y => 396}, { :x => 68, :y => 378}, { :x => 75, :y => 360},
-                           { :x => 3, :y => 342}, { :x => 67, :y => 324}, { :x => 91, :y => 306},
-                           { :x => 85, :y => 229}, { :x => 79, :y => 210}, { :x => 69, :y => 192},
-                           { :x => 67, :y => 174}
+      coordinates_array = [{ :x => 32, :y => 480}, { :x => 103, :y => 462}, { :x => 60, :y => 444},
+                           { :x => 88, :y => 426}, { :x => 68, :y => 408}, { :x => 75, :y => 390},
+                           { :x => 3, :y => 372}, { :x => 67, :y => 354}, { :x => 91, :y => 336},
+                           { :x => 85, :y => 259}, { :x => 79, :y => 240}, { :x => 69, :y => 222},
+                           { :x => 67, :y => 204}
                           ]
       2.times do
         coordinates_array.each do |coordinate|
@@ -110,32 +110,33 @@ module PdfDocument
       if @children_nevada_residency
         push_header "<b>CHILDREN OF THE PARTIES</b>", 10
 
-        table_row [{ :content => "", :colspan => 2, :border_width => 0 }, { :content => "", :border_width => 0 }, { :content => "", :border_width => 0 }, { :content => "<b>Gender</b>", :border_width => 0 }]
-        coordinate_x = 125
+        table_row [{ :content => "", :colspan => 2, :border_width => 0 }, { :content => "", :border_width => 0 }, { :content => "", :border_width => 0 }, { :content => "<b>Gender</b>", :border_width => 0,  :width => 70 }]
+        coordinate_y = 155
         @children_info.each_with_index do |child, index|
-          table_row [{ :content => "Name: <u>#{ child[:full_name] }</u>", :colspan => 2, :border_width => 0 }, { :content => "SSN: <u>#{ child[:social_security] }</u>", :border_width => 0 }, { :content => "DOB: <u>#{ child[:date_of_birth] }</u>", :border_width => 0 }, { :content => "M\b\b\b\b\bF", :border_width => 0 }]
+          table_row [{ :content => "Name: <u>#{ child[:full_name] }</u>", :colspan => 2, :border_width => 0 }, { :content => "SSN: <u>#{ child[:social_security] }</u>", :border_width => 0, :width => 100 }, { :content => "DOB: <u>#{ child[:date_of_birth] }</u>", :border_width => 0, :width => 100 }, { :content => "M\b\b\b\b\bF", :border_width => 0, :width => 70 }]
           if child[:sex] == 'Male'
-            small_rectangle_checked 445, coordinate_x - (index * 18)
-            small_rectangle 466, coordinate_x - (index * 18)
+            small_rectangle_checked 463, coordinate_y - (index * 18)
+            small_rectangle 484, coordinate_y - (index * 18)
           else
-            small_rectangle 445, coordinate_x - (index * 18)
-            small_rectangle_checked 466, coordinate_x - (index * 18)
+            small_rectangle 463, coordinate_y - (index * 18)
+            small_rectangle_checked 484, coordinate_y - (index * 18)
           end
           break if index == 4
         end
         push_table -1, 0
         push_header "If there are more than five (5) children, list their information on a separate sheet of paper and attach.",8
-        move_down 20
+        move_down 10
       end
 
       push_text "Does this case involve Family Violence:       YES       NO"
-      move_down 10
+
       if @children_info.present?
-        rectangle 245, 103 - (@children_info.count * 18)
-        rectangle 202, 103 - (@children_info.count * 18)
+        rectangle 245, 142 - (@children_info.count * 18)
+        rectangle 202, 142 - (@children_info.count * 18)
       else
-        rectangle 245, 161
-        rectangle 202, 161
+        rectangle 245, 191
+        rectangle 202, 191
+        move_down 10
       end
 
       table_row [{ :content => "<u>#{ '_'*30 }</u>", :colspan => 2, :border_width => 0, :align => :center }, { :content => "<u>#{ Time.now.strftime("%m-%d-%Y") }</u>", :border_width => 0, :align => :center }, { :content => "<u>#{ '_'*30 }</u>", :colspan => 2, :border_width => 0, :align => :center }, { :content => "<u>#{ Time.now.strftime("%m-%d-%Y") }<u>", :border_width => 0, :align => :center }]
