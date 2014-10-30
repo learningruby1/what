@@ -404,7 +404,6 @@ module PdfDocument
             step = steps.next
 
             @physical_custody_parent = Array.new
-            days_of_week = %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)
             physical_custody_amount = @same_physical_custody ? 1 : @number_of_children
 
             physical_custody_amount.times do |i|
@@ -429,7 +428,7 @@ module PdfDocument
                   answer = answers.next
                   if answer.answer == '1'
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' ' + answers.next.answer
-                    tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
+                    tmp_string += ', to ' + answers.next.answer + ' ' + answers.next.answer
                     selected_answers.push tmp_string
                   else
                     3.times do answers.next end
@@ -447,7 +446,7 @@ module PdfDocument
                   answer = answers.next
                   if answer.answer == '1'
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' with ' + answers.next.answer + ' ' + answers.next.answer
-                    tmp_string += ', to ' + days_of_week[answers.next.answer.to_i - 1] + ' ' + answers.next.answer
+                    tmp_string += ', to ' + answers.next.answer + ' ' + answers.next.answer
                     selected_answers.push tmp_string
 
                   else
