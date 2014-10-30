@@ -53,67 +53,68 @@ module PdfDocument
         push_text 'Wife in this case is not currently pregnant.', @text_indent
       end
 
-      move_to_left "#{ _counter += 1 }. MINOR CHILDREN"
-      minor_children_text = "That the parties have #{ @number_of_children } minor #{ @number_of_children > 1 ? 'children' : 'child' } who #{ @number_of_children > 1 ? 'are' : 'is' } the issue of this marriage or have been adopted by the parties."
-      if @number_of_children
+      if @children_nevada_residency
+        move_to_left "#{ _counter += 1 }. MINOR CHILDREN"
+        minor_children_text = "That the parties have #{ @number_of_children } minor #{ @number_of_children > 1 ? 'children' : 'child' } who #{ @number_of_children > 1 ? 'are' : 'is' } the issue of this marriage or have been adopted by the parties."
         minor_children_text += ' The '
         @children_info.each_with_index do |child, index|
           minor_children_text += "#{ child[:full_name] } born #{ child[:date_of_birth] }"
           minor_children_text += @children_info.count == index + 1 ? '.' : '; '
         end
-      end
 
-      push_text minor_children_text, @text_indent
 
-      move_to_left "#{ _counter += 1 }. MINOR CHILDREN RESIDENCY"
-      if @children_nevada_residency
-        push_text "Nevada is the habitual residence of the #{ @number_of_children > 1 ? 'children' : 'child' } and this Court does have the jurisdiction to enter orders regarding custody and visitation.", @text_indent
-      else
-        push_text "The #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada. This Court does not have the jurisdiction to enter orders regarding custody and visitation.", @text_indent
-      end
+        push_text minor_children_text, @text_indent
 
-      move_to_left "#{ _counter += 1 }. LEGAL CUSTODY"
-      @legal_custody_parent.each do |legal_custody|
-        case legal_custody
-        when 'BOTH Parents'
-          push_text "The parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+        move_to_left "#{ _counter += 1 }. MINOR CHILDREN RESIDENCY"
+        if @children_nevada_residency
+          push_text "Nevada is the habitual residence of the #{ @number_of_children > 1 ? 'children' : 'child' } and this Court does have the jurisdiction to enter orders regarding custody and visitation.", @text_indent
         else
-          push_text "The #{ legal_custody.eql?('Only MOM') ? @mom.capitalize : @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          push_text "The #{ @number_of_children > 1 ? 'children are' : 'child is' } residents of the State of Nevada. This Court does not have the jurisdiction to enter orders regarding custody and visitation.", @text_indent
         end
-      end
 
-      move_to_left "#{ _counter += 1 }. PHYSICAL CUSTODY"
-      @physical_custody_parent.each do |physical_custody|
-        case physical_custody[:custody]
-        when /^With/
-          push_text " The #{ physical_custody[:custody].eql?('With mom and visits with dad') ? @mom.capitalize : @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ physical_custody[:custody].eql?('With mom and visits with dad') ? @dad.capitalize : @mom.capitalize } having visitation as set forth below.", @text_indent
-        when /^Both/
-          push_text "The parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }. The parties should have visitation as set forth below.", @text_indent
-        when /^Only/
-          push_text "The #{ physical_custody[:custody].eql?('Only with the mom') ? @mom.capitalize : @dad.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+        move_to_left "#{ _counter += 1 }. LEGAL CUSTODY"
+        @legal_custody_parent.each do |legal_custody|
+          case legal_custody
+          when 'BOTH Parents'
+            push_text "The parties are fit and proper people to be awarded JOINT LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          else
+            push_text "The #{ legal_custody.eql?('Only MOM') ? @mom.capitalize : @dad.capitalize } is a fit and proper person to be awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          end
         end
-      end
 
-      move_to_left "#{ _counter += 1 }. MINOR CHILDREN HEALTH INSURANCE"
-      case @child_insurance
-      when 'Both Parents'
-        push_text " That both parties should both maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } through the employer, if available. Any deductibles and expenses not covered by insurance should be paid equally by both parties.", @text_indent
-      else
-        push_text "That #{ @child_insurance.eql?('Mom') ? @mom.capitalize : @dad.capitalize } should maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } through the employer, if available.  Any deductibles and expenses not covered by insurance should be paid equally by both parties.", @text_indent
-      end
+        move_to_left "#{ _counter += 1 }. PHYSICAL CUSTODY"
+        @physical_custody_parent.each do |physical_custody|
+          case physical_custody[:custody]
+          when /^With/
+            push_text " The #{ physical_custody[:custody].eql?('With mom and visits with dad') ? @mom.capitalize : @dad.capitalize } is a fit and proper person to be awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ physical_custody[:custody].eql?('With mom and visits with dad') ? @dad.capitalize : @mom.capitalize } having visitation as set forth below.", @text_indent
+          when /^Both/
+            push_text "The parties are fit and proper person to be awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }. The parties should have visitation as set forth below.", @text_indent
+          when /^Only/
+            push_text "The #{ physical_custody[:custody].eql?('Only with the mom') ? @mom.capitalize : @dad.capitalize } is a fit and proper person to be awarded SOLE PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          end
+        end
 
-      move_to_left "#{ _counter += 1 }. CHILD SUPPORT"
-      case @child_suport_who
-      when /will/
-        case @how_pay
-        when /following/
-          push_text "That #{ @child_suport_who.eql?('Dad will pay $') ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount.to_i } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+        move_to_left "#{ _counter += 1 }. MINOR CHILDREN HEALTH INSURANCE"
+        case @child_insurance
+        when 'Both Parents'
+          push_text " That both parties should both maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } through the employer, if available. Any deductibles and expenses not covered by insurance should be paid equally by both parties.", @text_indent
         else
-          count = get_number_of_primary_or_sole_child(@document)
-          push_text "That #{ @child_suport_who.eql?('Dad will pay $') ? @dad.capitalize : @mom.capitalize } should pay child support in the statutory minimum of $100 per month, per child or % #{ get_percentage_for_children(@number_of_children - count) } of #{ @child_suport_who.eql?('Dad will pay $') ? @mom.capitalize : @dad.capitalize } gross monthly income whichever is greater as is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates. ", @text_indent
+          push_text "That #{ @child_insurance.eql?('Mom') ? @mom.capitalize : @dad.capitalize } should maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } through the employer, if available.  Any deductibles and expenses not covered by insurance should be paid equally by both parties.", @text_indent
         end
-      when /^No/
-        push_text "That neither party should pay child support.", @text_indent
+
+        move_to_left "#{ _counter += 1 }. CHILD SUPPORT"
+        case @child_suport_who
+        when /will/
+          case @how_pay
+          when /following/
+            push_text "That #{ @child_suport_who.eql?('Dad will pay $') ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount.to_i } per month for support of the parties' minor #{ @number_of_children > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
+          else
+            count = get_number_of_primary_or_sole_child(@document)
+            push_text "That #{ @child_suport_who.eql?('Dad will pay $') ? @dad.capitalize : @mom.capitalize } should pay child support in the statutory minimum of $100 per month, per child or % #{ get_percentage_for_children(@number_of_children - count) } of #{ @child_suport_who.eql?('Dad will pay $') ? @mom.capitalize : @dad.capitalize } gross monthly income whichever is greater as is in compliance with NRS 125B.070. The obligation to pay child support should continue until the #{ @number_of_children > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates. ", @text_indent
+          end
+        when /^No/
+          push_text "That neither party should pay child support.", @text_indent
+        end
       end
 
       move_to_left "#{ _counter += 1 }. COMMUNITY PROPERTY"
@@ -154,231 +155,233 @@ module PdfDocument
 
       push_text "<b>THEREFORE, IT IS ORDERED, ADJUDGED AND DECREED</b> that the bonds of matrimony now and heretofore existing between the parties are hereby wholly dissolved, set aside and forever held for naught, and an absolute Decree of Divorce is hereby granted to the parties, and each of the parties are hereby restored to the status of a single, unmarried person.", @text_indent
 
-      @physical_custody_parent.each_with_index do |physical_custody, index|
-        case physical_custody[:custody]
-        when /^Both/
-          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the parties are awarded JOINT LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
-        when /^Only/
-          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the #{ physical_custody[:custody] == 'Only with the mom' ? @mom.capitalize : @dad.capitalize } is awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
-        end
-      end
-
-      @physical_custody_parent.each do |physical_custody|
-        case physical_custody[:custody]
-        when /and visit/
-          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the #{ physical_custody[:custody] == 'With mom and visits with dad' ? @mom.capitalize : @dad.capitalize } is awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ physical_custody[:custody] == 'With mom and visits with dad' ? @dad.capitalize : @mom.capitalize } having visitation as follows:", @text_indent
-          physical_custody[:answers].each_with_index do |answer, index|
-            push_text "#{ (97 + index).chr }. #{ answer }"
+      if @children_nevada_residency
+        @physical_custody_parent.each_with_index do |physical_custody, index|
+          case physical_custody[:custody]
+          when /^Both/
+            push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the parties are awarded JOINT LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          when /^Only/
+            push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the #{ physical_custody[:custody] == 'Only with the mom' ? @mom.capitalize : @dad.capitalize } is awarded SOLE LEGAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
           end
-        when /^Both/
-          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the parties are awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows:", @text_indent
-          physical_custody[:answers].each_with_index do |answer, index|
-            push_text "#{ (97 + index).chr }. #{ answer }"
-          end
-        when /^Only/
-          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the #{ physical_custody[:custody] == 'Only with the mom' ? @mom.capitalize : @dad.capitalize } is awarded SOLE PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
         end
-      end
 
-      if @holiday_now
-        holiday_text = "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the holiday visitation schedule is as follows: "
-        @all_holidays.each do |holiday|
-          holiday_text += holiday[:child].to_s
+        @physical_custody_parent.each do |physical_custody|
+          case physical_custody[:custody]
+          when /and visit/
+            push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the #{ physical_custody[:custody] == 'With mom and visits with dad' ? @mom.capitalize : @dad.capitalize } is awarded PRIMARY PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } with #{ physical_custody[:custody] == 'With mom and visits with dad' ? @dad.capitalize : @mom.capitalize } having visitation as follows:", @text_indent
+            physical_custody[:answers].each_with_index do |answer, index|
+              push_text "#{ (97 + index).chr }. #{ answer }"
+            end
+          when /^Both/
+            push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the parties are awarded JOINT PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' } and the parties’ timeshare should be as follows:", @text_indent
+            physical_custody[:answers].each_with_index do |answer, index|
+              push_text "#{ (97 + index).chr }. #{ answer }"
+            end
+          when /^Only/
+            push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the #{ physical_custody[:custody] == 'Only with the mom' ? @mom.capitalize : @dad.capitalize } is awarded SOLE PHYSICAL custody of the minor #{ @number_of_children > 1 ? 'children' : 'child' }.", @text_indent
+          end
+        end
 
-          holiday[:holidays].each do |holy|
-            holiday_text += holy[0].template_field.name.split(' /<spain/>').first
-            case holy.count
-            when 3
-              holiday_text += ": from #{ holy[1] } to #{ holy[2] }; "
-            when 4
-              holiday_text += ": from #{ holy[1] } to #{ holy[2] }, #{ holy[3] }; "
-            when 5
-              holiday_text += ": from #{ holy[1] } to #{ holy[2] } with #{ holy[3] }, #{ holy[4] }; "
-            when 7
-              holiday_text += ": #{ holy[1] }, #{ holy[2] } from #{ holy[3] } to #{ holy[4] }, with #{ holy[5] }, #{ holy[6] }; "
+        if @holiday_now
+          holiday_text = "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that the holiday visitation schedule is as follows: "
+          @all_holidays.each do |holiday|
+            holiday_text += holiday[:child].to_s
+
+            holiday[:holidays].each do |holy|
+              holiday_text += holy[0].template_field.name.split(' /<spain/>').first
+              case holy.count
+              when 3
+                holiday_text += ": from #{ holy[1] } to #{ holy[2] }; "
+              when 4
+                holiday_text += ": from #{ holy[1] } to #{ holy[2] }, #{ holy[3] }; "
+              when 5
+                holiday_text += ": from #{ holy[1] } to #{ holy[2] } with #{ holy[3] }, #{ holy[4] }; "
+              when 7
+                holiday_text += ": #{ holy[1] }, #{ holy[2] } from #{ holy[3] } to #{ holy[4] }, with #{ holy[5] }, #{ holy[6] }; "
+              end
             end
           end
+          holiday_text += "The holiday visitation schedule shall control when in conflict with the regular visitation schedule."
+          push_text holiday_text, @text_indent
+        else
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that no holiday schedule is being ordered.", @text_indent
         end
-        holiday_text += "The holiday visitation schedule shall control when in conflict with the regular visitation schedule."
-        push_text holiday_text, @text_indent
-      else
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that no holiday schedule is being ordered.", @text_indent
-      end
 
-      case @child_insurance
-      when /^Both/
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that both parties shall maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } if available. Any deductibles and expenses not covered by insurance should be paid equally by both parties, pursuant to the 30/30 Rule.", @text_indent
-      else
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that #{ @child_insurance == 'Dad' ? @dad.capitalize : @mom.capitalize } shall maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } if available.  Any deductibles and expenses not covered by insurance should be paid equally by both parties, pursuant to the 30/30 Rule.", @text_indent
-      end
-
-      case @child_suport_who
-      when /^No/
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that neither party shall pay child support.", @text_indent
-      when /^Dad|^Mom/
-        case @how_pay
-        when /following/
-          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } shall pay $ #{ @child_suport_amount } per month in child support. Pursuant to NRS 125.510, this amount shall continue until the minor child reaches 18 years of age if no longer in high school, or if the child still enrolled in high school, when the child reaches 19 years of age or becomes emancipated or otherwise self-supporting.", @text_indent
-        when /statutory/
-          count = get_number_of_primary_or_sole_child @document
-          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } shall pay child support in the amount of #{ get_percentage_for_children(count) } % of #{ @child_suport_who == 'Dad will pay <child> support' ? @mom.capitalize : @dad.capitalize } gross monthly income or the minimum required by law and is in compliance with NRS 125B.070.  Pursuant to NRS 125.510, this amount shall continue until the minor child reaches 18 years of age if no longer in high school, or if the child still enrolled in high school, when the child reaches 19 years of age or becomes emancipated or otherwise self-supporting.", @text_indent
+        case @child_insurance
+        when /^Both/
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that both parties shall maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } if available. Any deductibles and expenses not covered by insurance should be paid equally by both parties, pursuant to the 30/30 Rule.", @text_indent
+        else
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that #{ @child_insurance == 'Dad' ? @dad.capitalize : @mom.capitalize } shall maintain medical and dental insurance for the minor #{ @number_of_children > 1 ? 'children' : 'child' } if available.  Any deductibles and expenses not covered by insurance should be paid equally by both parties, pursuant to the 30/30 Rule.", @text_indent
         end
-      end
 
-      case @request_withhold
-      when 'Yes'
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that a wage withholding shall issue against the obligor parent to secure payment of child support and spousal support, if any.", @text_indent
-      else
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that no wage withholding shall be order at this time.", @text_indent
-      end
-
-      if @request_arrears
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that Plaintiff is awarded child support arrearages in the total of $ #{ @request_amount_paid }, which amount is reduced to judgment against Defendant. ", @text_indent
-      else
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that no child support arrearages exist and Plaintiff waives the right to child support arrearages.", @text_indent
-      end
-
-      tax_exemptions_text = "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> "
-      @child_tax_examption.each do |tax|
-        case tax.first
-        when /^Should be/
-          tax_exemptions_text += "The tax deduction shall be allocated per federal law."
-          push_text tax_exemptions_text, @text_indent
-          tax_exemptions_text = ''
-        when /^Mom every|^Dad every/
-          tax_exemptions_text += "#{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} shall claim the following minor child #{ @children_info[tax.second][:full_name] } as dependent for Federal Tax purposes every year."
-          push_text tax_exemptions_text, @text_indent
-          tax_exemptions_text = ''
-        when /^Dad and Mom/
-          tax_exemptions_text += "Plaintiff should claim minor #{ @children_info[tax.second][:full_name] } as dependent for Federal Tax purposes every year.  Defendant should claim minor #{ @children_info[tax.second][:full_name] } as dependent for Federal Tax purposes every year."
-          push_text tax_exemptions_text, @text_indent
-          tax_exemptions_text = ''
-        end
-      end
-
-      tax_exemption_text = "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> "
-      @child_tax_examption.each do |tax|
-        case tax.first
-        when /^Should be/
-          tax_exemption_text += "That the parties should alternate claiming the minor #{ @number_of_children > 1 ? 'children' : 'child' } as dependent(s) for Federal Tax purposes. "
-          push_text tax_exemption_text, @text_indent
-          tax_exemption_text = ''
-        when /^Mom every|^Dad every/
-          tax_exemption_text += "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor #{ @number_of_children > 1 ? 'children' : 'child' } as dependent(s) for Federal Tax purposes every year."
-          push_text tax_exemption_text, @text_indent
-          tax_exemption_text = ''
-        when /^Dad and Mom/
-          tax_exemption_text += "That Plaintiff should claim minor #{ @children_info[tax.second][:full_name] } as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor #{ @children_info[tax.second][:full_name] } as dependent(s) for Federal Tax purposes every year."
-          push_text tax_exemption_text, @text_indent
-          tax_exemption_text = ''
-        end
-      end
-
-      case @property_presence
-      when 'Yes'
-        push_text " <b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that community property which shall be equally divided as follows:", @text_indent
-        mom_array = []
-        dad_array = []
-        @properties_more.each do |property|
-          case property.last
-          when /^Wife will keep/
-            property.pop
-            mom_array.push property.join(', ') if property != '' || property != ','
-          when /^Husband will keep/
-            property.pop
-            dad_array.push property.join(', ') if property != '' || property != ','
-          else
-            property[property.count - 1] = 'Sell'
-            mom_array.push property.join(', ') if property != '' || property != ','
-            dad_array.push property.join(', ') if property != '' || property != ','
+        case @child_suport_who
+        when /^No/
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that neither party shall pay child support.", @text_indent
+        when /^Dad|^Mom/
+          case @how_pay
+          when /following/
+            push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } shall pay $ #{ @child_suport_amount } per month in child support. Pursuant to NRS 125.510, this amount shall continue until the minor child reaches 18 years of age if no longer in high school, or if the child still enrolled in high school, when the child reaches 19 years of age or becomes emancipated or otherwise self-supporting.", @text_indent
+          when /statutory/
+            count = get_number_of_primary_or_sole_child @document
+            push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } shall pay child support in the amount of #{ get_percentage_for_children(count) } % of #{ @child_suport_who == 'Dad will pay <child> support' ? @mom.capitalize : @dad.capitalize } gross monthly income or the minimum required by law and is in compliance with NRS 125B.070.  Pursuant to NRS 125.510, this amount shall continue until the minor child reaches 18 years of age if no longer in high school, or if the child still enrolled in high school, when the child reaches 19 years of age or becomes emancipated or otherwise self-supporting.", @text_indent
           end
         end
 
-        @debts_accounts.each do |property|
-          case property.last
-          when /^Wife will keep it/
-            property.pop
-            mom_array.push property.join(', ') if property != '' || property != ','
-          when /^Husband will keep it/
-            property.pop
-            dad_array.push property.join(', ') if property != '' || property != ','
-          else
-            property[2] = 'Divide'
-            mom_array.push property.join(', ') if property != '' || property != ','
-            dad_array.push property.join(', ') if property != '' || property != ','
+        case @request_withhold
+        when 'Yes'
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that a wage withholding shall issue against the obligor parent to secure payment of child support and spousal support, if any.", @text_indent
+        else
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that no wage withholding shall be order at this time.", @text_indent
+        end
+
+        if @request_arrears
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that Plaintiff is awarded child support arrearages in the total of $ #{ @request_amount_paid }, which amount is reduced to judgment against Defendant. ", @text_indent
+        else
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that no child support arrearages exist and Plaintiff waives the right to child support arrearages.", @text_indent
+        end
+
+        tax_exemptions_text = "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> "
+        @child_tax_examption.each do |tax|
+          case tax.first
+          when /^Should be/
+            tax_exemptions_text += "The tax deduction shall be allocated per federal law."
+            push_text tax_exemptions_text, @text_indent
+            tax_exemptions_text = ''
+          when /^Mom every|^Dad every/
+            tax_exemptions_text += "#{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} shall claim the following minor child #{ @children_info[tax.second][:full_name] } as dependent for Federal Tax purposes every year."
+            push_text tax_exemptions_text, @text_indent
+            tax_exemptions_text = ''
+          when /^Dad and Mom/
+            tax_exemptions_text += "Plaintiff should claim minor #{ @children_info[tax.second][:full_name] } as dependent for Federal Tax purposes every year.  Defendant should claim minor #{ @children_info[tax.second][:full_name] } as dependent for Federal Tax purposes every year."
+            push_text tax_exemptions_text, @text_indent
+            tax_exemptions_text = ''
           end
         end
 
-        @bank_account.each do |property|
-          case property.last
-          when /^Wife will keep it/
-            property.pop
-            mom_array.push property.join(', ') if property != '' || property != ','
-          when /^Husband will keep it/
-            property.pop
-            dad_array.push property.join(', ') if property != '' || property != ','
-          else
-            property[4] = 'Divide'
-            mom_array.push property.join(', ') if property != '' || property != ','
-            dad_array.push property.join(', ') if property != '' || property != ','
-          end
-        end
-        push_text "To the Plaintiff, as #{ @mom == 'plaintiff' ? 'her' : 'his' } sole and separate property:", @text_indent
-        property_array = @mom == 'plaintiff' ? mom_array : dad_array
-        alphabet = 97
-        property_array.each_with_index do |p, index|
-          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-        end
-        push_text "To the Defendant, as #{ @dad == 'defendant' ? 'his' : 'her' } sole and separate property:", @text_indent
-        property_array = @dad == 'defendant' ? dad_array : mom_array
-        alphabet = 97
-        property_array.each_with_index do |p, index|
-          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-        end
-      when 'No, we already divided them'
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that community property and it has been already divided.", @text_indent
-      else
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is no community property to divide.", @text_indent
-      end
-
-      community_debt_text = ""
-      case @community_debts
-      when 'Yes'
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is community debt which shall be equally divided as follows: ", @text_indent
-
-        mom_array = []
-        dad_array = []
-        @debt_devision.each do |property|
-          case property.last
-          when /^Wife will keep/
-            property.pop
-            mom_array.push property.join(', ') if property != '' || property != ','
-          when /^Husband will keep/
-            property.pop
-            dad_array.push property.join(', ') if property != '' || property != ','
-          else
-            property[property.count - 1] = 'Divide' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
-            mom_array.push property.join(', ') if property != '' || property != ','
-            dad_array.push property.join(', ') if property != '' || property != ','
+        tax_exemption_text = "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> "
+        @child_tax_examption.each do |tax|
+          case tax.first
+          when /^Should be/
+            tax_exemption_text += "That the parties should alternate claiming the minor #{ @number_of_children > 1 ? 'children' : 'child' } as dependent(s) for Federal Tax purposes. "
+            push_text tax_exemption_text, @text_indent
+            tax_exemption_text = ''
+          when /^Mom every|^Dad every/
+            tax_exemption_text += "That #{ tax.first == 'Mom every year' ? @mom.capitalize : @dad.capitalize} should claim the minor #{ @number_of_children > 1 ? 'children' : 'child' } as dependent(s) for Federal Tax purposes every year."
+            push_text tax_exemption_text, @text_indent
+            tax_exemption_text = ''
+          when /^Dad and Mom/
+            tax_exemption_text += "That Plaintiff should claim minor #{ @children_info[tax.second][:full_name] } as dependent(s) for Federal Tax purposes every year.  Defendant should claim minor #{ @children_info[tax.second][:full_name] } as dependent(s) for Federal Tax purposes every year."
+            push_text tax_exemption_text, @text_indent
+            tax_exemption_text = ''
           end
         end
 
-        push_text "To the Plaintiff, as #{ @mom == 'plaintiff' ? 'her' : 'his' } sole and separate debts and shall indemnify and hold Defendant harmless from these debts:", @text_indent
-        debt_array = @mom == 'plaintiff' ? mom_array : dad_array
-        alphabet = 97
-        debt_array.each_with_index do |p, index|
-          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+        case @property_presence
+        when 'Yes'
+          push_text " <b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that community property which shall be equally divided as follows:", @text_indent
+          mom_array = []
+          dad_array = []
+          @properties_more.each do |property|
+            case property.last
+            when /^Wife will keep/
+              property.pop
+              mom_array.push property.join(', ') if property != '' || property != ','
+            when /^Husband will keep/
+              property.pop
+              dad_array.push property.join(', ') if property != '' || property != ','
+            else
+              property[property.count - 1] = 'Sell'
+              mom_array.push property.join(', ') if property != '' || property != ','
+              dad_array.push property.join(', ') if property != '' || property != ','
+            end
+          end
+
+          @debts_accounts.each do |property|
+            case property.last
+            when /^Wife will keep it/
+              property.pop
+              mom_array.push property.join(', ') if property != '' || property != ','
+            when /^Husband will keep it/
+              property.pop
+              dad_array.push property.join(', ') if property != '' || property != ','
+            else
+              property[2] = 'Divide'
+              mom_array.push property.join(', ') if property != '' || property != ','
+              dad_array.push property.join(', ') if property != '' || property != ','
+            end
+          end
+
+          @bank_account.each do |property|
+            case property.last
+            when /^Wife will keep it/
+              property.pop
+              mom_array.push property.join(', ') if property != '' || property != ','
+            when /^Husband will keep it/
+              property.pop
+              dad_array.push property.join(', ') if property != '' || property != ','
+            else
+              property[4] = 'Divide'
+              mom_array.push property.join(', ') if property != '' || property != ','
+              dad_array.push property.join(', ') if property != '' || property != ','
+            end
+          end
+          push_text "To the Plaintiff, as #{ @mom == 'plaintiff' ? 'her' : 'his' } sole and separate property:", @text_indent
+          property_array = @mom == 'plaintiff' ? mom_array : dad_array
+          alphabet = 97
+          property_array.each_with_index do |p, index|
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+          push_text "To the Defendant, as #{ @dad == 'defendant' ? 'his' : 'her' } sole and separate property:", @text_indent
+          property_array = @dad == 'defendant' ? dad_array : mom_array
+          alphabet = 97
+          property_array.each_with_index do |p, index|
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        when 'No, we already divided them'
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that community property and it has been already divided.", @text_indent
+        else
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is no community property to divide.", @text_indent
         end
-        push_text "To the Defendant, as #{ @dad == 'defendant' ? 'his' : 'her' } sole and separate debts and shall indemnify and hold Plaintiff harmless from these debts:", @text_indent
-        debt_array = @dad == 'defendant' ? dad_array : mom_array
-        alphabet = 97
-        debt_array.each_with_index do |p, index|
-          push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+
+        community_debt_text = ""
+        case @community_debts
+        when 'Yes'
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is community debt which shall be equally divided as follows: ", @text_indent
+
+          mom_array = []
+          dad_array = []
+          @debt_devision.each do |property|
+            case property.last
+            when /^Wife will keep/
+              property.pop
+              mom_array.push property.join(', ') if property != '' || property != ','
+            when /^Husband will keep/
+              property.pop
+              dad_array.push property.join(', ') if property != '' || property != ','
+            else
+              property[property.count - 1] = 'Divide' if property.last == 'Pay with sell of home' || 'Pay with sell of land'
+              mom_array.push property.join(', ') if property != '' || property != ','
+              dad_array.push property.join(', ') if property != '' || property != ','
+            end
+          end
+
+          push_text "To the Plaintiff, as #{ @mom == 'plaintiff' ? 'her' : 'his' } sole and separate debts and shall indemnify and hold Defendant harmless from these debts:", @text_indent
+          debt_array = @mom == 'plaintiff' ? mom_array : dad_array
+          alphabet = 97
+          debt_array.each_with_index do |p, index|
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+          push_text "To the Defendant, as #{ @dad == 'defendant' ? 'his' : 'her' } sole and separate debts and shall indemnify and hold Plaintiff harmless from these debts:", @text_indent
+          debt_array = @dad == 'defendant' ? dad_array : mom_array
+          alphabet = 97
+          debt_array.each_with_index do |p, index|
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        when 'No, we already divided them'
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is community debt and it has been already divided.", @text_indent
+        else
+          push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is no community debt to divide.", @text_indent
         end
-      when 'No, we already divided them'
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is community debt and it has been already divided.", @text_indent
-      else
-        push_text "<b>IT IS FURTHER ORDERED, ADJUDGED AND DECREED</b> that there is no community debt to divide.", @text_indent
       end
 
       if @alimony_presence
