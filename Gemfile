@@ -34,3 +34,5 @@ gem 'gritter'
 
 gem 'whenever', :require => false
 gem 'american_date'
+
+gem 'exception_notification'
