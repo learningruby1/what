@@ -284,7 +284,7 @@ module PdfDocument
                 @children_info[i][:question_1_cases] = []
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
-                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer.capitalize : k += 1
                 case_data[:name_of_court] = answers[k += 1].answer
                 case_data[:state] = answers[k += 1].answer
                 case_data[:case_number] = answers[k += 1].answer
@@ -300,7 +300,7 @@ module PdfDocument
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
-                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer.capitalize : k += 1
                 case_data[:name_of_court] = answers[k += 1].answer
                 case_data[:state] = answers[k += 1].answer
                 case_data[:case_number] = answers[k += 1].answer
@@ -322,7 +322,7 @@ module PdfDocument
                 @children_info[i][:question_2_cases] = []
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
-                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer.capitalize : k += 1
                 case_data[:name_of_court] = answers[k += 1].answer
                 case_data[:state] = answers[k += 1].answer
                 case_data[:case_number] = answers[k += 1].answer
@@ -338,7 +338,7 @@ module PdfDocument
               while answers.count - 1 > k do
                 case_data = {}
                 case_data[:role] = answers[k += 2].answer
-                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer : k += 1
+                case_data[:role] == 'Other' ? case_data[:role] = answers[k += 1].answer.capitalize : k += 1
                 case_data[:name_of_court] = answers[k += 1].answer
                 case_data[:state] = answers[k += 1].answer
                 case_data[:case_number] = answers[k += 1].answer
@@ -704,7 +704,7 @@ module PdfDocument
             answers.next
             answers.next
             @request_arrears = answers.next.answer == 'Yes' rescue false
-            @request_arrears_from = answers.next.answer
+            @request_arrears_from = answers.next.answer.gsub(/\/[0-9]{1,2}\//, '/')
             answers.next
             @request_amount_paid = answers.next.answer
 

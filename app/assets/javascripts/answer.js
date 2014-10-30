@@ -1,6 +1,10 @@
 //$(function(){
 $( document ).ready(function() {
-  date_init();
+  // For date_select
+    $("[name*='answer(1i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
+    $("[name*='answer(3i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
+    $("[name*='answer(2i)']:not([type='hidden'])").wrap("<div class='col-md-3 margin-left'></div>")
+
   day_of_week_init();
   var time = $('.time');
   if (time.length > 0){
@@ -184,6 +188,7 @@ function joint_child_support_amount(_this){
   _this.parent().find('.under_amount_text').prop('innerText', '$ ' + month_income + ' * ' + (percentage * 100) + '%  = ' + result);
   return result
 }
+
 function who_pay(dad_result, mom_result){
   if(dad_result == undefined || mom_result == undefined){
     return;
@@ -196,7 +201,6 @@ function who_pay(dad_result, mom_result){
   }
 }
 
-
 function check_value(value, _this){
   if(value < 1 || value > 9){
     _this.after('<div id="error" style="width:240px; background:#FAACAC; padding: 3px; border-radius: 5px; color: red; margin-top: 3px;"><span>Only from 1 to 9</span>/<span class="spain">Sólo del 1 al 9</span></div>');
@@ -204,204 +208,6 @@ function check_value(value, _this){
     return false
   }
   return true
-}
-
-function date_init(){
-  var date = $('.date');
-  var date_without_day = $('.date_without_day');
-  var date_after_born = $('.date_after_born');
-  var only_year = $('.only_year')
-  var only_year_born = $('.only_year_born')
-  if (date.length > 0 || date_without_day.length > 0 || only_year.length > 0 || only_year_born.length > 0 || date_after_born.length > 0){
-
-    var months = '<option value="1">January / Enero</option>' +
-                 '<option value="2">February / Febrero</option>' +
-                 '<option value="3">March / Marzo</option>' +
-                 '<option value="4">April / Abril</option>' +
-                 '<option value="5">May / Mayo</option>' +
-                 '<option value="6">June / Junio</option>' +
-                 '<option value="7">July / Julio</option>' +
-                 '<option value="8">August / Agosto</option>' +
-                 '<option value="9">September / Septiembre</option>' +
-                 '<option value="10">October / Octubre</option>' +
-                 '<option value="11">November / Noviembre</option>' +
-                 '<option value="12">December / Diciembre</option>';
-
-    var days = '';
-    var years = '';
-    var years_without_day = '';
-    var only_years = '';
-    var only_years_born = '';
-    var start_year = 1900;
-    var start_year_without_day = 2009;
-    var start_only_year = 2013;
-
-    for( i = 1; i <= 31; ++i )
-      days += '<option>' + i + '</option>';
-
-    for( i = new Date().getFullYear(); i >= start_year; --i )
-      years += '<option>' + i + '</option>';
-
-    for( i = new Date().getFullYear(); i >= start_year_without_day; --i )
-      years_without_day += '<option>' + i + '</option>';
-
-    for( i = new Date().getFullYear(); i >= start_only_year; --i )
-      only_years += '<option>' + i + '</option>';
-
-    for( i = new Date().getFullYear() + 1; i >= new Date().getFullYear(); --i )
-      only_years_born += '<option>' + i + '</option>';
-
-    only_year_born.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
-                '<div class="col-md-2 margin-left"><select class="day form-control">'  + '<option disabled="disabled" selected="selected">Day / Día</option>' + days + '</select></div>' +
-                '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + only_years_born + '</select></div>');
-
-
-    only_year.append('<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + only_years + '</select></div>');
-
-    date_without_day.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
-                '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + years_without_day + '</select></div>');
-
-    date_after_born.each(function(){
-      var start_born_year_without_day = parseInt($(this).attr('locals-date').split('/')[2]) < (new Date().getFullYear() - 5) ? new Date().getFullYear() - 5 : parseInt($(this).attr('locals-date').split('/')[2]);
-      var after_born_years_without_day = '';
-      for( i = new Date().getFullYear(); i >= start_born_year_without_day; --i ){
-        after_born_years_without_day += '<option>' + i + '</option>';
-      }
-      $(this).append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
-                     '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + after_born_years_without_day + '</select></div>');
-    });
-
-    date.append('<div class="col-md-3 margin-left"><select class="month form-control">'+ '<option disabled="disabled" selected="selected" value="">Month / Mes</option>' + months + '</select></div>' +
-                '<div class="col-md-2 margin-left"><select class="day form-control">'  + '<option disabled="disabled" selected="selected">Day / Día</option>' + days + '</select></div>' +
-                '<div class="col-md-2 margin-left"><select class="year form-control">' + '<option disabled="disabled" selected="selected">Year / Año</option>' + years + '</select></div>');
-
-    $('.only_year_born select').each(function(){
-      $(this).change(function(){
-
-        var _this = $(this);
-        only_year_born = _this.parent().parent().find('[type="hidden"]');
-        only_year_born.val('');
-
-        _this.parent().parent().find('.form-control').each(function(){
-          if (only_year_born.val().length > 0)
-            only_year_born.val(only_year_born.val() + '/');
-          only_year_born.val(only_year_born.val() + $(this).val());
-        });
-      });
-    });
-
-    only_year_born.find('[type="hidden"]').each(function(){
-
-      var _this = $(this);
-      if(_this.val().length > 0){
-        selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split('/')[0]);
-        selects.first().parent().next().children().val(_this.val().split('/')[1]);
-        selects.last().val(_this.val().split('/')[2]);
-      }
-    });
-
-    $('.date select').each(function(){
-      var str = '.' + $(this).prop('class');
-      $this = str.replace(' ', '.');
-
-      $(document).on('change', $this, function(){
-
-        var _this = $(this);
-        date = _this.parent().parent().find('[type="hidden"]');
-        date.val('');
-
-        _this.parent().parent().find('.form-control').each(function(){
-          if (date.val().length > 0)
-            date.val(date.val() + '/');
-          date.val(date.val() + $(this).val());
-        });
-      });
-    });
-
-    date.find('[type="hidden"]').each(function(){
-
-      var _this = $(this);
-      if(_this.val().length > 0){
-        selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split('/')[0]);
-        selects.first().parent().next().children().val(_this.val().split('/')[1]);
-        selects.last().val(_this.val().split('/')[2]);
-      }
-    });
-
-    $('.date_without_day select').each(function(){
-      $(this).change(function(){
-
-        var _this = $(this);
-        date_without_day = _this.parent().parent().find('[type="hidden"]');
-        date_without_day.val('');
-
-        _this.parent().parent().find('.form-control').each(function(){
-          if (date_without_day.val().length > 0)
-            date_without_day.val(date_without_day.val() + '/');
-          date_without_day.val(date_without_day.val() + $(this).val());
-        });
-      });
-    });
-
-    date_without_day.find('[type="hidden"]').each(function(){
-      var _this = $(this);
-      if(_this.val().length > 0){
-        selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split('/')[0]);
-        selects.first().parent().next().children().val(_this.val().split('/')[1]);
-      }
-    });
-
-    $('.date_after_born select').each(function(){
-      $(this).change(function(){
-
-        var _this = $(this);
-        date_after_born = _this.parent().parent().find('[type="hidden"]');
-        date_after_born.val('');
-
-        _this.parent().parent().find('.form-control').each(function(){
-          if (date_after_born.val().length > 0)
-            date_after_born.val(date_after_born.val() + '/');
-          date_after_born.val(date_after_born.val() + $(this).val());
-        });
-      });
-    });
-
-    date_after_born.find('[type="hidden"]').each(function(){
-      var _this = $(this);
-      if(_this.val().length > 0){
-        selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split('/')[0]);
-        selects.first().parent().next().children().val(_this.val().split('/')[1]);
-      }
-    });
-
-    $('.only_year select').each(function(){
-      $(this).change(function(){
-
-        var _this = $(this);
-        only_year = _this.parent().parent().find('[type="hidden"]');
-        only_year.val('');
-
-        _this.parent().parent().find('.form-control').each(function(){
-          if (only_year.val().length > 0)
-            only_year.val(only_year.val() + '/');
-          only_year.val(only_year.val() + $(this).val());
-        });
-      });
-    });
-
-    only_year.find('[type="hidden"]').each(function(){
-
-      var _this = $(this);
-      if(_this.val().length > 0){
-        selects = _this.parent().find('.form-control');
-        selects.first().val(_this.val().split('/')[0]);
-      }
-    });
-  }
 }
 
 function day_of_week_init(){

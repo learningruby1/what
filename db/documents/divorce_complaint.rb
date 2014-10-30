@@ -113,7 +113,7 @@ current_step = template.steps.create :step_number => step_number += 1,#7
 
 current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pregnant /<spain/>NO ESTÁ embarazada en este momento.
                                                              <option/>IS currently pregnant /<spain/>ESTÁ embarazada en este momento.', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'only_year_born review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
+current_step.fields.create :field_type => 'date_year_born review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
 current_step.fields.create :field_type => 'text review_show', :name => 'Is the husband the father of the unborn child? /<spain/>¿El esposo es el padre del niño por nacer?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant'
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
@@ -229,7 +229,7 @@ current_step.fields.create :field_type => 'string rev_inline',
 
 current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección',
-                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1',
@@ -270,7 +270,7 @@ current_step.fields.create :field_type => 'string-capitalize rev_inline',
 current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :name => 'Child moved to this address /<spain/>El menor se mudó a esta dirección',
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
-                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1',
                            :header_ids => "#{ child_birth.id }"
@@ -288,7 +288,7 @@ field_for_mandatory_second = current_step.fields.create :field_type => 'radio re
 
 current_step.fields.create :field_type => 'date_after_born',
                            :name => 'Child moved to my address /<spain/>El menor se mudó a mi dirección',
-                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
                            :toggle_id => toggle_id, :toggle_option => 'Same as me',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1',
@@ -1040,7 +1040,7 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting <
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'date_without_day', :name => 'I want back <child_count> support starting /<spain/>Quiero la manutención de <child_count_spain> a partir', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
+current_step.fields.create :field_type => 'date_without_day', :name => 'I want back <child_count> support starting /<spain/>Quiero la manutención de <child_count_spain> a partir', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
 current_step.fields.create :field_type => 'text', :name => 'I want /<spain/>Quiero', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'amount $', :name => 'per month for child support. /<spain/>por mes de manutención de menores.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^(\$)?[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 
@@ -1055,7 +1055,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Should be allocated
                                                              <option/>Dad every year /<spain/>Papá todos los años
                                                              <option/>Dad and Mom alternating years /<spain/>Mamá y Papá años por medio', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'only_year', :name => 'Mom will start claiming the child from /<spain/>La mamá comenzara a reclamar el menor desde:', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom alternating years', :mandatory => { :value => /\w+/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'date_year_only', :name => 'Mom will start claiming the child from /<spain/>La mamá comenzara a reclamar el menor desde:', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom alternating years', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 0
 toggle_id += 1

@@ -78,12 +78,13 @@ class Document < ActiveRecord::Base
       _answer = answers.find(answer.first)
       # save answer
 
-      _answer.answer = answer.last[:answer]
+      field_answer = answer.last.to_a[1..-1].map{|key,value| value}.reject(&:blank?).join('/') if _answer.template_field.field_type =~ /date/
+      _answer.answer = field_answer.to_s.length > 4 ? field_answer : answer.last[:answer]
 
       _answer.answer = "$#{_answer.answer}" if _answer.field_type.match(/\$/) && !_answer.answer.match(/\$/)
       _answer.answer = '000-00-0000' if _answer.answer == '' && _answer.template_field.field_type.match(/social_security/)
       _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase/)
-      _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize/)
+      _answer.answer = _answer.answer.to_s.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize/)
       _answer.save
 
       looper = add_mandatory_error unless check_mandatory(_answer)
