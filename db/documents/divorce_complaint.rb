@@ -329,13 +329,24 @@ current_step.fields.create :field_type => 'select_person rev_inline',
 
 
 current_step.fields.create :field_type => 'loop_button-add',
-                           :name => 'Add other address /<spain/> Anadir otra dirección',
+                           :name => 'Add one more address /<spain/> Añadir una dirección más',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 current_step.fields.create :field_type => 'loop_button-delete',
                            :name => 'Delete last address /<spain/> Eliminar la última dirección',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
+
+
+
+
+
+
+
+
+
+
+
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #12
                                      :title => '<uppercase_child>’S QUESTION 1 /<spain/><uppercase_child_spain> PREGUNTA 1'
