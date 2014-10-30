@@ -26,7 +26,7 @@ module PdfDocument
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Summons", document
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Injunction(Optional)", document
         generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
-        generate_document PdfDocument::WelfareSheet.new(document).generate,   "Welfare_sheet", document, false, false, "Welfare_sheet"
+        generate_document PdfDocument::WelfareSheet.new(document).generate,      "Welfare_sheet", document
         generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
         generate_document cover.generate,                                        "Cover", document if cover.can_generate?
         generate_document coversheet.generate,                                   "Cover", document if coversheet.can_generate?
@@ -148,13 +148,6 @@ module PdfDocument
                 cells.row(command_number).background_color = 'DFDFDF' if command_number > 0
                 if command_number == -2
                   cells.style :padding => [15, 20, 15, 20]
-                  # bounding_box([0, 10], :width => 1, :height => 50) do
-                  #   cell :width => 1,
-                  #        :height => 50,
-                  #        :borders => [:left],
-                  #        :border_color => '858585',
-                  #        :border_width => 1
-                  # end
                 end
               end
             when 'new_page'
