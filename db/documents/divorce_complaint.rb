@@ -960,7 +960,7 @@ field_for_mandatory = current_step.fields.create :field_type => 'radio', :name =
                                                                                    <option/>Mom will pay the following amount $ /<spain/>La mamá pagara la siguiente cantidad $', :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Mom', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 toggle_id += 1
-current_step.fields.create :field_type => 'amount', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'amount', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto', :template_field => field_for_mandatory.id, :toggle_option => 'amount' }
+current_step.fields.create :field_type => 'amount $', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'amount', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto', :template_field => field_for_mandatory.id, :toggle_option => 'amount' }
 
 
 
@@ -1443,7 +1443,7 @@ current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<sp
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support /<spain/>Esposa PAGARA manutención en la cantidad de $ por mes.
                                                              <option/>Husband WILL PAY spousal support /<spain/>Esposo PAGARA manutención en la cantidad de $ por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
-current_step.fields.create :field_type => 'amount', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'amount $', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9,]+$/, :hint => 'Please enter a number /<spain/>Por favor, introduzca un número' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
