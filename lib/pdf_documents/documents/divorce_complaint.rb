@@ -218,7 +218,8 @@ module PdfDocument
           when /following/
             push_text "That #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } should pay $ #{ @child_suport_amount.to_i } per month for support of the parties' minor #{ @sole_primary_children_count > 1 ? 'children' : 'child' }. This amount is in compliance with NRS 125B.070.", @text_indent
           when /statutory/
-            push_text "That #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } should pay child support of % #{ get_percentage_for_children(@child_suport_amount.to_i) } of #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } gross monthly income.", @text_indent
+            count = get_number_of_primary_or_sole_child @document
+            push_text "That #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } should pay child support of % #{ get_percentage_for_children(count) } of #{ @child_suport_who == 'Dad will pay <child> support' ? @dad.capitalize : @mom.capitalize } gross monthly income.", @text_indent
           end
           push_text "The obligation to pay child support should continue until the #{ @sole_primary_children_count > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
