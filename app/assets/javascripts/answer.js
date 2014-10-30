@@ -490,7 +490,7 @@ function checkbox_radio_toggler(){
   //Toggler logic for sub-toggle
   $('[data-sub-toggle]').each(function(){
     var this_class = '.' + $(this).prop('class');
-    var result = parseInt($(this).prop('class').substr(7, $(this).prop('class').length - 7)) + 1;
+    var result = parseInt($(this).prop('class').substr(7, $(this).prop('class').length - 7)) + parseInt($(this).attr('data-sub-toggle')) - 1;
     var this_class_next = '.toggle_' + result;
     var selected_value = $(this_class + ' [type="radio"]:checked:last').val();
     var selected_class = 'toggle_' + $(this_class + ' [type="radio"]:checked:last').closest('[class^="toggle_"]').data('sub-toggle');
