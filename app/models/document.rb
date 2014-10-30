@@ -78,7 +78,7 @@ class Document < ActiveRecord::Base
       _answer = answers.find(answer.first)
       # save answer
 
-      field_answer = answer.last.to_a[1..-1].map{|k,v| v}.reject(&:blank?).join('/') if _answer.template_field.field_type =~ /date/
+      field_answer = answer.last.to_a[1..-1].map{|key,value| value}.reject(&:blank?).join('/') if _answer.template_field.field_type =~ /date/
       _answer.answer = field_answer.to_s.length > 4 ? field_answer : answer.last[:answer]
 
       _answer.answer = "$#{_answer.answer}" if _answer.field_type.match(/\$/) && !_answer.answer.match(/\$/)
@@ -95,7 +95,6 @@ class Document < ActiveRecord::Base
 
   # Check mandatory
   def check_mandatory(_answer)
-    # return true
     if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
       step = _answer.template_step
       parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
