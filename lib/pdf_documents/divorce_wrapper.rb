@@ -656,20 +656,20 @@ module PdfDocument
             else
               answers = step_answers_enum steps.next
               answers.next
-              @employed_presence = answers.next.answer == 'Yes' rescue false
-              if @employed_presence
-                @employer_name = answers.next.answer
-                @business_address = answers.next.answer.titleize
-                @employer_city = answers.next.answer.classify
-                @employer_state = answers.next.answer.classify
-                @employer_zip = answers.next.answer.classify
-                @employer_phone = answers.next.answer
-                @drivers_license = answers.next.answer
+              @plaintiff_employed_presence = answers.next.answer == 'Yes' rescue false
+              if @plaintiff_employed_presence
+                @plaintiff_employer_name = answers.next.answer
+                @plaintiff_business_address = answers.next.answer.titleize
+                @plaintiff_employer_city = answers.next.answer.classify
+                @plaintiff_employer_state = answers.next.answer.classify
+                @plaintiff_employer_zip = answers.next.answer.classify
+                @plaintiff_employer_phone = answers.next.answer
+                @plaintiff_drivers_license = answers.next.answer
               else
                 7.times do answers.next end
               end
               answers.next
-              @ethinicity = answers.next.answer
+              @plaintiff_ethinicity = answers.next.answer
             end
 
             #Step 26 Additional Child Support For Spouse
@@ -678,20 +678,20 @@ module PdfDocument
             else
               answers = step_answers_enum steps.next
               answers.next
-              @employed_presence = answers.next.answer == 'Yes' rescue false
-              if @employed_presence
-                @employer_name = answers.next.answer
-                @business_address = answers.next.answer.titleize
-                @employer_city = answers.next.answer.classify
-                @employer_state = answers.next.answer.classify
-                @employer_zip = answers.next.answer.classify
-                @employer_phone = answers.next.answer
-                @drivers_license = answers.next.answer
+              @defendant_employed_presence = answers.next.answer == 'Yes' rescue false
+              if @defendant_employed_presence
+                @defendant_employer_name = answers.next.answer
+                @defendant_business_address = answers.next.answer.titleize
+                @defendant_employer_city = answers.next.answer.classify
+                @defendant_employer_state = answers.next.answer.classify
+                @defendant_employer_zip = answers.next.answer.classify
+                @defendant_employer_phone = answers.next.answer
+                @defendant_drivers_license = answers.next.answer
               else
                 7.times do answers.next end
               end
               answers.next
-              @ethinicity = answers.next.answer
+              @defendant_ethinicity = answers.next.answer
             end
 
             #Step 27  Wage withholding

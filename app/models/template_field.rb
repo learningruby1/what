@@ -13,6 +13,7 @@ class TemplateField < ActiveRecord::Base
       if document.to_s == Document::DIVORCE_COMPLAINT
         name.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
         name.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
+        name.gsub! '<child>',                 number_of_child(document) == '1' ? 'child' : 'children'
         name.gsub! '<el_ellos>', number_of_child(document) == '1' ? 'él' : 'ellos'
         name.gsub! '<spain_self>', get_self(document) == 'Wife' ? 'esposo' : 'esposa'
         name.gsub! '<uppercase_spain_self>', get_self(document) ? 'ESPOSO' : 'ESPOSA'
