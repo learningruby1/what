@@ -78,11 +78,12 @@ class Document < ActiveRecord::Base
       _answer = answers.find(answer.first)
       # save answer
 
-      _answer.answer = answer.last[:answer]
+      field_answer = answer.last.to_a[1..-1].map{|k,v| v}.reject(&:blank?).join('/') if _answer.template_field.field_type =~ /date/
+      _answer.answer = field_answer.to_s.length > 4 ? field_answer : answer.last[:answer]
 
       _answer.answer = '000-00-0000' if _answer.answer == '' && _answer.template_field.field_type.match(/social_security/)
       _answer.answer = _answer.answer.upcase if _answer.template_field.field_type.match(/upcase/)
-      _answer.answer = _answer.answer.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize/)
+      _answer.answer = _answer.answer.to_s.split(' ').map(&:titleize).join(' ') if _answer.template_field.field_type.match(/capitalize/)
       _answer.save
 
       looper = add_mandatory_error unless check_mandatory(_answer)
@@ -93,6 +94,7 @@ class Document < ActiveRecord::Base
 
   # Check mandatory
   def check_mandatory(_answer)
+    # return true
     if _answer.template_field.mandatory.present? && (_answer.answer.nil? || !_answer.answer.match(_answer.template_field.mandatory[:value]))
       step = _answer.template_step
       parent_template = step.fields.where(:toggle_id => _answer.template_field.toggle_id).first
@@ -103,7 +105,7 @@ class Document < ActiveRecord::Base
       return false if (_answer.template_field.toggle_id.nil? || parent_toggler == _answer) && step.fields.where(:sub_toggle_id => _answer.template_field.toggle_id).where.not(:sub_toggle_id => nil).count == 0
 
       if _answer.template_field.field_type == 'checkbox'
-        return false if get_checked_answer_count(_answer) == 0 && parent_toggler.answer.match(toggle_option)
+        return false if parent_toggler.answer.present? && get_checked_answer_count(_answer) == 0 && parent_toggler.answer.match(toggle_option)
       else
         return false if toggle_option.present? && parent_toggler.answer.present? && parent_toggler.answer.match(toggle_option) ||
                       toggle_option.nil?     && parent_toggler.answer.present? && parent_toggler.answer == '1' ||

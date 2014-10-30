@@ -73,6 +73,8 @@ class DocumentAnswer < ActiveRecord::Base
             ['Brother / Hermano', 'Brother'],
             ['Other / Otro', 'Other']]
 
+  MONTH_NAMES = ['January / Enero', 'February / Febrero', 'March / Marzo', 'April / Abril', 'May / Mayo', 'June / Junio', 'July / Julio', 'August / Agosto', 'September / Septiembre', 'October / Octubre', 'November / Noviembre', 'December / Diciembre']
+
   def to_s
     if answer.present? && document.to_s == Document::DIVORCE_COMPLAINT
       answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
