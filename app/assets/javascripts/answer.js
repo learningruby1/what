@@ -330,8 +330,7 @@ function checkbox_radio_toggler(){
 }
 
 function hide_sub_toggles(_this, selected_value){
-  var result = parseInt($(this).attr('data-sub-toggle'));
-  var current_class = '.toggle_' + result;
+  var current_class = '.toggle_' + parseInt($(this).attr('data-sub-toggle'));
 
   if(_this.data('sub-toggle') != undefined){
     if( _this.find('[type="radio"]:checked').length > 0 ){
