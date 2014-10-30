@@ -295,8 +295,9 @@ function checkbox_radio_toggler(){
 
   //Toggler logic for sub-toggle
   $('[data-sub-toggle]').each(function(){
+
     var this_class = '.' + $(this).prop('class');
-    var result = parseInt($(this).prop('class').substr(7, $(this).prop('class').length - 7)) + parseInt($(this).attr('data-sub-toggle')) - 1;
+    var result = parseInt($(this).attr('data-sub-toggle'));
     var this_class_next = '.toggle_' + result;
     var selected_value = $(this_class + ' [type="radio"]:checked:last').val();
     var selected_class = 'toggle_' + $(this_class + ' [type="radio"]:checked:last').closest('[class^="toggle_"]').data('sub-toggle');
@@ -329,12 +330,13 @@ function checkbox_radio_toggler(){
 }
 
 function hide_sub_toggles(_this, selected_value){
-  var result = parseInt(_this.prop('class').substr(7, _this.prop('class').length - 7)) + 1;
+  var result = parseInt($(this).attr('data-sub-toggle'));
   var current_class = '.toggle_' + result;
 
   if(_this.data('sub-toggle') != undefined){
     if( _this.find('[type="radio"]:checked').length > 0 ){
-      _this.find('[type="radio"]:checked').prop('checked',false);
+      var toggler = _this.find('[type="radio"]:checked').prop('checked', false).closest('div[data-sub-toggle]').attr('data-sub-toggle');
+      $('.toggle_' + toggler).hide();
     }
     $(current_class).hide().each(function(){
       hide_sub_toggles($(this));
