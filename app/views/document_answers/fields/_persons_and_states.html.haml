@@ -2,4 +2,4 @@
   = render :partial => 'render_text', :locals => { :answer => answer }
   .br
   .col-md-2
-    = a.select :answer, answer.template_field.field_type.match('states') ? DocumentAnswer::STATES : DocumentAnswer::PERSON, {}, :class => 'form-control margin-left'
+    = a.select :answer, answer.template_field.field_type.match('states') ? DocumentAnswer::STATES : DocumentAnswer::PERSON, { include_blank: true }, :class => 'form-control margin-left'

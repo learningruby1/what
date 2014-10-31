@@ -8,8 +8,7 @@ class DocumentAnswer < ActiveRecord::Base
   scope :this_document, -> (document){ where(:document_id => document.id) }
 
   NUMBER_NAME = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh']
-  STATES = [['', ''],
-            ['Alabama', 'AL'],
+  STATES = [['Alabama', 'AL'],
             ['Alaska', 'AK'],
             ['Arizona', 'AZ'],
             ['Arkansas', 'AR'],
@@ -59,8 +58,7 @@ class DocumentAnswer < ActiveRecord::Base
             ['West Virginia', 'WV'],
             ['Wisconsin', 'WI'],
             ['Wyoming', 'WY']]
-  PERSON = [['', ''],
-            ['Grandma / Abuela', 'Grandma'],
+  PERSON = [['Grandma / Abuela', 'Grandma'],
             ['Grandpa / Abuelo', 'Grandpa'],
             ['Aunt / Tía', 'Aunt'],
             ['Uncle / Tío', 'Uncle'],
