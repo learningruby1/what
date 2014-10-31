@@ -329,7 +329,7 @@ current_step.fields.create :field_type => 'select_person',
 
 
 current_step.fields.create :field_type => 'loop_button-add',
-                           :name => 'Add one more address /<spain/> Añadir una dirección más',
+                           :name => 'Add other address /<spain/> Anadir otra dirección',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 current_step.fields.create :field_type => 'loop_button-delete',
@@ -1237,7 +1237,7 @@ toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /^Yes|No$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sort_index => 'a1'
 bank_number_field = current_step.fields.create :name => 'How Many /<spain/>Cuantos:', :field_type => 'sub_amount', :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a2', :mandatory => { :value => /^[1-9]$/, :hint => 'Please enter count or press button "Continue" /<spain/>Por favor introduce el recuento o el botón "Continuar"' }
 current_step.fields.create :name => 'Account/Cuenta<beginText/>Name of the account /<spain/>Nombre de la cuenta', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter name of the account /<spain/>Por favor introduce el nombre de la cuenta' }, :field_type => 'string-capitalize', :toggle_option => 'Yes'
-current_step.fields.create :name => 'approximate amount in it /<spain/>la cantidad aproximada', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter approximate amount in it /<spain/>Por favor, ingrese el monto aproximado en ella' }, :toggle_option => 'Yes'
+current_step.fields.create :name => 'approximate amount in it /<spain/>la cantidad aproximada', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter approximate amount in it /<spain/>Por favor, ingrese el monto aproximado en ella' }, :toggle_option => 'Yes', :field_type => 'string $'
 current_step.fields.create :name => 'last 4# (if possible) /<spain/>los últimos 4# (si es posible):', :toggle_id => toggle_id, :amount_field_id => bank_number_field.id, :raw_question => false, :mandatory => { :value => /\w+/, :hint => 'Please enter last 4# /<spain/>Por favor introduce el pasado 4 #' }, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'radio', :toggle_option => 'Yes', :name => 'Wife will keep it /<spain/>Esposa se quedara con ella
                                                              <option/>Divide /<spain/>Dividir
