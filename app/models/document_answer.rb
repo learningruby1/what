@@ -84,7 +84,7 @@ class DocumentAnswer < ActiveRecord::Base
       answer.gsub!('<child_percentage_sole>', "#{sole_count} children #{get_percentage_for_children(sole_count)}%")
       answer[0] = 'C' if answer[0] == 'c'
     end
-    answer
+    ERB::Util.h(answer)
   end
 
   def to_html_array(amount_index=1)
