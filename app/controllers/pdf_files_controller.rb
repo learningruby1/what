@@ -1,11 +1,11 @@
 class PdfFilesController < ApplicationController
   require 'pdf_documents/pdf'
 
-  before_action :get_user_document, :only => [:generate]
+  before_action :get_user_document, :only => [:generate, :download]
   before_action :get_user_documents, :only => [:index, :welcome]
 
   def index
-    @file_names = Dir.glob("documents/pdf/#{ current_user.id }/*.pdf")
+    @file_names = Document.get_files_name @documents, current_user
   end
 
   def welcome
@@ -19,12 +19,8 @@ class PdfFilesController < ApplicationController
 
   def download
     current_user.create_mail_reminder! MailForm::REMINDER_TYPE.first
-    file_path = "documents/pdf/#{ current_user.id }/#{ params[:filename] }.pdf"
-    if File.file?(file_path)
-      send_file file_path, :type => "application/pdf", :x_sendfile => true
-    else
-      redirect_to pdf_files_path
-    end
+    file_path = "documents/pdf/#{ current_user.id }/#{ @document.template_name.split(' /<spain/>').first }/#{ params[:filename] }.pdf"
+    File.file?(file_path) ? send_file(file_path, :type => "application/pdf", :x_sendfile => true) : redirect_to(pdf_files_path)
   end
 
   private

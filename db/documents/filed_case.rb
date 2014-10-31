@@ -30,8 +30,8 @@ addres_field = current_step.fields.create :field_type => 'radio', :name => 'No<o
 
 
 
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => addres_field.id.to_s, :render_if_field_value => 'Yes' #3
-current_step.fields.create :field_type => 'text', :name => 'Who is going to give <defendant_full_name> the documents? <br/><spain/>¿Quién le va a dar los documentos a <defendant_full_name_spain>?'
+current_step = template.steps.create :step_number => step_number += 1,#3
+                                     :title => 'Who is going to give <defendant_full_name> the documents? <br/><spain/>¿Quién le va a dar los documentos a <defendant_full_name_spain>?', :render_if_field_id => addres_field.id.to_s, :render_if_field_value => 'Yes'
 
 current_step.fields.create :field_type => 'radio', :name => '<defendant_full_name> will accept and sign for the documents. /<spain/><defendant_full_name_spain> va a aceptar y firmar los documentos.
                                                              <option/>I have a friend/Family member /<spain/>Tengo un amigo/familiar

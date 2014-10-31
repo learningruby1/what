@@ -12,6 +12,7 @@ module PdfDocument
     require 'pdf_documents/documents/uccja'
     require 'pdf_documents/documents/decree_of_divorce'
     require 'pdf_documents/documents/welfare_sheet'
+    require 'pdf_documents/documents/default_divorce'
     require 'prawn'
 
 
@@ -36,6 +37,7 @@ module PdfDocument
 
         generate_document acceptance_of_service.generate,      "Acceptance_of_service", document if acceptance_of_service.can_generate?
         generate_document affidavit_of_service.generate,       "Affidavit_of_service", document if affidavit_of_service.can_generate?
+        generate_document PdfDocument::DefaultDivorce.new(document).generate,   "Default_divorce", document
       end
     end
 
@@ -47,9 +49,9 @@ module PdfDocument
       end
 
       user_folder = document.owner.id.to_s
-      Dir.mkdir("#{Rails.root}/documents/pdf/#{ user_folder }") unless File.exists?("#{Rails.root}/documents/pdf/#{ user_folder }")
+      Dir.mkdir("#{Rails.root}/documents/pdf/#{ user_folder }/#{ document.template_name.split(' /<spain/>').first }") unless File.exists?("#{Rails.root}/documents/pdf/#{ user_folder }/#{ document.template_name.split(' /<spain/>').first }")
 
-      Prawn::Document.generate("documents/pdf/#{ document.owner.id }/#{ pdf_name }.pdf") do
+      Prawn::Document.generate("documents/pdf/#{ document.owner.id }/#{ document.template_name.split(' /<spain/>').first }/#{ pdf_name }.pdf") do
         font "Times-Roman"
 
         if !judical_layout
