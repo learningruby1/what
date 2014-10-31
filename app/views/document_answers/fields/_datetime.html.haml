@@ -16,7 +16,7 @@
 
   - when /date_year_born/
     .col-md-12.input-group{ :class => answer.template_field.field_type }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year - 1, :end_year => Time.now.year, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
+      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year, :end_year => Time.now.year + 1, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
 
   - when /date_year_only/
     .col-md-12.input-group{ :class => answer.template_field.field_type }
