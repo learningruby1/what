@@ -1,5 +1,3 @@
-require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
-
 namespace :app do
   namespace :db do
     desc 'Makes DB empty (no data, just tables)'
