@@ -236,7 +236,7 @@ function checkbox_radio_toggler(){
       });
 
       //Radio button event
-      $('.' + $(this).prop('class') + ' [type="radio"]').change(function(){
+      $('.' + $(this).prop('class') + ' [type="radio"]').unbind('change').change(function(){
         var selected_value = $(this).next().text();
         var parent_class = '.' + $(this).closest('[class^="toggle_"]').prop('class');
         if(selected_value == 'No' && $(this).closest('[class^="toggle_"]').data('sub-toggle') == undefined){
