@@ -199,7 +199,7 @@ current_step.fields.create :field_type => 'radio',
                            :sort_index => 'a1'
 
 
-current_step.fields.create :field_type => 'date_after_born',
+current_step.fields.create :field_type => 'date_after_born rev_inline rev_br',
                            :name => 'Child moved to my address /<spain/>El menor se mudó a mi dirección',
                            :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' },
                            :toggle_id => toggle_id, :toggle_option => 'Same as me',
@@ -208,14 +208,14 @@ current_step.fields.create :field_type => 'date_after_born',
                            :header_ids => "#{ child_birth.id }"
 
 
-current_step.fields.create :field_type => 'string-capitalize',
+current_step.fields.create :field_type => 'string capitalize',
                            :name => 'Address /<spain/>Dirección: *',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
-current_step.fields.create :field_type => 'string-capitalize rev_inline',
+current_step.fields.create :field_type => 'string capitalize rev_inline',
                            :name => 'City /<spain/>Ciudad: *',
                            :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' },
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
@@ -244,7 +244,7 @@ current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :sort_index => 'a1',
                            :header_ids => "#{ child_birth.id }"
 
-field_for_mandatory_first = current_step.fields.create :field_type => 'radio',
+field_for_mandatory_first = current_step.fields.create :field_type => 'radio rev_inline rev_br',
                                                        :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
                                                        :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                        :toggle_id => toggle_id, :toggle_option => 'In the United States',
@@ -253,26 +253,10 @@ field_for_mandatory_first = current_step.fields.create :field_type => 'radio',
                                                        :sort_index => 'a1'
 
 
-current_step.fields.create :field_type => 'string-capitalize rev_inline',
-                           :name => 'Name of person /<spain/>Nombre de la persona: *',
-                           :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido',
-                                           :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
-                           :toggle_id => toggle_id + 1, :toggle_option => 'Other',
-                           :amount_field_id => top_field.id,
-                           :sort_index => 'a1'
-
-current_step.fields.create :field_type => 'select_person rev_inline',
-                           :name => 'Relationship to child /<spain/>Parentesco con el menor: *',
-                           :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona',
-                                           :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
-                           :toggle_id => toggle_id + 1, :toggle_option => 'Other',
-                           :amount_field_id => top_field.id,
-                           :sort_index => 'a1'
 
 
 
-
-current_step.fields.create :field_type => 'string-capitalize',
+current_step.fields.create :field_type => 'string capitalize',
                            :name => 'Address /<spain/>Dirección: *',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' },
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
@@ -301,7 +285,7 @@ current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :sort_index => 'a1',
                            :header_ids => "#{ child_birth.id }"
 
-field_for_mandatory_second = current_step.fields.create :field_type => 'radio rev_inline',
+field_for_mandatory_second = current_step.fields.create :field_type => 'radio rev_inline rev_br',
                                                         :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
                                                         :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                         :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
@@ -310,7 +294,23 @@ field_for_mandatory_second = current_step.fields.create :field_type => 'radio re
                                                         :sort_index => 'a1'
 
 
-current_step.fields.create :field_type => 'string-capitalize rev_inline',
+current_step.fields.create :field_type => 'string capitalize',
+                           :name => 'Name of person /<spain/>Nombre de la persona: *',
+                           :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido',
+                                           :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
+                           :toggle_id => toggle_id + 1, :toggle_option => 'Other',
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'select_person',
+                           :name => 'Relationship to child /<spain/>Parentesco con el menor: *',
+                           :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona',
+                                           :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
+                           :toggle_id => toggle_id + 1, :toggle_option => 'Other',
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1'
+
+current_step.fields.create :field_type => 'string capitalize',
                            :name => 'Name of person /<spain/>Nombre de la persona: *',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido',
                                            :template_field => field_for_mandatory_second.id, :toggle_option => 'Other' },
@@ -318,7 +318,7 @@ current_step.fields.create :field_type => 'string-capitalize rev_inline',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
-current_step.fields.create :field_type => 'select_person rev_inline',
+current_step.fields.create :field_type => 'select_person',
                            :name => 'Relationship to child /<spain/>Parentesco con el menor: *',
                            :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona',
                                            :template_field => field_for_mandatory_second.id, :toggle_option => 'Other' },
@@ -336,6 +336,10 @@ current_step.fields.create :field_type => 'loop_button-delete',
                            :name => 'Delete last address /<spain/> Eliminar la última dirección',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
+
+
+
+
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #12
                                      :title => '<uppercase_child>’S QUESTION 1 /<spain/><uppercase_child_spain> PREGUNTA 1'
@@ -965,7 +969,7 @@ field_for_mandatory = current_step.fields.create :field_type => 'radio', :name =
                                                                                    <option/>Mom will pay the following amount $ /<spain/>La mamá pagara la siguiente cantidad $', :toggle_id => toggle_id, :sub_toggle_id => toggle_id + 1, :toggle_option => 'Mom', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 toggle_id += 1
-current_step.fields.create :field_type => 'amount $', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'amount', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto', :template_field => field_for_mandatory.id, :toggle_option => 'amount' }
+current_step.fields.create :field_type => 'amount $', :name => 'per month as <child_count> support /<spain/>mensual de manutención para <child_count_spain>', :toggle_id => toggle_id, :toggle_option => 'amount', :mandatory => { :value => /^(\$)[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto', :template_field => field_for_mandatory.id, :toggle_option => 'amount' }
 
 
 
@@ -1448,7 +1452,7 @@ current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<sp
 current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spousal support /<spain/>Esposa PAGARA manutención en la cantidad de $ por mes.
                                                              <option/>Husband WILL PAY spousal support /<spain/>Esposo PAGARA manutención en la cantidad de $ por mes.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
-current_step.fields.create :field_type => 'amount $', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'amount $', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^(\$)[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9,]+$/, :hint => 'Please enter a number /<spain/>Por favor, introduzca un número' }
 
 current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses

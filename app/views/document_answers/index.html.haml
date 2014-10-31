@@ -23,7 +23,7 @@
         %table{ :style => 'width: 80%; margin-left: 20px' }
 
           - last_toggle = nil
-          - main_answer = nil
+          - toggler_answer = nil
           - amount_index = 0
           - shown_answers = 0
 
@@ -31,27 +31,29 @@
           - answers.each do |answer|
             - next if !answer.nil? && answer.field_type.match(/button/)
 
-            -# hr for amount
+            / hr for amount
             - if answer.template_field.id == DocumentAnswer.sort(@document.answers.where(:template_step_id => step.id).to_a, step).first.template_field.id && answer.id != @document.answers.where(:template_step_id => step.id).order(:id).first.id
               %div
                 %hr
 
-            - #Skip if answer not mentioned to show
+            / Skip if answer not mentioned to show
             - next if answer.answer.nil? && !answer.template_field.field_type.match(field_type_to_show)
+            / Toggler
             - if answer.template_field.toggle_id.present?
               - if last_toggle != answer.template_field.toggle_id
                 - last_toggle = answer.template_field.toggle_id
-                - main_answer = answer
+                - toggler_answer = answer
               - if last_toggle == answer.template_field.toggle_id
-                - if main_answer.answer.present? && !main_answer.answer.match(answer.template_field.toggle_option.presence || '') || answer.template_field.toggle_option.nil? && main_answer.answer == '0' && !main_answer.field_type.match(/review_show/)
+                / Toggler check
+                - if toggler_answer.answer.present? && !toggler_answer.answer.match(answer.template_field.toggle_option.presence || '') || answer.template_field.toggle_option.nil? && toggler_answer.answer == '0' && !toggler_answer.field_type.match(/review_show/)
                   / Show NO if no other answers
                   - if answer == answers.last && shown_answers == 0
                     %span.answer No
                   - next
 
-            - #Insert fullfiling
+            / Insert fullfiling
             - if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/)
-              - next if @document.looped_amount(step, answer.template_step.document_answers.where(:document_id => @document.id)) != @document.loop_amount(step)
+              - next if @document.looped_amount(step, answer.template_step.document_answers.where(:document_id => @document.id)) != @document.loop_amount(step) && !answer.template_step.amount_field_id.present?
               - amount_index += 1
             - answer_html_array = answer.to_html_array(amount_index)
 
