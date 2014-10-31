@@ -42,6 +42,7 @@ module PdfDocument
       end
 
       user_folder = document.owner.id.to_s
+      Dir.mkdir("#{Rails.root}/documents/pdf/#{ user_folder }") unless File.exists?("#{Rails.root}/documents/pdf/#{ user_folder }")
       Dir.mkdir("#{Rails.root}/documents/pdf/#{ user_folder }/#{ document.template_name.split(' /<spain/>').first }") unless File.exists?("#{Rails.root}/documents/pdf/#{ user_folder }/#{ document.template_name.split(' /<spain/>').first }")
 
       Prawn::Document.generate("documents/pdf/#{ document.owner.id }/#{ document.template_name.split(' /<spain/>').first }/#{ pdf_name }.pdf") do
