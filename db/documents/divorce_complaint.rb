@@ -329,7 +329,7 @@ current_step.fields.create :field_type => 'select_person',
 
 
 current_step.fields.create :field_type => 'loop_button-add',
-                           :name => 'Add one more address /<spain/> Añadir una dirección más',
+                           :name => 'Add other address /<spain/> Anadir otra dirección',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 current_step.fields.create :field_type => 'loop_button-delete',
