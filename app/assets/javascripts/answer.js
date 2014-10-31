@@ -226,7 +226,7 @@ function checkbox_radio_toggler(){
           $(this_prop_class   + ':not(:first)').show();
       });
     }
-    if($(this_prop_class + ':first > .container [type="radio"]').length > 0){
+    if($(this_prop_class + ':first [type="radio"]').length > 0){
       var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
       $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
         if(selected_value != undefined)
