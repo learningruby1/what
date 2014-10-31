@@ -2,18 +2,10 @@ module PdfDocument
   class Pdf
     require 'pdf_documents/wrapper'
     require 'pdf_documents/divorce_wrapper'
-    require 'pdf_documents/documents/divorce_complaint'
-    require 'pdf_documents/documents/divorce_summons'
-    require 'pdf_documents/documents/divorce_injunction'
-    require 'pdf_documents/documents/divorce_cover'
-    require 'pdf_documents/documents/divorce_coversheet'
-    require 'pdf_documents/documents/acceptance_of_service'
-    require 'pdf_documents/documents/affidavit_of_service'
-    require 'pdf_documents/documents/uccja'
-    require 'pdf_documents/documents/decree_of_divorce'
-    require 'pdf_documents/documents/welfare_sheet'
-    require 'pdf_documents/documents/default_divorce'
     require 'prawn'
+    Dir["lib/pdf_documents/documents/*.rb"].each do |file|
+      require "pdf_documents/documents/#{ File.basename(file, ".rb") }"
+    end
 
 
     def generate(document)
@@ -35,9 +27,10 @@ module PdfDocument
         acceptance_of_service = PdfDocument::AcceptanceOfService.new(document)
         affidavit_of_service = PdfDocument::AffidavitOfService.new(document)
 
-        generate_document acceptance_of_service.generate,      "Acceptance_of_service", document if acceptance_of_service.can_generate?
-        generate_document affidavit_of_service.generate,       "Affidavit_of_service", document if affidavit_of_service.can_generate?
+        generate_document acceptance_of_service.generate,                       "Acceptance_of_service", document if acceptance_of_service.can_generate?
+        generate_document affidavit_of_service.generate,                        "Affidavit_of_service", document if affidavit_of_service.can_generate?
         generate_document PdfDocument::DefaultDivorce.new(document).generate,   "Default_divorce", document
+        generate_document PdfDocument::NoticeOfEntry.new(document).generate,    "Notice_of_entry", document, true, true, "Notice_of_entry"
       end
     end
 
