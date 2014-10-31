@@ -1,3 +1,5 @@
+require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
+
 namespace :app do
   namespace :db do
     desc 'Makes DB empty (no data, just tables)'
@@ -18,7 +20,7 @@ namespace :app do
       end
     end
 
-    desc 'Clear DB and load the seed data from db/seeds.rb'
+    desc 'Clear DB and load the seed data from db/documents directory'
     task :clear_and_seed do
       on roles(:all) do
         within release_path do
