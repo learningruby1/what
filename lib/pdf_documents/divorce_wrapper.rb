@@ -38,7 +38,6 @@ module PdfDocument
     #Filed_Case_Step 3
           if @filed_case[:addres_for_opposing_present]
             answers = step_answers_enum steps.next
-            answers.next.answer
             @filed_case[:person_who_give] = answers.next.answer
             if @filed_case[:person_who_give] =~ /I have a friend/
               answers.next.answer
