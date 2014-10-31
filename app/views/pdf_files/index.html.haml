@@ -19,7 +19,7 @@
               %span.spain Documentos
           %td
 
-      - @documents.select { |doc| !doc.divorce_document.present? }.each do |document|
+      - @documents.each_with_index do |document, index|
         %tr
           %td
             %h5
@@ -32,38 +32,12 @@
               %span.spain Revisar
           %td
             - if document.is_generated?
-              - if current_user
-                - if current_user.paypal_payment_id.present?
-                  = render :partial => 'link_to_documents', :locals => { :document => document }
-
-
-                - else
-                  = link_to new_paypal_payment_path, :class => 'btn btn-primary modal_remote',
-                    'data-target' => '#modal_window', 'data-toggle' => 'modal' do
-                    .glyphicon.glyphicon-cloud-download
-                    Pay to Download /
-                    %span Pagar por descargar
-                = render :partial => 'link_to_documents', :locals => { :document => document }
-
+              - if current_user.paypal_payment_id.present?
+                = render :partial => 'link_to_documents', :locals => { :document => document, :index => index }
               - else
-                = link_to new_user_session_path, :class => 'btn btn-primary modal_remote',
+                = link_to new_paypal_payment_path, :class => 'btn btn-primary modal_remote',
                   'data-target' => '#modal_window', 'data-toggle' => 'modal' do
-                  .glyphicon.glyphicon-pencil
-                  Sign In /
-                  %span Iniciar sesión
-
-
-            - if document.sub_documents.present?
-              - document.sub_documents.each do |sub_document|
-                %tr
-                  %td
-                    %h5
-                      = sub_document.to_s.split('<spain/>').first
-                      %span.spain= sub_document.to_s.split('<spain/>').last
-                  %td
-                    = link_to document_answer_path(sub_document, 1), :class => 'btn btn-default' do
-                      .glyphicon.glyphicon-edit
-                      Edit /
-                      %span.spain Editar
-                    - if sub_document.is_generated?
-                      = link_to 'Affidative_Acceptance', download_pdf_path("Affidavit_Acceptance_of_service_#{ sub_document.id }"), :class => 'btn btn-primary'
+                  .glyphicon.glyphicon-cloud-download
+                  Pay to Download /
+                  %span Pagar por descargar
+              = render :partial => 'link_to_documents', :locals => { :document => document, :index => index }

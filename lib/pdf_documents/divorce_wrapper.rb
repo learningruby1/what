@@ -27,7 +27,7 @@ module PdfDocument
           answers.next.answer
           answers.next.answer
           @filed_case[:summons_and_complaint_date] = answers.next.answer
-          answers.next.answer
+          @filed_case[:preliminary_injunction] = answers.next.answer == '1' rescue false
           @filed_case[:preliminary_injunction_date] = answers.next.answer
 
     #Filed_Case_Step 2

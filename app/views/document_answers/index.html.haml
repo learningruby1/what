@@ -10,8 +10,9 @@
 
     .row
       .col-md-10
-        %strong.new_roman= step.to_s(@document).split('<spain/>')[0].html_safe
-        %strong.new_roman.spain= step.to_s(@document).split('<spain/>')[1].html_safe
+        - unless step.to_s(@document).nil?
+          %strong.new_roman= step.to_s(@document).split('<spain/>')[0].html_safe
+          %strong.new_roman.spain= step.to_s(@document).split('<spain/>')[1].html_safe
 
       .col-md-2
         = link_to document_answer_path(@document, step.step_number, :review => true), :class => 'btn btn-default' do
