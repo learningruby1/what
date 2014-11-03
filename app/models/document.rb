@@ -135,7 +135,11 @@ class Document < ActiveRecord::Base
         fields_count = step.fields.where(:toggle_id => _answer.template_field.toggle_id).count
         answers_count = step.fields.map{ |f| f.document_answers.where(:document_id => id, :sort_index => _answer.sort_index, :toggler_offset => _answer.toggler_offset) }.flatten.count rescue nil
 
-        return false unless answers_count - 2 == (fields_count - 2) * _answer.answer.to_i
+        unless answers_count - 2 == (fields_count - 2) * _answer.answer.to_i
+          _answer.answer = nil
+          _answer.save
+          return false
+        end
       end
     end
     true
