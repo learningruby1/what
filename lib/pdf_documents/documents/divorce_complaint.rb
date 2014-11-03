@@ -474,7 +474,7 @@ module PdfDocument
       move_to_left "#{ _counter += 1 }.  SPOUSAL SUPPORT"
 
       if @alimony_presence
-        push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support $' ? @mom.capitalize : @dad.capitalize} in the amount of $ #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month.downcase }.", @text_indent
+        push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support' ? @mom.capitalize : @dad.capitalize} in the amount of #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month.downcase }.", @text_indent
       else
         push_text 'That neither party should be awarded spousal support.', @text_indent
       end
