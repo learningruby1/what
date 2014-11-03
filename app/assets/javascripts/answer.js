@@ -6,7 +6,6 @@ $( document ).ready(function() {
   $("[name*='answer(3i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
   $("[name*='answer(2i)']:not([type='hidden'])").wrap("<div class='col-md-3 margin-left'></div>")
 
-
   //Toggler
   checkbox_radio_toggler();
 
@@ -123,7 +122,43 @@ $( document ).ready(function() {
     who_pay(dad_result, mom_result);
   });
 
+
+  //Alert when no all 5  years addreses for children
+  if($('.date_after_born').length > 0){
+    $("[id*='answer_1i']").on('change', function(){
+      console.log(check_year())
+      if(check_year()){
+        $("[type*='submit']").attr('data-confirm', 'WARNING: You have`t added all addresses for last 5 years(or from the birth date of a child yonger then 5 years)!');
+      }
+      else{
+        $("[type*='submit']").removeAttr('data-confirm');
+      }
+    });
+  }
+
 });
+
+function check_year(){
+  var selected_years = {}
+  var togglers = []
+  $("[class*='toggle_']:not([style*='display: none']):has('.date_after_born')").find(".date_after_born").each(function(){
+    var toggler = $(this).attr('toggler')
+    if(togglers.indexOf(toggler) == -1) {
+      togglers.push(toggler)
+    }
+    var born_year = $(this).attr('born_year')
+    var year = $(this).find(".col-md-2 [id*='answer_1i']").val()
+    if(typeof selected_years[toggler] === 'undefined'){
+      selected_years[toggler] = []
+    }
+    selected_years[toggler].push(born_year == year)
+  });
+  var result = false
+  togglers.forEach(function(toggler){
+    result = selected_years[toggler].indexOf(true) == -1 ? true : result
+  });
+  return result
+}
 
 function time_select(){
   var time = $('.time');
