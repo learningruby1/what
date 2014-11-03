@@ -56,7 +56,7 @@ $( document ).ready(function() {
       if(check_value(value, $(this))){
         $.ajax({
           type: "POST",
-          data: form + "&value=" + value + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val(),
+          data: form + "&value=" + value + "&answer_id_first=" + answer_id_question +"&answer_id_second=" + answer_id + "&document_id=" + $('#document_id').val() + "&review=" + $('#review_present').val(),
           url: "/documents/"+$('#document_id').val()+"/step/"+$('#step_id').val()+"/render_questions"
         });
       }

@@ -1148,21 +1148,10 @@ current_step.fields.create :field_type => 'radio-last', :name => 'Wife will keep
                                                              <option/>Husband will keep it /<spain/>Mi esposo se quedara con ella', :amount_field_id => business_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
-
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_division_field.id.to_s, :render_if_field_value => 'Yes',#34
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_division_field.id.to_s, :render_if_field_value => 'Yes',#35
                                      :title => 'Property Division: Vehicles /<spain/>División de Propiedades: Vehículos',
                                      :description => 'Was there a car, motorcycle, rv, boat, trailer purchased during the marriage?
                                                       <br/><spain/>¿Compraron carro, moto, rv, barco, remolque durante el matrimonio?'
-
-property_field = current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-
-
-
-
-
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => property_field.id.to_s, :render_if_field_value => 'Yes',#35
-                                     :title => 'Property Division: Vehicles /<spain/>División de Propiedades: Vehículos'
 
 toggle_id = 0
 toggle_id += 1
