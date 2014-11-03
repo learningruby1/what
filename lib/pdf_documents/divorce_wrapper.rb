@@ -649,48 +649,40 @@ module PdfDocument
             end
 
             #Step 25 Additional Child Support
-            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty? || (@child_suport_who =~ /I already have/)
-              steps.next
+            answers = step_answers_enum steps.next
+            answers.next
+            @plaintiff_employed_presence = answers.next.answer == 'Yes' rescue false
+            if @plaintiff_employed_presence
+              @plaintiff_employer_name = answers.next.answer
+              @plaintiff_business_address = answers.next.answer.titleize
+              @plaintiff_employer_city = answers.next.answer.classify
+              @plaintiff_employer_state = answers.next.answer.classify
+              @plaintiff_employer_zip = answers.next.answer.classify
+              @plaintiff_employer_phone = answers.next.answer
+              @plaintiff_drivers_license = answers.next.answer
             else
-              answers = step_answers_enum steps.next
-              answers.next
-              @plaintiff_employed_presence = answers.next.answer == 'Yes' rescue false
-              if @plaintiff_employed_presence
-                @plaintiff_employer_name = answers.next.answer
-                @plaintiff_business_address = answers.next.answer.titleize
-                @plaintiff_employer_city = answers.next.answer.classify
-                @plaintiff_employer_state = answers.next.answer.classify
-                @plaintiff_employer_zip = answers.next.answer.classify
-                @plaintiff_employer_phone = answers.next.answer
-                @plaintiff_drivers_license = answers.next.answer
-              else
-                7.times do answers.next end
-              end
-              answers.next
-              @plaintiff_ethinicity = answers.next.answer
+              7.times do answers.next end
             end
+            answers.next
+            @plaintiff_ethinicity = answers.next.answer
 
             #Step 26 Additional Child Support For Spouse
-            if @physical_custody_parent.select { |each_child| each_child[:custody] =~ /With|Only/}.empty? || (@child_suport_who =~ /I already have/)
-              steps.next
+            answers = step_answers_enum steps.next
+            answers.next
+            @defendant_employed_presence = answers.next.answer == 'Yes' rescue false
+            if @defendant_employed_presence
+              @defendant_employer_name = answers.next.answer
+              @defendant_business_address = answers.next.answer.titleize
+              @defendant_employer_city = answers.next.answer.classify
+              @defendant_employer_state = answers.next.answer.classify
+              @defendant_employer_zip = answers.next.answer.classify
+              @defendant_employer_phone = answers.next.answer
+              @defendant_drivers_license = answers.next.answer
             else
-              answers = step_answers_enum steps.next
-              answers.next
-              @defendant_employed_presence = answers.next.answer == 'Yes' rescue false
-              if @defendant_employed_presence
-                @defendant_employer_name = answers.next.answer
-                @defendant_business_address = answers.next.answer.titleize
-                @defendant_employer_city = answers.next.answer.classify
-                @defendant_employer_state = answers.next.answer.classify
-                @defendant_employer_zip = answers.next.answer.classify
-                @defendant_employer_phone = answers.next.answer
-                @defendant_drivers_license = answers.next.answer
-              else
-                7.times do answers.next end
-              end
-              answers.next
-              @defendant_ethinicity = answers.next.answer
+              7.times do answers.next end
             end
+            answers.next
+            @defendant_ethinicity = answers.next.answer
 
             #Step 27  Wage withholding
             answers = step_answers_enum steps.next

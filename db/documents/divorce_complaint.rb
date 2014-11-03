@@ -988,7 +988,7 @@ current_step.fields.create :field_type => 'amount-income', :name => 'Enter $ dad
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => child_support_field.id.to_s, :render_if_field_value => 'No|Dad|Mom',#25
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#25
                                      :title => 'ADDITIONAL CHILD SUPPORT QUESTION /<spain/>PREGUNTAS ADICIONES SOBRE MANUTENCION DE MENORES'
 current_step.fields.create :field_type => 'text review_show', :name => 'Are you currently employed or self-employed? /<spain/>¿Actualmente tiene empleo o trabaja por su cuenta? *'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
@@ -1013,7 +1013,7 @@ current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic
 
 toggle_id = 0
 toggle_id += 1
-current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => child_support_field.id.to_s, :render_if_field_value => 'No|Dad|Mom',#26
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#26
                                      :title => 'ADDITIONAL CHILD SUPPORT QUESTION FOR SPOUSE /<spain/>PREGUNTAS ADICIONES DE SU (INSERT ESPOSA O ESPOSO) SOBRE LA MANUTENCION DE MENORES'
 current_step.fields.create :field_type => 'text review_show', :name => 'Is your spouse currently employed/self-employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
 current_step.fields.create :field_type => 'radio', :name => 'No
