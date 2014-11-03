@@ -230,9 +230,9 @@ module PdfDocument
                 address_data[:persone_relationship] = answers[k += 1].answer.upcase
                 case address_data[:persone_relationship]
                 when 'OTHER'
-                  address_data[:lived_with] = answers[k += 1].answer
+                  address_data[:lived_with] = answers[k += 6].answer
                   address_data[:persone_relationship] = answers[k += 1].answer.upcase
-                  k += 9
+                  k += 4
                 when 'MOM'
                   address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
                   k += 11
@@ -242,14 +242,14 @@ module PdfDocument
                 end
                 @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               when 'Outside the United States'
-                address_data[:address] = answers[k += 10].answer
+                address_data[:address] = answers[k += 8].answer
                 address_data[:city] = answers[k += 1].answer
                 address_data[:country] = answers[k += 1].answer
                 address_data[:move_date] = answers[k += 1].answer.to_date
                 address_data[:persone_relationship] = answers[k += 1].answer.upcase
                 case address_data[:persone_relationship]
                 when 'OTHER'
-                  address_data[:lived_with] = answers[k += 1].answer
+                  address_data[:lived_with] = answers[k += 3].answer
                   address_data[:persone_relationship] = answers[k += 1].answer.upcase
                   k += 2
                 when 'MOM'
