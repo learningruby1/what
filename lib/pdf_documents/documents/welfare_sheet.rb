@@ -1,5 +1,8 @@
 module PdfDocument
   class WelfareSheet < DivorceWrapper
+    def can_generate?
+      @children_residency
+    end
     def generate
       push_header "<b>NEVADA STATE DIVISION OF WELFARE AND SUPPORTIVE SERVICES</b>"
       push_header "<b>CHILD SUPPORT ENFORCEMENT</b>"
@@ -53,9 +56,25 @@ module PdfDocument
       push_table -1, 0
       move_down
 
-      coordinates_array = [{ :x => 43, :y => 508 }, { :x => 124, :y => 508 }, { :x => 312, :y => 508 }, { :x => 394, :y => 508 }]
-      coordinates_array.each do |coordinate|
-        small_rectangle coordinate[:x], coordinate[:y]
+      y_coordinate = 508
+      @legal_custody_parent.each do |legal_custody|
+        case legal_custody
+        when 'BOTH Parents'
+          small_rectangle_checked 43, y_coordinate
+          small_rectangle 124, y_coordinate
+          small_rectangle_checked 312, y_coordinate
+          small_rectangle 394, y_coordinate
+        when 'Only MOM'
+          small_rectangle_checked 43, y_coordinate
+          small_rectangle 124, y_coordinate
+          small_rectangle 312, y_coordinate
+          small_rectangle_checked 394, y_coordinate
+        when 'Only DAD'
+          small_rectangle 43, y_coordinate
+          small_rectangle_checked 124, y_coordinate
+          small_rectangle_checked 312, y_coordinate
+          small_rectangle 394, y_coordinate
+        end
       end
 
       coordinates_array = [{ :x => 49, :y => 327 }, { :x => 153, :y => 327 }, { :x => 4, :y => 316 }, { :x => 91, :y => 316 }, { :x => 4, :y => 305 }, { :x => 150, :y => 305 }]
