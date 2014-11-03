@@ -58,7 +58,7 @@ module PdfDocument
         push_text 'That the parties do not have minor children who are the issue of this marriage or were adopted.', @text_indent
       end
 
-      tmp_text = "That the wife in this case is currently pregnant."
+      tmp_text = "That the wife in this case #{ @pregnacy ? 'is' : 'is not' } currently pregnant."
       tmp_text += " Husband #{ @pregnacy_unborn ? 'is' : 'is not' } the father of the he unborn child. The unborn child is due to be born on #{ @pregnacy_date }" if @pregnacy
       push_text tmp_text, @text_indent
 
@@ -474,7 +474,7 @@ module PdfDocument
       move_to_left "#{ _counter += 1 }.  SPOUSAL SUPPORT"
 
       if @alimony_presence
-        push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support $' ? @mom.capitalize : @dad.capitalize} in the amount of $ #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month.downcase }.", @text_indent
+        push_text "That spousal support should be awarded to #{ @alimony_who == 'Wife WILL PAY spousal support' ? @mom.capitalize : @dad.capitalize} in the amount of #{ @alimony_how_much } per month for #{ @alimony_how_long } #{ @alimony_year_month.downcase }.", @text_indent
       else
         push_text 'That neither party should be awarded spousal support.', @text_indent
       end

@@ -14,12 +14,13 @@ module PdfDocument
         uccja = PdfDocument::Uccja.new(document)
         cover = PdfDocument::DivorceCover.new(document)
         coversheet = PdfDocument::DivorceCoversheet.new(document)
+        welfare_sheet = PdfDocument::WelfareSheet.new(document)
 
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Complaint", document, true, true, "Divorce_complaint"
         generate_document PdfDocument::DivorceSummons.new(document).generate,    "Summons", document
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Injunction(Optional)", document
         generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
-        generate_document PdfDocument::WelfareSheet.new(document).generate,      "Welfare_sheet", document
+        generate_document welfare_sheet.generate,                                "Welfare_sheet", document if welfare_sheet.can_generate?
         generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
         generate_document cover.generate,                                        "Cover", document if cover.can_generate?
         generate_document coversheet.generate,                                   "Cover", document if coversheet.can_generate?
