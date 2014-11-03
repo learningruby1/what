@@ -9,6 +9,9 @@ module PdfDocument
 
 
     def generate(document)
+      user_folder = document.owner.id.to_s
+      FileUtils.rm_rf("#{Rails.root}/documents/pdf/#{ user_folder }/#{ document.template_name.split(' /<spain/>').first }")
+
       case document.template.to_s
       when /^Complaint for Divorce/
         uccja = PdfDocument::Uccja.new(document)
@@ -17,13 +20,16 @@ module PdfDocument
         welfare_sheet = PdfDocument::WelfareSheet.new(document)
 
         generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Complaint", document, true, true, "Divorce_complaint"
-        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Summons", document
-        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Injunction(Optional)", document
-        generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
-        generate_document welfare_sheet.generate,                                "Welfare_sheet", document if welfare_sheet.can_generate?
-        generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
         generate_document cover.generate,                                        "Cover", document if cover.can_generate?
         generate_document coversheet.generate,                                   "Cover", document if coversheet.can_generate?
+        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Summons", document
+        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Injunction(Optional)", document
+        generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
+
+        generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
+        generate_document welfare_sheet.generate,                                "Welfare_sheet", document if welfare_sheet.can_generate?
+
+
       when /^Filed Case/
         acceptance_of_service = PdfDocument::AcceptanceOfService.new(document)
         affidavit_of_service = PdfDocument::AffidavitOfService.new(document)
