@@ -36,18 +36,18 @@ module PdfDocument
 
       deputy_clerk_info = case @clark_nye
         when 'Clark'
-          'Family Courts and Services Center\n601 North Pecos Road\nLas Vegas, Nevada 89101'
+          "Family Courts and Services Center\n601 North Pecos Road\nLas Vegas, Nevada 89101"
         when 'Nye'
-          '1520 E. Basin Ave. Ste. 108\nPahrump, NV 89060'
+          "1520 E. Basin Ave. Ste. 108\nPahrump, NV 89060"
         when 'Esmeralda'
-          'Esmeralda County Clerk Office\nP.O. Box 547\nGoldfield, NV 89013'
+          "Esmeralda County Clerk Office\nP.O. Box 547\nGoldfield, NV 89013"
         when 'Mineral'
-          'Mineral County Clerk Office\nP.O. Box 1450\nHawthorne, NV 89415'
+          "Mineral County Clerk Office\nP.O. Box 1450\nHawthorne, NV 89415"
         end
 
       move_down 40
       table_row [ { :content => 'Submitted by:', :width => 300, :border_width => 0 }, { :content => 'Clerk of the Court', :width => 240, :border_width => 0 } ]
-      table_row [ { :content => '_'*35, :width => 300, :border_width => 0 }, { :content => '_'*35, :width => 240, :border_width => 0 } ]
+      table_row [ { :content => '_'*35, :width => 300, :border_width => 0 }, { :content => "By: #{ '_'*35 }", :width => 240, :border_width => 0 } ]
       table_row [ { :content => 'Signature', :width => 300, :font_style => :bold, :border_width => 0 }, { :content => 'Deputy Clerk', :width => 240, :font_style => :bold, :border_width => 0 } ]
       table_row [ { :content => "#{ @plaintiff_full_name }", :width => 300, :border_width => 0 }, { :content => "#{ deputy_clerk_info }", :width => 240, :border_width => 0 } ]
       push_table -1, 0
