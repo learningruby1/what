@@ -1,6 +1,6 @@
 class DocumentAnswersController < ApplicationController
   before_action :get_document, :only => [:edit, :update, :render_questions, :add_fields_block, :delete_fields_block, :index]
-  before_action :get_review, :only => [:edit, :update]
+  before_action :get_review, :only => [:edit, :update, :render_questions]
 
   def edit
     if @document.present?
