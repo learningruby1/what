@@ -150,8 +150,7 @@ current_step.fields.create :field_type => 'string capitalize', :name => 'City/To
 current_step.fields.create :field_type => 'string capitalize rev_inline', :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a country /<spain/>Por favor, proporciona el país' }
 
 current_step.fields.create :field_type => 'string social_security', :name => 'Social Security # /<spain/># Seguro Social: <spain/>e.g. XXX-XX-XXXX', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. /<spain/>Por favor, ponga un número de Seguro Social válido' }
-current_step.fields.create :field_type => 'radio rev_br', :name => 'Son /<spain/>Hijo
-                                     <option/>Daughter /<spain/>Hija', :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'radio rev_br', :name => 'Son /<spain/>Hijo <option/>Daughter /<spain/>Hija', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 

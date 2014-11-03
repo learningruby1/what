@@ -47,13 +47,20 @@
               - if last_toggle != answer.template_field.toggle_id
                 - last_toggle = answer.template_field.toggle_id
                 - toggler_answer = answer
+
               - if last_toggle == answer.template_field.toggle_id
                 / Toggler check
-                - if toggler_answer.answer.present? && !toggler_answer.answer.match(answer.template_field.toggle_option.presence || '') || answer.template_field.toggle_option.nil? && toggler_answer.answer == '0' && !toggler_answer.field_type.match(/review_show/)
+                - if
+                  - answer.template_field.toggle_option.present? &&
+                  - !toggler_answer.answer.match(answer.template_field.toggle_option) ||
+                  - toggler_answer.answer == '0' &&
+                  - !toggler_answer.field_type.match(/review_show/)
+
                   / Show NO if no other answers
                   - if answer == answers.last && shown_answers == 0
                     %span.answer No
                   - next
+            - else last_toggle = nil
 
             / Insert fullfiling
             - if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/)
