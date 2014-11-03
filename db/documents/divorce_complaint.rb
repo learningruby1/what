@@ -1444,7 +1444,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife WILL PAY spous
 current_step.fields.create :field_type => 'amount $', :name => 'Enter monthly amount /<spain/>Ingrese el monto mensual', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^(\$)[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 current_step.fields.create :field_type => 'amount', :name => 'For how long ? (enter number) /<spain/>¿Por cuánto tiempo? (ponga en número)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9,]+$/, :hint => 'Please enter a number /<spain/>Por favor, introduzca un número' }
 
-current_step.fields.create :field_type => 'radio', :name => 'Months /<spain/>Meses
+current_step.fields.create :field_type => 'radio rev_inline', :name => 'Months /<spain/>Meses
                                                              <option/>Year(s) /<spain/>Año(s)', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
 

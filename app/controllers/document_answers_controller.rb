@@ -1,5 +1,6 @@
 class DocumentAnswersController < ApplicationController
   before_action :get_document, :only => [:edit, :update, :render_questions, :add_fields_block, :delete_fields_block, :index]
+  before_action :get_review, :only => [:edit, :update, :render_questions]
 
   def edit
     if @document.present?
@@ -14,11 +15,11 @@ class DocumentAnswersController < ApplicationController
 
   def update
     if @document.update_answers! answers_params
-      redirect_to document_answer_path(@document, params[:step].to_i, :review => params[:review]), :alert => @document.errors.full_messages.first
+      redirect_to document_answer_path(@document, params[:step].to_i, :review => @review), :alert => @document.errors.full_messages.first
     else
-      redirect_to params[:review].present? && params[:btn_review] ?
+      redirect_to @review.present? && params[:btn_review] ?
         document_review_path(@document, :scroll => params[:step]):
-        document_answer_path(@document, (params[:step].to_i + (params[:direction] == 'back' ? -1 : 1)), :review => params[:review])
+        document_answer_path(@document, (params[:step].to_i + (params[:direction] == 'back' ? -1 : 1)), :review => @review)
     end
   end
 
@@ -41,6 +42,11 @@ class DocumentAnswersController < ApplicationController
   end
 
   private
+  def get_review
+    @review = @document.review?(params[:step], session) if params[:review]
+    @review = params[:review] if @review.nil?
+  end
+
   def get_document
     @document = current_user.documents.find(params[:document_id])
   end

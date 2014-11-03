@@ -261,6 +261,17 @@ class Document < ActiveRecord::Base
 
 
 
+  # DC for Divorce complaint
+  DC_HIDE_REVIEW_STEP = (8..29)
+
+  def review?(step_number, session)
+    if to_s == DIVORCE_COMPLAINT
+      session[:review] = false if DC_HIDE_REVIEW_STEP.first == step_number.to_i
+      session[:review] = true if (DC_HIDE_REVIEW_STEP.last  == step_number.to_i || !DC_HIDE_REVIEW_STEP.include?(step_number.to_i)) && session[:review] == false
+    end
+    session[:review]
+  end
+
   def skip_steps(next_step, direction='forward')
     if template.steps.where(:step_number => next_step).exists? && template.steps.where(:step_number => next_step).first.render_if_field_id.present?
       begin
