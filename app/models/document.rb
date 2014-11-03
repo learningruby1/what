@@ -325,7 +325,7 @@ class Document < ActiveRecord::Base
   def self.get_files_name( documents, user )
     _file_names = Array.new
     documents.each do |document|
-      _file_names << Dir.glob("documents/pdf/#{ user.id }/#{ document.template_name.split(' /<spain/>').first }/*.pdf")
+      _file_names << Dir.glob("documents/pdf/#{ user.id }/#{ document.template_name.split(' /<spain/>').first }/*.pdf").sort_by{ |file| File.stat(file).ino }
     end
     _file_names
   end
