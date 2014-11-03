@@ -748,7 +748,7 @@ module PdfDocument
         answers.next
         @property_presence = answers.next.answer
         if @property_presence != 'Yes'
-          6.times do steps.next end
+          5.times do steps.next end
         else
 
           @properties_more = Array.new
@@ -790,72 +790,66 @@ module PdfDocument
             end
           end
 
-          #Step 34   Property Division: Vehicles
-          answers = step_answers_enum steps.next
-          @vehicles_presence = answers.next.answer == 'Yes' rescue false
-
           #Step 35  Property Division: Vehicles
           answers = document.step_answers steps.next
-          if @vehicles_presence
 
-            car = answers.select{ |item| item.sort_index == 'a' }
-            car.sort_by!{ |item| item.sort_number }
-            if car.first.answer == '1'
-              loop_answer = car.second.answer.to_i
-              loop_answer.times do
-                car.shift 2
-                @properties_more.push ['Car', car.first.answer, car.second.answer]
-              end
+          car = answers.select{ |item| item.sort_index == 'a' }
+          car.sort_by!{ |item| item.sort_number }
+          if car.first.answer == '1'
+            loop_answer = car.second.answer.to_i
+            loop_answer.times do
+              car.shift 2
+              @properties_more.push ['Car', car.first.answer, car.second.answer]
             end
+          end
 
-            motorcycle = answers.select{ |item| item.sort_index == 'b' }
-            motorcycle.sort_by!{ |item| item.sort_number }
-            if motorcycle.first.answer == '1'
-              loop_answer = motorcycle.second.answer.to_i
-              loop_answer.times do
-                motorcycle.shift 2
-                @properties_more.push ['Motorcycle', motorcycle.first.answer, motorcycle.second.answer]
-              end
+          motorcycle = answers.select{ |item| item.sort_index == 'b' }
+          motorcycle.sort_by!{ |item| item.sort_number }
+          if motorcycle.first.answer == '1'
+            loop_answer = motorcycle.second.answer.to_i
+            loop_answer.times do
+              motorcycle.shift 2
+              @properties_more.push ['Motorcycle', motorcycle.first.answer, motorcycle.second.answer]
             end
+          end
 
-            rv = answers.select{ |item| item.sort_index == 'c' }
-            rv.sort_by!{ |item| item.sort_number }
-            if rv.first.answer == '1'
-              loop_answer = rv.second.answer.to_i
-              loop_answer.times do
-                rv.shift 2
-                @properties_more.push ['RV', rv.first.answer, rv.second.answer]
-              end
+          rv = answers.select{ |item| item.sort_index == 'c' }
+          rv.sort_by!{ |item| item.sort_number }
+          if rv.first.answer == '1'
+            loop_answer = rv.second.answer.to_i
+            loop_answer.times do
+              rv.shift 2
+              @properties_more.push ['RV', rv.first.answer, rv.second.answer]
             end
+          end
 
-            boat = answers.select{ |item| item.sort_index == 'd' }
-            boat.sort_by!{ |item| item.sort_number }
-            if boat.first.answer == '1'
-              loop_answer = boat.second.answer.to_i
-              loop_answer.times do
-                boat.shift 2
-                @properties_more.push ['Boat', boat.first.answer, boat.second.answer]
-              end
+          boat = answers.select{ |item| item.sort_index == 'd' }
+          boat.sort_by!{ |item| item.sort_number }
+          if boat.first.answer == '1'
+            loop_answer = boat.second.answer.to_i
+            loop_answer.times do
+              boat.shift 2
+              @properties_more.push ['Boat', boat.first.answer, boat.second.answer]
             end
+          end
 
-            trailer = answers.select{ |item| item.sort_index == 'e' }
-            trailer.sort_by!{ |item| item.sort_number }
-            if trailer.first.answer == '1'
-              loop_answer = trailer.second.answer.to_i
-              loop_answer.times do
-                trailer.shift 2
-                @properties_more.push ['Trailer', trailer.first.answer, trailer.second.answer]
-              end
+          trailer = answers.select{ |item| item.sort_index == 'e' }
+          trailer.sort_by!{ |item| item.sort_number }
+          if trailer.first.answer == '1'
+            loop_answer = trailer.second.answer.to_i
+            loop_answer.times do
+              trailer.shift 2
+              @properties_more.push ['Trailer', trailer.first.answer, trailer.second.answer]
             end
+          end
 
-            other = answers.select{ |item| item.sort_index == 'f' }
-            other.sort_by!{ |item| item.sort_number }
-            if other.first.answer == '1'
-              loop_answer = other.second.answer.to_i
-              loop_answer.times do
-                other.shift 2
-                @properties_more.push ['Other', other.first.answer, other.second.answer]
-              end
+          other = answers.select{ |item| item.sort_index == 'f' }
+          other.sort_by!{ |item| item.sort_number }
+          if other.first.answer == '1'
+            loop_answer = other.second.answer.to_i
+            loop_answer.times do
+              other.shift 2
+              @properties_more.push ['Other', other.first.answer, other.second.answer]
             end
           end
 
