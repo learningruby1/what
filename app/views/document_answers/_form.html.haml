@@ -2,7 +2,7 @@
   = form_for :document_answer, :url => (document_answer_update_path(@document, @answers.first.step_number, :review => params[:review])), :html => { :class => "form-horizontal", :role => 'form', :id => 'answer_form' } do |f|
     %input{ :type => 'hidden', :value => @document.id, :id => 'document_id' }
     %input{ :type => 'hidden', :value => @current_step, :id => 'step_id' }
-    %input{ :type => 'hidden', :value => params[:review], :id => 'review_present' }
+    %input{ :type => 'hidden', :value => @review, :id => 'review_present' }
 
     .jumbotron
       .container
@@ -24,7 +24,7 @@
                     %span.new_roman Back /
                     %span.new_roman.spain Retroceder
 
-              - if params[:review].present?
+              - if @review
                 %td
                   = f.button :submit, :class => 'btn btn-default new_roman', :name => 'btn_review' do
                     %span Back to review /

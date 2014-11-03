@@ -4,9 +4,12 @@
   %hr
   - field_type_to_show = /review_show|checkbox|time/
 
+  / Step 25 for DC income math
+  - mom_income, dad_income = nil, nil
   - @document.template.steps.each do |step|
     %div{ :id => "scroll_#{step.step_number}" }
-    - next if @document.cant_render?(step) || step.document_answers.blank?
+    - session[:review] = nil
+    - next if @document.cant_render?(step)# || step.document_answers.blank?
 
     .row
       .col-md-10
@@ -63,30 +66,46 @@
             - else
               %div
 
-            / Html printing
-            - if answer.template_field.field_type.match(field_type_to_show) && answer.template_field.insert_place.nil?
-              - shown_answers += 1
-              / 38 step need change until we have this one:
-              - if answer.answer == '0'
-                %span.answer No
+            / Income math
+            - if @document.to_s == Document::DIVORCE_COMPLAINT && answer.step_number == 24
+              - if mom_income.nil?
+                - mom_income = answer.answer
+                - next
               - else
-                %span.answer= answer_html_array[0].split('<spain/>')[0].try :html_safe
-                %span.spain= answer_html_array[0].split('<spain/>')[1].try :html_safe
+                - dad_income = answer.answer
+            - if !dad_income.nil?
+              %span.answer here is your math
+              / After it
+              - mom_income, dad_income = nil, nil
+            - else
+              / Html printing
+              - if answer.template_field.field_type.match(field_type_to_show) && answer.template_field.insert_place.nil?
+                - shown_answers += 1
+                / 38 step need change until we have this one:
+                - if answer.answer == '0'
+                  %span.answer No
+                - else
+                  %span.answer= answer_html_array[0].split('<spain/>')[0].try :html_safe
+                  %span.spain= answer_html_array[0].split('<spain/>')[1].try :html_safe
 
-            - if !answer.template_field.field_type.match(/checkbox/)
-              - shown_answers += 1
-              %span.answer= answer.to_spain.try :html_safe
+              - if !answer.template_field.field_type.match(/checkbox/)
+                - shown_answers += 1
+                %span.answer= answer.to_spain.try :html_safe
 
-            - if answer.template_field.field_type.match(/rev_br/)
-              %br
-              %br
+              - if answer.template_field.field_type.match(/rev_br/)
+                %br
+                %br
     .row
       %br
       %hr
 
   .row
     .col-md-6
-      = link_to 'Generate PDF', generate_pdf_path(@document.id), :class => 'btn btn-default navbar-right'
+      = link_to generate_pdf_path(@document.id), :class => 'btn btn-default navbar-right' do
+        Continue
+        %span.spain / Continuar
+    %br
+    %br
 
 :javascript
   if($("#scroll_#{params[:scroll]}").length > 0){
