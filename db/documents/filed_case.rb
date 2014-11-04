@@ -13,11 +13,11 @@ current_step.fields.create :name => 'Enter the Dept.: /<spain/>Escriba el Depart
 
 current_step.fields.create :field_type => 'text', :name => 'Date of filing, you will find this information usually on the right side corner. <br/><spain/>Fecha de archivo,  usted encontrará esta información normalmente en la esquina derecha.'
 current_step.fields.create :field_type => 'text', :name => 'Summons and Complaint /<spain/>Citatorio y Demanda: *'
-current_step.fields.create :name => '', :field_type => 'date'
+current_step.fields.create :name => '', :field_type => 'date_future'
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => 'Preliminary Injunction /<spain/>Precautoria Conjunta', :toggle_id => toggle_id
-current_step.fields.create :name => '', :field_type => 'date', :toggle_id => toggle_id, :toggle_option => 'Preliminary'
+current_step.fields.create :name => '', :field_type => 'date_future', :toggle_id => toggle_id, :toggle_option => 'Preliminary'
 
 
 toggle_id = 0
