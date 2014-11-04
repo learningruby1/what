@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def create_mail_reminder!(reminder_type)
-    if mail_reminder.blank?
+    if !mail_reminder.map{ |item| item.reminder_type }.include? reminder_type
       mail_reminder.create(:reminder_type => reminder_type)
     end
   end
