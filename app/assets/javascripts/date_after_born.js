@@ -26,6 +26,10 @@ var DateAfterBorn = {
     togglers.forEach(function(toggler){
       need_confirm = selected_years[toggler].indexOf(true) == -1 ? true : need_confirm;
     });
-    need_confirm ? submit_button.attr('data-confirm', 'WARNING: You have`t added all addresses for last 5 years(or from the birth date of a child yonger then 5 years)!') : submit_button.removeAttr('data-confirm');
+    if(need_confirm){
+      submit_button.data('confirm', 'WARNING: You have`t added all addresses for last 5 years(or from the birth date of a child yonger then 5 years)!');
+    }else{
+      submit_button.removeData('confirm');
+    }
   }
 };
