@@ -14,6 +14,7 @@ class PdfFilesController < ApplicationController
   def generate
     PdfDocument::Pdf.new.generate @document
     @document.update :is_generated => true
+    current_user.create_mail_reminder! MailForm::REMINDER_TYPE.second if @document.template_name.eql?(Document::AFTER_SERVICE)
     redirect_to pdf_files_path, :notice => 'Document complete'
   end
 

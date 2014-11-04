@@ -15,7 +15,7 @@ class Document < ActiveRecord::Base
 
   DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
   FILED_CASE = 'Filed Case /<spain/>Caso archivado'
-  AFTER_SERVICE = 'After Service /<spain/>Después de servicio'
+  AFTER_SERVICE = "After Service /<spain/>Después de servicio"
   TOGGLER_OFFSET = 1000
   BLOCK_DIFFERENCE = 10
 
