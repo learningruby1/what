@@ -96,6 +96,7 @@
                 - else
                   %span.answer= answer_html_array[0].split('<spain/>')[0].try :html_safe
                   %span.spain= answer_html_array[0].split('<spain/>')[1].try :html_safe
+                  &nbsp
 
               - if !answer.template_field.field_type.match(/checkbox/)
                 - shown_answers += 1

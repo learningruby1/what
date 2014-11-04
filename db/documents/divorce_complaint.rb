@@ -1014,18 +1014,18 @@ toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#26
                                      :title => 'ADDITIONAL CHILD SUPPORT QUESTION FOR SPOUSE /<spain/>PREGUNTAS ADICIONES DE SU (INSERT ESPOSA O ESPOSO) SOBRE LA MANUTENCION DE MENORES'
-current_step.fields.create :field_type => 'text review_show', :name => 'Is your spouse currently employed/self-employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
-current_step.fields.create :field_type => 'radio', :name => 'No
-                                                             <option/>I don’t know /<spain/>No sé
+current_step.fields.create :field_type => 'text review_show', :name => 'Is your spouse currently employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
+current_step.fields.create :field_type => 'radio rev_br', :name => 'I don’t know /<spain/>No sé
+                                                             <option/>No
                                                              <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :name => 'Employer Name /<spain/>Nombre del empleador  *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-capitalize', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Business Address /<spain/>Dirección del Negocio: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string-capitalize'
-current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string-capitalize'
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
+current_step.fields.create :field_type => 'string capitalize review_show', :name => 'Employer Name /<spain/>Nombre del empleador  *', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string capitalize review_show', :name => 'Business Address /<spain/>Dirección del Negocio: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string capitalize rev_inline', :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'states rev_inline', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string rev_inline', :name => 'Zip Code /<spain/>Código postal: * ', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string', :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string rev_br', :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
 current_step.fields.create :field_type => 'text review_show', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
@@ -1034,6 +1034,8 @@ current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic
                                                              <option/>Asian or Pacific Islander /<spain/>Asiático o Islas del Pacifico
                                                              <option/>Native American or Alaskan Native /<spain/>Indígena Americano o Nativo de Alaska
                                                              <option/>Other /<spain/>Otra', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+
+
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#27
@@ -1059,9 +1061,9 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting <
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'date_without_day', :name => 'I want back <child_count> support starting /<spain/>Quiero la manutención de <child_count_spain> a partir', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
-current_step.fields.create :field_type => 'text', :name => 'I want /<spain/>Quiero', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :field_type => 'amount $', :name => 'per month for child support. /<spain/>por mes de manutención de menores.', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^(\$)?[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
+current_step.fields.create :field_type => 'date_without_day review_show', :name => 'I want back <child_count> support starting /<spain/>Quiero la manutención de <child_count_spain> a partir', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
+current_step.fields.create :field_type => 'text review_show', :name => 'I want /<spain/>Quiero', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'amount $ review_show', :name => 'per month for child support /<spain/>por mes de manutención de menores', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^(\$)?[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 
 toggle_id = 0
 toggle_id += 1
@@ -1074,7 +1076,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Should be allocated
                                                              <option/>Dad every year /<spain/>Papá todos los años
                                                              <option/>Dad and Mom alternating years /<spain/>Mamá y Papá años por medio', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'date_year_only', :name => 'Mom will start claiming the child from /<spain/>La mamá comenzara a reclamar el menor desde:', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom alternating years', :mandatory => { :value => /\w+/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'date_year_only review_show', :name => 'Mom will start claiming the child from /<spain/>La mamá comenzara a reclamar el menor desde:', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom alternating years', :mandatory => { :value => /\w+/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 0
 toggle_id += 1
