@@ -8,9 +8,9 @@ current_step = template.steps.create :step_number => step_number += 1,#1
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'text', :name => 'Date <defendant_full_name> was served with the documents /<spain/>Fecha cuando <defendant_full_name> recibio los documentos *'
-current_step.fields.create :name => '', :field_type => 'date'
+current_step.fields.create :name => '', :field_type => 'date_future'
 current_step.fields.create :field_type => 'text', :name => 'Date Affidavit of Service was filed with the court /<spain/>Fecha cuando la declaracion de entrega de documentos fue archiva en la corte *'
-current_step.fields.create :name => '', :field_type => 'date'
+current_step.fields.create :name => '', :field_type => 'date_future'
 
 current_step = template.steps.create :step_number => step_number += 1,#2
                                      :title => 'FINISH /<spain/>ACABADO'

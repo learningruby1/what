@@ -28,7 +28,7 @@ module DivorceComplaintHelper
   end
 
   def get_number_of_joint_child(document)
-    if document.step_answers(17).first.answer == 'Yes'
+    if document.step_answers(17).map(&:answer).include? 'Yes'
       document.step_answers(18).map(&:answer).keep_if {|a| a.to_s.downcase == 'both parents'}.present? ? number_of_child(document).to_i : 0
     else
       document.step_answers(18).map(&:answer).keep_if {|a| a.to_s.downcase == 'both parents'}.length
