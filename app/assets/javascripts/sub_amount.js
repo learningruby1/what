@@ -1,16 +1,12 @@
 $(function(){
-  SubAmount.sub_amount_click($('[class^="sub_amount_"]'))
+  SubAmount.sub_amount_click($('[class^="sub_amount_"]'));
 });
 
-
-
 var SubAmount = {
-
   sub_amount_click: function(sub_amount_button){
     sub_amount_button.each(function(){
-      var $this = '.' + $(this).prop('class');
 
-      $(document).on('click', $this + ' div:last-child a', function(event){
+      $(document).on('click', '.' + $(this).prop('class') + ' div:last-child a', function(event){
         event.preventDefault();
 
         var form = $('#answer_form').serialize();
@@ -37,9 +33,8 @@ var SubAmount = {
     if(value < 1 || value > 9){
       _this.after('<div id="error" style="width:240px; background:#FAACAC; padding: 3px; border-radius: 5px; color: red; margin-top: 3px;"><span>Only from 1 to 9</span>/<span class="spain">Sólo del 1 al 9</span></div>');
       setTimeout(function(){ $('#error').remove(); }, 5000);
-      return false
+      return false;
     }
-    return true
+    return true;
   }
-
 }

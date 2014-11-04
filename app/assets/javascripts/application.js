@@ -14,9 +14,9 @@
 //= require jquery_ujs
 //= require gritter
 //= require twitter/bootstrap
+//= require togglers
 //= require date_after_born
 //= require support_amount
-//= require togglers
 //= require loop_button
 //= require date_and_time_selectors
 //= require sub_amount

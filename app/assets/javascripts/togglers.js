@@ -1,18 +1,14 @@
 $(function(){
   Togglers.checkbox_radio_toggler();
-
   var counters = $('.counter');
   if(counters.length == 1){
     counters.hide();
   }else{
-    Togglers.dependant_fields(counters)
+    Togglers.dependant_fields(counters);
   }
-
 });
 
-
 var Togglers = {
-
   dependant_fields: function(counters){
     counters.each(function(){
       var first_depend_field = $(this).next().find('[type="text"]');
@@ -22,7 +18,7 @@ var Togglers = {
             first_depend_field.closest('div[data-toggle-option]').prev().find('.first_dependant_field').text($(this).val());
         });
 
-        var second_depend_field = first_depend_field.closest('div[data-toggle-option]').next().next().next().next().find('[type="text"]')
+        var second_depend_field = first_depend_field.closest('div[data-toggle-option]').next().next().next().next().find('[type="text"]');
         if( second_depend_field.length > 0)
             second_depend_field.change(function(){
               second_depend_field.closest('div[data-toggle-option]').prev().prev().prev().prev().prev().find('.second_dependant_field').text($(this).val());
@@ -37,24 +33,28 @@ var Togglers = {
       var this_prop_class = '.' + $(this).prop('class');
 
       if($(this_prop_class    + ':first :checkbox').length > 0){
-        if(!$(this_prop_class + ':first :checkbox').is(':checked'))
+        if(!$(this_prop_class + ':first :checkbox').is(':checked')){
           $(this_prop_class   + ':not(:first)').hide();
+        }
 
         //Checkbox event
         $(document).change( '.' + $(this).prop('class') + ':first:has(:checkbox)', function(){
-          if(!$(this_prop_class + ':first :checkbox').is(':checked'))
+          if(!$(this_prop_class + ':first :checkbox').is(':checked')){
             $(this_prop_class   + ':not(:first)').hide();
-          else
+          }else{
             $(this_prop_class   + ':not(:first)').show();
+          }
         });
       }
 
       if($(this_prop_class + ':first [type="radio"]').length > 0){
         var selected_value = $('.' + $(this).prop('class') + ' [type="radio"]:checked').val();
         $('.' + $(this).prop('class') + ':not(:first)').hide().each(function(){
-          if(selected_value != undefined)
-            if(selected_value.indexOf($(this).data('toggle-option')) != -1)
+          if(selected_value != undefined){
+            if(selected_value.indexOf($(this).data('toggle-option')) != -1){
               $(this).show();
+            }
+          }
         });
 
         //Radio button event
@@ -87,9 +87,11 @@ var Togglers = {
 
       if(!$('.' + $(this).prop('class') + ' [type="checkbox"]').length > 0 ){
         $(this_class_next).hide().each(function(){
-          if(selected_value != undefined && selected_class != undefined)
-            if(selected_value.indexOf($(this).data('toggle-option')) != -1 && selected_class == $(this).prop('class'))
+          if(selected_value != undefined && selected_class != undefined){
+            if(selected_value.indexOf($(this).data('toggle-option')) != -1 && selected_class == $(this).prop('class')){
               $(this).show();
+            }
+          }
         });
       }
 
@@ -125,22 +127,22 @@ var Togglers = {
       });
     }
 
-    if(selected_value!= undefined && selected_value.indexOf(_this.data('toggle-option')) != -1)
+    if(selected_value!= undefined && selected_value.indexOf(_this.data('toggle-option')) != -1){
       _this.show();
+    }
   }
-
 }
 
 var Checkboxes = {
-
   checkbox_button_event: function(_this){
     if($('.' + _this.prop('class') + ' [type="checkbox"]').length > 0 ){
       var this_class = '.toggle_' + (parseInt(_this.data('sub-toggle')));
 
-      if($('.' + _this.prop('class') + '[data-sub-toggle="'+ _this.data('sub-toggle')+'"]' + '[data-toggle-option="'+ _this.data('toggle-option')+'"]' + ' [type="checkbox"]').is(':checked'))
+      if($('.' + _this.prop('class') + '[data-sub-toggle="'+ _this.data('sub-toggle')+'"]' + '[data-toggle-option="'+ _this.data('toggle-option')+'"]' + ' [type="checkbox"]').is(':checked')){
         $(this_class + '[data-toggle-option="'+ _this.data('toggle-option')+'"]').show();
-      else
+      }else{
         $(this_class + '[data-toggle-option="'+ _this.data('toggle-option')+'"]').hide();
+      }
     }
   },
 
@@ -152,5 +154,4 @@ var Checkboxes = {
       });
     }
   }
-
 }

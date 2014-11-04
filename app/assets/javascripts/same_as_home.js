@@ -5,7 +5,6 @@ $(function(){
 });
 
 var SameAsHomeRadio = {
-
   radio_click: function(radio_button){
     radio_button.on('click', function(){
       var address = $('[data-toggle-option]').eq(5).find('.container div:eq(1) input').val();
@@ -20,16 +19,16 @@ var SameAsHomeRadio = {
     });
 
     $('[data-toggle-option]').eq(9).find('.container div:eq(2) div input').on('keydown', function(){
-      $('.radio_3:first').prop('checked', false)
+      $('.radio_3:first').prop('checked', false);
     });
     $('[data-toggle-option]').eq(10).find('.container div:eq(1) input').on('keydown', function(){
-      $('.radio_3:first').prop('checked', false)
+      $('.radio_3:first').prop('checked', false);
     });
     $('[data-toggle-option]').eq(12).find('.container div:eq(1) input').on('keydown', function(){
-      $('.radio_3:first').prop('checked', false)
+      $('.radio_3:first').prop('checked', false);
     });
     $('[data-toggle-option]').eq(11).find('.container .col-md-2 select').on('change', function(){
-      $('.radio_3:first').prop('checked', false)
+      $('.radio_3:first').prop('checked', false);
     });
 
     //Script for insert html blok to other place
@@ -40,5 +39,4 @@ var SameAsHomeRadio = {
       div = null;
     });
   }
-
 }
