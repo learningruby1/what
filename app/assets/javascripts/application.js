@@ -16,7 +16,6 @@
 //= require twitter/bootstrap
 //= require date_after_born
 //= require support_amount
-//= require checkboxes
 //= require togglers
 //= require loop_button
 //= require date_and_time_selectors

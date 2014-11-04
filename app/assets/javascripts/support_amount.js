@@ -1,9 +1,11 @@
 $(function(){
-  $('.amount_block:last').parent().parent().parent().append("<div class='container'><div class='row new_roman col-md-9'><div class='who_pay_text'></div></div></div>")
-  SupportAmount.who_pay($('.amount_block:last .income-math'), $('.amount_block:first .income-math'), $('.who_pay_text'));
-  $('.amount_block .income-math').keyup(function(){
+  if($('.amount_block').length > 0){
+    $('.amount_block:last').parent().parent().parent().append("<div class='container'><div class='row new_roman col-md-9'><div class='who_pay_text'></div></div></div>")
     SupportAmount.who_pay($('.amount_block:last .income-math'), $('.amount_block:first .income-math'), $('.who_pay_text'));
-  });
+    $('.amount_block .income-math').keyup(function(){
+      SupportAmount.who_pay($('.amount_block:last .income-math'), $('.amount_block:first .income-math'), $('.who_pay_text'));
+    });
+  }
 });
 
 var SupportAmount = {

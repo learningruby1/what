@@ -1,10 +1,14 @@
 $(function(){
 
-  Time.time_select();
+  if($('.time').length > 0){
+    Time.time_select();
+  }
+  if($("[name*='answer(1i)']").length > 0){
+    $("[name*='answer(1i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
+    $("[name*='answer(3i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
+    $("[name*='answer(2i)']:not([type='hidden'])").wrap("<div class='col-md-3 margin-left'></div>")
+  }
 
-  $("[name*='answer(1i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
-  $("[name*='answer(3i)']:not([type='hidden'])").wrap("<div class='col-md-2 margin-left'></div>")
-  $("[name*='answer(2i)']:not([type='hidden'])").wrap("<div class='col-md-3 margin-left'></div>")
 
 });
 

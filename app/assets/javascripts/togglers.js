@@ -5,6 +5,15 @@ $(function(){
   if(counters.length == 1){
     counters.hide();
   }else{
+    Togglers.dependant_fields(counters)
+  }
+
+});
+
+
+var Togglers = {
+
+  dependant_fields: function(counters){
     counters.each(function(){
       var first_depend_field = $(this).next().find('[type="text"]');
 
@@ -19,14 +28,8 @@ $(function(){
               second_depend_field.closest('div[data-toggle-option]').prev().prev().prev().prev().prev().find('.second_dependant_field').text($(this).val());
         });
       }
-
     });
-  }
-
-});
-
-
-var Togglers = {
+  },
 
   checkbox_radio_toggler: function(){
     //Toggler logic
@@ -124,6 +127,30 @@ var Togglers = {
 
     if(selected_value!= undefined && selected_value.indexOf(_this.data('toggle-option')) != -1)
       _this.show();
+  }
+
+}
+
+var Checkboxes = {
+
+  checkbox_button_event: function(_this){
+    if($('.' + _this.prop('class') + ' [type="checkbox"]').length > 0 ){
+      var this_class = '.toggle_' + (parseInt(_this.data('sub-toggle')));
+
+      if($('.' + _this.prop('class') + '[data-sub-toggle="'+ _this.data('sub-toggle')+'"]' + '[data-toggle-option="'+ _this.data('toggle-option')+'"]' + ' [type="checkbox"]').is(':checked'))
+        $(this_class + '[data-toggle-option="'+ _this.data('toggle-option')+'"]').show();
+      else
+        $(this_class + '[data-toggle-option="'+ _this.data('toggle-option')+'"]').hide();
+    }
+  },
+
+  hide_checkboxes: function(_this){
+    if($('.' + _this.prop('class') + ' [type="checkbox"]').length > 0 ){
+      $('.' + _this.prop('class') + ' [type="checkbox"]:checked').prop('checked',false);
+      $('.' + _this.prop('class') + '[data-sub-toggle]').each(function(){
+        $('.toggle_' + (parseInt($(this).data('sub-toggle')))).hide();
+      });
+    }
   }
 
 }
