@@ -14,4 +14,10 @@
 //= require jquery_ujs
 //= require gritter
 //= require twitter/bootstrap
-//= require answer
+//= require togglers
+//= require date_after_born
+//= require support_amount
+//= require loop_button
+//= require date_and_time_selectors
+//= require sub_amount
+//= require same_as_home
