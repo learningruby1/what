@@ -56,6 +56,8 @@ module DivorceComplaintHelper
         document
       when Document::FILED_CASE
         document.divorce_document
+      when Document::AFTER_SERVICE
+        document.divorce_document.divorce_document
       end
     divorce_document.step_answers(4).map(&:answer)[0..2].join(' ').squeeze(' ')
   end
