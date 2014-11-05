@@ -95,8 +95,6 @@ module DivorceComplaintHelper
 
   def return_start_end_year(answer)
     case answer.template_field.field_type
-    when 'date'
-      return [Time.now.year, Time.now.year - 100]
     when /date_future/
       return [Time.now.year, Time.now.year + 10]
     when /date_year_born/
@@ -111,9 +109,9 @@ module DivorceComplaintHelper
       return [born_year, Time.now.year]
     when /date_for_child/
       return [Time.now.year, Time.now.year - 18]
+    when /date/
+      return [Time.now.year, Time.now.year - 100]
     end
-
-
   end
 
   def replace_main_text(_document, _answers, text, _amount_index, _index_of_radio, _real_answer)
