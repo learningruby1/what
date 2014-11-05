@@ -1,9 +1,6 @@
 .container
   = render :partial => 'render_text', :locals => { :answer => answer }
   - case answer.template_field.field_type
-  - when 'date'
-    .col-md-12.input-group{ :class => answer.template_field.field_type }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year, :end_year => Time.now.year - 100, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
   - when /date_future/
     .col-md-12.input-group{ :class => answer.template_field.field_type }
       = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year, :end_year => Time.now.year + 10, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
@@ -24,6 +21,10 @@
   - when /date_year_only/
     .col-md-12.input-group{ :class => answer.template_field.field_type }
       = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :discard_day => true, :discard_month => true, :start_year => Time.now.year, :end_year => Time.now.year - 1, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
+
+  - when /date/
+    .col-md-12.input-group{ :class => answer.template_field.field_type }
+      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year, :end_year => Time.now.year - 100, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
 
   - when /day_of_week/
     .col-md-12.input-group{ :class => answer.template_field.field_type }
