@@ -227,38 +227,46 @@ module PdfDocument
                 address_data[:state] = answers[k += 1].answer
                 address_data[:zip] = answers[k += 1].answer
                 address_data[:move_date] = answers[k += 1].answer.to_date
-                address_data[:persone_relationship] = answers[k += 1].answer.upcase
-                case address_data[:persone_relationship]
-                when 'OTHER'
-                  address_data[:lived_with] = answers[k += 6].answer
-                  address_data[:persone_relationship] = answers[k += 1].answer.upcase
-                  k += 4
-                when 'MOM'
-                  address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 11
-                when 'DAD'
-                  address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 11
+                address_data[:persone_relationship] = []
+                address_data[:lived_with] = []
+                3.times do
+                  if answers[k += 1].answer == '1'
+                    address_data[:persone_relationship] << answers[k].template_field.name.split(' /<spain/>').first.upcase
+                    case address_data[:persone_relationship].last
+                    when 'OTHER'
+                      address_data[:lived_with] << answers[k + 8].answer.upcase
+                      address_data[:persone_relationship][-1] = answers[k + 9].answer.upcase
+                    when 'MOM'
+                      address_data[:lived_with] << (@mom == 'plaintiff' ? "#{ @plaintiff_full_name.upcase }" : "#{ @defendant_full_name.upcase }")
+                    when 'DAD'
+                      address_data[:lived_with] << (@dad == 'plaintiff' ? "#{ @plaintiff_full_name.upcase }" : "#{ @defendant_full_name.upcase }")
+                    end
+                  end
                 end
+                k += 13
                 @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               when 'Outside the United States'
-                address_data[:address] = answers[k += 8].answer
+                address_data[:address] = answers[k += 10].answer
                 address_data[:city] = answers[k += 1].answer
                 address_data[:country] = answers[k += 1].answer
                 address_data[:move_date] = answers[k += 1].answer.to_date
-                address_data[:persone_relationship] = answers[k += 1].answer.upcase
-                case address_data[:persone_relationship]
-                when 'OTHER'
-                  address_data[:lived_with] = answers[k += 3].answer
-                  address_data[:persone_relationship] = answers[k += 1].answer.upcase
-                  k += 2
-                when 'MOM'
-                  address_data[:lived_with] = @mom == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 4
-                when 'DAD'
-                  address_data[:lived_with] = @dad == 'plaintiff' ? "#{ @plaintiff_full_name }" : "#{ @defendant_full_name }"
-                  k += 4
+                address_data[:persone_relationship] = []
+                address_data[:lived_with] = []
+                3.times do
+                  if answers[k += 1].answer == '1'
+                    address_data[:persone_relationship] << answers[k].template_field.name.split(' /<spain/>').first.upcase
+                    case address_data[:persone_relationship].last
+                    when 'OTHER'
+                      address_data[:lived_with] << answers[k + 3].answer.upcase
+                      address_data[:persone_relationship][-1] = answers[k + 4].answer.upcase
+                    when 'MOM'
+                      address_data[:lived_with] << (@mom == 'plaintiff' ? "#{ @plaintiff_full_name.upcase }" : "#{ @defendant_full_name.upcase }")
+                    when 'DAD'
+                      address_data[:lived_with] << (@dad == 'plaintiff' ? "#{ @plaintiff_full_name.upcase }" : "#{ @defendant_full_name.upcase }")
+                    end
+                  end
                 end
+                k += 6
                 @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               when 'Same as me'
                 address_data[:move_date] = answers[k += 1].answer.to_date
@@ -266,9 +274,9 @@ module PdfDocument
                 address_data[:city] = @plaintiff_home_address_city
                 address_data[:state] = @plaintiff_home_address_state
                 address_data[:zip] = @plaintiff_home_address_zip
-                address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? 'MOM' : 'DAD'
-                address_data[:lived_with] = @plaintiff_full_name
-                k += 17
+                address_data[:persone_relationship] = @plaintiff_wife_husband == 'Wife' ? ['MOM'] : ['DAD']
+                address_data[:lived_with] = [@plaintiff_full_name.upcase]
+                k += 21
                 @children_info[answers[k-1].toggler_offset / Document::TOGGLER_OFFSET][:addresses] << address_data
               end
             end
