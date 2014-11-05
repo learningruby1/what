@@ -213,51 +213,51 @@ module PdfDocument
         table_row [ { :content => 'First name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Last name', :align => :center, :font_style => :bold, :width => 108 }, { :content => 'Middle name', :align => :center, :font_style => :bold, :width => 108 } ]
         print_index = 0
         if @divorce
-          table_row [ "#{ print_index += 1 }. #{ @divorce_array[1] }", "#{ @divorce_array[0] }", "#{ @divorce_array[2] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
+          table_row [ "#{ print_index += 1 }. #{ @divorce_array[0] }", "#{ @divorce_array[2] }", "#{ @divorce_array[1] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
           if @divorce_array[3].present?
-            table_row [ "#{ print_index += 1 }. #{ @divorce_array[4] }", "#{ @divorce_array[3] }", "#{ @divorce_array[5] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @divorce_array[3] }", "#{ @divorce_array[5] }", "#{ @divorce_array[4] }", "#{ @divorce_array[6] }", "#{ @divorce_array[7] }" ]
           end
         end
 
         if @tpo
-          table_row [ "#{ print_index += 1 }. #{ @tpo_array[1] }", "#{ @tpo_array[0] }", "#{ @tpo_array[2] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
+          table_row [ "#{ print_index += 1 }. #{ @tpo_array[0] }", "#{ @tpo_array[2] }", "#{ @tpo_array[1] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
           if @tpo_array[3].present?
-            table_row [ "#{ print_index += 1 }. #{ @tpo_array[4] }", "#{ @tpo_array[3] }", "#{ @tpo_array[5] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @tpo_array[3] }", "#{ @tpo_array[5] }", "#{ @tpo_array[4] }", "#{ @tpo_array[6] }", "#{ @tpo_array[7] }" ]
           end
         end
 
         if @custody_support
-          table_row [ "#{ print_index += 1 }. #{ @custody_support_array[1] }", "#{ @custody_support_array[0] }", "#{ @custody_support_array[2] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
+          table_row [ "#{ print_index += 1 }. #{ @custody_support_array[0] }", "#{ @custody_support_array[2] }", "#{ @custody_support_array[1] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
           if @custody_support_array[3].present?
-            table_row [ "#{ print_index += 1 }. #{ @custody_support_array[4] }", "#{ @custody_support_array[3] }", "#{ @custody_support_array[5] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @custody_support_array[3] }", "#{ @custody_support_array[5] }", "#{ @custody_support_array[4] }", "#{ @custody_support_array[6] }", "#{ @custody_support_array[7] }" ]
           end
         end
 
         if @paternity
-          table_row [ "#{ print_index += 1 }. #{ @paternity_array[1] }", "#{ @paternity_array[0] }", "#{ @paternity_array[2] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
+          table_row [ "#{ print_index += 1 }. #{ @paternity_array[0] }", "#{ @paternity_array[2] }", "#{ @paternity_array[1] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
           if @paternity_array[3].present?
-            table_row [ "#{ print_index += 1 }. #{ @paternity_array[4] }", "#{ @paternity_array[3] }", "#{ @paternity_array[5] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @paternity_array[3] }", "#{ @paternity_array[5] }", "#{ @paternity_array[4] }", "#{ @paternity_array[6] }", "#{ @paternity_array[7] }" ]
           end
         end
 
         if @juvenile_court
-          table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[1] }", "#{ @juvenile_court_array[0] }", "#{ @juvenile_court_array[2] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
+          table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[0] }", "#{ @juvenile_court_array[2] }", "#{ @juvenile_court_array[1] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
           if @juvenile_court_array[3].present?
-            table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[4] }", "#{ @juvenile_court_array[3] }", "#{ @juvenile_court_array[5] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @juvenile_court_array[3] }", "#{ @juvenile_court_array[5] }", "#{ @juvenile_court_array[4] }", "#{ @juvenile_court_array[6] }", "#{ @juvenile_court_array[7] }" ]
           end
         end
 
         if @guardianship
-          table_row [ "#{ print_index += 1 }. #{ @guardianship_array[1] }", "#{ @guardianship_array[0] }", "#{ @guardianship_array[2] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
+          table_row [ "#{ print_index += 1 }. #{ @guardianship_array[0] }", "#{ @guardianship_array[2] }", "#{ @guardianship_array[1] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
           if @guardianship_array[3].present?
-            table_row [ "#{ print_index += 1 }. #{ @guardianship_array[4] }", "#{ @guardianship_array[3] }", "#{ @guardianship_array[5] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @guardianship_array[3] }", "#{ @guardianship_array[5] }", "#{ @guardianship_array[4] }", "#{ @guardianship_array[6] }", "#{ @guardianship_array[7] }" ]
           end
         end
 
         if @termination_parental_right
-          table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[1] }", "#{ @termination_parental_right_array[0] }", "#{ @termination_parental_right_array[2] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
+          table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[0] }", "#{ @termination_parental_right_array[2] }", "#{ @termination_parental_right_array[1] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
           if @termination_parental_right_array[3].present?
-            table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[4] }", "#{ @termination_parental_right_array[3] }", "#{ @termination_parental_right_array[5] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
+            table_row [ "#{ print_index += 1 }. #{ @termination_parental_right_array[3] }", "#{ @termination_parental_right_array[5] }", "#{ @termination_parental_right_array[4] }", "#{ @termination_parental_right_array[6] }", "#{ @termination_parental_right_array[7] }" ]
           end
         end
         if print_index < 4
