@@ -21,3 +21,4 @@
 //= require date_and_time_selectors
 //= require sub_amount
 //= require same_as_home
+//= require answer

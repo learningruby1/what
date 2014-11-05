@@ -6,22 +6,9 @@ $(function(){
   }else{
     Togglers.dependant_fields(counters);
   }
-
-  if($('[data-insert-place]').length > 0){
-    Togglers.move_html_block($('[data-insert-place]'));
-  }
 });
 
 var Togglers = {
-  move_html_block: function(data_insert){
-    data_insert.each(function(){
-      var this_class = '.place_for_insert_' + $(this).data('insert-place');
-      var div = $(this).detach();
-      $(this_class).append(div);
-      div = null;
-    });
-  },
-
   dependant_fields: function(counters){
     counters.each(function(){
       var first_depend_field = $(this).next().find('[type="text"]');
