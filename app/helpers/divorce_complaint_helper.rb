@@ -93,6 +93,29 @@ module DivorceComplaintHelper
     end
   end
 
+  def return_start_end_year(answer)
+    case answer.template_field.field_type
+    when 'date'
+      return [Time.now.year, Time.now.year - 100]
+    when /date_future/
+      return [Time.now.year, Time.now.year + 10]
+    when /date_year_born/
+      return [Time.now.year, Time.now.year + 1]
+    when /date_without_day/
+      return [Time.now.year - 5, Time.now.year]
+    when /date_year_only/
+      return [Time.now.year, Time.now.year - 1]
+    when /date_after_born/
+      born_year = TemplateField.find(answer.template_field.header_ids.to_i).document_answers.where(:document_id => answer.document.id, :toggler_offset => (answer.toggler_offset / 1000) * 1000).first.answer.to_date.year
+      born_year = born_year < Time.now.year - 5 ? Time.now.year - 5 : born_year
+      return [born_year, Time.now.year]
+    when /date_for_child/
+      return [Time.now.year, Time.now.year - 18]
+    end
+
+
+  end
+
   def replace_main_text(_document, _answers, text, _amount_index, _index_of_radio, _real_answer)
     if _answers.first.template_step_id == 18
       if number_of_child(_document) != '1' && TemplateStep.where(:title => 'Same Legal Custody /<spain/>Misma Custodia Legal').first.document_answers.where(:document_id => _document.id).first.answer == 'Yes'

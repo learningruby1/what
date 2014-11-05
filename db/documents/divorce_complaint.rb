@@ -137,7 +137,7 @@ child_name = current_step.fields.create :field_type => 'string upcase', :name =>
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
 
 child_last_name = current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
-child_birth = current_step.fields.create :field_type => 'date', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+child_birth = current_step.fields.create :field_type => 'date_for_child', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :field_type => 'date', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 
 current_step.fields.create :field_type => 'text review_show', :name => 'Place of Birth /<spain/>Lugar de nacimiento:'
 current_step.fields.create :field_type => 'radio', :name => 'In the United States /<spain/>En los Estados Unidos

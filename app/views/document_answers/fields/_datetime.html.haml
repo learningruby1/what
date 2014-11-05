@@ -1,37 +1,18 @@
 .container
   = render :partial => 'render_text', :locals => { :answer => answer }
   - case answer.template_field.field_type
-  - when /date_future/
-    .col-md-12.input-group{ :class => answer.template_field.field_type }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year, :end_year => Time.now.year + 10, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
-  - when /date_without_day/
-    .col-md-12.input-group{ :class => answer.template_field.field_type }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :discard_day => true, :start_year => Time.now.year - 5, :end_year => Time.now.year, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
-
-  - when /date_after_born/
-    - born_year = TemplateField.find(answer.template_field.header_ids.to_i).document_answers.where(:document_id => answer.document.id, :toggler_offset => (answer.toggler_offset / 1000) * 1000).first.answer.to_date.year
-    - born_year = born_year < Time.now.year - 5 ? Time.now.year - 5 : born_year
-    .col-md-12.input-group{ :class => answer.template_field.field_type, :toggler => (answer.toggler_offset / 1000) * 1000, :born_year => born_year }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :discard_day => true, :start_year => born_year, :end_year => Time.now.year, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
-
-  - when /date_year_born/
-    .col-md-12.input-group{ :class => answer.template_field.field_type }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year, :end_year => Time.now.year + 1, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
-
-  - when /date_year_only/
-    .col-md-12.input-group{ :class => answer.template_field.field_type }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :discard_day => true, :discard_month => true, :start_year => Time.now.year, :end_year => Time.now.year - 1, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
-
-  - when /date/
-    .col-md-12.input-group{ :class => answer.template_field.field_type }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :start_year => Time.now.year, :end_year => Time.now.year - 100, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
+  - when /time/
+    .col-md-12.input-group{ 'data-date-format' => 'H:mm', :class => answer.template_field.field_type }
+      = a.hidden_field :answer, :value => answer.answer || '1:00 AM'
 
   - when /day_of_week/
     .col-md-12.input-group{ :class => answer.template_field.field_type }
       .col-md-3.margin-left= a.collection_select :answer, Date::DAYS_INTO_WEEK.collect{ |e| [ e.first.to_s.capitalize, e.first.to_s.capitalize + ' / ' + DocumentAnswer::SPAIN_DAYS[e.last] ] }, :first, :last , {}, :class => 'form-control'
 
   - else
-    .col-md-12.input-group{ 'data-date-format' => 'H:mm', :class => answer.template_field.field_type }
-      = a.hidden_field :answer, :value => answer.answer || '1:00 AM'
+    - years = return_start_end_year answer
+    .col-md-12.input-group{ :class => answer.template_field.field_type, :toggler => ((answer.toggler_offset / 1000) * 1000 if answer.template_field.field_type.match(/date_after_born/)), :born_year => (years.first if answer.template_field.field_type.match(/date_after_born/)) }
+      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :discard_day => (true if answer.template_field.field_type.match(/date_without_day|date_after_born|date_year_only/)), :discard_month => (true if answer.template_field.field_type.match(/date_year_only/)), :start_year =>  years.first, :end_year => years.second, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
+
 .col-md-12
   %br
