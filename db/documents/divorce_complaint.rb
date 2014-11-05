@@ -243,17 +243,23 @@ current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :sort_index => 'a1',
                            :header_ids => "#{ child_birth.id }"
 
-field_for_mandatory_first = current_step.fields.create :field_type => 'radio rev_inline rev_br',
-                                                       :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
-                                                       :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
+current_step.fields.create :field_type => 'checkbox',
+                           :name => 'MOM /<spain/>MAMÁ',
+                           :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1'
+current_step.fields.create :field_type => 'checkbox',
+                           :name => 'DAD /<spain/>PAPÁ',
+                           :toggle_id => toggle_id, :toggle_option => 'In the United States',
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1'
+field_for_mandatory_first = current_step.fields.create :field_type => 'checkbox',
+                                                       :name => 'Other /<spain/>Otra',
+                                                       :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                        :toggle_id => toggle_id, :toggle_option => 'In the United States',
                                                        :sub_toggle_id => toggle_id + 1,
                                                        :amount_field_id => top_field.id,
                                                        :sort_index => 'a1'
-
-
-
-
 
 current_step.fields.create :field_type => 'string capitalize',
                            :name => 'Address /<spain/>Dirección: *',
@@ -284,20 +290,31 @@ current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :sort_index => 'a1',
                            :header_ids => "#{ child_birth.id }"
 
-field_for_mandatory_second = current_step.fields.create :field_type => 'radio rev_inline rev_br',
-                                                        :name => 'MOM /<spain/>MAMÁ<option/>DAD /<spain/>PAPÁ<option/>Other /<spain/>Otra',
-                                                        :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
+current_step.fields.create :field_type => 'checkbox',
+                           :name => 'MOM /<spain/>MAMÁ',
+                           :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1'
+current_step.fields.create :field_type => 'checkbox',
+                           :name => 'DAD /<spain/>PAPÁ',
+                           :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
+                           :amount_field_id => top_field.id,
+                           :sort_index => 'a1'
+field_for_mandatory_second = current_step.fields.create :field_type => 'checkbox',
+                                                        :name => 'Other /<spain/>Otra',
+                                                        :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                         :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
                                                         :sub_toggle_id => toggle_id + 2,
                                                         :amount_field_id => top_field.id,
                                                         :sort_index => 'a1'
 
 
+
 current_step.fields.create :field_type => 'string capitalize',
                            :name => 'Name of person /<spain/>Nombre de la persona: *',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido',
                                            :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
-                           :toggle_id => toggle_id + 1, :toggle_option => 'Other',
+                           :toggle_id => toggle_id + 1, :toggle_option => 'In the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
@@ -305,7 +322,7 @@ current_step.fields.create :field_type => 'select_person',
                            :name => 'Relationship to child /<spain/>Parentesco con el menor: *',
                            :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona',
                                            :template_field => field_for_mandatory_first.id, :toggle_option => 'Other' },
-                           :toggle_id => toggle_id + 1, :toggle_option => 'Other',
+                           :toggle_id => toggle_id + 1, :toggle_option => 'In the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
@@ -313,7 +330,7 @@ current_step.fields.create :field_type => 'string capitalize',
                            :name => 'Name of person /<spain/>Nombre de la persona: *',
                            :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid Name /<spain/>Por favor ingrese un nombre válido',
                                            :template_field => field_for_mandatory_second.id, :toggle_option => 'Other' },
-                           :toggle_id => toggle_id + 2, :toggle_option => 'Other',
+                           :toggle_id => toggle_id + 2, :toggle_option => 'Outside the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
@@ -321,7 +338,7 @@ current_step.fields.create :field_type => 'select_person',
                            :name => 'Relationship to child /<spain/>Parentesco con el menor: *',
                            :mandatory => { :value => /\w+/, :hint => 'Select person /<spain/>Por favor, Seleccione persona',
                                            :template_field => field_for_mandatory_second.id, :toggle_option => 'Other' },
-                           :toggle_id => toggle_id + 2, :toggle_option => 'Other',
+                           :toggle_id => toggle_id + 2, :toggle_option => 'Outside the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
 
