@@ -73,11 +73,12 @@ class DocumentAnswer < ActiveRecord::Base
 
   MONTH_NAMES = ['January / Enero', 'February / Febrero', 'March / Marzo', 'April / Abril', 'May / Mayo', 'June / Junio', 'July / Julio', 'August / Agosto', 'September / Septiembre', 'October / Octubre', 'November / Noviembre', 'December / Diciembre']
   SPAIN_DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+
   def to_s
     if answer.present? && document.to_s == Document::DIVORCE_COMPLAINT
       answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
       answer.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
-      answer.gsub! '<child>',           number_of_child(document) == '1' ? 'child' : 'children'
+      answer.gsub! '<child>',                 number_of_child(document) == '1' ? 'child' : 'children'
       sole_count = get_number_of_primary_or_sole_child document
       answer.gsub!('<child_percentage_sole>', "#{sole_count} children #{get_percentage_for_children(sole_count)}%")
       answer[0] = 'C' if answer[0] == 'c'
@@ -112,10 +113,10 @@ class DocumentAnswer < ActiveRecord::Base
     end
   end
 
-  def to_spain
+  def to_spain(amount_index=1)
     return to_s if !template_field.field_type.match(/radio/) || template_field.field_type.match(/text_radio/)
-    template_field.to_text(document).split('<option/>').each do |a|
-      if a.match(Regexp.new answer.split('(').first)
+    template_field.to_text(document, amount_index, nil, true).split('<option/>').each do |a|
+      if a.match(Regexp.new answer.split(/\(|\</).first)
         if a.match '<spain/>'
           splited_answer = a.split '<spain/>'
           a = splited_answer[0] + ' <span class="spain">' + splited_answer[1] + '</span>'

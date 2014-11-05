@@ -33,6 +33,7 @@
 
           - answers = DocumentAnswer.sort(@document.answers.where(:template_step_id => step.id).to_a, step)
           - answers.each do |answer|
+            / Probably excessive
             - next if !answer.nil? && answer.field_type.match(/button/)
 
             / hr for amount
@@ -41,7 +42,7 @@
                 %hr
 
             / Skip if answer not mentioned to show
-            - next if answer.answer.nil? && !answer.template_field.field_type.match(field_type_to_show)
+            - next if answer.answer.nil? && !answer.field_type.match(field_type_to_show)
             / Toggler
             - if answer.template_field.toggle_id.present?
               - if last_toggle != answer.template_field.toggle_id
@@ -63,7 +64,7 @@
             - else last_toggle = nil
 
             / Insert fullfiling
-            - if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/)
+            - if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/) && answer.field_type.match(/text/)
               - next if @document.looped_amount(step, answer.template_step.document_answers.where(:document_id => @document.id)) != @document.loop_amount(step) && !answer.template_step.amount_field_id.present?
               - amount_index += 1
             - answer_html_array = answer.to_html_array(amount_index)
@@ -100,7 +101,7 @@
 
               - if !answer.template_field.field_type.match(/checkbox/)
                 - shown_answers += 1
-                %span.answer= answer.to_spain.try :html_safe
+                %span.answer= answer.to_spain(amount_index).try :html_safe
 
               - if answer.template_field.field_type.match(/rev_br/)
                 %br
