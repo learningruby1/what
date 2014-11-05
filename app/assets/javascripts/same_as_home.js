@@ -30,13 +30,5 @@ var SameAsHomeRadio = {
     $('[data-toggle-option]').eq(11).find('.container .col-md-2 select').on('change', function(){
       $('.radio_3:first').prop('checked', false);
     });
-
-    //Script for insert html blok to other place
-    $('[data-insert-place]').each(function(){
-      var this_class = '.place_for_insert_' + $(this).data('insert-place');
-      var div = $(this).detach();
-      $(this_class).append(div);
-      div = null;
-    });
   }
 }
