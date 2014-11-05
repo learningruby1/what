@@ -18,9 +18,14 @@
         .pull-left
           %table
             %tr
-              - if template_step.to_i > 1 || @document.template.name != Document::DIVORCE_COMPLAINT
+              - if template_step.to_i > 1
                 %td
                   = link_to document_answer_path(@document, @document.skip_steps(template_step.to_i.pred, 'back'), :direction => 'back', :review => params[:review]), :class => 'btn btn-default' do
+                    %span.new_roman Back /
+                    %span.new_roman.spain Retroceder
+              - else
+                %td
+                  = link_to root_path, :class => 'btn btn-default' do
                     %span.new_roman Back /
                     %span.new_roman.spain Retroceder
 
