@@ -75,18 +75,20 @@ class DocumentAnswer < ActiveRecord::Base
   SPAIN_DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
 
   def to_s
-    if answer.present? && document.to_s == Document::DIVORCE_COMPLAINT
-      answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
-      answer.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
-      answer.gsub! '<child>',                 number_of_child(document) == '1' ? 'child' : 'children'
-      sole_count = get_number_of_primary_or_sole_child document
-      answer.gsub!('<child_percentage_sole>', "#{sole_count} children #{get_percentage_for_children(sole_count)}%")
-      answer[0] = 'C' if answer[0] == 'c'
-    elsif document.to_s == Document::FILED_CASE
-      if answer.present? && answer.match(/<defendant_full_name>/) || answer.match(/<defendant_full_name_spain>/)
-        defendant_name = get_defendant_full_name(document)
-        answer.gsub!('<defendant_full_name>', defendant_name)
-        answer.gsub!('<defendant_full_name_spain>', defendant_name)
+    if answer.present?
+      if document.to_s == Document::DIVORCE_COMPLAINT
+        answer.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
+        answer.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
+        answer.gsub! '<child>',                 number_of_child(document) == '1' ? 'child' : 'children'
+        sole_count = get_number_of_primary_or_sole_child document
+        answer.gsub!('<child_percentage_sole>', "#{sole_count} children #{get_percentage_for_children(sole_count)}%")
+        answer[0] = 'C' if answer[0] == 'c'
+      elsif document.to_s == Document::FILED_CASE
+        if answer.match(/<defendant_full_name>/) || answer.match(/<defendant_full_name_spain>/)
+          defendant_name = get_defendant_full_name(document)
+          answer.gsub!('<defendant_full_name>', defendant_name)
+          answer.gsub!('<defendant_full_name_spain>', defendant_name)
+        end
       end
     end
     ERB::Util.h(answer)
