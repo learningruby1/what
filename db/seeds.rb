@@ -1,5 +1,7 @@
 DocumentAnswer.destroy_all
-document = User.first.create_document Template.where(:name => Document::DIVORCE_COMPLAINT).first.id
+user = User.where(:email => 'test@gmail.com').first.nil? ? User.create(:email => 'test@gmail.com', :password => '1234567890') : User.where(:email => 'test@gmail.com').first
+
+document = user.create_document Template.where(:name => Document::DIVORCE_COMPLAINT).first.id
 _fields = document.template.steps.map{ |item| item.fields.where(:raw_question => true).order(:id) }.flatten
 user_info = %w{ 12345 12345678398 test@gmail.com 000-00-0000 }
 
