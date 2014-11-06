@@ -83,7 +83,7 @@ class DocumentAnswer < ActiveRecord::Base
       answer.gsub!('<child_percentage_sole>', "#{sole_count} children #{get_percentage_for_children(sole_count)}%")
       answer[0] = 'C' if answer[0] == 'c'
     elsif document.to_s == Document::FILED_CASE
-      if answer.match(/<defendant_full_name>/) || answer.match(/<defendant_full_name_spain>/)
+      if answer.present? && answer.match(/<defendant_full_name>/) || answer.match(/<defendant_full_name_spain>/)
         defendant_name = get_defendant_full_name(document)
         answer.gsub!('<defendant_full_name>', defendant_name)
         answer.gsub!('<defendant_full_name_spain>', defendant_name)
