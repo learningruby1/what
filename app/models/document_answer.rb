@@ -7,7 +7,7 @@ class DocumentAnswer < ActiveRecord::Base
 
   scope :this_document, -> (document){ where(:document_id => document.id) }
 
-  NUMBER_NAME = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh']
+  NUMBER_NAME = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh','Eighth','Ninth']
   STATES = [['Alabama', 'AL'],
             ['Alaska', 'AK'],
             ['Arizona', 'AZ'],
