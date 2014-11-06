@@ -7,8 +7,8 @@ class TemplateStep < ActiveRecord::Base
   has_many :document_answers
   belongs_to :template
 
-  def to_question_title
-    [title].join('. ')
+  def to_question_title(document=nil)
+    [to_s(document)].join('. ')
   end
 
   def to_s(document=nil)

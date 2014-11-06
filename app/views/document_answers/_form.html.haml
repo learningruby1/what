@@ -7,7 +7,7 @@
     .jumbotron
       .container
         - template_step = @answers.first.template_step
-        = render :partial => 'render_text', :locals => { :answer => template_step.to_question_title }
+        = render :partial => 'render_text', :locals => { :answer => template_step.to_question_title(@document) }
         %hr
         = render :partial => 'render_text', :locals => { :answer => template_step.to_description(@document) }
 
