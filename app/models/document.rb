@@ -34,12 +34,27 @@ class Document < ActiveRecord::Base
     unless template_step.nil?
       # Delete answers
       _looped_amount = looped_amount(next_step, _answers)
-      if (!template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) &&
-        (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) ||
-        _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option)) || (_answers.map(&:toggler_offset).map { |toggler| toggler / TOGGLER_OFFSET }.uniq.count != number_of_child(self).to_i && template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present?)
+      if (!template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) && (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) || _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option)) ||
+         (_answers.map(&:toggler_offset).map { |toggler| toggler / TOGGLER_OFFSET }.uniq.count != number_of_child(self).to_i && template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present?)
 
+        new_answers = DocumentAnswer.sort(_create_next_step_answers!(next_step), template_step)
+        if !template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present?
+          _answers = DocumentAnswer.sort(_answers.to_a, template_step)
+
+          if _looped_amount > loop_amount(next_step)
+            new_answers.each_with_index do |a, i|
+              a.answer = _answers[i].answer
+            end
+          else
+            _answers.each_with_index do |a, i|
+              new_answers[i].answer = a.answer
+            end
+          end
+
+          new_answers.each{ |na| na.save :validate => false }
+        end
         _answers.each(&:destroy)
-        _answers = nil
+        _answers = new_answers
       end
     end
 
