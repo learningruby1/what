@@ -109,6 +109,8 @@ module DivorceComplaintHelper
       return [born_year, Time.now.year]
     when /date_for_child/
       return [Time.now.year, Time.now.year - 18]
+    when /date_birthday/
+      return [Time.now.year - 13, Time.now.year - 100]
     when /date/
       return [Time.now.year, Time.now.year - 100]
     end
