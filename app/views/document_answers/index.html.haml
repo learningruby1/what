@@ -9,7 +9,7 @@
   - @document.template.steps.each do |step|
     %div{ :id => "scroll_#{step.step_number}" }
     - session[:review] = nil
-    - next if @document.cant_render?(step)# || step.document_answers.blank?
+    - next if @document.cant_render?(step) || step.document_answers.blank?
 
     .row
       .col-md-10
