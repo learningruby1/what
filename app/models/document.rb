@@ -31,28 +31,39 @@ class Document < ActiveRecord::Base
     _answers = step_answers(next_step) rescue nil
     template_step = TemplateStep.find next_step + template.steps.first.id - 1 rescue nil
 
+
     unless template_step.nil?
       # Delete answers
-      _looped_amount = looped_amount(next_step, _answers)
-      if (!template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present? && direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) && (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) || _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option)) ||
-         (_answers.map(&:toggler_offset).map { |toggler| toggler / TOGGLER_OFFSET }.uniq.count != number_of_child(self).to_i && template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present?)
+      _looped_amount = looped_amount(next_step, _answers, template_step)
+
+      if (direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) && (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) || _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option))
 
         new_answers = DocumentAnswer.sort(_create_next_step_answers!(next_step), template_step)
-        if !template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).present?
-          _answers = DocumentAnswer.sort(_answers.to_a, template_step)
-
-          if _looped_amount > loop_amount(next_step)
-            new_answers.each_with_index do |a, i|
-              a.answer = _answers[i].answer
-            end
-          else
-            _answers.each_with_index do |a, i|
-              new_answers[i].answer = a.answer
+        if template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).exists?
+          count = []
+          _answers.select{ |answer| answer.template_field.field_type == 'loop_button-add' }.each{ |answer| count[answer.toggler_offset / 1000] = count[answer.toggler_offset / 1000].to_i + 1  }
+          new_answers.select{ |answer| answer.template_field.field_type == 'loop_button-add' }.each_with_index do |a, i|
+            count[i] -= 1 if count[i].to_i > 0
+            answer_id = a.id
+            count[i].to_i.times do
+              answer_id =  add_answers_block!(answer_id)
             end
           end
-
-          new_answers.each{ |na| na.save :validate => false }
         end
+        _answers = DocumentAnswer.sort(_answers.to_a, template_step)
+        new_answers = DocumentAnswer.sort(step_answers(next_step).select{ |a| !_answers.map(&:id).include? a.id }, template_step)
+
+        if _looped_amount > loop_amount(next_step)
+          new_answers.each_with_index do |a, i|
+            a.answer = _answers[i].answer
+          end
+        else
+          _answers.each_with_index do |a, i|
+            new_answers[i].answer = a.answer
+          end
+        end
+
+        new_answers.each{ |na| na.save :validate => false }
         _answers.each(&:destroy)
         _answers = new_answers
       end
@@ -177,6 +188,7 @@ class Document < ActiveRecord::Base
     #Its Delete button
     last_button = answers.find(answer_id.to_i + 1)
     index = last_button.sort_number
+    offset = nil
     last_button.template_step.fields.where(:amount_field_id => TemplateField.find(last_button.template_field_id).amount_field_id).reverse_each do |field|
       offset = last_button.template_step.fields.where(:toggle_id => 2).present? ? last_button.toggler_offset + BLOCK_DIFFERENCE : last_button.toggler_offset
       answers.create(:template_field_id => field.id, :toggler_offset => offset, :sort_index => last_button.sort_index, :sort_number => index += 1, :template_step_id => last_button.template_step_id )
@@ -184,6 +196,8 @@ class Document < ActiveRecord::Base
     # This will hide buttons Add and Delete(in _loop_button)
     last_button.update :answer => 'none'
     answers.find(answer_id.to_i).update :answer => 'none'
+
+    answers.where(:template_step_id => last_button.template_step_id, :sort_number => index - 1, :toggler_offset => offset).first.id if index > 1
   end
 
   def delete_answers_block!(answer_id)
@@ -329,9 +343,13 @@ class Document < ActiveRecord::Base
     template.steps.where(:step_number => step).first.amount_fields.this_document(self).first.try(:answer).to_i.presence_in(1..9) || 1 rescue 1
   end
 
-  def looped_amount(step, _answers)
-    selected_array = _answers.select{ |item| item.template_field.raw_question == true }
-    selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question.count rescue 0
+  def looped_amount(step, _answers, template_step=nil)
+    if template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).exists?
+      _answers.map(&:toggler_offset).map { |toggler| toggler / TOGGLER_OFFSET }.uniq.count
+    else
+      selected_array = _answers.select{ |item| item.template_field.raw_question == true }
+      selected_array.count / template.steps.where(:step_number => step).first.fields.raw_question.count rescue 0
+    end
   end
 
   def to_s
