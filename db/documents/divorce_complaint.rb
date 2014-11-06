@@ -1010,15 +1010,15 @@ current_step.fields.create :field_type => 'text review_show', :name => 'Are you 
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :name => 'Employer Name /<spain/>Nombre del empleador  *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }, :field_type => 'string-capitalize', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Business Address /<spain/>Dirección del Negocio: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string-capitalize'
-current_step.fields.create :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string-capitalize'
-current_step.fields.create :field_type => 'states', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono: ', :toggle_id => toggle_id, :toggle_option => 'Yes'
-current_step.fields.create :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes', :field_type => 'string'
+current_step.fields.create :field_type => 'string capitalize review_show default_no', :name => 'Employer Name /<spain/>Nombre del empleador  *', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string capitalize review_show', :name => 'Business Address /<spain/>Dirección del Negocio: *', :mandatory => { :value => /^([0-9a-zA-Z\-,.\/ #]+)?$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string capitalize rev_inline', :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'states rev_inline', :name => 'State /<spain/>Estado: *', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }, :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string rev_inline', :name => 'Zip Code /<spain/>Código postal: * ', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string review_show default_no', :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
+current_step.fields.create :field_type => 'string review_show default_no rev_br', :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
-current_step.fields.create :field_type => 'text review_show', :name => 'Your Ethinicity /<spain/>Su Raza: *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
                                                              <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano

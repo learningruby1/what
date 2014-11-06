@@ -9,7 +9,7 @@
   - @document.template.steps.each do |step|
     %div{ :id => "scroll_#{step.step_number}" }
     - session[:review] = nil
-    - next if @document.cant_render?(step) || step.document_answers.blank?
+    - next if @document.cant_render?(step)# || step.document_answers.blank?
 
     .row
       .col-md-10
@@ -33,7 +33,6 @@
 
           - answers = DocumentAnswer.sort(@document.answers.where(:template_step_id => step.id).to_a, step)
           - answers.each do |answer|
-            / Probably excessive
             - next if !answer.nil? && answer.field_type.match(/button/)
 
             / hr for amount
@@ -65,7 +64,7 @@
 
             / Insert fullfiling
             - if answer.template_field.name.present? && answer.template_field.name.match(/<insert>/) && answer.field_type.match(/text/)
-              - next if @document.looped_amount(step, answer.template_step.document_answers.where(:document_id => @document.id)) != @document.loop_amount(step) && !answer.template_step.amount_field_id.present?
+              - next if @document.looped_amount(step, answer.template_step.document_answers.where(:document_id => @document.id)) != @document.loop_amount(step) && !answer.template_step.amount_field_id.present? || @document.looped_amount(answer.step_number, answers) == 1
               - amount_index += 1
             - answer_html_array = answer.to_html_array(amount_index)
 
