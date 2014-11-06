@@ -1,4 +1,4 @@
-- answer.template_field.name.split('<option/>').each_with_index do |title, index|
+- answer.template_field.to_text(@document).split('<option/>').each_with_index do |title, index|
   .container
     %div{ :class => return_row_class(title)}
       - title_array = title.split('<separate/>')
