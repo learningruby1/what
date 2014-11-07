@@ -39,14 +39,12 @@ class Document < ActiveRecord::Base
       if (direction == 'forward' && _answers.present? && (template_step.amount_field_id.present? || _answers.select{|a|a.template_field.render_if_id != 0}.present?) && (loop_amount(next_step) != _looped_amount && (template_step.amount_answer_if.nil? || template_step.amount_if_answer(self) == template_step.amount_field_if_option) || _looped_amount != 1 && template_step.amount_if_answer(self) != template_step.amount_field_if_option))
 
         new_answers = DocumentAnswer.sort(_create_next_step_answers!(next_step), template_step)
-        if template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).exists?
-          count = []
-          _answers.select{ |answer| answer.template_field.field_type == 'loop_button-add' }.each{ |answer| count[answer.toggler_offset / 1000] = count[answer.toggler_offset / 1000].to_i + 1  }
-          new_answers.select{ |answer| answer.template_field.field_type == 'loop_button-add' }.each_with_index do |a, i|
+        if template_step.fields.where(:field_type => ['loop_button-add', 'loop_button-delete']).exists?
+          count = count_of_added_blocks(_answers)
+          new_answers.select{ |answer| answer.field_type == 'loop_button-add' }.each_with_index do |a, i|
             count[i] -= 1 if count[i].to_i > 0
-            answer_id = a.id
             count[i].to_i.times do
-              answer_id =  add_answers_block!(answer_id)
+              answer_id =  add_answers_block!(answer_id.presence || a.id)
             end
           end
         end
@@ -207,6 +205,13 @@ class Document < ActiveRecord::Base
     answers.where(:toggler_offset => answer.toggler_offset, :template_step_id => answer.template_step_id).last(answer.template_step.fields.where(:amount_field_id => TemplateField.find(answer.template_field_id).amount_field_id).count).each{ |ans| ans.delete }
     answers.where(:toggler_offset => offset, :template_step_id => answer.template_step_id).last(2).each{ |ans| ans.update :answer => '' }
   end
+
+  def count_of_added_blocks(answers)
+    count = []
+    answers.select{ |answer| answer.field_type == 'loop_button-add' }.each{ |answer| count[answer.toggler_offset / 1000] = count[answer.toggler_offset / 1000].to_i + 1 }
+    count
+  end
+
   # End of Add/delete block of fields
 
   # Hidden answers
