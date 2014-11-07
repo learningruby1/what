@@ -30,7 +30,7 @@ clark_nye = current_step.fields.create :name => 'Nye<option/>Esmeralda<option/>M
 
 
 current_step = template.steps.create :step_number => step_number += 1,#3
-                                     :title => 'Your information /<spain/>Su Información'
+                                     :title => 'Your Information /<spain/>Su Información'
 
 current_step.fields.create :field_type => 'string upcase', :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
@@ -174,7 +174,7 @@ current_step.fields.create :field_type => 'redirect', :name => 'No<link=/templat
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #11
-                                     :title => '<child_count>’s address /<spain/>dirección <child_count_spain>', :description => 'The law requires that you provide the address where <child_count> have lived for the last 5 years.
+                                     :title => '<child_count>’s Address /<spain/>Dirección <child_count_spain>', :description => 'The law requires that you provide the address where <child_count> have lived for the last 5 years.
                                                               If <child_count> is younger than 5 year old, where <child_count> has lived since birth.
                                                             If you don’t remember all the address do your best by using the internet since your document might be returned by the Judge if a lot of the information is missing.<br/><spain/>
                                                             La ley requiere que usted proporcione la dirección donde <child_count_spain> han vivido durante los últimos 5 años. Si <child_count_spain> tiene menos de 5 años de edad, escriba las direcciones donde ha vivido desde que nació.
@@ -360,7 +360,7 @@ current_step.fields.create :field_type => 'loop_button-delete',
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #12
-                                     :title => '<child_count>’s question 1 /<spain/><child_count_spain> pregunta 1'
+                                     :title => '<child>’s Question 1 /<spain/><child_count_spain> pregunta 1'
 current_step.fields.create :field_type => 'text review_show', :name => 'Have YOU PARTICIPATED as a party, witness or any other capacity in any other litigation or custody proceeding in this or any other state concerning custody of <insert>?<br/><spain/>¿HA PARTICIPADO USTED como demandado, demandante,  testigo o de cualquier otro modo en cualquier otro caso de custodia con <insert> en este u otro estado ?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
 toggle_id += 1
@@ -377,7 +377,7 @@ current_step.fields.create :field_type => 'loop_button-add', :name => 'Add /<spa
 current_step.fields.create :field_type => 'loop_button-delete', :name => 'Delete /<spain/> Eliminar', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #13
-                                     :title => '<child_count>’s question 2 /<spain/><child_count_spain> pregunta 2'
+                                     :title => '<child>’s Question 2 /<spain/><child_count_spain> pregunta 2'
 current_step.fields.create :field_type => 'text review_show', :name => 'IS THERE ANY proceeding at this time including cases of domestic violence, protective orders, termination of parental rights or adoption in this state or another regarding <insert>?<br/><spain/>¿HAY ALGÚN procedimiento en este momento, incluyendo caso de violencia doméstica, órdenes de protección, patria potestad o adopción en este estado o en otro con respecto a <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
 toggle_id += 1
@@ -394,7 +394,7 @@ current_step.fields.create :field_type => 'loop_button-add', :name => 'Add /<spa
 current_step.fields.create :field_type => 'loop_button-delete', :name => 'Delete /<spain/> Eliminar', :amount_field_id => participated.id, :toggle_id => toggle_id, :toggle_option => 'Yes', :sort_index => 'a1'
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes', :amount_field_id => children_amount_field.id, #14
-                                     :title => '<child_count>’s question 3 /<spain/><child_count_spain> pregunta 3'
+                                     :title => '<child>’s Question 3 /<spain/><child_count_spain> pregunta 3'
 
 current_step.fields.create :field_type => 'text review_show', :name => 'DO YOU KNOW of anyone, besides you and the other parent of <insert>, that has physical custody or came of custody or visitation rights over <insert>?<br/><spain/>¿CONOCE de alguien, que no sea usted y el otro padre de <insert>, que tiene la custodia física o derecho de custodia o visitas de <insert>?', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 toggle_id = 0
@@ -1007,7 +1007,7 @@ current_step.fields.create :field_type => 'amount-income', :name => 'Enter $ dad
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#25
-                                     :title => 'Additional child support question /<spain/>Preguntas adiciones sobre manutencion de menores'
+                                     :title => 'Additional Child Support Question /<spain/>Preguntas Adiciones sobre Manutencion de Menores'
 current_step.fields.create :field_type => 'text review_show', :name => 'Are you currently employed or self-employed? /<spain/>¿Actualmente tiene empleo o trabaja por su cuenta? *'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -1032,7 +1032,7 @@ current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#26
-                                     :title => 'Additional child support question for spouse /<spain/>Preguntas adiciones de su (insert esposa o esposo) sobre la manutencion de menores'
+                                     :title => 'Additional Child Support Question for Spouse /<spain/>Preguntas Adiciones de su (insert esposa o esposo) sobre la Manutencion de Menores'
 current_step.fields.create :field_type => 'text review_show', :name => 'Is your spouse currently employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
 current_step.fields.create :field_type => 'radio rev_br', :name => 'I don’t know /<spain/>No sé
                                                              <option/>No
@@ -1058,7 +1058,7 @@ current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#27
-                                     :title => 'Wage withholding /<spain/>Retención de Sueldo'
+                                     :title => 'Wage Withholding /<spain/>Retención de Sueldo'
 
 
 current_step.fields.create :field_type => 'text', :name => 'Are you requesting wage withholding to collect <child_count> support?
@@ -1449,7 +1449,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Wife will keep /<sp
 
 
 current_step = template.steps.create :step_number => step_number += 1,#45
-                                     :title => 'Spousal Support or Alimony /<spain/>Manutención de Esposa(o)',
+                                     :title => 'Spousal support or Alimony /<spain/>Manutención de Esposa(o)',
                                      :description => 'There is no precise formula for awarding spousal support/alimony; it is decided on a case by case basis.
  <br/><spain/>No hay ninguna fórmula precisa para determinar la manutención de esposo(a); se decide caso por caso.'
 
