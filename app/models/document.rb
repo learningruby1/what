@@ -344,7 +344,7 @@ class Document < ActiveRecord::Base
   end
 
   def looped_amount(step, _answers, template_step=nil)
-    if template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).exists?
+    if !template_step.nil? && template_step.fields.where(:field_type =>  ['loop_button-add', 'loop_button-delete']).exists?
       _answers.map(&:toggler_offset).map { |toggler| toggler / TOGGLER_OFFSET }.uniq.count
     else
       selected_array = _answers.select{ |item| item.template_field.raw_question == true }
