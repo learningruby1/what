@@ -9,7 +9,7 @@
   - @document.template.steps.each do |step|
     %div{ :id => "scroll_#{step.step_number}" }
     - session[:review] = nil
-    - next if @document.cant_render?(step) || step.document_answers.blank?
+    - next if @document.cant_render?(step) || (step.document_answers.blank? && Rails.env != 'development')
 
     .row
       .col-md-10
@@ -88,7 +88,7 @@
               - mom_income, dad_income = nil, nil
             - else
               / Html printing
-              - if answer.template_field.field_type.match(field_type_to_show) && answer.template_field.insert_place.nil?
+              - if answer.template_field.field_type.match(field_type_to_show) && answer.template_field.insert_place.nil? && (!answer.template_field.field_type.match(/review_yes_only/) || answer.answer == '1')
                 - shown_answers += 1
                 / 38 step need change until we have this one:
                 - if answer.answer == '0'
