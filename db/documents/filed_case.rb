@@ -23,17 +23,17 @@ current_step.fields.create :name => '', :field_type => 'date_future', :toggle_id
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1,#2
-                                     :title => 'PERSON WHO WILL SERVE <defendant_full_name> /<spain/>PERSONA QUE ENTREGARA LOS DOCUMENTOS <defendant_full_name_spain> '
+                                     :title => 'PERSON WHO WILL SERVE <defendant_full_name> /<spain/>PERSONA QUE ENTREGARA LOS DOCUMENTOS <defendant_full_name> '
 
-current_step.fields.create :field_type => 'text', :name => 'Do you have a current address for <defendant_full_name>? /<spain/>¿Tiene una dirección actual para <defendant_full_name_spain>?'
+current_step.fields.create :field_type => 'text', :name => 'Do you have a current address for <defendant_full_name>? /<spain/>¿Tiene una dirección actual para <defendant_full_name>?'
 addres_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
 
 current_step = template.steps.create :step_number => step_number += 1,#3
-                                     :title => 'Who is going to give <defendant_full_name> the documents? <br/><spain/>¿Quién le va a dar los documentos a <defendant_full_name_spain>?', :render_if_field_id => addres_field.id.to_s, :render_if_field_value => 'Yes'
+                                     :title => 'Who is going to give <defendant_full_name> the documents? <br/><spain/>¿Quién le va a dar los documentos a <defendant_full_name>?', :render_if_field_id => addres_field.id.to_s, :render_if_field_value => 'Yes'
 
-current_step.fields.create :field_type => 'radio', :name => '<defendant_full_name> will accept and sign for the documents. /<spain/><defendant_full_name_spain> va a aceptar y firmar los documentos.
+current_step.fields.create :field_type => 'radio', :name => '<defendant_full_name> will accept and sign for the documents. /<spain/><defendant_full_name> va a aceptar y firmar los documentos.
                                                              <option/>I have a friend/Family member /<spain/>Tengo un amigo/familiar
                                                              <option/>I will hire a private processor /<spain/>Voy a contratar un procesador privado', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 

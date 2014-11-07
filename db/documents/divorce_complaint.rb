@@ -439,15 +439,15 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
 
 current_step.fields.create :field_type => 'text review_show', :name => 'Physical custody of <insert>.<spain/>Custodia física de <insert>.', :header_ids => "#{ child_name.id }/#{ child_last_name.id }"
 current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY /<spain/>CUSTODIA FISICA PRIMARIA'
-current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when the child lives with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : cuando el menor vive con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
+current_step.fields.create :field_type => 'label', :name => 'PRIMARY PHYSICAL CUSTODY: when <child_lives> with one parent for most of the time (more than 60%) and has limited visitation with the other parent. <br/><spain/>CUSTODIA FISICA PRIMARIA : cuando <child_lives_spain> con un padre/madre más del 60% y el otro padre/madre tiene visitas.<spain/>'
 
 toggle_id = 0
 toggle_id += 1
 custody_field = current_step.fields.create :field_type => 'radio-sub', :name => 'With mom and visits with dad /<spain/>Con mamá y visitas con papá.
                                                                  <option/>With dad and visit with mom /<spain/>Con papá y visitas con mamá.<spain/><place_for_insert>
-                                                                 <separate/>JOINT PHYSICAL CUSTODY: when the child lives with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando el menor vive con ambos padres 50/50 o 60/40 del tiempo.
+                                                                 <separate/>JOINT PHYSICAL CUSTODY: when <child_lives> with both parent 50/50 or 60/40 of the time.<spain/><br/>Con papá y visitas con mamá: Custodia FISICA COMPARTIDA: cuando <child_lives_spain> con ambos padres 50/50 o 60/40 del tiempo.
                                                                  <option/>Both Parents /<spain/>Ambos padres.<spain/><place_for_insert>
-                                                                 <separate/>SOLE PHYSICAL CUSTODY: when the child lives with one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA: cuando el menor vive solamente con uno de los padres.
+                                                                 <separate/>SOLE PHYSICAL CUSTODY: when <child_lives> with one parent.<spain/><br/>Ambos padres: CUSTODIA FÍSICA ÚNICA: cuando <child_lives_spain> solamente con uno de los padres.
                                                                  <option/>Only with the mom /<spain/>Solo con mamá
                                                                  <option/>Only with the dad /<spain/>Solo con papá', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :toggle_id => toggle_id
 

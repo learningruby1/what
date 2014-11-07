@@ -124,7 +124,7 @@ module DivorceComplaintHelper
       end
     end
 
-    text = _real_answer.template_field.to_text(_document, _amount_index, _index_of_radio) if text.match(/<insert>/)
+    text = _real_answer.template_field.to_text(_document, _amount_index, _index_of_radio) if text.match(/<insert>/) && _real_answer.present?
 
     unless get_self(_document).nil?
       if get_self(_document) == 'Wife'
@@ -218,5 +218,87 @@ module DivorceComplaintHelper
 
     text
   end
+
+
+
+
+
+  def to_humanize(_document, text)
+    return text if text.blank? || _document.nil?
+    text.gsub!('<defendant_full_name>', get_defendant_full_name(_document))
+
+    unless get_self(_document).nil?
+      if get_self(_document) == 'Wife'
+        text.gsub!('<spain_self>', 'esposo')
+        text.gsub!('<uppercase_spain_self>', 'ESPOSO')
+      else
+        text.gsub!('<spain_self>', 'esposa')
+        text.gsub!('<uppercase_spain_self>', 'ESPOSA')
+      end
+    end
+
+    unless number_of_child(_document).nil?
+      count = number_of_child(_document).to_i
+      sole_count = get_number_of_primary_or_sole_child(_document)
+      joint_count = get_number_of_joint_child(_document)
+      if count == 1
+        text.gsub!('<child_lives>', 'the child lives')
+        text.gsub!('<child_lives_spain>', 'el menor vive')
+
+        text.gsub!('<child>', 'child')
+        text.gsub!('<child_count>', 'the child')
+        text.gsub!('<child_count_spain>', 'del menor')
+
+        text.gsub!('<residency_child>', 'El menor debe')
+        text.gsub!('<residency_child_second>', 'Ha vivido el menor')
+
+        text.gsub!('<el_ellos>', 'él')
+      else
+        text.gsub!('<child_lives>', 'the children live')
+        text.gsub!('<child_lives_spain>', 'los menores viven')
+
+        text.gsub!('<child_count>', 'children')
+        text.gsub!('<child_count_spain>', 'de los menores')
+        text.gsub!('<child>', 'children')
+
+        text.gsub!('<residency_child>', 'Los menores deben')
+        text.gsub!('<residency_child_second>', 'Han vivido los menores')
+
+        text.gsub!('<el_ellos>', 'ellos')
+      end
+
+      if sole_count == 1
+        text.gsub!('<child_sole_count>', '1 child')
+        text.gsub!('<child_sole_count_spain>', '1 menor ')
+      else
+        text.gsub!('<child_sole_count>', "#{sole_count} children")
+        text.gsub!('<child_sole_count_spain>', "#{sole_count} menores")
+      end
+
+      if sole_count == 1
+        text.gsub!('<child_percentage_sole>', '1 child 18%')
+        text.gsub!('<child_percentage_sole_spain>', '1 niño 18%')
+      else
+        text.gsub!('<child_percentage_sole>', "#{sole_count} children #{get_percentage_for_children(sole_count)}%")
+        text.gsub!('<child_percentage_sole_spain>', "#{sole_count} niños #{get_percentage_for_children(sole_count)}%")
+      end
+
+      if joint_count == 1
+        text.gsub!('<child_joint_count>', '1 child')
+        text.gsub!('<child_joint_count_spain>', '1 menor ')
+      else
+        text.gsub!('<child_joint_count>', "#{joint_count} children")
+        text.gsub!('<child_joint_count_spain>', "#{joint_count} menores")
+      end
+    end
+p '_'*100
+p text
+p '_'*100
+
+
+    text[0] = text[0].upcase
+    text
+  end
+
 end
 

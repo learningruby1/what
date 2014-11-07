@@ -12,18 +12,18 @@ class TemplateStep < ActiveRecord::Base
   end
 
   def to_s(document=nil)
-    if document.present? && document.to_s == Document::DIVORCE_COMPLAINT
-      title.gsub!('<spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'esposo' : 'esposa')
-      title.gsub!('<uppercase_spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'ESPOSO' : 'ESPOSA')
+    # if document.present? && document.to_s == Document::DIVORCE_COMPLAINT
+    #   title.gsub!('<spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'esposo' : 'esposa')
+    #   title.gsub!('<uppercase_spain_self>', document.step_answers(3)[document.step_answers(3).count - 2].try(:answer) == 'Wife' ? 'ESPOSO' : 'ESPOSA')
 
-      title.gsub! '<child_count>',           number_of_child(document) == '1' ? 'the child' : 'children'
-      title.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
-      title.gsub! '<uppercase_child>',       number_of_child(document) == '1' ? 'CHILD'     : 'CHILDREN'
-      title.gsub! '<uppercase_child_spain>', number_of_child(document) == '1' ? 'EL MENOR '  : 'LOS MENORES'
-      title[0] = 'C' if title[0] == 'c'
-      title[0] = 'T' if title[0] == 't'
-    end
-    title
+    #   title.gsub! '<child_count>',           number_of_child(document) == '1' ? 'the child' : 'children'
+    #   title.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
+    #   title.gsub! '<uppercase_child>',       number_of_child(document) == '1' ? 'CHILD'     : 'CHILDREN'
+    #   title.gsub! '<uppercase_child_spain>', number_of_child(document) == '1' ? 'EL MENOR '  : 'LOS MENORES'
+    #   title[0] = 'C' if title[0] == 'c'
+    #   title[0] = 'T' if title[0] == 't'
+    # end
+    to_humanize document, title
   end
 
   def to_i
@@ -38,6 +38,7 @@ class TemplateStep < ActiveRecord::Base
     insert = description.match(/<insert id=\d+\/>/)[0] rescue nil
     return description if insert.nil?
     replace_data = TemplateField.find(insert.match(/\d+/)[0]).document_answers.where(:document_id => document.id).first.answer
-    description.sub(insert, replace_data).sub(insert, replace_data)
+    # description.sub(insert, replace_data).sub(insert, replace_data)
+    to_humanize document, description.sub(insert, replace_data).sub(insert, replace_data)
   end
 end
