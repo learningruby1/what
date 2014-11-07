@@ -6,6 +6,7 @@
 # <insert> is marker for :header_ids
 # In name e.g.      english <spain/> spain <spain/> example
 #
+# field_type 'loop_button-add' and 'loop_button-delete' can`t have another class
 
 #NOTICE: name used in link_to_documents tempate AND in lib/pdf_documents/documents/pdf.rb
 Template.where( :name => Document::DIVORCE_COMPLAINT).first.try :destroy
