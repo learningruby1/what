@@ -672,7 +672,7 @@ module PdfDocument
               7.times do answers.next end
             end
             answers.next
-            @plaintiff_ethinicity = answers.next.answer
+            @plaintiff_ethnicity = answers.next.answer
 
             #Step 26 Additional Child Support For Spouse
             answers = step_answers_enum steps.next
@@ -690,7 +690,7 @@ module PdfDocument
               7.times do answers.next end
             end
             answers.next
-            @defendant_ethinicity = answers.next.answer
+            @defendant_ethnicity = answers.next.answer
 
             #Step 27  Wage withholding
             answers = step_answers_enum steps.next

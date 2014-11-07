@@ -1020,7 +1020,7 @@ current_step.fields.create :field_type => 'string rev_inline', :name => 'Zip Cod
 current_step.fields.create :field_type => 'string review_show default_no', :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'string review_show default_no rev_br', :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
-current_step.fields.create :field_type => 'text review_show', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Your Ethnicity /<spain/>Su Raza: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
                                                              <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano
@@ -1046,7 +1046,7 @@ current_step.fields.create :field_type => 'string rev_inline', :name => 'Zip Cod
 current_step.fields.create :field_type => 'string review_show default_no', :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'string review_show default_no rev_br', :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
-current_step.fields.create :field_type => 'text review_show', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Ethnicity of the other parent /<spain/>Raza del otro padre: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
                                                              <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano

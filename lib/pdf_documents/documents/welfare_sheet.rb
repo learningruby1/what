@@ -78,9 +78,9 @@ module PdfDocument
       end
 
       coordinates_array = [{ :x => 49, :y => 327 }, { :x => 153, :y => 327 }, { :x => 4, :y => 316 }, { :x => 91, :y => 316 }, { :x => 4, :y => 305 }, { :x => 150, :y => 305 }]
-      _ethinicity = @plaintiff_ethinicity
+      _ethnicity = @plaintiff_ethnicity
       2.times do
-        case _ethinicity
+        case _ethnicity
         when 'White (Non-Hispanic)'
           small_rectangle_checked coordinates_array[0][:x], coordinates_array[0][:y]
           coordinates_array.shift
@@ -106,7 +106,7 @@ module PdfDocument
         end
 
         coordinates_array = [{ :x => 317, :y => 327 }, { :x => 421, :y => 327 }, { :x => 274, :y => 316 }, { :x => 361, :y => 316 }, { :x => 274, :y => 305 }, { :x => 420, :y => 305 }]
-        _ethinicity = @defendant_ethinicity
+        _ethnicity = @defendant_ethnicity
       end
 
       @plaintiff_employed_presence ? [small_rectangle_checked(87, 286), small_rectangle(120, 286)] : [small_rectangle(87, 286), small_rectangle_checked(120, 286)]
