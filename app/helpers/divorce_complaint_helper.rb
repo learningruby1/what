@@ -219,10 +219,6 @@ module DivorceComplaintHelper
     text
   end
 
-
-
-
-
   def to_humanize(_document, text)
     return text if text.blank? || _document.nil?
     text.gsub!('<defendant_full_name>', get_defendant_full_name(_document))
