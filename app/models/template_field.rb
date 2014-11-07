@@ -9,27 +9,30 @@ class TemplateField < ActiveRecord::Base
   scope :raw_question, -> { where(:raw_question => true) }
 
   def to_s(document=nil)
-    if name.present?
-      if document.to_s == Document::DIVORCE_COMPLAINT
-        name.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
-        name.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
-        name.gsub! '<child>',                 number_of_child(document) == '1' ? 'child' : 'children'
-        name.gsub! '<el_ellos>', number_of_child(document) == '1' ? 'él' : 'ellos'
-        name.gsub! '<spain_self>', get_self(document) == 'Wife' ? 'esposo' : 'esposa'
-        name.gsub! '<uppercase_spain_self>', get_self(document) ? 'ESPOSO' : 'ESPOSA'
-        name[0] = 'C' if name[0] == 'c'
-      elsif document.to_s == Document::FILED_CASE
-        if name.match(/<defendant_full_name>/) || name.match(/<defendant_full_name_spain>/)
-          defendant_name = get_defendant_full_name(document)
-          name.gsub!('<defendant_full_name>', defendant_name)
-          name.gsub!('<defendant_full_name_spain>', defendant_name)
-        end
-      end
-    end
-    name
+    # if name.present?
+    #   if document.to_s == Document::DIVORCE_COMPLAINT
+    #     name.gsub! '<child_count>',           number_of_child(document) == '1' ? 'child' : 'children'
+    #     name.gsub! '<child_count_spain>',     number_of_child(document) == '1' ? 'el menor '  : 'los menores'
+    #     name.gsub! '<child>',                 number_of_child(document) == '1' ? 'child' : 'children'
+    #     name.gsub! '<el_ellos>', number_of_child(document) == '1' ? 'él' : 'ellos'
+    #     name.gsub! '<spain_self>', get_self(document) == 'Wife' ? 'esposo' : 'esposa'
+    #     name.gsub! '<uppercase_spain_self>', get_self(document) ? 'ESPOSO' : 'ESPOSA'
+    #     name[0] = 'C' if name[0] == 'c'
+    #   elsif document.to_s == Document::FILED_CASE
+    #     if name.match(/<defendant_full_name>/) || name.match(/<defendant_full_name_spain>/)
+    #       defendant_name = get_defendant_full_name(document)
+    #       name.gsub!('<defendant_full_name>', defendant_name)
+    #       name.gsub!('<defendant_full_name_spain>', defendant_name)
+    #     end
+    #   end
+    # end
+
+    to_humanize document, name
   end
 
   def to_text(document, amount_index=1, index_of_radio=nil, have_no_index=false)
+    #Hot fix
+    return to_s(document) if field_type =~ /radio/
     amount_index -= 1
     if !header_ids.nil?
       _header_ids = header_ids.split('/')
