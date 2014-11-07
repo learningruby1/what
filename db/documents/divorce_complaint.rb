@@ -244,17 +244,17 @@ current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :sort_index => 'a1',
                            :header_ids => "#{ child_birth.id }"
 
-current_step.fields.create :field_type => 'checkbox',
+current_step.fields.create :field_type => 'checkbox review_yes_only',
                            :name => 'MOM /<spain/>MAMÁ',
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
-current_step.fields.create :field_type => 'checkbox',
+current_step.fields.create :field_type => 'checkbox review_yes_only',
                            :name => 'DAD /<spain/>PAPÁ',
                            :toggle_id => toggle_id, :toggle_option => 'In the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
-field_for_mandatory_first = current_step.fields.create :field_type => 'checkbox',
+field_for_mandatory_first = current_step.fields.create :field_type => 'checkbox review_yes_only',
                                                        :name => 'Other /<spain/>Otra',
                                                        :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                        :toggle_id => toggle_id, :toggle_option => 'In the United States',
@@ -291,17 +291,18 @@ current_step.fields.create :field_type => 'date_after_born rev_inline',
                            :sort_index => 'a1',
                            :header_ids => "#{ child_birth.id }"
 
-current_step.fields.create :field_type => 'checkbox',
+current_step.fields.create :field_type => 'checkbox review_yes_only',
                            :name => 'MOM /<spain/>MAMÁ',
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
-current_step.fields.create :field_type => 'checkbox',
+current_step.fields.create :field_type => 'checkbox review_yes_only',
                            :name => 'DAD /<spain/>PAPÁ',
                            :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
                            :amount_field_id => top_field.id,
                            :sort_index => 'a1'
-field_for_mandatory_second = current_step.fields.create :field_type => 'checkbox',
+
+field_for_mandatory_second = current_step.fields.create :field_type => 'checkbox review_yes_only',
                                                         :name => 'Other /<spain/>Otra',
                                                         :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
                                                         :toggle_id => toggle_id, :toggle_option => 'Outside the United States',
