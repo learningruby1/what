@@ -291,10 +291,6 @@ module DivorceComplaintHelper
         text.gsub!('<child_joint_count_spain>', "#{joint_count} menores")
       end
     end
-p '_'*100
-p text
-p '_'*100
-
 
     text[0] = text[0].upcase
     text
