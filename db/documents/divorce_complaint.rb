@@ -1020,7 +1020,7 @@ current_step.fields.create :field_type => 'string rev_inline', :name => 'Zip Cod
 current_step.fields.create :field_type => 'string review_show default_no', :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'string review_show default_no rev_br', :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
-current_step.fields.create :field_type => 'text review_show', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Your Ethnicity /<spain/>Su Raza: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
                                                              <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano
@@ -1032,8 +1032,8 @@ current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic
 toggle_id = 0
 toggle_id += 1
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => continue_field.id.to_s, :render_if_field_value => 'Yes',#26
-                                     :title => 'Additional Child Support Question for Spouse /<spain/>Preguntas Adiciones de su (insert esposa o esposo) sobre la Manutencion de Menores'
-current_step.fields.create :field_type => 'text review_show', :name => 'Is your spouse currently employed? /<spain/>¿Actualmente está su esposo o esposa trabajando? *'
+                                     :title => 'Additional Child Support Question for Spouse /<spain/>Preguntas Adiciones de su <spain_self> sobre la Manutencion de Menores'
+current_step.fields.create :field_type => 'text review_show', :name => 'Is your spouse currently employed? /<spain/>¿Actualmente está su <spain_self> trabajando? *'
 current_step.fields.create :field_type => 'radio rev_br', :name => 'I don’t know /<spain/>No sé
                                                              <option/>No
                                                              <option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
@@ -1046,7 +1046,7 @@ current_step.fields.create :field_type => 'string rev_inline', :name => 'Zip Cod
 current_step.fields.create :field_type => 'string review_show default_no', :name => 'Phone number /<spain/>Número de teléfono:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'string review_show default_no rev_br', :name => 'Driver’s License #<spain/>/ Número de licencia de conducir:', :toggle_id => toggle_id, :toggle_option => 'Yes'
 
-current_step.fields.create :field_type => 'text review_show', :name => 'Ethinicity of the other parent /<spain/>Raza del otro padre: *'
+current_step.fields.create :field_type => 'text review_show', :name => 'Ethnicity of the other parent /<spain/>Raza del otro padre: *'
 current_step.fields.create :field_type => 'radio', :name => 'White (Non-Hispanic) /<spain/>Blanco (No Latino)
                                                              <option/>Hispanic /<spain/>Latino
                                                              <option/>African-American /<spain/>Afro -Americano
