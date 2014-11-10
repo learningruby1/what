@@ -118,7 +118,7 @@ class DocumentAnswer < ActiveRecord::Base
 
   def to_spain(amount_index=1)
     return to_s if !template_field.field_type.match(/radio/) || template_field.field_type.match(/text_radio/)
-    template_field.to_text(document, amount_index, nil, true).split('<option/>').each do |a|
+    template_field.to_text(document, amount_index).split('<option/>').each do |a|
       if a.match(Regexp.new answer.split(/\(|\</).first)
         if a.match '<spain/>'
           splited_answer = a.split '<spain/>'

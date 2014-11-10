@@ -82,8 +82,8 @@
                 - dad_income = answer.answer.to_f
             - if !dad_income.nil?
               - percentage = get_percentage_for_children(get_number_of_joint_child(@document)) / 100.0
-              %span.answer= "#{ dad_income > mom_income ? 'Dad' : 'Mom' } has to pay #{ (mom_income * percentage - dad_income * percentage).abs }$ per month for child support to #{ dad_income > mom_income ? 'mom' : 'dad' }."
-              %span.spain= " / #{ (mom_income * percentage - dad_income * percentage).abs }$ es la responsabilidad de manutención de menor que #{ dad_income > mom_income ? 'Papá' : 'Mamá' } tendrá que pagar a la #{ dad_income > mom_income ? 'mamá' : 'papá' } por mes."
+              %span.answer= "#{ dad_income > mom_income ? 'Dad' : 'Mom' } has to pay #{ (mom_income * percentage - dad_income * percentage).abs.round(2) }$ per month for child support to #{ dad_income > mom_income ? 'mom' : 'dad' }."
+              %span.spain= " / #{ (mom_income * percentage - dad_income * percentage).abs.round(2) }$ es la responsabilidad de manutención de menor que #{ dad_income > mom_income ? 'Papá' : 'Mamá' } tendrá que pagar a la #{ dad_income > mom_income ? 'mamá' : 'papá' } por mes."
               / After it
               - mom_income, dad_income = nil, nil
             - else
