@@ -26,8 +26,8 @@ module PdfDocument
         generate_document PdfDocument::DivorceInjunction.new(document).generate, "Injunction(Optional)", document
         generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
 
-        generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
-        generate_document welfare_sheet.generate,                                "Welfare_sheet", document if welfare_sheet.can_generate?
+        # generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
+        # generate_document welfare_sheet.generate,                                "Welfare_sheet", document if welfare_sheet.can_generate?
 
 
       when /^Filed Case/
@@ -36,8 +36,8 @@ module PdfDocument
 
         generate_document acceptance_of_service.generate,                       "Acceptance_of_service", document if acceptance_of_service.can_generate?
         generate_document affidavit_of_service.generate,                        "Affidavit_of_service", document if affidavit_of_service.can_generate?
-        generate_document PdfDocument::DefaultDivorce.new(document).generate,   "Default_divorce", document
-        generate_document PdfDocument::NoticeOfEntry.new(document).generate,    "Notice_of_entry", document, true, true, "Notice_of_entry"
+        # generate_document PdfDocument::DefaultDivorce.new(document).generate,   "Default_divorce", document
+        # generate_document PdfDocument::NoticeOfEntry.new(document).generate,    "Notice_of_entry", document, true, true, "Notice_of_entry"
       end
     end
 
