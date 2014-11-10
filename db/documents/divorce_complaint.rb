@@ -156,7 +156,7 @@ current_step.fields.create :field_type => 'radio rev_br', :name => 'Son /<spain/
 
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => children_field.id.to_s, :render_if_field_value => 'Yes', #10
-                                     :title => '<child_count>’s Residency /<spain/>Residencia de los <child_count_spain>'
+                                     :title => '<child_count>’s Residency /<spain/>Residencia <child_count_spain>'
 
 current_step.fields.create :field_type => 'text', :name => '<child_count> must have resided in Nevada for a minimum of 6 months before the Nevada District Court will take jurisdiction over them.<br/>
                                                             <spain/><residency_child> haber vivido en Nevada por un mínimo de 6 meses antes  que la corte de Nevada tenga el poder judicial sobre <el_ellos>.'
