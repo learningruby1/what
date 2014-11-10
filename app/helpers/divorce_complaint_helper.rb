@@ -289,6 +289,8 @@ module DivorceComplaintHelper
     end
 
     text[0] = text[0].upcase
+    #First letter after <option/> or <spain/> will be upcase
+    text.gsub!(/\/>(\w{1})/){ |m| m.upcase }
     text
   end
 

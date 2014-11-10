@@ -30,9 +30,7 @@ class TemplateField < ActiveRecord::Base
     to_humanize document, name
   end
 
-  def to_text(document, amount_index=1, index_of_radio=nil, have_no_index=false)
-    #Hot fix
-    return to_s(document) if field_type =~ /radio/
+  def to_text(document, amount_index=1)
     amount_index -= 1
     if !header_ids.nil?
       _header_ids = header_ids.split('/')
@@ -40,16 +38,7 @@ class TemplateField < ActiveRecord::Base
       additional_info += " " + document.answers.where(:template_field_id => _header_ids[1]).order('id')[amount_index].answer.to_s if _header_ids.length > 1
       birth_day = _header_ids.length > 2 ? document.answers.where(:template_field_id => _header_ids[2]).order('id')[amount_index].answer.to_s : ''
 
-      to_s_name = to_s(document).gsub(/<insert>/, additional_info).gsub(/<birth_date>/, birth_day)
-      return to_s_name if have_no_index
-
-      if index_of_radio.nil?
-        splited_name = to_s_name.split('<spain/>')
-      else
-        splited_name = to_s_name.split('<option/>')[index_of_radio].split('<spain/>')
-      end
-
-      splited_name.first + (splited_name[1].present? ? "<div class='spain'>#{splited_name[1]}</div>" : '')
+      to_s(document).gsub(/<insert>/, additional_info).gsub(/<birth_date>/, birth_day)
     else
       to_s document
     end

@@ -36,7 +36,7 @@ class TemplateStep < ActiveRecord::Base
 
   def to_description(document)
     insert = description.match(/<insert id=\d+\/>/)[0] rescue nil
-    return description if insert.nil?
+    return to_humanize(document, description) if insert.nil?
     replace_data = TemplateField.find(insert.match(/\d+/)[0]).document_answers.where(:document_id => document.id).first.answer
     # description.sub(insert, replace_data).sub(insert, replace_data)
     to_humanize document, description.sub(insert, replace_data).sub(insert, replace_data)
