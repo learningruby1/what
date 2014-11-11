@@ -3,11 +3,9 @@ $(function(){
     InsertBlock.insert_html_block($('[data-insert-place]'));
   }
 
-
   if($('witness_name').length > 0){
     WitnessName.insert_name();
   }
-
 });
 
 var InsertBlock = {
