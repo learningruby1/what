@@ -1098,6 +1098,25 @@ module PdfDocument
         answers = step_answers_enum steps.next
         @reason_divorce = answers.next.answer
 
+        #Step 48_JOINT Resident witness
+        answers = step_answers_enum steps.next
+        @witness = {}
+        @witness[:first_name] = answers.next.answer
+        @witness[:middle_name] = answers.next.answer
+        @witness[:last_name] = answers.next.answer
+        @witness[:full_name] = "#{ @witness[:first_name] } #{ @witness[:middle_name] } #{ @witness[:last_name] }".squish
+        @witness[:address] = answers.next.answer
+        @witness[:city] = answers.next.answer
+        @witness[:state] = answers.next.answer
+        @witness[:zip] = answers.next.answer
+        answers.next
+        @witness[:relationship] = answers.next.answer
+        @witness[:relationship] =~ /Other/ ? @witness[:relationship] = answers.next.answer : answers.next
+        @witness[:meet_date] = answers.next.answer.to_date
+        answers.next
+        @witness[:see_times] = answers.next.answer
+        @witness[:moved_date] = answers.next.answer.to_date
+
         #Step 48 Other cases in Family court
         answers = step_answers_enum steps.next
         @family_court = answers.next.answer == 'Yes' rescue false

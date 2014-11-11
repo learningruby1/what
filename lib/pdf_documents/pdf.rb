@@ -22,16 +22,18 @@ module PdfDocument
         injunction = PdfDocument::DivorceInjunction.new(document)
         # decree_of_divorce = PdfDocument::DecreeOfDivorce.new(document)
         welfare_sheet = PdfDocument::WelfareSheet.new(document)
+        affidavit_of_resident_witness = PdfDocument::AffidavitOfResidentWitness.new(document)
 
-        generate_document divorce_complaint.generate,   "Complaint", document, true, true, "Divorce_complaint" if divorce_complaint.can_generate?
-        generate_document cover.generate,               "Cover", document if cover.can_generate?
-        generate_document coversheet.generate,          "Cover", document if coversheet.can_generate?
-        generate_document summons.generate,             "Summons", document if summons.can_generate?
-        generate_document injunction.generate,          "Injunction(Optional)", document if injunction.can_generate?
-        generate_document uccja.generate,               "UCCJA", document if uccja.can_generate?
+        generate_document divorce_complaint.generate,                   "Complaint", document, true, true, "Divorce_complaint" if divorce_complaint.can_generate?
+        generate_document cover.generate,                               "Cover", document if cover.can_generate?
+        generate_document coversheet.generate,                          "Cover", document if coversheet.can_generate?
+        generate_document summons.generate,                             "Summons", document if summons.can_generate?
+        generate_document injunction.generate,                          "Injunction(Optional)", document if injunction.can_generate?
+        generate_document uccja.generate,                               "UCCJA", document if uccja.can_generate?
 
         # generate_document decree_of_divorce.generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce" if decree_of_divorce.can_generate?
-        generate_document welfare_sheet.generate,       "Welfare_sheet", document if welfare_sheet.can_generate?
+        generate_document welfare_sheet.generate,                       "Welfare_sheet", document if welfare_sheet.can_generate?
+        generate_document affidavit_of_resident_witness.generate,       "Affidavit Of Resident Witness", document if affidavit_of_resident_witness.can_generate?
 
 
       when /^Filed Case/
