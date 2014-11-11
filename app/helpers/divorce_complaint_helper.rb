@@ -94,9 +94,9 @@ module DivorceComplaintHelper
 
   def return_start_end_year(answer)
     start_range, end_range = 0, 0
-    start_range = answer.template_field.field_type.match(/start_range=(\S{0,1}\d{1,3})/)[1].to_i if answer.template_field.field_type.match(/start_range=(\S{0,1}\d{1,3})/).present?
-    end_range = answer.template_field.field_type.match(/end_range=(\S{0,1}\d{1,3})/)[1].to_i if answer.template_field.field_type.match(/end_range=(\S{0,1}\d{1,3})/).present?
-    case answer.template_field.field_type
+    start_range = $1.to_i if answer.field_type.match(/start_range=(\S{0,1}\d{1,3})/).present?
+    end_range = $1.to_i if answer.field_type.match(/end_range=(\S{0,1}\d{1,3})/).present?
+    case answer.field_type
     when /date_future|date_year_born|date_without_day|date_year_only|date_for_child|date_birthday/
       return [Time.now.year + start_range, Time.now.year + end_range]
     when /date_after_born/

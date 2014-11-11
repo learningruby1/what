@@ -1,5 +1,6 @@
 module PdfDocument
   class AcceptanceOfService < DivorceWrapper
+
     def can_generate?
       @filed_case[:person_who_give] =~ /accept/ && @packet =~ /Divorce/
     end

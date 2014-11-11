@@ -1,5 +1,6 @@
 module PdfDocument
   class DivorceInjunction < DivorceWrapper
+
     def can_generate?
       @packet =~ /Divorce/
     end

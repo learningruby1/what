@@ -1,6 +1,7 @@
 module PdfDocument
   class DecreeOfDivorce < DivorceWrapper
     include DivorceComplaintHelper
+
     def can_generate?
       @packet =~ /Divorce/
     end
