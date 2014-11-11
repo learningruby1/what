@@ -23,6 +23,7 @@ module DivorceComplaintHelper
     return hash_index
   end
 
+
   def number_of_child(document)
     document.step_answers(8).last.try :answer if document.to_s == Document::DIVORCE_COMPLAINT
   end
@@ -50,26 +51,25 @@ module DivorceComplaintHelper
     end
   end
 
-  def get_defendant_full_name(document)
-    divorce_document = case document.to_s
-      when Document::DIVORCE_COMPLAINT
-        document
-      when Document::FILED_CASE
-        document.divorce_document
-      when Document::AFTER_SERVICE
-        document.divorce_document.divorce_document
-      end
-    divorce_document.step_answers(4).map(&:answer)[0..2].join(' ').squeeze(' ')
+  def get_divorce_document(document)
+    divorce_document = document
+    while divorce_document.previous_document.present? do
+      divorce_document = divorce_document.previous_document
+      p '_'
+    end
+    divorce_document
+  end
+
+  def get_packet_name(document)
+    get_divorce_document(document).step_answers(1).map(&:answer)[0]
   end
 
   def get_plaintiff_full_name(document)
-    divorce_document = case document.to_s
-      when Document::DIVORCE_COMPLAINT
-        document
-      when Document::FILED_CASE
-        document.divorce_document
-      end
-    divorce_document.step_answers(3).map(&:answer)[0..2].join(' ').squeeze(' ')
+    get_divorce_document(document).step_answers(3).map(&:answer)[0..2].join(' ').squeeze(' ')
+  end
+
+  def get_defendant_full_name(document)
+    get_divorce_document(document).step_answers(4).map(&:answer)[0..2].join(' ').squeeze(' ')
   end
 
   def get_self(document)
@@ -94,25 +94,19 @@ module DivorceComplaintHelper
   end
 
   def return_start_end_year(answer)
+    start_range, end_range = 0, 0
+    start_range = answer.template_field.field_type.match(/start_range=(\S{0,1}\d{1,3})/)[1].to_i if answer.template_field.field_type.match(/start_range=(\S{0,1}\d{1,3})/).present?
+    end_range = answer.template_field.field_type.match(/end_range=(\S{0,1}\d{1,3})/)[1].to_i if answer.template_field.field_type.match(/end_range=(\S{0,1}\d{1,3})/).present?
     case answer.template_field.field_type
-    when /date_future/
-      return [Time.now.year, Time.now.year + 10]
-    when /date_year_born/
-      return [Time.now.year, Time.now.year + 1]
-    when /date_without_day/
-      return [Time.now.year - 5, Time.now.year]
-    when /date_year_only/
-      return [Time.now.year, Time.now.year - 1]
+    when /date_future|date_year_born|date_without_day|date_year_only|date_for_child|date_birthday/
+      return [Time.now.year + start_range, Time.now.year + end_range]
     when /date_after_born/
       born_year = TemplateField.find(answer.template_field.header_ids.to_i).document_answers.where(:document_id => answer.document.id, :toggler_offset => (answer.toggler_offset / 1000) * 1000).first.answer.to_date.year
       born_year = born_year < Time.now.year - 5 ? Time.now.year - 5 : born_year
       return [born_year, Time.now.year]
-    when /date_for_child/
-      return [Time.now.year, Time.now.year - 18]
-    when /date_birthday/
-      return [Time.now.year - 13, Time.now.year - 100]
     when /date/
-      return [Time.now.year, Time.now.year - 100]
+      end_range = -100 if end_range == 0
+      return [Time.now.year + start_range, Time.now.year + end_range ]
     end
   end
 
@@ -120,6 +114,23 @@ module DivorceComplaintHelper
   def to_humanize(_document, text)
     return text if text.blank? || _document.nil?
     text.gsub!('<defendant_full_name>', get_defendant_full_name(_document))
+
+    case get_packet_name(_document)
+    when /Divorce/
+      text.gsub!('<packet>', 'divorce action')
+      text.gsub!('<packet_spain>', 'divorcio')
+      text.gsub!('<plaintiff_role>', 'PLAINTIFF')
+      text.gsub!('<plaintiff_role_spain>', 'demandante. (PLAINTIFF)')
+      text.gsub!('<defendant_role>', 'DEFENDANT')
+      text.gsub!('<defendant_role_spain>', 'demandado. (DEFENDANT)')
+    when /Joint/
+      text.gsub!('<packet>', 'joint petition' )
+      text.gsub!('<packet_spain>', 'petición conjunta')
+      text.gsub!('<plaintiff_role>', 'PETITIONER')
+      text.gsub!('<plaintiff_role_spain>', 'solicitante. (PETITIONER)')
+      text.gsub!('<defendant_role>', 'CO-PETITIONER')
+      text.gsub!('<defendant_role_spain>', 'Co-solicitante. (CO-PETITIONER)')
+    end
 
     unless get_self(_document).nil?
       if get_self(_document) == 'Wife'

@@ -1,7 +1,7 @@
 module PdfDocument
   class WelfareSheet < DivorceWrapper
     def can_generate?
-      @children_residency
+      @children_residency && @packet =~ /Joint/
     end
     def generate
       push_header "<b>NEVADA STATE DIVISION OF WELFARE AND SUPPORTIVE SERVICES</b>"

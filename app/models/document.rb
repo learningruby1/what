@@ -4,10 +4,13 @@ class Document < ActiveRecord::Base
   validates :template_name, :presence => true
 
   has_many :answers, :class_name => 'DocumentAnswer'
-  has_many :dependent_documents
-  has_many :sub_documents, :through => :dependent_documents, :class_name => 'Document', :foreign_key => 'sub_document_id'
-  has_one :dependant_document, :class_name => 'DependentDocument', :foreign_key => 'sub_document_id'
-  has_one :divorce_document, :through => :dependant_document, :class_name => 'Document', :source => :document
+
+  has_one :next_dependent_document, :class_name => 'DependentDocument'
+  has_one :next_document, :through => :next_dependent_document, :class_name => 'Document', :foreign_key => 'sub_document_id', :source => :sub_document
+
+  has_one :previous_dependant_document, :class_name => 'DependentDocument', :foreign_key => 'sub_document_id'
+  has_one :previous_document, :through => :previous_dependant_document, :class_name => 'Document', :source => :document
+
   belongs_to :template
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
 

@@ -7,12 +7,10 @@ module PdfDocument
 
       @document = document
 
-      @divorce_document = case document.template.name
-        when Document::DIVORCE_COMPLAINT
-          document
-        when Document::FILED_CASE
-          document.divorce_document
-        end
+      @divorce_document = document
+      while @divorce_document.previous_document.present? do
+        @divorce_document = @divorce_document.previous_document
+      end
 
         @document_id = document.id
         @data_array = Array.new

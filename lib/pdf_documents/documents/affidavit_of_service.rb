@@ -1,7 +1,7 @@
 module PdfDocument
   class AffidavitOfService < DivorceWrapper
     def can_generate?
-      @filed_case[:person_who_give] =~ /I have a friend/
+      @filed_case[:person_who_give] =~ /I have a friend/ && @packet =~ /Divorce/
     end
 
     def generate
