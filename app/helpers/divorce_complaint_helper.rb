@@ -55,7 +55,6 @@ module DivorceComplaintHelper
     divorce_document = document
     while divorce_document.previous_document.present? do
       divorce_document = divorce_document.previous_document
-      p '_'
     end
     divorce_document
   end
