@@ -1,5 +1,6 @@
 module PdfDocument
   class DivorceCover < DivorceWrapper
+
     def can_generate?
       @clark_nye == 'Clark'
     end

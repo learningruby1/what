@@ -14,20 +14,24 @@ module PdfDocument
 
       case document.template.to_s
       when /^Complaint for Divorce/
+        divorce_complaint = PdfDocument::DivorceComplaint.new(document)
         uccja = PdfDocument::Uccja.new(document)
         cover = PdfDocument::DivorceCover.new(document)
         coversheet = PdfDocument::DivorceCoversheet.new(document)
+        summons = PdfDocument::DivorceSummons.new(document)
+        injunction = PdfDocument::DivorceInjunction.new(document)
+        # decree_of_divorce = PdfDocument::DecreeOfDivorce.new(document)
         welfare_sheet = PdfDocument::WelfareSheet.new(document)
 
-        generate_document PdfDocument::DivorceComplaint.new(document).generate,  "Complaint", document, true, true, "Divorce_complaint"
-        generate_document cover.generate,                                        "Cover", document if cover.can_generate?
-        generate_document coversheet.generate,                                   "Cover", document if coversheet.can_generate?
-        generate_document PdfDocument::DivorceSummons.new(document).generate,    "Summons", document
-        generate_document PdfDocument::DivorceInjunction.new(document).generate, "Injunction(Optional)", document
-        generate_document uccja.generate,                                        "UCCJA", document if uccja.can_generate?
+        generate_document divorce_complaint.generate,   "Complaint", document, true, true, "Divorce_complaint" if divorce_complaint.can_generate?
+        generate_document cover.generate,               "Cover", document if cover.can_generate?
+        generate_document coversheet.generate,          "Cover", document if coversheet.can_generate?
+        generate_document summons.generate,             "Summons", document if summons.can_generate?
+        generate_document injunction.generate,          "Injunction(Optional)", document if injunction.can_generate?
+        generate_document uccja.generate,               "UCCJA", document if uccja.can_generate?
 
-        # generate_document PdfDocument::DecreeOfDivorce.new(document).generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce"
-        # generate_document welfare_sheet.generate,                                "Welfare_sheet", document if welfare_sheet.can_generate?
+        # generate_document decree_of_divorce.generate,   "Decree_of_divorce", document, true, true, "Decree_of_divorce" if decree_of_divorce.can_generate?
+        generate_document welfare_sheet.generate,       "Welfare_sheet", document if welfare_sheet.can_generate?
 
 
       when /^Filed Case/

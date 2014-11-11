@@ -53,8 +53,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def bind_sub_document(document_id, sub_document)
-    documents.find(document_id).sub_documents << sub_document
+  def bind_sub_document(document_id, next_document)
+    documents.find(document_id).next_document = next_document
   end
 
   def create_mail_reminder!(reminder_type)

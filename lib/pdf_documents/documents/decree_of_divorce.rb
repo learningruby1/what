@@ -1,6 +1,11 @@
 module PdfDocument
   class DecreeOfDivorce < DivorceWrapper
     include DivorceComplaintHelper
+
+    def can_generate?
+      @packet =~ /Divorce/
+    end
+
     def generate
       _counter = 0
       default_leading 5

@@ -12,7 +12,15 @@
   - else
     - years = return_start_end_year answer
     .col-md-12.input-group{ :class => answer.template_field.field_type, :toggler => ((answer.toggler_offset / 1000) * 1000 if answer.template_field.field_type.match(/date_after_born/)), :born_year => (years.first if answer.template_field.field_type.match(/date_after_born/)) }
-      = a.date_select :answer, { :order => [:month, :day, :year], :use_month_names => DocumentAnswer::MONTH_NAMES, :discard_day => (true if answer.template_field.field_type.match(/date_without_day|date_after_born|date_year_only/)), :discard_month => (true if answer.template_field.field_type.match(/date_year_only/)), :start_year =>  years.first, :end_year => years.second, :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, { :class => 'form-control' }
+      = a.date_select :answer, { :order => [:month, :day, :year],
+                                 :use_month_names => DocumentAnswer::MONTH_NAMES,
+                                 :discard_day => (true if answer.template_field.field_type.match(/date_without_day|date_after_born|date_year_only/)),
+                                 :discard_month => (true if answer.template_field.field_type.match(/date_year_only/)),
+                                 :start_year => years.first,
+                                 :end_year => years.second,
+                                 :selected => answer.answer.present? ? answer.answer.to_s.to_date : nil,
+                                 :prompt => { day: 'Select day', month: 'Select month', year: 'Select year' }},
+                               { :class => 'form-control' }
 
 .col-md-12
   %br

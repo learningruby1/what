@@ -1,5 +1,10 @@
 module PdfDocument
   class DivorceSummons < DivorceWrapper
+
+    def can_generate?
+      @packet =~ /Divorce/
+    end
+
     def generate
       push_text '<font size="7">SUMM</font>'
       push_header "IN THE #{ @clark_nye == 'Clark' ? '8' : '5' }th JUDICIAL DISTRICT COURT OF THE"

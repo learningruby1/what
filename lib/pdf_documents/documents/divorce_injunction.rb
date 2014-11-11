@@ -1,5 +1,10 @@
 module PdfDocument
   class DivorceInjunction < DivorceWrapper
+
+    def can_generate?
+      @packet =~ /Divorce/
+    end
+
     def generate
       push_text 'CC12'
 

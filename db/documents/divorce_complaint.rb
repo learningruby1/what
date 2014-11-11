@@ -18,7 +18,7 @@ current_step = template.steps.create :step_number => step_number += 1,#1
                                      :title => 'Choice your packet /<spain/>Seleccione su paquete'
 toggle_id = 0
 toggle_id += 1
-current_step.fields.create :name => 'Joint Petition /<spain/>Petición Conjunta
+packet = current_step.fields.create :name => 'Joint Petition /<spain/>Petición Conjunta
                                      <option/>Divorce Complaint /<spain/>Demanda de Divorcio', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :field_type => 'text', :name => 'You and your spouse have resolved all issues and want to file as joint petitioners for an uncontested divorce. <br/><spain/>Usted y su cónyuge han resuelto todos los temas asociados con el divorcio y quieren archivar  un divorcio de mutuo acuerdo.', :toggle_id => toggle_id, :toggle_option => 'Joint Petition'
 current_step.fields.create :field_type => 'text', :name => 'You and your spouse DO NOT agree to the terms of the divorce OR you have not seen your spouse for a long time. <br/><spain/>Usted y su cónyuge NO ESTÁN de acuerdo en los temas asociados con el  divorcio O no sabe dónde está su cónyuge.', :toggle_id => toggle_id, :toggle_option => 'Divorce Complaint'
@@ -35,7 +35,7 @@ current_step = template.steps.create :step_number => step_number += 1,#3
 current_step.fields.create :field_type => 'string upcase', :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
-current_step.fields.create :field_type => 'date_birthday', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+current_step.fields.create :field_type => 'date_birthday start_range=-13 end_range=-100', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 current_step.fields.create :field_type => 'string social_security rev_br', :name => 'Social Security # /<spain/># Seguro Social: <spain/>e.g. XXX-XX-XXXX', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. /<spain/>Por favor, ponga un número de Seguro Social válido' }
 current_step.fields.create :field_type => 'string capitalize', :name => 'Home Address /<spain/>Dirección de casa: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
 current_step.fields.create :field_type => 'string capitalize', :name => 'City /<spain/>Ciudad: *', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }
@@ -50,18 +50,18 @@ current_step.fields.create :field_type => 'string rev_br', :name => 'Email /<spa
 current_step.fields.create :field_type => 'label', :name => 'I am /<spain/>Yo soy:'
 current_step.fields.create :field_type => 'radio', :name => 'Wife /<spain/>Esposa
                                                             <option/>Husband /<spain/>Esposo', :mandatory => { :value => /^Wife|Husband/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'text', :name => 'Since you are the person starting the divorce action, you will be referred as the PLAINTIFF.
-                                                            <br/><spain/>Ya que usted es la persona que inicia la acción de divorcio, usted será referido como el demandante (PLAINTIFF)'
+current_step.fields.create :field_type => 'text', :name => 'Since you are the person starting the <packet>, you will be referred as the <plaintiff_role>.
+                                                            <br/><spain/>Ya que usted es la persona que inicia la acción de <packet_spain>, usted será referido como el <plaintiff_role_spain>'
 
 
 current_step = template.steps.create :step_number => step_number += 1,#4
                                      :title => 'Your Spouse\'s Information /<spain/>Información de su <spain_self>',
-                                     :description => 'This person will be referred as the DEFENDANT<br/><spain/>Esta persona será referida como el demandado (DEFENDANT)'
+                                     :description => 'This person will be referred as the <defendant_role><br/><spain/>Esta persona será referida como el <defendant_role_spain>'
 
 current_step.fields.create :field_type => 'string upcase', :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
-current_step.fields.create :field_type => 'date_birthday', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+current_step.fields.create :field_type => 'date_birthday start_range=-13 end_range=-100', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 current_step.fields.create :field_type => 'string social_security rev_br', :name => 'Social Security # /<spain/># Seguro Social: <spain/>e.g. XXX-XX-XXXX', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. /<spain/>Por favor, ponga un número de Seguro Social válido' }
 current_step.fields.create :field_type => 'string capitalize', :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
 
@@ -114,7 +114,7 @@ current_step = template.steps.create :step_number => step_number += 1,#7
 
 current_step.fields.create :field_type => 'radio', :name => 'IS NOT currently pregnant /<spain/>NO ESTÁ embarazada en este momento.
                                                              <option/>IS currently pregnant /<spain/>ESTÁ embarazada en este momento.', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'date_year_born review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
+current_step.fields.create :field_type => 'date_year_born end_range=1 review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
 current_step.fields.create :field_type => 'text review_show', :name => 'Is the husband the father of the unborn child? /<spain/>¿El esposo es el padre del niño por nacer?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant'
 current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }, :sub_toggle_id => toggle_id + 1
 
@@ -138,7 +138,7 @@ child_name = current_step.fields.create :field_type => 'string upcase', :name =>
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
 
 child_last_name = current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Last Name /<spain/>Apellido: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
-child_birth = current_step.fields.create :field_type => 'date_for_child', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
+child_birth = current_step.fields.create :field_type => 'date_for_child end_range=-19', :name => 'Date of Birth /<spain/>Fecha de nacimiento: *', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date of birthday /<spain/>Por favor, ponga la fecha de nacimiento' }
 
 current_step.fields.create :field_type => 'text review_show', :name => 'Place of Birth /<spain/>Lugar de nacimiento:'
 current_step.fields.create :field_type => 'radio', :name => 'In the United States /<spain/>En los Estados Unidos
@@ -1080,7 +1080,7 @@ current_step.fields.create :field_type => 'text', :name => 'Are you requesting <
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí
                                                              <option/>No', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'date_without_day review_show', :name => 'I want back <child_count> support starting /<spain/>Quiero la manutención de <child_count_spain> a partir', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
+current_step.fields.create :field_type => 'date_without_day start_range=-5 review_show', :name => 'I want back <child_count> support starting /<spain/>Quiero la manutención de <child_count_spain> a partir', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
 current_step.fields.create :field_type => 'text review_show', :name => 'I want /<spain/>Quiero', :toggle_id => toggle_id, :toggle_option => 'Yes'
 current_step.fields.create :field_type => 'amount $ review_show', :name => 'per month for child support /<spain/>por mes de manutención de menores', :toggle_id => toggle_id, :toggle_option => 'Yes', :mandatory => { :value => /^(\$)?[0-9]+$/, :hint => 'Please enter amount /<spain/>Por favor, ingrese el monto' }
 
@@ -1095,7 +1095,7 @@ current_step.fields.create :field_type => 'radio', :name => 'Should be allocated
                                                              <option/>Dad every year /<spain/>Papá todos los años
                                                              <option/>Dad and Mom alternating years /<spain/>Mamá y Papá años por medio', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
-current_step.fields.create :field_type => 'date_year_only review_show', :name => 'Mom will start claiming the child from /<spain/>La mamá comenzara a reclamar el menor desde:', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom alternating years', :mandatory => { :value => /\w+/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
+current_step.fields.create :field_type => 'date_year_only start_range=-1 review_show', :name => 'Mom will start claiming the child from /<spain/>La mamá comenzara a reclamar el menor desde:', :toggle_id => toggle_id, :toggle_option => 'Dad and Mom alternating years', :mandatory => { :value => /\w+/, :hint => 'Please select date /<spain/>Seleccione uno, por favor' }
 
 toggle_id = 0
 toggle_id += 1
@@ -1490,6 +1490,59 @@ current_step.fields.create :field_type => 'radio', :name => 'I no longer want to
                                                              <option/>I no longer want to be married and have lived separated and apart for over 1 year /<spain/>Ya no quiero seguir casada y hemos vivido separados desde hace más de 1 año', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 
+current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => packet.id.to_s, :render_if_field_value => 'Joint',#48_JOINT
+                                     :title => 'Resident witness /<spain/>Testigo de residencia',
+                                     :description => 'A resident witness is someone who will signed an affidavit to confirm that you have been a resident of Nevada for 6 weeks. You will need the following information from your witness: Full name, home address, and year the person moved to Nevada.<br/>
+                                     <spain/>Un testigo residente es una persona que va a firmar una declaración jurada confirmando que usted ha vivido en Nevada por las últimas 6 semanas. Necesitará la siguiente información de su testigo: Nombre completo, domicilio y año que la persona se mudó a Nevada.'
+current_step.fields.create :field_type => 'string upcase',
+                           :name => 'Name /<spain/>Nombre: *',
+                           :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }
+current_step.fields.create :field_type => 'string upcase rev_inline',
+                           :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
+current_step.fields.create :field_type => 'string upcase rev_inline',
+                           :name => 'Last Name /<spain/>Apellido: *',
+                           :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter last name /<spain/>Escriba el apellido' }
+
+current_step.fields.create :field_type => 'string capitalize',
+                           :name => 'Home Address /<spain/>Dirección de casa: *',
+                           :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid home address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
+current_step.fields.create :field_type => 'string capitalize',
+                           :name => 'City /<spain/>Ciudad: *',
+                           :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }
+current_step.fields.create :field_type => 'states rev_inline',
+                           :name => 'State /<spain/>Estado: *',
+                           :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
+current_step.fields.create :field_type => 'string rev_inline rev_br',
+                           :name => 'Zip Code /<spain/>Código postal: * ',
+                           :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
+
+current_step.fields.create :field_type => 'text',
+                           :name => 'What is your relationship to <witness_name>witness</witness_name> /<spain/>¿Cuál es su relación con <witness_name>testigo</witness_name>'
+current_step.fields.create :field_type => 'radio',
+                           :name => 'Friend /<spain/>Amigo(a)
+                           <option/>Co-worker /<spain/>Compañero(a) de trabajo
+                           <option/>Neighbor /<spain/>Vecino(a)
+                           <option/>Family member /<spain/>Familiar
+                           <option/>Other /<spain/>Otro',
+                           :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' },
+                           :toggle_id => toggle_id
+current_step.fields.create :field_type => 'amount-left',
+                           :mandatory => { :value => /\w+/, :hint => 'Please enter relation /<spain/>Por favor, ingrese relación' },
+                           :toggle_id => toggle_id, :toggle_option => 'Other'
+
+current_step.fields.create :field_type => 'date_without_day end_range=-100 rev_inline',
+                           :name => 'What month and year did you meet <witness_name>witness</witness_name> in Nevada. /<spain/>¿Qué mes y año usted conoció a <witness_name>testigo</witness_name> en Nevada?',
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
+
+current_step.fields.create :field_type => 'text',
+                           :name => 'How many times per week do you see <witness_name>witness</witness_name>? /<spain/>¿Cuántas veces por semana ver a <witness_name>testigo</witness_name>?'
+current_step.fields.create :field_type => 'amount',
+                           :mandatory => { :value => /^[0-7]{1}$/, :hint => 'Please enter 0..7 /<spain/>Por favor, ingrese 0..7' }
+
+current_step.fields.create :field_type => 'date_year_only end_range=-100',
+                           :name => 'What year did <witness_name>witness</witness_name> moved to Nevada? /<spain/>¿En qué año se mudo <witness_name>testigo</witness_name> a Nevada?',
+                           :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please select date /<spain/>Por favor seleccione la fecha' }
+
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => clark_nye.id.to_s, :render_if_field_value => 'Clark',#48
                                      :title => 'Other cases in Family court /<spain/>Otros casos en la corte de Familia',
@@ -1497,9 +1550,6 @@ current_step = template.steps.create :step_number => step_number += 1, :render_i
                                                       <br/><spain/>¿Ha tenido o tiene usted u la otra persona en este caso (incluyendo cualquier de sus menores) otros casos en la corte de familia en el Condado de <insert id=#{ clark_nye.id }/>?"
 
 other_cases_field = current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<spain/>Sí', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-
-
 
 current_step = template.steps.create :step_number => step_number += 1, :render_if_field_id => other_cases_field.id.to_s, :render_if_field_value => 'Yes',#49
                                      :title => 'Other cases in Family court /<spain/>Otros casos en la corte de Familia',
