@@ -18,8 +18,8 @@ current_step = template.steps.create :step_number => step_number += 1,#1
                                      :title => 'Choice your packet /<spain/>Seleccione su paquete'
 toggle_id = 0
 toggle_id += 1
-packet = current_step.fields.create :name => 'Joint Petition /<spain/>Petición Conjunta
-                                     <option/>Divorce Complaint /<spain/>Demanda de Divorcio', :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
+packet = current_step.fields.create :name => "#{ Document::JOINT_PACKET }
+                                     <option/>#{ Document::DIVORCE_PACKET }", :toggle_id => toggle_id, :field_type => 'radio', :mandatory => { :value => /^[a-zA-Z\s]+$/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 current_step.fields.create :field_type => 'text', :name => 'You and your spouse have resolved all issues and want to file as joint petitioners for an uncontested divorce. <br/><spain/>Usted y su cónyuge han resuelto todos los temas asociados con el divorcio y quieren archivar  un divorcio de mutuo acuerdo.', :toggle_id => toggle_id, :toggle_option => 'Joint Petition'
 current_step.fields.create :field_type => 'text', :name => 'You and your spouse DO NOT agree to the terms of the divorce OR you have not seen your spouse for a long time. <br/><spain/>Usted y su cónyuge NO ESTÁN de acuerdo en los temas asociados con el  divorcio O no sabe dónde está su cónyuge.', :toggle_id => toggle_id, :toggle_option => 'Divorce Complaint'
 

@@ -19,6 +19,10 @@ class Document < ActiveRecord::Base
   DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
   FILED_CASE = 'Filed Case /<spain/>Caso archivado'
   AFTER_SERVICE = "After Service /<spain/>Después de servicio"
+
+  DIVORCE_PACKET = 'Divorce Complaint /<spain/>Demanda de Divorcio'
+  JOINT_PACKET = 'Joint Petition /<spain/>Petición Conjunta'
+
   TOGGLER_OFFSET = 1000
   BLOCK_DIFFERENCE = 10
 
@@ -362,6 +366,18 @@ class Document < ActiveRecord::Base
 
   def to_s
     template.name
+  end
+
+  def to_packet
+    if template.name == DIVORCE_COMPLAINT
+      case step_answers(1).map(&:answer).first.presence
+      when DIVORCE_PACKET.split(' /<spain/>').first
+        return DIVORCE_PACKET
+      when JOINT_PACKET.split(' /<spain/>').first
+        return JOINT_PACKET
+      end
+    end
+    to_s
   end
 
   def self.get_files_name( documents, user )
