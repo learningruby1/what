@@ -365,14 +365,19 @@ class Document < ActiveRecord::Base
   end
 
   def to_s
-    case step_answers(1).map(&:answer).first.presence
-    when DIVORCE_PACKET.split(' /<spain/>').first
-      DIVORCE_PACKET
-    when JOINT_PACKET.split(' /<spain/>').first
-      JOINT_PACKET
-    else
-      template.name
+    template.name
+  end
+
+  def to_packet
+    if template.name == DIVORCE_COMPLAINT
+      case step_answers(1).map(&:answer).first.presence
+      when DIVORCE_PACKET.split(' /<spain/>').first
+        return DIVORCE_PACKET
+      when JOINT_PACKET.split(' /<spain/>').first
+        return JOINT_PACKET
+      end
     end
+    to_s
   end
 
   def self.get_files_name( documents, user )

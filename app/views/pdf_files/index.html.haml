@@ -23,8 +23,8 @@
         %tr
           %td
             %h5
-              = document.to_s.split('<spain/>').first
-              %span.spain= document.to_s.split('<spain/>').last
+              = document.to_packet.split('<spain/>').first
+              %span.spain= document.to_packet.split('<spain/>').last
           %td
             = link_to document_review_path(document), :class => 'btn btn-default' do
               .glyphicon.glyphicon-list-alt

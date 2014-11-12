@@ -11,8 +11,8 @@
           %span.spain Gracias por volver
       - document = @documents.sort_by(&:updated_at).first
       = link_to document_answer_path(document, 1) do
-        = document.to_s.split('<spain/>').first
-        %span.spain= document.to_s.split('<spain/>').last
+        = document.to_packet.split('<spain/>').first
+        %span.spain= document.to_packet.split('<spain/>').last
       %br
     - else
       %hr
