@@ -7,12 +7,16 @@ class MailForm < ActionMailer::Base
 
   def reminder_after_download_divorce_complaint(user, document, after_day)
     @document, @day = document, after_day
-    mail(to: user.email, subject: 'Reminder from www.FormsMama.com')
+    mail(to: get_email(user), subject: 'Reminder from www.FormsMama.com')
   end
 
   def reminder_after_finished_divorce_complaint(user, document, after_day)
     @document, @day = document, after_day
-    mail(to: user.email, subject: 'Reminder from www.FormsMama.com')
+    mail(to: get_email(user), subject: 'Reminder from www.FormsMama.com')
+  end
+
+  def get_email(user)
+    user.documents.where(:template_name => Document::DIVORCE_COMPLAINT).first.step_answers(3).map(&:answer)[16]
   end
 
 end
