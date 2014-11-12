@@ -16,7 +16,7 @@ class MailForm < ActionMailer::Base
   end
 
   def get_email(user)
-    user.documents.where(:template_name => Document::DIVORCE_COMPLAINT).first.step_answers(3).map(&:answer)[16]
+    user.documents.where(:template_name => Document::DIVORCE_COMPLAINT).first.step_answers(3).map(&:answer)[14]
   end
 
 end
