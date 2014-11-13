@@ -5,7 +5,7 @@
         %p= a.text_field :answer, :class => 'form-control'
     - elsif answer.template_field.field_type.match /income\z/
       .amount_block
-        = a.text_field :answer, :class => 'form-control income-math'
+        = a.text_field :answer, :class => 'form-control income-math', :data => {:plaintiff_name => get_plaintiff_full_name(@document), :defendant_name => get_defendant_full_name(@document)}
         = a.hidden_field 'percentage_field', :class => 'children_percentage', :value => get_percentage_for_children(get_number_of_joint_child(@document))
         .under_amount_text
     -else
