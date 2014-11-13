@@ -38,7 +38,6 @@ class Document < ActiveRecord::Base
     _answers = step_answers(next_step) rescue nil
     template_step = TemplateStep.find next_step + template.steps.first.id - 1 rescue nil
 
-
     unless template_step.nil?
       # Delete answers
       _looped_amount = looped_amount(next_step, _answers, template_step)
@@ -75,7 +74,7 @@ class Document < ActiveRecord::Base
     end
 
     _answers = _create_next_step_answers!(next_step) if _answers.blank?
-    DocumentAnswer.sort _answers, next_step
+    DocumentAnswer.sort get_spouses_answers(_answers), next_step
   end
 
   def _create_next_step_answers!(next_step, toggler_offset=0)
@@ -386,5 +385,17 @@ class Document < ActiveRecord::Base
       _file_names << Dir.glob("documents/pdf/#{ user.id }/#{ document.template_name.split(' /<spain/>').first }/*.pdf").sort_by{ |file| File.stat(file).ino }
     end
     _file_names
+  end
+
+  def get_spouses_answers(answers)
+    if (get_sex(self) && get_sex(self, 'defendant')) == 'Male'
+      result = answers.select{ |item| item.template_field.spouses == 'man' }
+      result.count == 0 ? answers.select{ |item| item.template_field.spouses.nil? } : result
+    elsif (get_sex(self) && get_sex(self, 'defendant')) == 'Female'
+      result = answers.select{ |item| item.template_field.spouses == 'women' }
+      result.count == 0 ? answers.select{ |item| item.template_field.spouses.nil? } : result
+    else
+      answers.select{ |item| item.template_field.spouses.nil? }
+    end
   end
 end
