@@ -110,15 +110,7 @@ module DivorceComplaintHelper
   end
 
   def get_sex(document, person_referred='plaintiff')
-    divorce_document = case document.to_s
-      when Document::DIVORCE_COMPLAINT
-        document
-      when Document::FILED_CASE
-        document.divorce_document
-      when Document::AFTER_SERVICE
-        document.divorce_document.divorce_document
-      end
-    person_referred.eql?('plaintiff') ? divorce_document.step_answers(3).map(&:answer)[5] : divorce_document.step_answers(4).map(&:answer)[5]
+    person_referred.eql?('plaintiff') ? get_divorce_document(document).step_answers(3).map(&:answer)[5] : get_divorce_document(document).step_answers(4).map(&:answer)[5]
   end
 
   def return_toggle_option(answer, _document)
