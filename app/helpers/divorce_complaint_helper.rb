@@ -109,10 +109,33 @@ module DivorceComplaintHelper
     end
   end
 
+  def get_sex(document, person_referred='plaintiff')
+    divorce_document = case document.to_s
+      when Document::DIVORCE_COMPLAINT
+        document
+      when Document::FILED_CASE
+        document.divorce_document
+      when Document::AFTER_SERVICE
+        document.divorce_document.divorce_document
+      end
+    person_referred.eql?('plaintiff') ? divorce_document.step_answers(3).map(&:answer)[5] : divorce_document.step_answers(4).map(&:answer)[5]
+  end
+
+  def return_toggle_option(answer, _document)
+    toggle_option = answer.template_field.toggle_option.to_s
+    if toggle_option.include?('<plaintiff_full_name>') || toggle_option.include?('<defendant_full_name>')
+      toggle_option.match(/<plaintiff_full_name>/) ? toggle_option.gsub!('<plaintiff_full_name>', get_plaintiff_full_name(_document)) : toggle_option.gsub!('<defendant_full_name>', get_defendant_full_name(_document))
+    else
+      return toggle_option
+    end
+  end
 
   def to_humanize(_document, text)
     return text if text.blank? || _document.nil?
     text.gsub!('<defendant_full_name>', get_defendant_full_name(_document))
+    text.gsub!('<plaintiff_full_name>', get_plaintiff_full_name(_document))
+    get_sex(_document).eql?('Male') ? [text.gsub!('<plaintiff_his_her>', 'his'), text.gsub!('<defendant_soltera_soltero>', 'soltera')] : [text.gsub!('<plaintiff_his_her>', 'her'), text.gsub!('<plaintiff_soltera_soltero>', 'soltero')]
+    get_sex(_document, 'defendant').eql?('Male') ? [text.gsub!('<defendant_his_her>', 'his'), text.gsub!('<defendant_soltera_soltero>', 'soltera')] : [text.gsub!('<defendant_his_her>', 'her'), text.gsub!('<plaintiff_soltera_soltero>', 'soltero')]
 
     case get_packet_name(_document)
     when /Divorce/

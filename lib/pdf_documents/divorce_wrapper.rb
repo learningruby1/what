@@ -74,6 +74,8 @@ module PdfDocument
         @plaintiff_full_name = "#{ @plaintiff_first_name } #{ @plaintiff_middle_name } #{ @plaintiff_last_name }".squish
 
         @plaintiff_date_of_birth = answers.next.answer
+        answers.next
+        @plaintiff_sex = answers.next.answer
         @plaintiff_social_security = answers.next.answer
         @plaintiff_home_address = answers.next.answer.titleize
         @plaintiff_home_address_city = answers.next.answer.classify
@@ -101,6 +103,8 @@ module PdfDocument
         @defendant_full_name = "#{ @defendant_first_name } #{ @defendant_middle_name } #{ @defendant_last_name }".squish
 
         @defendant_date_of_birth = answers.next.answer
+        answers.next
+        @defendant_sex = answers.next.answer
         @defendant_social_security = answers.next.answer
         @defendant_mailing_address = answers.next.answer.titleize
         if answers.next.answer == "Outside the United States"
@@ -116,6 +120,14 @@ module PdfDocument
         @defendant_email = answers.next.answer
         @defendant_phone = answers.next.answer
 
+        if @plaintiff_sex == 'Male' && @defendant_sex == 'Male'
+          @spouses = 'Male'
+        elsif @plaintiff_sex == 'Female' && @defendant_sex == 'Female'
+          @spouses = 'Female'
+        else
+          @spouses = 'Male and Female'
+        end
+
         #Step 5   Marriage Information
         answers = step_answers_enum steps.next
 
@@ -130,7 +142,7 @@ module PdfDocument
 
         @marriage_country_string = "in the city of #{ @in_the_us ? @marriage_city : @marriage_city_town_province }"
         @marriage_country_string += @in_the_us ? " State of #{ @marriage_state }" : " Country of #{ @marriage_country }"
-        @marriage_country_string += ' and have since remained husband and wife.'
+        @marriage_country_string += ' and have since remained married.'
 
         @marriage_date_decree = @marriage_date.to_date.strftime('%d day of %B, %Y')
         @marriage_country_decree = "in the city of #{ @in_the_us ? @marriage_city : @marriage_city_town_province }"
@@ -145,12 +157,31 @@ module PdfDocument
         @lived_in_nevada_since = answers.next.answer
 
         #Step 7   Pregnacy
-        answers = step_answers_enum steps.next
-        @pregnacy = answers.next.answer == 'IS currently pregnant'
-        if @pregnacy
-          @pregnacy_date = answers.next.answer
+        if @spouses == 'Male'
+          steps.next
+        elsif @spouses == 'Female'
+          answers = step_answers_enum steps.next
+          6.times do answers.next end
+          @pregnacy = answers.next.answer == '0' rescue false
+          if @pregnacy
+            if @pregnacy_user = answers.next.answer == '1' rescue false
+              @pregnacy_user_date = answers.next.answer
+            else
+              answers.next
+            end
+            if @pregnacy_spouse = answers.next.answer == '1' rescue false
+              @pregnacy_spouse_date = answers.next.answer
+            end
+          end
+        else
+          answers = step_answers_enum steps.next
           answers.next
-          @pregnacy_unborn = answers.next.answer == 'Yes'
+          @pregnacy = answers.next.answer == 'IS currently pregnant'
+          if @pregnacy
+            @pregnacy_date = answers.next.answer
+            answers.next
+            @pregnacy_unborn = answers.next.answer == 'Yes'
+          end
         end
 
         #Step 8   Children & Number of children
@@ -395,11 +426,16 @@ module PdfDocument
             @legal_custody_parent = Array.new
             legal_custody_amount = @same_legal_custody ? 1 : @number_of_children
 
-            legal_custody_amount.times do |i|
-              answers = step_answers_enum step, i
+            legal_custody_amount.times do |item_number|
+              answers = step_answers_enum step, item_number
+              _legal_custody = Array.new
               answers.next
-              @legal_custody_parent.push answers.next.answer
+              _legal_custody << answers.next.answer
+              answers.next
+              _legal_custody << answers.next.answer
+              @legal_custody_parent.push _legal_custody
             end
+
 
             #Step 17   Legal Custody
             answers = step_answers_enum steps.next
@@ -421,9 +457,9 @@ module PdfDocument
               answers.next
               physical_custody[:custody] = answers.next.answer
 
-              if physical_custody[:custody] == 'With mom and visits with dad' || physical_custody[:custody] == 'With dad and visit with mom'
+              if physical_custody[:custody] == "With #{ @plaintiff_full_name } and visits with #{ @defendant_full_name }" || physical_custody[:custody] == "With #{ @defendant_full_name } and visit with #{ @plaintiff_full_name }"
                 answers.next
-                33.times do answers.next end if physical_custody[:custody] == 'With dad and visit with mom'
+                33.times do answers.next end if physical_custody[:custody] == "With #{ @defendant_full_name } and visit with #{ @plaintiff_full_name }"
                 selected_answers = Array.new
                 4.times do
                   answer = answers.next
@@ -766,7 +802,7 @@ module PdfDocument
               end
             end
 
-            land = answers.select{ |item| item.sort_index == 'b' }
+            land = answers.select{ |item| item.sort_index == 'c' }
             land.sort_by!{ |item| item.sort_number }
             if land.first.answer == '1'
               loop_answer = land.second.answer.to_i
@@ -776,7 +812,7 @@ module PdfDocument
               end
             end
 
-            business = answers.select{ |item| item.sort_index == 'c' }
+            business = answers.select{ |item| item.sort_index == 'e' }
             business.sort_by!{ |item| item.sort_number }
             if business.first.answer == '1'
               loop_answer = business.second.answer.to_i
@@ -801,7 +837,7 @@ module PdfDocument
             end
           end
 
-          motorcycle = answers.select{ |item| item.sort_index == 'b' }
+          motorcycle = answers.select{ |item| item.sort_index == 'c' }
           motorcycle.sort_by!{ |item| item.sort_number }
           if motorcycle.first.answer == '1'
             loop_answer = motorcycle.second.answer.to_i
@@ -811,7 +847,7 @@ module PdfDocument
             end
           end
 
-          rv = answers.select{ |item| item.sort_index == 'c' }
+          rv = answers.select{ |item| item.sort_index == 'e' }
           rv.sort_by!{ |item| item.sort_number }
           if rv.first.answer == '1'
             loop_answer = rv.second.answer.to_i
@@ -821,7 +857,7 @@ module PdfDocument
             end
           end
 
-          boat = answers.select{ |item| item.sort_index == 'd' }
+          boat = answers.select{ |item| item.sort_index == 'g' }
           boat.sort_by!{ |item| item.sort_number }
           if boat.first.answer == '1'
             loop_answer = boat.second.answer.to_i
@@ -831,7 +867,7 @@ module PdfDocument
             end
           end
 
-          trailer = answers.select{ |item| item.sort_index == 'e' }
+          trailer = answers.select{ |item| item.sort_index == 'i' }
           trailer.sort_by!{ |item| item.sort_number }
           if trailer.first.answer == '1'
             loop_answer = trailer.second.answer.to_i
@@ -841,7 +877,7 @@ module PdfDocument
             end
           end
 
-          other = answers.select{ |item| item.sort_index == 'f' }
+          other = answers.select{ |item| item.sort_index == 'k' }
           other.sort_by!{ |item| item.sort_number }
           if other.first.answer == '1'
             loop_answer = other.second.answer.to_i
@@ -1084,8 +1120,9 @@ module PdfDocument
             else
               @alimony_year_month = 'months'
             end
-
           end
+          answers.next
+          @affidavit_of_support = answers.next.answer == 'Yes' rescue false
         end
 
         #Step 46   Wife’s Name
@@ -1121,11 +1158,24 @@ module PdfDocument
           steps.next
         end
 
-        #Step 48 Other cases in Family court
+        #Step 49 DOMESTIC VIOLENCE
+        answers = step_answers_enum steps.next
+        @domestic_violence = answers.next.answer == 'Yes' rescue false
+        answers.next
+        @temporary_protective_order = answers.next.answer == 'Yes' rescue false
+        @temporary_protective_order_case = answers.next.answer
+        answers.next
+        @show_in_complaint = answers.next.answer == 'Yes' rescue false
+
+        #Step 50 COURT COST AND ATTORNEY’S FEES
+        answers = step_answers_enum steps.next
+        @court_cost_attorney_fees = answers.next.answer == 'Yes' rescue false
+
+        #Step 51 Other cases in Family court
         answers = step_answers_enum steps.next
         @family_court = answers.next.answer == 'Yes' rescue false
 
-        #Step 49 Other cases in Family court
+        #Step 52 Other cases in Family court
         if @family_court
           answers = document.step_answers steps.next
           @child_array = Array.new

@@ -1,5 +1,6 @@
 class DocumentAnswersController < ApplicationController
-  before_action :get_document, :only => [:edit, :update, :render_questions, :add_fields_block, :delete_fields_block, :index]
+  include DivorceComplaintHelper
+  before_action :get_document, :only => [:edit, :update, :render_questions, :add_fields_block, :delete_fields_block, :index, :child_suport_prompt]
   before_action :get_review, :only => [:edit, :update, :render_questions]
 
   def edit
@@ -39,6 +40,13 @@ class DocumentAnswersController < ApplicationController
   end
 
   def index
+  end
+
+  def child_suport_prompt
+    @plaintiff_full_name = get_plaintiff_full_name @document
+    @defendant_full_name = get_defendant_full_name @document
+    @dad_result = params[:dad_result].to_f
+    @mom_result = params[:mom_result].to_f
   end
 
   private

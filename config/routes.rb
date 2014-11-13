@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get 'step/:step/edit' => 'document_answers#edit', :as => :answer
     post 'step/:step' => 'document_answers#update', :as => :answer_update
     post 'step/:step/render_questions' => 'document_answers#render_questions', :as => :render_questions
+    get 'step/:step/child_suport_prompt' => 'document_answers#child_suport_prompt'
     post 'add_fields_block' => 'document_answers#add_fields_block', :as => :add_fields_block
     post 'delete_fields_block' => 'document_answers#delete_fields_block', :as => :delete_fields_block
     get 'review' => 'document_answers#index'
