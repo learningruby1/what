@@ -231,7 +231,7 @@ module PdfDocument
         move_to_left "#{ _counter += 1 }.  CHILD SUPPORT"
         if @joint_children_count
           amount = (@mom_month_amount.to_f * (get_percentage_for_children(@joint_children_count).to_f / 100) - @dad_month_amount.to_f * (get_percentage_for_children(@joint_children_count).to_f / 100)).abs.round(2)
-          push_text "That #{ @child_suport_who == "#{ @dad.capitalize } will pay $" ? @dad.capitalize : @mom.capitalize } should pay $ #{amount} of #{ @mom_month_amount > @dad_month_amount ? @mom.capitalize : @dad.capitalize }'s gross monthly income, whichever amount is greater.", @text_indent
+          push_text "That #{ @child_suport_who == "#{ @dad.capitalize } will pay $" ? @dad.capitalize : @mom.capitalize } should pay $ #{ amount } of #{ @mom_month_amount > @dad_month_amount ? @mom.capitalize : @dad.capitalize }'s gross monthly income, whichever amount is greater.", @text_indent
           push_text "The obligation to pay child support should continue until the #{ @joint_children_count > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
 
@@ -301,10 +301,10 @@ module PdfDocument
         @pets.each do |pet|
 
           case pet.last
-          when "#{ @plaintiff_full_name } will keep it"
+          when "#{ @plaintiff_full_name } will keep"
             pet.pop
             mom_array.push pet.join(', ') if pet != '' || pet != ','
-          when "#{ @defendant_full_name } will keep it"
+          when "#{ @defendant_full_name } will keep"
             pet.pop
             dad_array.push pet.join(', ') if pet != '' || pet != ','
           else
@@ -388,41 +388,24 @@ module PdfDocument
           end
         end
 
-        if @mom == 'plaintiff'
-          alphabet = 96
-          mom_array.each_with_index do |p, index|
-            if mom_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-          alphabet = 96
-          dad_array.each_with_index do |p, index|
-            if dad_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-        else
-          alphabet = 96
-          dad_array.each_with_index do |p, index|
-            if dad_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-          alphabet = 96
-          mom_array.each_with_index do |p, index|
-            if mom_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
+
+        alphabet = 96
+        mom_array.each_with_index do |p, index|
+          if mom_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
           end
         end
+        alphabet = 96
+        dad_array.each_with_index do |p, index|
+          if dad_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        end
+
 
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
         push_text "That if Defendant fails or refuses to sign the (insert Quitclaim deed to the property and or Vehicle Title) so that the property becomes the sole and separate property of the Plaintiff, Plaintiff respectfully requests that the Clerk of the Court be directed to sign the (insert Quitclaim deed and/or Vehicle Title).", @text_indent
@@ -456,41 +439,24 @@ module PdfDocument
             dad_array.push property.join(', ') if property != '' || property != ','
           end
         end
-        if @mom == 'plaintiff'
-          alphabet = 96
-          mom_array.each_with_index do |p, index|
-            if mom_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-          alphabet = 96
-          dad_array.each_with_index do |p, index|
-            if dad_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-        else
-          alphabet = 96
-          dad_array.each_with_index do |p, index|
-            if dad_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
-          end
-          alphabet = 96
-          mom_array.each_with_index do |p, index|
-            if mom_array.first == p
-              push_text p, @text_indent
-            else
-              push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
-            end
+
+        alphabet = 96
+        mom_array.each_with_index do |p, index|
+          if mom_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
           end
         end
+        alphabet = 96
+        dad_array.each_with_index do |p, index|
+          if dad_array.first == p
+            push_text p, @text_indent
+          else
+            push_text "#{ (alphabet+index).chr }. #{ p }", @text_indent
+          end
+        end
+
 
         push_text 'Plaintiff asks for leave to amend the Complaint once other debts are discovered and identified.', @text_indent
       when 'No, we already divided them'

@@ -51,12 +51,6 @@ current_step.fields.create :field_type => 'states rev_inline', :name => 'State /
 current_step.fields.create :field_type => 'string rev_inline rev_br', :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
 current_step.fields.create :field_type => 'string rev_br', :name => 'Phone number /<spain/>Número de teléfono: * <spain/>e.g. (xxx) xxx-xxxx', :mandatory => { :value => /^[A-Za-z0-9\- ()]{2,20}$/, :hint => 'Please enter a valid Phone Number /<spain/>Por favor, ponga un número de teléfono válido' }
 current_step.fields.create :field_type => 'string rev_br', :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email /<spain/>Por favor, ponga un correo electrónico válido' }
-current_step.fields.create :field_type => 'label', :name => 'I am /<spain/>Yo soy:'
-current_step.fields.create :field_type => 'radio', :name => 'Wife /<spain/>Esposa
-                                                            <option/>Husband /<spain/>Esposo', :mandatory => { :value => /^Wife|Husband/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'text', :name => 'Since you are the person starting the <packet>, you will be referred as the <plaintiff_role>.
-                                                            <br/><spain/>Ya que usted es la persona que inicia la acción de <packet_spain>, usted será referido como el <plaintiff_role_spain>'
-
 
 current_step = template.steps.create :step_number => step_number += 1,#4
                                      :title => 'Your Spouse\'s Information /<spain/>Información de su conyuge',
@@ -130,11 +124,11 @@ current_step.fields.create :field_type => 'radio', :name => 'No<option/>Yes /<sp
 current_step.fields.create :field_type => 'text', :name => 'Is one or both of the spouses pregnant? /<spain/>¿Esta uno o ambos cónyuges embarazada?', :spouses => 'women'
 current_step.fields.create :field_type => 'checkbox', :name => 'IS NOT currently pregnant /<spain/>NO ESTÁ embarazada en este momento.', :spouses => 'women'
 current_step.fields.create :field_type => 'checkbox', :name => '<plaintiff_full_name> IS currently pregnant /<spain/><plaintiff_full_name> ESTÁ embarazada en este momento.', :toggle_id => toggle_id, :spouses => 'women'
-current_step.fields.create :field_type => 'date_year_born review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :spouses => 'women', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
+current_step.fields.create :field_type => 'date_year_born end_range=1 review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :spouses => 'women', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
 
 toggle_id += 1
 current_step.fields.create :field_type => 'checkbox', :name => '<defendant_full_name> IS currently pregnant /<spain/><defendant_full_name> ESTÁ embarazada en este momento.', :toggle_id => toggle_id, :spouses => 'women', :mandatory => { :value => /1/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'date_year_born review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :spouses => 'women', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
+current_step.fields.create :field_type => 'date_year_born end_range=1 review_show', :name => 'When is unborn child due? /<spain/>¿Qué fecha va nacer él bebe?', :toggle_id => toggle_id, :toggle_option => 'IS currently pregnant', :spouses => 'women', :mandatory => { :value => /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/, :hint => 'Please enter a date/<spain/>Por favor, introduzca una fecha' }
 
 
 

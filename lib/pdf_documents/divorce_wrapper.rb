@@ -88,11 +88,9 @@ module PdfDocument
         #@plaintiff_zip = answers.next.answer
         @plaintiff_phone = answers.next.answer
         @plaintiff_email = answers.next.answer
-        answers.next
-        @plaintiff_wife_husband = answers.next.answer
 
-        @mom = @plaintiff_wife_husband == 'Wife' ? 'plaintiff' : 'defendant'
-        @dad = @plaintiff_wife_husband == 'Wife' ? 'defendant' : 'plaintiff'
+        @mom = 'plaintiff'
+        @dad = 'defendant'
 
         #Step 4   Your Spouse\'s Information
         answers = step_answers_enum steps.next
@@ -144,7 +142,7 @@ module PdfDocument
         @marriage_country_string += @in_the_us ? " State of #{ @marriage_state }" : " Country of #{ @marriage_country }"
         @marriage_country_string += ' and have since remained married.'
 
-        @marriage_date_decree = @marriage_date.to_date.strftime('%d day of %B, %Y')
+        @marriage_date_decree = @marriage_date.to_date.strftime('%e day of %B, %Y')
         @marriage_country_decree = "in the city of #{ @in_the_us ? @marriage_city : @marriage_city_town_province }"
         @marriage_country_decree += @in_the_us ? " State of #{ @marriage_state } County of #{ @clark_nye }" : " Country of #{ @marriage_country }"
 
@@ -476,7 +474,7 @@ module PdfDocument
                   end
                 end
               elsif physical_custody[:custody] == 'Both Parents'
-                66.times do answers.next end
+                67.times do answers.next end
                 selected_answers = Array.new
 
                 2.times do
@@ -489,11 +487,14 @@ module PdfDocument
                     tmp_string = 'from ' + answer.template_field.name.split(' /<spain/>').first + ' with ' + answers.next.answer + ' ' + answers.next.answer
                     tmp_string += ', to ' + answers.next.answer + ' ' + answers.next.answer
                     selected_answers.push tmp_string
-
                   else
                     4.times do answers.next end
                   end
                 end
+              end
+              selected_answers.each do |answer|
+                answer.gsub!('<plaintiff_full_name>', @plaintiff_full_name)
+                answer.gsub!('<defendant_full_name>', @defendant_full_name)
               end
 
               physical_custody[:answers] = selected_answers
