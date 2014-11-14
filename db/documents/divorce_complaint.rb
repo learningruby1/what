@@ -51,11 +51,12 @@ current_step.fields.create :field_type => 'states rev_inline', :name => 'State /
 current_step.fields.create :field_type => 'string rev_inline rev_br', :name => 'Zip Code /<spain/>Código postal: * ', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
 current_step.fields.create :field_type => 'string rev_br', :name => 'Phone number /<spain/>Número de teléfono: * <spain/>e.g. (xxx) xxx-xxxx', :mandatory => { :value => /^[A-Za-z0-9\- ()]{2,20}$/, :hint => 'Please enter a valid Phone Number /<spain/>Por favor, ponga un número de teléfono válido' }
 current_step.fields.create :field_type => 'string rev_br', :name => 'Email /<spain/>Correo Electrónico: *', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})+$/, :hint => 'Please enter a valid email /<spain/>Por favor, ponga un correo electrónico válido' }
+current_step.fields.create :field_type => 'text', :name => 'Since you are the person starting the <packet>, you will be referred as the <plaintiff_role>.
+                                                            <br/><spain/>Ya que usted es la persona que inicia la acción de <packet_spain>, usted será referido como el <plaintiff_role_spain>'
 
 current_step = template.steps.create :step_number => step_number += 1,#4
                                      :title => 'Your Spouse\'s Information /<spain/>Información de su conyuge',
                                      :description => 'This person will be referred as the <defendant_role><br/><spain/>Esta persona será referida como el demandado <defendant_role_spain>'
-
 
 current_step.fields.create :field_type => 'string upcase', :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }
 current_step.fields.create :field_type => 'string upcase rev_inline', :name => 'Middle Initial /<spain/>Inicial del Segundo Nombre:'
