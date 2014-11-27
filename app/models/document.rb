@@ -18,7 +18,7 @@ class Document < ActiveRecord::Base
 
   DIVORCE_COMPLAINT = 'Complaint for Divorce /<spain/>Demanda de Divorcio'
   FILED_CASE = 'Filed Case /<spain/>Caso archivado'
-  AFTER_SERVICE = "After Service /<spain/>Después de servicio"
+  AFTER_SERVICE = "After Service /<spain/>Después de entrega de documentos"
 
   DIVORCE_PACKET = 'Divorce Complaint /<spain/>Demanda de Divorcio'
   JOINT_PACKET = 'Joint Petition /<spain/>Petición Conjunta'

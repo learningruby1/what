@@ -27,7 +27,7 @@ var DateAfterBorn = {
       need_confirm = selected_years[toggler].indexOf(true) == -1 ? true : need_confirm;
     });
     if(need_confirm){
-      submit_button.data('confirm', 'WARNING: You have`t added all addresses for last 5 years(or from the birth date of a child yonger then 5 years)!');
+      submit_button.data('confirm', 'WARNING: You haven`t added all addresses for last 5 years(or from the birth date of a child younger than 5 years)!/ ADVERTENCIA: No ha añadido todas las direcciones por los últimos 5 años (o desde la fecha de nacimiento del menor de 5 años)  ');
     }else{
       submit_button.removeData('confirm');
     }

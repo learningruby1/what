@@ -55,7 +55,7 @@ current_step.fields.create :field_type => 'text', :name => 'Since you are the pe
                                                             <br/><spain/>Ya que usted es la persona que inicia la acción de <packet_spain>, usted será referido como el <plaintiff_role_spain>'
 
 current_step = template.steps.create :step_number => step_number += 1,#4
-                                     :title => 'Your Spouse\'s Information /<spain/>Información de su conyuge',
+                                     :title => 'Your Spouse\'s Information /<spain/>Información de su Cónyuge',
                                      :description => 'This person will be referred as the <defendant_role><br/><spain/>Esta persona será referida como el demandado <defendant_role_spain>'
 
 current_step.fields.create :field_type => 'string upcase', :name => 'Name /<spain/>Nombre: *', :mandatory => { :value => /^[a-zA-Z\- ]+$/, :hint => 'Enter name /<spain/>Escriba el nombre' }
@@ -67,18 +67,19 @@ current_step.fields.create :field_type => 'radio', :name => 'Male /<spain/>Mascu
                                                              <option/>Female /<spain/>Femenino', :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
 
 current_step.fields.create :field_type => 'string social_security rev_br', :name => 'Social Security # /<spain/># Seguro Social: <spain/>e.g. XXX-XX-XXXX', :mandatory => { :value => /^([0-9]{3}\D*[0-9]{2}\D*[0-9]{4})?$/, :hint => 'Please enter a valid Social Security Number. /<spain/>Por favor, ponga un número de Seguro Social válido' }
-current_step.fields.create :field_type => 'string capitalize', :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección: *', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
+current_step.fields.create :field_type => 'string capitalize', :name => 'Mailing Address or last Known address /<spain/>Dirección postal o última dirección:', :mandatory => { :value => /^[0-9a-zA-Z\-,.\/ #]+$/, :hint => 'Please enter a valid mailing address /<spain/>Por favor, ponga una dirección de casa o postal válida' }
 
 toggle_id = 0
 toggle_id += 1
 current_step.fields.create :field_type => 'radio', :name => 'In the United States /<spain/>En los Estados Unidos
+                                                            <option/> Unknown /<spain/> No Se
                                                              <option/>Outside the United States /<spain/>Fuera de los Estados Unidos', :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-current_step.fields.create :field_type => 'string capitalize', :name => 'City /<spain/>Ciudad: *',  :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }
-current_step.fields.create :field_type => 'states rev_inline', :name => 'State /<spain/>Estado: *', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
+current_step.fields.create :field_type => 'string capitalize', :name => 'City /<spain/>Ciudad: ',  :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a city /<spain/>Por favor, proporciona una ciudad' }
+current_step.fields.create :field_type => 'states rev_inline', :name => 'State /<spain/>Estado:', :toggle_id => toggle_id, :toggle_option => 'In the United States', :mandatory => { :value => /\w+/, :hint => 'Provide a state /<spain/>Por favor, proporciona un estado' }
 
-current_step.fields.create :field_type => 'string capitalize', :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a City/Town/Province /<spain/>Por favor, proporciona una Ciudad/Pueblo/Provincia' }
-current_step.fields.create :field_type => 'string capitalize rev_inline', :name => 'Country /<spain/>País: *', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage country /<spain/>Por favor, proporciona el país' }
-current_step.fields.create :field_type => 'string rev_inline rev_br', :name => 'Zip Code /<spain/>Código postal: *', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
+current_step.fields.create :field_type => 'string capitalize', :name => 'City/Town/Province: /<spain/>Ciudad/Pueblo/Provincia:', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a City/Town/Province /<spain/>Por favor, proporciona una Ciudad/Pueblo/Provincia' }
+current_step.fields.create :field_type => 'string capitalize rev_inline', :name => 'Country /<spain/>País:', :toggle_id => toggle_id, :toggle_option => 'Outside', :mandatory => { :value => /\w+/, :hint => 'Provide a marriage country /<spain/>Por favor, proporciona el país' }
+current_step.fields.create :field_type => 'string rev_inline rev_br', :name => 'Zip Code /<spain/>Código postal:', :mandatory => { :value => /^\w+$/, :hint => 'Please enter a valid zip code /<spain/>Por favor, ponga un código postal válido' }
 current_step.fields.create :field_type => 'string rev_br', :name => 'Email /<spain/>Correo Electrónico:', :mandatory => { :value => /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})?+$/, :hint => 'Please enter a valid email /<spain/>Por favor, ponga un correo electrónico válido' }
 current_step.fields.create :name => 'Phone number /<spain/>Número de teléfono: <spain/>e.g. (xxx) xxx-xxxx', :mandatory => { :value => /^([A-Za-z0-9\- ()]{2,20})?$/, :hint => 'Please enter a valid Phone Number /<spain/>Por favor, ponga un número de teléfono válido' }
 
@@ -1166,8 +1167,7 @@ current_step.fields.create :name => 'House - Mobile Home/Casa - Traila<beginText
 current_step.fields.create :field_type => 'radio-last', :name => '<plaintiff_full_name> will keep it /<spain/><plaintiff_full_name> se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/><defendant_full_name> will keep it /<spain/><defendant_full_name> se quedara con ella', :amount_field_id => house_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-
-current_step.fields.create :field_type => 'label', :name => 'Do you need <defendant_full_name> to sign over a quitclaim deed to the property?
+                                                  :title => 'Do you need <defendant_full_name> to sign over a quitclaim deed to the property?
                                                             <br/><spain/>¿Necesita que <defendant_full_name> le firme el quitclaim deed o título de la propiedad?', :sort_index => 'b1'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :sort_index => 'b2'
 

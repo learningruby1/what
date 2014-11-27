@@ -39,7 +39,7 @@ module PdfDocument
       push_text "COMES NOW Plaintiff, #{ @plaintiff_full_name }, in Proper Person, and files this Complaint for Divorce against the above Defendant, and alleges as follows:", @text_indent
 
       move_to_left "#{ _counter += 1 }.  RESIDENCY"
-      push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of #{ @clark_nye.upcase } County,  Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
+      push_text "That the Plaintiff  has been and continues to be an actual, bona fide resident of Nevada and has been actually physically present and domiciled in the State of Nevada for more than six (6) weeks prior to the filing of this action.", @text_indent
 
       move_to_left "#{ _counter += 1 }.  DATE OF MARRIAGE"
       push_text "That the parties were married on the #{ @marriage_date_decree } #{ @marriage_country_string }", @text_indent
@@ -246,7 +246,7 @@ module PdfDocument
             push_text "That #{ @child_suport_who == "#{ @dad.capitalize } will pay #{ @number_of_children > 1 ? 'children' : 'child' } support" ? @dad.capitalize : @mom.capitalize } should pay the amount of $ #{ @child_suport_amount.to_i } per month in child support.", @text_indent
           when /statutory/
             count = get_number_of_primary_or_sole_child @document
-            push_text "That #{ @child_suport_who == "#{ @dad.capitalize } will pay #{ @number_of_children > 1 ? 'children' : 'child' } support" ? @dad.capitalize : @mom.capitalize } should pay % #{ get_percentage_for_children(count) } of gross income or $100 per month whichever is higher as and for child support.", @text_indent
+            push_text "That #{ @child_suport_who == "#{ @dad.capitalize } will pay #{ @number_of_children > 1 ? 'children' : 'child' } support" ? @dad.capitalize : @mom.capitalize } should pay #{ get_percentage_for_children(count) } % of gross income or $100 per month whichever is higher as and for child support.", @text_indent
           end
           push_text "The obligation to pay child support should continue until the #{ @sole_primary_children_count > 1 ? 'children reaches' : 'child reach' } the age of 18 and no longer in high school, or 19 years of age, whichever occurs first, or emancipates.", @text_indent
         end
@@ -408,7 +408,8 @@ module PdfDocument
 
 
         push_text 'Plaintiff asks for leave to amend the Complaint once other assets are discovered and identified.', @text_indent
-        push_text "That if Defendant fails or refuses to sign the (insert Quitclaim deed to the property and or Vehicle Title) so that the property becomes the sole and separate property of the Plaintiff, Plaintiff respectfully requests that the Clerk of the Court be directed to sign the (insert Quitclaim deed and/or Vehicle Title).", @text_indent
+      when 'Yes'
+        push_text "That if Defendant fails or refuses to sign the Quitclaim deed to the property and/or Vehicle Title so that the property becomes the sole and separate property of the Plaintiff, Plaintiff respectfully requests that the Clerk of the Court be directed to sign the (insert Quitclaim deed and/or Vehicle Title).", @text_indent
       when 'No, we already divided them'
         push_text 'That the parties have already divided all property and other assets and there is nothing for the Court to divide.', @text_indent
       else # Means 'No'
@@ -519,7 +520,7 @@ module PdfDocument
       start_new_page
 
       if @clark_nye == 'Clark'
-        push_header "<b>#{ @clark_nye.upcase } COUNT VERIFICATION</b>"
+        push_header "<b>#{ @clark_nye.upcase } VERIFICATION</b>"
         move_down
         push_text 'Under penalties of perjury, I declare that I am the Plaintiff in the above-entitled action; that I have read the foregoing Complaint and know the contents thereof, that the pleading is true of my own knowledge, except for those matters therein contained stated upon information and belief, and that as to those matters, I believe them to be true.', @text_indent
         push_text 'I declare under penalty of perjury under the law of the State of Nevada that the foregoing is true and correct.', @text_indent
@@ -531,7 +532,7 @@ module PdfDocument
         push_text 'Submitted by: __________________'
         push_text "#{ @plaintiff_full_name }"
       else
-        push_header "<b>#{ @clark_nye.upcase } COUNTY VERIFICATION</b>"
+        push_header "<b> VERIFICATION</b>"
         move_down
 
         push_text "STATE OF NEVADA#{ "\b"*17 })"
