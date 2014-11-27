@@ -1167,7 +1167,7 @@ current_step.fields.create :name => 'House - Mobile Home/Casa - Traila<beginText
 current_step.fields.create :field_type => 'radio-last', :name => '<plaintiff_full_name> will keep it /<spain/><plaintiff_full_name> se quedara con ella
                                                              <option/>Sell it /<spain/>Vender
                                                              <option/><defendant_full_name> will keep it /<spain/><defendant_full_name> se quedara con ella', :amount_field_id => house_number_field.id, :raw_question => false, :toggle_id => toggle_id, :mandatory => { :value => /\w+/, :hint => 'Please select one /<spain/>Seleccione uno, por favor' }
-                                                  :title => 'Do you need <defendant_full_name> to sign over a quitclaim deed to the property?
+current_step.fields.create :field_type => 'label', :name => 'Do you need <defendant_full_name> to sign over a quitclaim deed to the property?
                                                             <br/><spain/>¿Necesita que <defendant_full_name> le firme el quitclaim deed o título de la propiedad?', :sort_index => 'b1'
 current_step.fields.create :field_type => 'radio', :name => 'Yes /<spain/>Sí<option/>No', :sort_index => 'b2'
 
