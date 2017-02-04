@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20141111133313) do
     t.integer "document_id"
     t.integer "template_field_id"
     t.integer "toggler_offset",    default: 0
+    t.text    "answer"
     t.string  "sort_index"
     t.integer "sort_number"
-    t.text    "answer"
     t.integer "template_step_id"
   end
 
@@ -65,14 +65,14 @@ ActiveRecord::Schema.define(version: 20141111133313) do
     t.integer  "template_step_id"
     t.integer  "toggle_id"
     t.string   "toggle_option"
+    t.string   "looper_option"
     t.boolean  "dont_repeat",      default: false
     t.string   "mandatory"
     t.integer  "amount_field_id"
     t.boolean  "raw_question",     default: true
-    t.string   "sort_index"
     t.string   "header_ids"
+    t.string   "sort_index"
     t.integer  "sub_toggle_id"
-    t.string   "looper_option"
     t.string   "insert_place"
     t.string   "render_if_id"
     t.string   "render_if_value"

@@ -9,7 +9,7 @@ gem 'therubyracer'
 gem 'sass-rails', '~> 4.0.3'
 gem 'less-rails'
 gem 'uglifier', '>= 1.3.0'
-
+gem 'json', '~> 1.8.6'
 gem 'haml-rails'
 gem 'less-rails-bootstrap'
 
