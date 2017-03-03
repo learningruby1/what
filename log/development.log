@@ -1332,3 +1332,36 @@ Started GET "/assets/sub_amount.js?body=1" for 127.0.0.1 at 2017-02-03 22:11:26 
 Started GET "/assets/same_as_home.js?body=1" for 127.0.0.1 at 2017-02-03 22:11:26 -0800
 Started GET "/assets/answer.js?body=1" for 127.0.0.1 at 2017-02-03 22:11:26 -0800
 Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2017-02-03 22:11:26 -0800
+Started GET "/" for 127.0.0.1 at 2017-02-27 23:04:50 -0800
+
+AbstractController::Helpers::MissingHelperError (Missing helper file helpers//users/formsmama/desktop/success/forms_mama/app/helpers/application_helper.rb_helper.rb):
+  app/controllers/application_controller.rb:1:in `<top (required)>'
+  app/controllers/pdf_files_controller.rb:1:in `<top (required)>'
+
+
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.5ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.4ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (20.5ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (114.3ms)
+Started GET "/" for 127.0.0.1 at 2017-02-27 23:04:53 -0800
+
+AbstractController::Helpers::MissingHelperError (Missing helper file helpers//users/formsmama/desktop/success/forms_mama/app/helpers/application_helper.rb_helper.rb):
+  app/controllers/application_controller.rb:1:in `<top (required)>'
+  app/controllers/pdf_files_controller.rb:1:in `<top (required)>'
+
+
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (2.2ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.2ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.2ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (93.7ms)
+Started GET "/" for 127.0.0.1 at 2017-02-27 23:07:18 -0800
+
+AbstractController::Helpers::MissingHelperError (Missing helper file helpers//users/formsmama/desktop/success/forms_mama/app/helpers/application_helper.rb_helper.rb):
+  app/controllers/application_controller.rb:1:in `<top (required)>'
+  app/controllers/pdf_files_controller.rb:1:in `<top (required)>'
+
+
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.6ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.4ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (18.9ms)
+  Rendered /Users/formsmama/.rvm/gems/ruby-2.3.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (113.9ms)
